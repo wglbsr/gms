@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.CBasisMapper">
+  <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.CBasis">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mach_no" jdbcType="VARCHAR" property="machNo" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="sys_mode" jdbcType="TINYINT" property="sysMode" />
+    <result column="lank_level" jdbcType="DOUBLE" property="lankLevel" />
+    <result column="cabinet_temperature" jdbcType="DOUBLE" property="cabinetTemperature" />
+    <result column="st_current" jdbcType="DOUBLE" property="stCurrent" />
+    <result column="external_temperature" jdbcType="DOUBLE" property="externalTemperature" />
+    <result column="st_voltage" jdbcType="DOUBLE" property="stVoltage" />
+    <result column="al_voltage" jdbcType="DOUBLE" property="alVoltage" />
+    <result column="city_electricity" jdbcType="TINYINT" property="cityElectricity" />
+    <result column="cabinet_state" jdbcType="TINYINT" property="cabinetState" />
+    <result column="st_time" jdbcType="TIMESTAMP" property="stTime" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="ver_no" jdbcType="VARCHAR" property="verNo" />
+    <result column="start_Voltage" jdbcType="DOUBLE" property="startVoltage" />
+    <result column="sum_power" jdbcType="DOUBLE" property="sumPower" />
+    <result column="num_time" jdbcType="VARCHAR" property="numTime" />
+    <result column="on_time" jdbcType="VARCHAR" property="onTime" />
+    <result column="maintain_time" jdbcType="VARCHAR" property="maintainTime" />
+    <result column="mainboard_temperature" jdbcType="DOUBLE" property="mainboardTemperature" />
+    <result column="inter_time" jdbcType="TIMESTAMP" property="interTime" />
+    <result column="st_co" jdbcType="DOUBLE" property="stCo" />
+    <result column="st_coordinate" jdbcType="VARCHAR" property="stCoordinate" />
+    <result column="item3" jdbcType="VARCHAR" property="item3" />
+    <result column="item4" jdbcType="VARCHAR" property="item4" />
+    <result column="item5" jdbcType="VARCHAR" property="item5" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, mach_no, state, sys_mode, lank_level, cabinet_temperature, st_current, external_temperature, 
+    st_voltage, al_voltage, city_electricity, cabinet_state, st_time, start_time, end_time, 
+    ver_no, start_Voltage, sum_power, num_time, on_time, maintain_time, mainboard_temperature, 
+    inter_time, st_co, st_coordinate, item3, item4, item5
+  </sql>
+  <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.CBasisExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from c_basis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_basis
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from c_basis
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.CBasisExample">
+    delete from c_basis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dyny.gms.db.pojo.CBasis">
+    insert into c_basis (id, mach_no, state, 
+      sys_mode, lank_level, cabinet_temperature, 
+      st_current, external_temperature, st_voltage, 
+      al_voltage, city_electricity, cabinet_state, 
+      st_time, start_time, end_time, 
+      ver_no, start_Voltage, sum_power, 
+      num_time, on_time, maintain_time, 
+      mainboard_temperature, inter_time, st_co, 
+      st_coordinate, item3, item4, 
+      item5)
+    values (#{id,jdbcType=INTEGER}, #{machNo,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, 
+      #{sysMode,jdbcType=TINYINT}, #{lankLevel,jdbcType=DOUBLE}, #{cabinetTemperature,jdbcType=DOUBLE}, 
+      #{stCurrent,jdbcType=DOUBLE}, #{externalTemperature,jdbcType=DOUBLE}, #{stVoltage,jdbcType=DOUBLE}, 
+      #{alVoltage,jdbcType=DOUBLE}, #{cityElectricity,jdbcType=TINYINT}, #{cabinetState,jdbcType=TINYINT}, 
+      #{stTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+      #{verNo,jdbcType=VARCHAR}, #{startVoltage,jdbcType=DOUBLE}, #{sumPower,jdbcType=DOUBLE}, 
+      #{numTime,jdbcType=VARCHAR}, #{onTime,jdbcType=VARCHAR}, #{maintainTime,jdbcType=VARCHAR}, 
+      #{mainboardTemperature,jdbcType=DOUBLE}, #{interTime,jdbcType=TIMESTAMP}, #{stCo,jdbcType=DOUBLE}, 
+      #{stCoordinate,jdbcType=VARCHAR}, #{item3,jdbcType=VARCHAR}, #{item4,jdbcType=VARCHAR}, 
+      #{item5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.CBasis">
+    insert into c_basis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="machNo != null">
+        mach_no,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="sysMode != null">
+        sys_mode,
+      </if>
+      <if test="lankLevel != null">
+        lank_level,
+      </if>
+      <if test="cabinetTemperature != null">
+        cabinet_temperature,
+      </if>
+      <if test="stCurrent != null">
+        st_current,
+      </if>
+      <if test="externalTemperature != null">
+        external_temperature,
+      </if>
+      <if test="stVoltage != null">
+        st_voltage,
+      </if>
+      <if test="alVoltage != null">
+        al_voltage,
+      </if>
+      <if test="cityElectricity != null">
+        city_electricity,
+      </if>
+      <if test="cabinetState != null">
+        cabinet_state,
+      </if>
+      <if test="stTime != null">
+        st_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="verNo != null">
+        ver_no,
+      </if>
+      <if test="startVoltage != null">
+        start_Voltage,
+      </if>
+      <if test="sumPower != null">
+        sum_power,
+      </if>
+      <if test="numTime != null">
+        num_time,
+      </if>
+      <if test="onTime != null">
+        on_time,
+      </if>
+      <if test="maintainTime != null">
+        maintain_time,
+      </if>
+      <if test="mainboardTemperature != null">
+        mainboard_temperature,
+      </if>
+      <if test="interTime != null">
+        inter_time,
+      </if>
+      <if test="stCo != null">
+        st_co,
+      </if>
+      <if test="stCoordinate != null">
+        st_coordinate,
+      </if>
+      <if test="item3 != null">
+        item3,
+      </if>
+      <if test="item4 != null">
+        item4,
+      </if>
+      <if test="item5 != null">
+        item5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="machNo != null">
+        #{machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="sysMode != null">
+        #{sysMode,jdbcType=TINYINT},
+      </if>
+      <if test="lankLevel != null">
+        #{lankLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="cabinetTemperature != null">
+        #{cabinetTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="stCurrent != null">
+        #{stCurrent,jdbcType=DOUBLE},
+      </if>
+      <if test="externalTemperature != null">
+        #{externalTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="stVoltage != null">
+        #{stVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="alVoltage != null">
+        #{alVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="cityElectricity != null">
+        #{cityElectricity,jdbcType=TINYINT},
+      </if>
+      <if test="cabinetState != null">
+        #{cabinetState,jdbcType=TINYINT},
+      </if>
+      <if test="stTime != null">
+        #{stTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="verNo != null">
+        #{verNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startVoltage != null">
+        #{startVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="sumPower != null">
+        #{sumPower,jdbcType=DOUBLE},
+      </if>
+      <if test="numTime != null">
+        #{numTime,jdbcType=VARCHAR},
+      </if>
+      <if test="onTime != null">
+        #{onTime,jdbcType=VARCHAR},
+      </if>
+      <if test="maintainTime != null">
+        #{maintainTime,jdbcType=VARCHAR},
+      </if>
+      <if test="mainboardTemperature != null">
+        #{mainboardTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="interTime != null">
+        #{interTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stCo != null">
+        #{stCo,jdbcType=DOUBLE},
+      </if>
+      <if test="stCoordinate != null">
+        #{stCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="item3 != null">
+        #{item3,jdbcType=VARCHAR},
+      </if>
+      <if test="item4 != null">
+        #{item4,jdbcType=VARCHAR},
+      </if>
+      <if test="item5 != null">
+        #{item5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dyny.gms.db.pojo.CBasisExample" resultType="java.lang.Long">
+    select count(*) from c_basis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update c_basis
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.machNo != null">
+        mach_no = #{record.machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.sysMode != null">
+        sys_mode = #{record.sysMode,jdbcType=TINYINT},
+      </if>
+      <if test="record.lankLevel != null">
+        lank_level = #{record.lankLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cabinetTemperature != null">
+        cabinet_temperature = #{record.cabinetTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stCurrent != null">
+        st_current = #{record.stCurrent,jdbcType=DOUBLE},
+      </if>
+      <if test="record.externalTemperature != null">
+        external_temperature = #{record.externalTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stVoltage != null">
+        st_voltage = #{record.stVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.alVoltage != null">
+        al_voltage = #{record.alVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cityElectricity != null">
+        city_electricity = #{record.cityElectricity,jdbcType=TINYINT},
+      </if>
+      <if test="record.cabinetState != null">
+        cabinet_state = #{record.cabinetState,jdbcType=TINYINT},
+      </if>
+      <if test="record.stTime != null">
+        st_time = #{record.stTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNo != null">
+        ver_no = #{record.verNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startVoltage != null">
+        start_Voltage = #{record.startVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sumPower != null">
+        sum_power = #{record.sumPower,jdbcType=DOUBLE},
+      </if>
+      <if test="record.numTime != null">
+        num_time = #{record.numTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onTime != null">
+        on_time = #{record.onTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maintainTime != null">
+        maintain_time = #{record.maintainTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainboardTemperature != null">
+        mainboard_temperature = #{record.mainboardTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="record.interTime != null">
+        inter_time = #{record.interTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stCo != null">
+        st_co = #{record.stCo,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stCoordinate != null">
+        st_coordinate = #{record.stCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item3 != null">
+        item3 = #{record.item3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item4 != null">
+        item4 = #{record.item4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item5 != null">
+        item5 = #{record.item5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update c_basis
+    set id = #{record.id,jdbcType=INTEGER},
+      mach_no = #{record.machNo,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=TINYINT},
+      sys_mode = #{record.sysMode,jdbcType=TINYINT},
+      lank_level = #{record.lankLevel,jdbcType=DOUBLE},
+      cabinet_temperature = #{record.cabinetTemperature,jdbcType=DOUBLE},
+      st_current = #{record.stCurrent,jdbcType=DOUBLE},
+      external_temperature = #{record.externalTemperature,jdbcType=DOUBLE},
+      st_voltage = #{record.stVoltage,jdbcType=DOUBLE},
+      al_voltage = #{record.alVoltage,jdbcType=DOUBLE},
+      city_electricity = #{record.cityElectricity,jdbcType=TINYINT},
+      cabinet_state = #{record.cabinetState,jdbcType=TINYINT},
+      st_time = #{record.stTime,jdbcType=TIMESTAMP},
+      start_time = #{record.startTime,jdbcType=VARCHAR},
+      end_time = #{record.endTime,jdbcType=VARCHAR},
+      ver_no = #{record.verNo,jdbcType=VARCHAR},
+      start_Voltage = #{record.startVoltage,jdbcType=DOUBLE},
+      sum_power = #{record.sumPower,jdbcType=DOUBLE},
+      num_time = #{record.numTime,jdbcType=VARCHAR},
+      on_time = #{record.onTime,jdbcType=VARCHAR},
+      maintain_time = #{record.maintainTime,jdbcType=VARCHAR},
+      mainboard_temperature = #{record.mainboardTemperature,jdbcType=DOUBLE},
+      inter_time = #{record.interTime,jdbcType=TIMESTAMP},
+      st_co = #{record.stCo,jdbcType=DOUBLE},
+      st_coordinate = #{record.stCoordinate,jdbcType=VARCHAR},
+      item3 = #{record.item3,jdbcType=VARCHAR},
+      item4 = #{record.item4,jdbcType=VARCHAR},
+      item5 = #{record.item5,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.CBasis">
+    update c_basis
+    <set>
+      <if test="machNo != null">
+        mach_no = #{machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="sysMode != null">
+        sys_mode = #{sysMode,jdbcType=TINYINT},
+      </if>
+      <if test="lankLevel != null">
+        lank_level = #{lankLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="cabinetTemperature != null">
+        cabinet_temperature = #{cabinetTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="stCurrent != null">
+        st_current = #{stCurrent,jdbcType=DOUBLE},
+      </if>
+      <if test="externalTemperature != null">
+        external_temperature = #{externalTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="stVoltage != null">
+        st_voltage = #{stVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="alVoltage != null">
+        al_voltage = #{alVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="cityElectricity != null">
+        city_electricity = #{cityElectricity,jdbcType=TINYINT},
+      </if>
+      <if test="cabinetState != null">
+        cabinet_state = #{cabinetState,jdbcType=TINYINT},
+      </if>
+      <if test="stTime != null">
+        st_time = #{stTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="verNo != null">
+        ver_no = #{verNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startVoltage != null">
+        start_Voltage = #{startVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="sumPower != null">
+        sum_power = #{sumPower,jdbcType=DOUBLE},
+      </if>
+      <if test="numTime != null">
+        num_time = #{numTime,jdbcType=VARCHAR},
+      </if>
+      <if test="onTime != null">
+        on_time = #{onTime,jdbcType=VARCHAR},
+      </if>
+      <if test="maintainTime != null">
+        maintain_time = #{maintainTime,jdbcType=VARCHAR},
+      </if>
+      <if test="mainboardTemperature != null">
+        mainboard_temperature = #{mainboardTemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="interTime != null">
+        inter_time = #{interTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stCo != null">
+        st_co = #{stCo,jdbcType=DOUBLE},
+      </if>
+      <if test="stCoordinate != null">
+        st_coordinate = #{stCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="item3 != null">
+        item3 = #{item3,jdbcType=VARCHAR},
+      </if>
+      <if test="item4 != null">
+        item4 = #{item4,jdbcType=VARCHAR},
+      </if>
+      <if test="item5 != null">
+        item5 = #{item5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.CBasis">
+    update c_basis
+    set mach_no = #{machNo,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      sys_mode = #{sysMode,jdbcType=TINYINT},
+      lank_level = #{lankLevel,jdbcType=DOUBLE},
+      cabinet_temperature = #{cabinetTemperature,jdbcType=DOUBLE},
+      st_current = #{stCurrent,jdbcType=DOUBLE},
+      external_temperature = #{externalTemperature,jdbcType=DOUBLE},
+      st_voltage = #{stVoltage,jdbcType=DOUBLE},
+      al_voltage = #{alVoltage,jdbcType=DOUBLE},
+      city_electricity = #{cityElectricity,jdbcType=TINYINT},
+      cabinet_state = #{cabinetState,jdbcType=TINYINT},
+      st_time = #{stTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      ver_no = #{verNo,jdbcType=VARCHAR},
+      start_Voltage = #{startVoltage,jdbcType=DOUBLE},
+      sum_power = #{sumPower,jdbcType=DOUBLE},
+      num_time = #{numTime,jdbcType=VARCHAR},
+      on_time = #{onTime,jdbcType=VARCHAR},
+      maintain_time = #{maintainTime,jdbcType=VARCHAR},
+      mainboard_temperature = #{mainboardTemperature,jdbcType=DOUBLE},
+      inter_time = #{interTime,jdbcType=TIMESTAMP},
+      st_co = #{stCo,jdbcType=DOUBLE},
+      st_coordinate = #{stCoordinate,jdbcType=VARCHAR},
+      item3 = #{item3,jdbcType=VARCHAR},
+      item4 = #{item4,jdbcType=VARCHAR},
+      item5 = #{item5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

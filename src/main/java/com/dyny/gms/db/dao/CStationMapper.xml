@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.CStationMapper">
+  <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.CStation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="st_no" jdbcType="VARCHAR" property="stNo" />
+    <result column="st_name" jdbcType="VARCHAR" property="stName" />
+    <result column="st_unit" jdbcType="VARCHAR" property="stUnit" />
+    <result column="st_type" jdbcType="TINYINT" property="stType" />
+    <result column="mach_no" jdbcType="VARCHAR" property="machNo" />
+    <result column="st_coordinate" jdbcType="VARCHAR" property="stCoordinate" />
+    <result column="st_add" jdbcType="VARCHAR" property="stAdd" />
+    <result column="unit_add" jdbcType="VARCHAR" property="unitAdd" />
+    <result column="st_per1" jdbcType="VARCHAR" property="stPer1" />
+    <result column="st_pertel1" jdbcType="VARCHAR" property="stPertel1" />
+    <result column="st_per2" jdbcType="VARCHAR" property="stPer2" />
+    <result column="st_pertel2" jdbcType="VARCHAR" property="stPertel2" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="stop_time" jdbcType="DOUBLE" property="stopTime" />
+    <result column="start_Voltage" jdbcType="DOUBLE" property="startVoltage" />
+    <result column="maintain_time" jdbcType="DOUBLE" property="maintainTime" />
+    <result column="item1" jdbcType="VARCHAR" property="item1" />
+    <result column="item2" jdbcType="VARCHAR" property="item2" />
+    <result column="item3" jdbcType="VARCHAR" property="item3" />
+    <result column="item4" jdbcType="VARCHAR" property="item4" />
+    <result column="item5" jdbcType="VARCHAR" property="item5" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, st_no, st_name, st_unit, st_type, mach_no, st_coordinate, st_add, unit_add, st_per1, 
+    st_pertel1, st_per2, st_pertel2, creat_time, creator, stop_time, start_Voltage, maintain_time, 
+    item1, item2, item3, item4, item5
+  </sql>
+  <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.CStationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from c_station
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_station
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from c_station
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.CStationExample">
+    delete from c_station
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dyny.gms.db.pojo.CStation">
+    insert into c_station (id, st_no, st_name, 
+      st_unit, st_type, mach_no, 
+      st_coordinate, st_add, unit_add, 
+      st_per1, st_pertel1, st_per2, 
+      st_pertel2, creat_time, creator, 
+      stop_time, start_Voltage, maintain_time, 
+      item1, item2, item3, 
+      item4, item5)
+    values (#{id,jdbcType=INTEGER}, #{stNo,jdbcType=VARCHAR}, #{stName,jdbcType=VARCHAR}, 
+      #{stUnit,jdbcType=VARCHAR}, #{stType,jdbcType=TINYINT}, #{machNo,jdbcType=VARCHAR}, 
+      #{stCoordinate,jdbcType=VARCHAR}, #{stAdd,jdbcType=VARCHAR}, #{unitAdd,jdbcType=VARCHAR}, 
+      #{stPer1,jdbcType=VARCHAR}, #{stPertel1,jdbcType=VARCHAR}, #{stPer2,jdbcType=VARCHAR}, 
+      #{stPertel2,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{stopTime,jdbcType=DOUBLE}, #{startVoltage,jdbcType=DOUBLE}, #{maintainTime,jdbcType=DOUBLE}, 
+      #{item1,jdbcType=VARCHAR}, #{item2,jdbcType=VARCHAR}, #{item3,jdbcType=VARCHAR}, 
+      #{item4,jdbcType=VARCHAR}, #{item5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.CStation">
+    insert into c_station
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stNo != null">
+        st_no,
+      </if>
+      <if test="stName != null">
+        st_name,
+      </if>
+      <if test="stUnit != null">
+        st_unit,
+      </if>
+      <if test="stType != null">
+        st_type,
+      </if>
+      <if test="machNo != null">
+        mach_no,
+      </if>
+      <if test="stCoordinate != null">
+        st_coordinate,
+      </if>
+      <if test="stAdd != null">
+        st_add,
+      </if>
+      <if test="unitAdd != null">
+        unit_add,
+      </if>
+      <if test="stPer1 != null">
+        st_per1,
+      </if>
+      <if test="stPertel1 != null">
+        st_pertel1,
+      </if>
+      <if test="stPer2 != null">
+        st_per2,
+      </if>
+      <if test="stPertel2 != null">
+        st_pertel2,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="stopTime != null">
+        stop_time,
+      </if>
+      <if test="startVoltage != null">
+        start_Voltage,
+      </if>
+      <if test="maintainTime != null">
+        maintain_time,
+      </if>
+      <if test="item1 != null">
+        item1,
+      </if>
+      <if test="item2 != null">
+        item2,
+      </if>
+      <if test="item3 != null">
+        item3,
+      </if>
+      <if test="item4 != null">
+        item4,
+      </if>
+      <if test="item5 != null">
+        item5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stNo != null">
+        #{stNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stName != null">
+        #{stName,jdbcType=VARCHAR},
+      </if>
+      <if test="stUnit != null">
+        #{stUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="stType != null">
+        #{stType,jdbcType=TINYINT},
+      </if>
+      <if test="machNo != null">
+        #{machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stCoordinate != null">
+        #{stCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="stAdd != null">
+        #{stAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="unitAdd != null">
+        #{unitAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="stPer1 != null">
+        #{stPer1,jdbcType=VARCHAR},
+      </if>
+      <if test="stPertel1 != null">
+        #{stPertel1,jdbcType=VARCHAR},
+      </if>
+      <if test="stPer2 != null">
+        #{stPer2,jdbcType=VARCHAR},
+      </if>
+      <if test="stPertel2 != null">
+        #{stPertel2,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="stopTime != null">
+        #{stopTime,jdbcType=DOUBLE},
+      </if>
+      <if test="startVoltage != null">
+        #{startVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="maintainTime != null">
+        #{maintainTime,jdbcType=DOUBLE},
+      </if>
+      <if test="item1 != null">
+        #{item1,jdbcType=VARCHAR},
+      </if>
+      <if test="item2 != null">
+        #{item2,jdbcType=VARCHAR},
+      </if>
+      <if test="item3 != null">
+        #{item3,jdbcType=VARCHAR},
+      </if>
+      <if test="item4 != null">
+        #{item4,jdbcType=VARCHAR},
+      </if>
+      <if test="item5 != null">
+        #{item5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dyny.gms.db.pojo.CStationExample" resultType="java.lang.Long">
+    select count(*) from c_station
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update c_station
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stNo != null">
+        st_no = #{record.stNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stName != null">
+        st_name = #{record.stName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stUnit != null">
+        st_unit = #{record.stUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stType != null">
+        st_type = #{record.stType,jdbcType=TINYINT},
+      </if>
+      <if test="record.machNo != null">
+        mach_no = #{record.machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stCoordinate != null">
+        st_coordinate = #{record.stCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stAdd != null">
+        st_add = #{record.stAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitAdd != null">
+        unit_add = #{record.unitAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stPer1 != null">
+        st_per1 = #{record.stPer1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stPertel1 != null">
+        st_pertel1 = #{record.stPertel1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stPer2 != null">
+        st_per2 = #{record.stPer2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stPertel2 != null">
+        st_pertel2 = #{record.stPertel2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatTime != null">
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopTime != null">
+        stop_time = #{record.stopTime,jdbcType=DOUBLE},
+      </if>
+      <if test="record.startVoltage != null">
+        start_Voltage = #{record.startVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.maintainTime != null">
+        maintain_time = #{record.maintainTime,jdbcType=DOUBLE},
+      </if>
+      <if test="record.item1 != null">
+        item1 = #{record.item1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item2 != null">
+        item2 = #{record.item2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item3 != null">
+        item3 = #{record.item3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item4 != null">
+        item4 = #{record.item4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.item5 != null">
+        item5 = #{record.item5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update c_station
+    set id = #{record.id,jdbcType=INTEGER},
+      st_no = #{record.stNo,jdbcType=VARCHAR},
+      st_name = #{record.stName,jdbcType=VARCHAR},
+      st_unit = #{record.stUnit,jdbcType=VARCHAR},
+      st_type = #{record.stType,jdbcType=TINYINT},
+      mach_no = #{record.machNo,jdbcType=VARCHAR},
+      st_coordinate = #{record.stCoordinate,jdbcType=VARCHAR},
+      st_add = #{record.stAdd,jdbcType=VARCHAR},
+      unit_add = #{record.unitAdd,jdbcType=VARCHAR},
+      st_per1 = #{record.stPer1,jdbcType=VARCHAR},
+      st_pertel1 = #{record.stPertel1,jdbcType=VARCHAR},
+      st_per2 = #{record.stPer2,jdbcType=VARCHAR},
+      st_pertel2 = #{record.stPertel2,jdbcType=VARCHAR},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      stop_time = #{record.stopTime,jdbcType=DOUBLE},
+      start_Voltage = #{record.startVoltage,jdbcType=DOUBLE},
+      maintain_time = #{record.maintainTime,jdbcType=DOUBLE},
+      item1 = #{record.item1,jdbcType=VARCHAR},
+      item2 = #{record.item2,jdbcType=VARCHAR},
+      item3 = #{record.item3,jdbcType=VARCHAR},
+      item4 = #{record.item4,jdbcType=VARCHAR},
+      item5 = #{record.item5,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.CStation">
+    update c_station
+    <set>
+      <if test="stNo != null">
+        st_no = #{stNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stName != null">
+        st_name = #{stName,jdbcType=VARCHAR},
+      </if>
+      <if test="stUnit != null">
+        st_unit = #{stUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="stType != null">
+        st_type = #{stType,jdbcType=TINYINT},
+      </if>
+      <if test="machNo != null">
+        mach_no = #{machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stCoordinate != null">
+        st_coordinate = #{stCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="stAdd != null">
+        st_add = #{stAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="unitAdd != null">
+        unit_add = #{unitAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="stPer1 != null">
+        st_per1 = #{stPer1,jdbcType=VARCHAR},
+      </if>
+      <if test="stPertel1 != null">
+        st_pertel1 = #{stPertel1,jdbcType=VARCHAR},
+      </if>
+      <if test="stPer2 != null">
+        st_per2 = #{stPer2,jdbcType=VARCHAR},
+      </if>
+      <if test="stPertel2 != null">
+        st_pertel2 = #{stPertel2,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="stopTime != null">
+        stop_time = #{stopTime,jdbcType=DOUBLE},
+      </if>
+      <if test="startVoltage != null">
+        start_Voltage = #{startVoltage,jdbcType=DOUBLE},
+      </if>
+      <if test="maintainTime != null">
+        maintain_time = #{maintainTime,jdbcType=DOUBLE},
+      </if>
+      <if test="item1 != null">
+        item1 = #{item1,jdbcType=VARCHAR},
+      </if>
+      <if test="item2 != null">
+        item2 = #{item2,jdbcType=VARCHAR},
+      </if>
+      <if test="item3 != null">
+        item3 = #{item3,jdbcType=VARCHAR},
+      </if>
+      <if test="item4 != null">
+        item4 = #{item4,jdbcType=VARCHAR},
+      </if>
+      <if test="item5 != null">
+        item5 = #{item5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.CStation">
+    update c_station
+    set st_no = #{stNo,jdbcType=VARCHAR},
+      st_name = #{stName,jdbcType=VARCHAR},
+      st_unit = #{stUnit,jdbcType=VARCHAR},
+      st_type = #{stType,jdbcType=TINYINT},
+      mach_no = #{machNo,jdbcType=VARCHAR},
+      st_coordinate = #{stCoordinate,jdbcType=VARCHAR},
+      st_add = #{stAdd,jdbcType=VARCHAR},
+      unit_add = #{unitAdd,jdbcType=VARCHAR},
+      st_per1 = #{stPer1,jdbcType=VARCHAR},
+      st_pertel1 = #{stPertel1,jdbcType=VARCHAR},
+      st_per2 = #{stPer2,jdbcType=VARCHAR},
+      st_pertel2 = #{stPertel2,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      stop_time = #{stopTime,jdbcType=DOUBLE},
+      start_Voltage = #{startVoltage,jdbcType=DOUBLE},
+      maintain_time = #{maintainTime,jdbcType=DOUBLE},
+      item1 = #{item1,jdbcType=VARCHAR},
+      item2 = #{item2,jdbcType=VARCHAR},
+      item3 = #{item3,jdbcType=VARCHAR},
+      item4 = #{item4,jdbcType=VARCHAR},
+      item5 = #{item5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
