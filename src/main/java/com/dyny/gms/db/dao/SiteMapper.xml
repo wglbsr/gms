@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.SiteMapper">
+	<!-- 四.	所有站点功能 -->
+	<resultMap type="map" id="allSiteMap">  
+	    <result column="stationType" property="stationType" javaType="string"/>  
+	    <result column="id" property="stationId" javaType="string"/>
+	    <result column="st_name" property="stationName" javaType="string"/>
+	    <result column="st_no" property="stationNumber" javaType="string"/>
+	    <result column="st_state" property="stationConnnectState" javaType="string"/>
+	    <result column="Acity_electricity" property="stationState" javaType="string"/>
+	    <result column="st_voltage" property="batteryVoltage" javaType="string"/>
+	    <result column="generationTime" property="generationTime" javaType="string"/>
+	    <result column="inter_time" property="updateTime" javaType="string"/>
+	    <result column="lengthtime" property="updateTimeLength" javaType="string"/>
+	</resultMap> 
+	<select id="getAllSite" resultMap="allSiteMap" parameterType="java.lang.String">
+		select dbo.mach_type(mach_no) stationType, id, st_name, st_no, st_state, Acity_electricity, st_voltage,
+		isnull(dbo.get_time(mach_no),0) generationTime, inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
+		 FROM View_mach
+		where (dbo.cus_no(mach_no) = #{username})
+		order by id
+	</select>
+	
+	<!-- 五.	全站地图功能 -->
+	<resultMap type="map" id="allMap">  
+	    <result column="id" property="stationId" javaType="string"/>
+	    <result column="st_name" property="stationName" javaType="string"/>
+	    <result column="st_state" property="stationConnnectState" javaType="string"/>
+	    <result column="Acity_electricity" property="stationState" javaType="string"/>
+	    <result column="st_coordinate" property="stationPosition" javaType="string"/>
+	</resultMap> 
+	<select id="getAllMap" resultMap="allMap" parameterType="java.lang.String">
+		select id, st_name, st_state, Acity_electricity, st_coordinate 
+		FROM View_mach
+		where (dbo.cus_no(mach_no) = #{username})
+		order by id
+	</select>
+
+	<!-- 六.	站点状态数量功能 -->
+	<resultMap type="map" id="numMap">  
+	    <result column="siteCount" property="siteCount" javaType="int"/>
+	</resultMap> 
+	<select id="getAllNum" resultMap="numMap" parameterType="java.lang.String">
+		select COUNT(1) siteCount 
+		FROM View_mach 
+		where (dbo.cus_no(mach_no) = #{username})
+	</select>
+	<select id="getOnlineNum" resultMap="numMap" parameterType="java.lang.String">
+		select COUNT(1) siteCount 
+		FROM View_mach 
+		where DATEDIFF(mi,inter_time,GETDATE()) &lt;= 3 
+		and (dbo.cus_no(mach_no) = #{username})
+	</select>
+	<select id="getOfflineNum" resultMap="numMap" parameterType="java.lang.String">
+		select COUNT(1) siteCount 
+		FROM View_mach 
+		where DATEDIFF(mi,inter_time,GETDATE()) &gt; 3 
+		and (dbo.cus_no(mach_no) = #{username})
+	</select>
+	<select id="getActiveNum" resultMap="numMap" parameterType="java.lang.String">
+		select COUNT(1) siteCount 
+		FROM View_mach
+		where state = 1 
+		and (dbo.cus_no(mach_no) = #{username})
+	</select>
+	<select id="getStopNum" resultMap="numMap" parameterType="java.lang.String">
+		select COUNT(1) siteCount 
+		FROM View_mach 
+		where city_electricity = 1 
+		and (dbo.cus_no(mach_no) = #{username})
+	</select>
+	
+	<!-- 七.	搜索功能 -->
+	<select id="search" resultMap="allMap" >
+		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
+		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
+		 from View_mach 
+		where 1 == 1
+		<if test="username != null and username != '' ">
+		     AND (dbo.cus_no(mach_no) = #{username}) 
+		</if>
+		<if test="search != null and search != '' ">
+		     AND st_add like CONCAT(CONCAT('%',#{search},'%')) 
+		</if>
+		order by id
+	</select>
+	
+	<!-- 八.	离线状态功能 -->
+	<select id="getOffLineSite" resultMap="allMap" >
+		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
+		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
+		 from View_mach 
+		where (dbo.cus_no(mach_no) = #{username}) 
+		AND DATEDIFF(mi,inter_time,GETDATE()) &gt; 3 
+		order by id
+	</select>
+	
+	<!-- 九.	在线状态功能 -->
+	<select id="getOnlineSite" resultMap="allMap" >
+		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
+		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
+		 from View_mach 
+		where (dbo.cus_no(mach_no) = #{username}) 
+		AND DATEDIFF(mi,inter_time,GETDATE()) &lt;= 3 
+		order by id
+	</select>
+	
+	<!-- 十.	发电状态功能 -->
+	<select id="getActiveSite" resultMap="allMap" >
+		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
+		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
+		 from View_mach 
+		where (dbo.cus_no(mach_no) = #{username}) 
+		AND state = 1 
+		order by id
+	</select>
+	
+	<!-- 十一.	停电状态功能 -->
+	<select id="getStopSite" resultMap="allMap" >
+		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
+		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
+		 from View_mach 
+		where (dbo.cus_no(mach_no) = #{username}) 
+		AND city_electricity = 1 
+		order by id
+	</select>
+	
+	<!-- 十二.	基站主头部基本信息 -->
+	<resultMap type="map" id="siteHeadMap">  
+	    <result column="ST_NAME" property="stationName" javaType="string"/>
+	    <result column="st_per1" property="stationContactMan" javaType="string"/>	
+	    <result column="st_pertel1" property="contactManPhone" javaType="string"/>
+	</resultMap> 
+	<select id="getSiteHeadMsg" resultMap="allMap" >
+		SELECT ST_NAME, st_per1, st_pertel1 FROM C_station 
+		WHERE st_no = #{stationId} 
+	</select>
+	
+	<!-- 十三.	基站主内容基本信息 -->
+	<resultMap type="map" id="siteContentMap">  
+	    <result column="id" property="stationId" javaType="string"/>
+	    <result column="stationType" property="stationType" javaType="string"/>	
+	    <result column="st_name" property="stationName" javaType="string"/>
+	    <result column="st_current" property="outputElectricity" javaType="string"/>
+	    <result column="Acity_electricity" property="stationState" javaType="string"/>
+	    <result column="Cabinet_temperature" property="stationTcase" javaType="string"/>
+	    <result column="external_temperature" property="motorTemperature" javaType="string"/>
+	    <result column="start_Voltage" property="startVoltage " javaType="string"/>
+	    <result column="sum_time" property="accumulativeGeneration" javaType="string"/>
+	    <result column="st_voltage" property="batteryVoltage" javaType="string"/>
+	    <result column="lank_level" property="oliPercentage" javaType="string"/>
+	    <result column="lank_percent" property="stationOli" javaType="string"/>
+	    <result column="inter_time" property="updateTime" javaType="string"/>
+	    <result column="oliPercentage" property="generationTimeLength" javaType="string"/>
+	    <result column="stop_time" property="stopTime" javaType="string"/>
+	    <result column="state" property="startResult" javaType="string"/>
+	</resultMap> 
+	<select id="getSiteContent" resultMap="siteContentMap" >
+		select id, dbo.mach_type(mach_no) stationType, st_name, st_current, Acity_electricity, Cabinet_temperature,
+		external_temperature, start_Voltage, dbo.sum_time(mach_no) sum_time,
+		st_voltage, lank_level, lank_level/100 lank_percent, inter_time, dbo.get_time(mach_no) oliPercentage, stop_time, state
+		WHERE st_no = #{stationId} 
+	</select>
+	
+	<!-- 十四.	查询启动电压功能 -->
+	<resultMap type="map" id="startVoltageMap">  
+	    <result column="start_Voltage" property="currentVoltage" javaType="int"/>
+	</resultMap> 
+	<select id="getStartVoltage" resultMap="startVoltageMap" >
+		select start_Voltage
+		from C_station
+		WHERE st_no =  #{stationId} 
+	</select>
+	
+	<!-- 十五.	设定启动电压功能 -->
+	<update id="modifyStartVoltage">
+        UPDATE C_station SET start_Voltage = #{changeVoltage, jdbcType = INTEGER} 
+        WHERE st_no = #{stationId}
+	</update>
+	
+	<!-- 十六.	(1)查询保养时间功能 -->
+	<resultMap type="map" id="careTimeMap">  
+	    <result column="currentServiceTime" property="currentServiceTime" javaType="int"/>
+	</resultMap> 
+	<select id="getCareTime" resultMap="careTimeMap" >
+		select  maintain_time as currentServiceTime  C_station  
+		From C_station
+		WHERE st_no = #{stationId} 
+	</select>
+	
+	<!-- 十六.	(2)设定保养时间功能 -->
+	<update id="modifyCareTime" >
+		UPDATE C_station  SET maintain_time = #{currentServiceTime} 
+		WHERE st_no = #{stationId} 
+	</update>
+	
+	<!-- 十七.	（1）设定停机功能 -->
+	<select id="getStopTime" resultMap="careTimeMap" >
+		select  stop_time as currentServiceTime  C_station  
+		From C_station
+		WHERE st_no = #{stationId}
+	</select>
+	<!-- 十七.	（2）设定停机功能 -->
+	<update id="modifyStopTime">
+        UPDATE C_station SET stop_time = #{currentStopTime, jdbcType = INTEGER} 
+        WHERE st_no = #{stationId}
+	</update>
+	
+	<!-- 十八.	查看地图位置功能 -->
+	<select id="getMapByStationId" resultMap="allMap">
+		select id, st_name, st_state, Acity_electricity, st_coordinate
+		FROM View_mach
+		where st_no = #{stationId} 
+		order by id
+	</select>
+	
+	<!-- 十九.	站点信息主功能 -->
+	<resultMap type="map" id="siteInfoMap">  
+	    <result column="id" property="stationId" javaType="string"/>
+	    <result column="st_name" property="stationName" javaType="string"/>
+	    <result column="st_no" property="stationNumber" javaType="string"/>
+	    <result column="st_type" property="stationType" javaType="string"/>
+	    <result column="cus_no" property="usercus" javaType="string"/>
+	    <result column="st_coordinate" property="stationPosition" javaType="string"/>
+	    <result column="st_add" property="stationAddress" javaType="string"/>
+	    <result column="unit_add" property="companyAddress" javaType="string"/>
+	    <result column="st_per1" property="stationContactManA" javaType="string"/>
+	    <result column="st_pertel1" property="contactManPhoneA" javaType="string"/>
+	    <result column="st_per2" property="stationContactManB" javaType="string"/>
+	    <result column="st_pertel2" property="contactManPhoneB" javaType="string"/>
+	</resultMap> 
+	<select id="getSiteInfo" resultMap="siteInfoMap" parameterType="java.lang.Integer">
+		select id, st_name, st_no, st_type, cus_no, st_coordinate, st_add, unit_add, st_per1, st_pertel1, st_per2, st_pertel2 
+		FROM C_station
+		where id = #{stationId}
+		order by id
+	</select>
+	
+	<!-- 二十.	站点信息修改功能 -->
+	<update id="modifySiteInfo">
+        UPDATE C_station SET 
+	        st_name = #{stationName, jdbcType = VARCHAR}, 
+	        st_no = #{stationNumber, jdbcType = VARCHAR}, 
+	        st_type = #{stationType, jdbcType = VARCHAR}, 
+	        cus_no = #{usercus, jdbcType = VARCHAR}, 
+	        st_coordinate = #{stationPosition, jdbcType = VARCHAR}, 
+	        st_add = #{stationAddress, jdbcType = VARCHAR}, 
+	        unit_add = #{companyAddress, jdbcType = VARCHAR}, 
+	        st_per1 = #{stationContactManA, jdbcType = VARCHAR}, 
+	        st_pertel1 = #{contactManPhoneA, jdbcType = VARCHAR}, 
+	        st_per2 = #{stationContactManB, jdbcType = VARCHAR}, 
+	        st_pertel2 = #{contactManPhoneB, jdbcType = VARCHAR}
+        WHERE id = #{stationId}
+	</update>
+	
+	<!-- 二十一.	注册站点信息功能 -->	
+	<insert id="addSiteInfo" >
+			INSERT INTO collect (
+				st_name,
+				st_no,
+				st_type,
+				cus_no,
+				st_coordinate,
+				st_add,
+				unit_add,
+				st_per1,
+				st_pertel1,
+				st_per2,
+				st_pertel2
+			)
+		    VALUES(
+		    	#{stationName, jdbcType = VARCHAR},
+		    	#{stationNumber, jdbcType = VARCHAR},
+		    	#{stationType, jdbcType = VARCHAR},
+		    	#{usercus, jdbcType = VARCHAR},
+		    	#{stationPosition, jdbcType = VARCHAR},
+		    	#{stationAddress, jdbcType = VARCHAR},
+		    	#{companyAddress, jdbcType = VARCHAR},
+		    	#{stationContactManA, jdbcType = VARCHAR},
+		    	#{contactManPhoneA, jdbcType = VARCHAR},
+		    	#{stationContactManB, jdbcType = VARCHAR},
+		    	#{contactManPhoneB, jdbcType = VARCHAR},
+		    )
+	</insert>
+	
+	<!-- 二十二.	加油记录功能 -->
+	<resultMap type="map" id="addOilLogMap">  
+	    <result column="mach_no" property="stationName" javaType="string"/>
+	    <result column="stationNumber" property="stationNumber" javaType="string"/>
+	    <result column="creat_time" property="addOliTime" javaType="string"/>
+	    <result column="end_num-start_num" property="addOli" javaType="string"/>
+	    <result column="sumaddOli" property="sumaddOli" javaType="string"/>
+	</resultMap> 
+	<select id="getAddOilLog" resultMap="addOilLogMap" >
+		select mach_no, dbo.mach_name(mach_no) stationNumber, creat_time, end_num-start_num, dbo.sum_numlank1(mach_no) sumaddOli
+		from Ap_lank 
+		WHERE mach_no = #{st_no}
+	</select>
+	
+	<!-- 二十三.	发电记录功能 -->
+	<resultMap type="map" id="activeElecLogMap">  
+	    <result column="mach_no" property="stationName" javaType="string"/>
+	    <result column="stationNumber" property="stationNumber" javaType="string"/>
+	    <result column="start_time" property="strat_time" javaType="string"/>
+	    <result column="end_time" property="end_time" javaType="string"/>
+	    <result column="num_time" property="num_time" javaType="string"/>
+	</resultMap> 
+	<select id="getActiveElecLog" resultMap="activeElecLogMap" >
+		select mach_no, dbo.mach_name(mach_no) stationNumber,start_time, end_time, 
+		DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time 
+		from Ap_time
+		where mach_no=#{st_no}
+	</select>
+	
+	
+	<!-- 二十四.	油机资产管理 -->	
+	<insert id="addAssets" >
+			INSERT INTO C_mach (
+				mach_name,
+				mach_no,
+				model_no,
+				vender_name,
+				power_num,
+				cus_no,
+				creator,
+				use_type,
+				mach_type,
+				fuel_type,
+				state,
+				purch_time
+			)
+		    VALUES(
+		    	#{mach_name, jdbcType = VARCHAR},
+		    	#{mach_no, jdbcType = VARCHAR},
+		    	#{model_no, jdbcType = VARCHAR},
+		    	#{vender_name, jdbcType = VARCHAR},
+		    	#{power_num, jdbcType = VARCHAR},
+		    	#{cus_no, jdbcType = VARCHAR},
+		    	#{creator, jdbcType = VARCHAR},
+		    	#{use_type, jdbcType = VARCHAR},
+		    	#{mach_type, jdbcType = VARCHAR},
+		    	#{fuel_type, jdbcType = VARCHAR},
+		    	#{state, jdbcType = VARCHAR},
+		    	#{purch_time, jdbcType = VARCHAR}
+		    )
+	</insert>
+	
+	<!-- 二十五.	油机领用管理 -->	
+	<insert id="addOil" >
+			INSERT INTO C_mach (
+				co_no,
+				co_time,
+				co_per,
+				co_tel,
+				st_no,
+				mach_no,
+				co_add,
+				creat_time,
+				creat_per
+			)
+		    VALUES(
+		    	#{co_no, jdbcType = VARCHAR},
+		    	#{co_time, jdbcType = VARCHAR},
+		    	#{co_per, jdbcType = VARCHAR},
+		    	#{co_tel, jdbcType = VARCHAR},
+		    	#{st_no, jdbcType = VARCHAR},
+		    	#{mach_no, jdbcType = VARCHAR},
+		    	#{use_address, jdbcType = VARCHAR},
+		    	getdate(),
+		    	#{user_no, jdbcType = VARCHAR}
+		    )
+	</insert>
+	
+	
+	<!-- 二十六.	移动油机运行情况 -->
+	<resultMap type="map" id="machineNumMap">  
+	    <result column="machineCount" property="machineCount" javaType="int"/>
+	</resultMap> 
+	<select id="getMachineAllNum" resultMap="machineNumMap" parameterType="java.lang.String">
+		select COUNT(1) machineCount 
+		FROM View_mach1 
+		where cus_no = #{user_cus}
+	</select>
+	<select id="getMachineOnlineNum" resultMap="machineNumMap" parameterType="java.lang.String">
+		select COUNT(1) machineCount 
+		FROM View_mach1 
+		where DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &lt;= 3 
+		and cus_no = #{user_cus}
+	</select>
+	<select id="getMachineOfflineNum" resultMap="machineNumMap" parameterType="java.lang.String">
+		select COUNT(1) machineCount 
+		FROM View_mach1 
+		where DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &gt; 3 
+		and cus_no = #{user_cus}
+	</select>
+	<select id="getMachineActiveNum" resultMap="machineNumMap" parameterType="java.lang.String">
+		select COUNT(1) machineCount 
+		FROM View_mach1
+		where state = 1 
+		and cus_no = #{user_cus}
+	</select>
+	<select id="getMachineStopNum" resultMap="machineNumMap" parameterType="java.lang.String">
+		select COUNT(1) machineCount 
+		FROM View_mach1 
+		where state = 1 
+		and cus_no = #{user_cus}
+	</select>
+	
+	<!-- 二十七.	移动油机在线(双击在线) -->
+	<resultMap type="map" id="machineStatusMap">  
+	    <result column="id" property="stationId" javaType="string"/>
+	    <result column="mach_no" property="mach_no" javaType="string"/>
+	    <result column="mach_type" property="mach_type" javaType="string"/>
+	    <result column="st_state" property="state" javaType="string"/>
+	    <result column="state1" property="city_electricity" javaType="string"/>
+	    <result column="al_voltage" property="start_Voltage" javaType="string"/>
+	    <result column="get_time" property="sum_power" javaType="string"/>
+	    <result column="inter_time" property="power_times" javaType="string"/>
+	    <result column="lengthtime" property="use_state" javaType="string"/>
+	</resultMap> 
+	<select id="getOnlineMachine" resultMap="machineStatusMap" >
+		select id, mach_no, mach_type, st_state, state1, al_voltage, 
+		dbo.get_time(mach_no) get_time, inter_time, lengthtime
+		from View_mach1
+		WHERE cus_no = #{user_cus}
+		and DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &lt;= 3
+	</select>
+	
+	<!-- 二十八.	移动油机离线(双击离线) -->
+	<select id="getOfflineMachine" resultMap="machineStatusMap" >
+		select id, mach_no, mach_type, st_state, state1, al_voltage, 
+		dbo.get_time(mach_no) get_time, inter_time, lengthtime
+		from View_mach1
+		WHERE cus_no = #{user_cus}
+		and DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &gt; 3 
+	</select>
+	
+	<!-- 二十九.	移动油机发电 -->
+	<select id="getActiveMachine" resultMap="machineStatusMap" >
+		select id, mach_no, mach_type, st_state, state1, al_voltage, 
+		dbo.get_time(mach_no) get_time, inter_time, lengthtime
+		from View_mach1
+		WHERE cus_no = #{user_cus}
+		and state = 1
+	</select>
+	
+	<!-- 三十.	移动油机停机 -->
+	<select id="getStopMachine" resultMap="machineStatusMap" >
+		select id, mach_no, mach_type, st_state, state1, al_voltage, 
+		dbo.get_time(mach_no) get_time, inter_time, lengthtime
+		from View_mach1
+		WHERE cus_no = #{user_cus}
+		and state = 0
+	</select>
+	
+	
+	<!-- 三十一.	移动油机查询 -->
+	<select id="searchMachine" resultMap="machineStatusMap" >
+		select id, mach_no, mach_type, st_state, state1, al_voltage, 
+		dbo.get_time(mach_no) get_time, inter_time, lengthtime
+		from View_mach1
+		WHERE 1 == 1
+		<if test="user_cus != null and user_cus != '' ">
+		     AND cus_no = #{user_cus}
+		</if>
+		<if test="state1 != null and state1 != '' ">
+		     AND cus_no = #{state1}
+		</if>
+		<if test="st_state != null and st_state != '' ">
+		     AND st_state = #{st_state}
+		</if>
+		<if test="mach_type != null and mach_type != '' ">
+		     AND mach_type = #{mach_type}
+		</if>
+		<if test="search != null and search != '' ">
+		     AND (mach_no = CONCAT(CONCAT('%',#{search},'%')))
+		</if>
+	</select>
+	
+	<!-- 三十二.	启动功能 -->	
+	<insert id="startMachine" >
+		INSERT INTO Ap_collar VALUES(
+	    	#{mach_no, jdbcType = VARCHAR},
+	    	1,
+	    	'84 05 01 00 00 00 01 02 16',
+	    	getdate(),
+	    	#{user_no, jdbcType = VARCHAR}
+	    )
+	</insert>
+	
+	<!-- 三十三.	熄火功能 -->	
+	<insert id="offMachine" >
+		INSERT INTO Ap_collar  VALUES (
+			#{mach_no, jdbcType = VARCHAR},
+			2, 
+			'84 05 01 00 00 00 01 02 16',
+			getdate(),
+			#{user_no, jdbcType = VARCHAR}
+		)
+	</insert>
+	
+	<!-- 三十四.	模式切换功能 -->	
+	<insert id="changeModel" >
+		INSERT INTO Ap_collar  VALUES (
+			#{mach_no, jdbcType = VARCHAR}, 
+			#{modelflag, jdbcType = INTEGER},
+			#{code, jdbcType = VARCHAR},
+			getdate(),
+			#{user_no, jdbcType = VARCHAR}
+		)
+	</insert>
+	
+	<!-- 三十五.	保护模式切换功能 -->	
+	<insert id="changeProtectModel" >
+		INSERT INTO Ap_collar  VALUES (
+			#{mach_no, jdbcType = VARCHAR}, 
+			#{modelflag, jdbcType = INTEGER},
+			#{code, jdbcType = VARCHAR},
+			getdate(),
+			#{user_no, jdbcType = VARCHAR}
+		)
+	</insert>
+	
+	<!-- 三十六.	移动油机地图位置 -->
+	<resultMap type="map" id="machineMapMap">  
+	    <result column="mach_no" property="stationId" javaType="string"/>
+	    <result column="mach_name" property="stationName" javaType="string"/>
+	    <result column="st_state" property="stationConnnectState" javaType="string"/>
+	    <result column="st_coordinate" property="stationPosition" javaType="string"/>
+	</resultMap> 
+	<select id="getMachineMap" resultMap="machineMapMap" >
+		select mach_no,mach_name, st_state,st_coordinate
+		 from View_mach1
+		where mach_no = #{mach_no}
+	</select>
+	
+	<!-- 三十七.	移动油机领用查询(25项目的补充) -->
+	<resultMap type="map" id="machineInUseMap">  
+	    <result column="co_no" property="co_no" javaType="string"/>
+	    <result column="co_time" property="co_time" javaType="string"/>
+	    <result column="co_per" property="co_per" javaType="string"/>
+	    <result column="co_tel" property="co_tel" javaType="string"/>
+	    <result column="st_no" property="city_electricity" javaType="string"/>
+	    <result column="mach_no" property="mach_no" javaType="string"/>
+	    <result column="co_add" property="co_add" javaType="string"/>
+	</resultMap> 
+	<select id="searchMachineInUse" resultMap="machineInUseMap" >
+		SELECT co_no, co_time, co_per, co_tel, st_no, mach_no, co_add, creat_time, creat_per 
+		FROM Ap_collar 
+		WHERE 1 == 1
+		<if test="user_cus != null and user_cus != '' ">
+		     AND (dbo.cus_no(mach_no) = #{user_cus})
+		</if>
+		 <if test="strat_time != null and strat_time != '' ">
+		     AND (co_time &gt;= #{strat_time})
+		</if>
+		<if test="end_time != null and end_time != '' ">
+		     AND (co_time &lt;= #{end_time})
+		</if>
+	</select>
+</mapper>

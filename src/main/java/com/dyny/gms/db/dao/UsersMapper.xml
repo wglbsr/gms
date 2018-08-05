@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.UsersMapper">
+	<resultMap type="com.dyny.gms.db.pojo.Users" id="UsersBean">
+		<result property="username" column="user_no"/>
+		<result property="password" column="user_pass"/>
+		<result property="userlevel" column="user_level"/>
+		<result property="usercus" column="user_cus"/>
+		<result property="state" column="state"/>
+	</resultMap>
+	
+	<resultMap type="map" id="loginMap">  
+	    <result column="user_no" property="name" javaType="string"/>  
+	    <result column="user_pass" property="name" javaType="string"/>
+	    <result column="user_level" property="name" javaType="int"/>
+	    <result column="state" property="name" javaType="int"/>
+	</resultMap> 
+	
+	<resultMap type="map" id="registerMap">  
+	    <result column="user_no" property="name" javaType="string"/>  
+	    <result column="user_pass" property="name" javaType="string"/>
+	    <result column="user_level" property="name" javaType="int"/>
+	    <result column="state" property="name" javaType="int"/>
+	</resultMap> 
+	
+	
+	<select id="getByNameAndPass" resultMap="UsersBean">
+		select user_no, user_pass, user_level, state from C_user
+		where user_no = #{username, jdbcType=VARCHAR} and user_pass=#{password, jdbcType=VARCHAR} 
+	</select>
+
+	<!-- 新增 -->	
+	<insert id="add" parameterType="com.dyny.gms.db.pojo.Users">
+			INSERT INTO C_user (
+				user_no, user_pass, user_level, user_cus
+			)
+		    VALUES(
+		    	#{username},
+		    	#{password},
+		    	#{userlevel},
+		    	#{usercus}
+		    )
+	</insert>
+	
+	<!-- 修改密码 -->	
+	<update id="updatePass" parameterType="java.lang.String">
+			UPDATE C_user SET user_pass = #{password} WHERE user_no = #{username}
+	</update>
+</mapper>
