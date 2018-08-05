@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    　　
+    <diskStore path="java.io.tempdir"/>
+    　　
+    <defaultCache maxElementsInMemory="1000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
+                  overflowToDisk="true"/>
+    　　
+    <cache name="loginInfo" maxElementsInMemory="10000" eternal="false"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="60000" overflowToDisk="true"/>
+    <!--
+    timeToLiveSeconds=x：缓存自创建日期起至失效时的间隔时间x；
+
+    timeToIdleSeconds=y：缓存创建以后，最后一次访问缓存的日期至失效之时的时间间隔y；
+    -->
+</ehcache>

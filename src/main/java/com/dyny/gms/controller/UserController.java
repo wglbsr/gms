@@ -5,6 +5,7 @@ import com.dyny.gms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,15 +16,14 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello() {
+    public String hello(@RequestParam(value = "id", required = false) Integer id) {
         System.out.println("hello");
         return "hello";
 
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public List<CUser> getAllUser(Integer offset, Integer limit) {
-
+    public List<CUser> getAllUser(@RequestParam(value = "id", required = false) Integer id) {
         return userService.getAllUser();
 
     }
