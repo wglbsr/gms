@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author zhangmx
  */
+@Deprecated
 @Controller
 @RequestMapping(value="/users")
 public class UsersController {

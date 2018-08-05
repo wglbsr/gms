@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Deprecated
 @Service
 public class SiteServiceImpl implements SiteService {
 	@Autowired

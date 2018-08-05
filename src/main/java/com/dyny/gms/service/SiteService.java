@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-
+@Deprecated
 public interface SiteService {
 	public List getAllSite(String username);
 	

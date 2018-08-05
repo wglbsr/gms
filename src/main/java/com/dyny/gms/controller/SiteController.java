@@ -19,6 +19,7 @@ import java.util.Map;
  * 
  * @author zhangmx
  */
+@Deprecated
 @Controller
 @RequestMapping(value="/site")
 public class SiteController {

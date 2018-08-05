@@ -3,7 +3,7 @@ package com.dyny.gms.db.dao;
 import com.dyny.gms.db.pojo.Users;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Deprecated
 @Mapper
 public interface UsersMapper {
 	
