@@ -1,17 +1,21 @@
 package com.dyny.gms.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 import com.alibaba.fastjson.JSONObject;
-import com.dyny.gms.service.SiteService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import com.dyny.gms.service.SiteService;
 
 /**
  * 
@@ -19,12 +23,12 @@ import java.util.Map;
  * 
  * @author zhangmx
  */
-@Deprecated
 @Controller
 @RequestMapping(value="/site")
 public class SiteController {
 	
-
+	private final Logger log = Logger.getLogger(SiteController.class);
+	
 	@Autowired
 	private SiteService service;
 
@@ -34,17 +38,24 @@ public class SiteController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="/getAllSite.do",method = RequestMethod.POST)
+	@Deprecated
+	@RequestMapping(value="/getAllSite.do",method = RequestMethod.GET)
 	@ResponseBody
 	public JSONObject getAllSite(HttpServletRequest request,
-								 HttpServletResponse response) {
+			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
-		String username = request.getParameter("user_cus");
+		String username="admin"; //= request.getParameter("user_cus");
 		try {
 			List list = service.getAllSite(username);
+			System.out.println(list.size());
 			resultMap.put("data", list);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+		    log.info(e);
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -131,6 +142,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getOffLineSite(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("user_cus");
 		String stationConnnectState = request.getParameter("stationConnnectState");
@@ -155,6 +170,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getOnlineSite(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("user_cus");
 		String stationConnnectState = request.getParameter("stationConnnectState");
@@ -179,6 +198,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getActiveSite(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("user_cus");
 		String stationState = request.getParameter("stationState");
@@ -250,6 +273,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getSiteContent(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String stationId = request.getParameter("st_no");
 		try {
@@ -273,10 +300,14 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getStartVoltage(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
-		String stationId = request.getParameter("stationId");
+		String mach_no = request.getParameter("mach_no");
 		try {
-			Map<String, Object> data = service.getStartVoltage(stationId);
+			Map<String, Object> data = service.getStartVoltage(mach_no);
 			resultMap.put("data", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
@@ -296,11 +327,16 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject modifyStartVoltage(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
-		String stationId = request.getParameter("stationId");
+		String mach_no = request.getParameter("mach_no");
 		String changeVoltage = request.getParameter("changeVoltage");
 		try {
-			int result = service.modifyStartVoltage(Integer.valueOf(changeVoltage), stationId);
+			BigDecimal changeVoltage_decimal = new BigDecimal(changeVoltage); 
+			int result = service.modifyStartVoltage(changeVoltage_decimal, mach_no);
 			if (result <= 0) {
 				resultMap.put("result", "false");
 				resultMap.put("errorMsg", "修改失败");
@@ -324,9 +360,9 @@ public class SiteController {
 	public JSONObject getCareTime(HttpServletRequest request,
 			HttpServletResponse response) {
 		JSONObject resultMap = new JSONObject();
-		String stationId = request.getParameter("stationId");
+		String mach_no = request.getParameter("mach_no");
 		try {
-			Map<String, Object> data = service.getCareTime(stationId);
+			Map<String, Object> data = service.getCareTime(mach_no);
 			resultMap.put("data", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
@@ -347,10 +383,11 @@ public class SiteController {
 	public JSONObject modifyCareTime(HttpServletRequest request,
 			HttpServletResponse response) {
 		JSONObject resultMap = new JSONObject();
-		String stationId = request.getParameter("stationId");
+		String mach_no = request.getParameter("mach_no");
 		String currentServiceTime  = request.getParameter("currentServiceTime ");
 		try {
-			int result = service.modifyCareTime(Integer.valueOf(currentServiceTime ), stationId);
+			BigDecimal currentServiceTime_decimal = new BigDecimal(currentServiceTime); 
+			int result = service.modifyCareTime(currentServiceTime_decimal, mach_no);
 			if (result <= 0) {
 				resultMap.put("result", "false");
 				resultMap.put("errorMsg", "修改失败");
@@ -374,9 +411,9 @@ public class SiteController {
 	public JSONObject getStopTime(HttpServletRequest request,
 			HttpServletResponse response) {
 		JSONObject resultMap = new JSONObject();
-		String stationId = request.getParameter("stationId");
+		String mach_no = request.getParameter("mach_no");
 		try {
-			Map<String, Object> data = service.getStopTime(stationId);
+			Map<String, Object> data = service.getStopTime(mach_no);
 			resultMap.put("data", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
@@ -396,11 +433,16 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject modifyStopTime(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
-		String stationId = request.getParameter("stationId");
+		String mach_no = request.getParameter("mach_no");
 		String currentStopTime = request.getParameter("currentStopTime");
 		try {
-			int result = service.modifyStopTime(Integer.valueOf(currentStopTime), stationId);
+			BigDecimal currentStopTime_decimal = new BigDecimal(currentStopTime);
+			int result = service.modifyStopTime( currentStopTime_decimal, mach_no);
 			if (result <= 0) {
 				resultMap.put("result", "false");
 				resultMap.put("errorMsg", "修改失败");
@@ -423,6 +465,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getMapByStationId(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String stationId = request.getParameter("stationId");
 		try {
@@ -446,6 +492,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getSiteInfo(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String stationId = request.getParameter("stationId");
 		try {
@@ -469,6 +519,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject modifySiteInfo(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String stationName = request.getParameter("stationName");
 		String stationNumber = request.getParameter("stationNumber");
@@ -507,6 +561,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject addSiteInfo(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String stationName = request.getParameter("stationName");
 		String stationNumber = request.getParameter("stationNumber");
@@ -544,6 +602,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getAddOilLog(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		try {
@@ -567,6 +629,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getActiveElecLog(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		try {
@@ -590,6 +656,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject addAssets(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_name = request.getParameter("mach_name");
 		String mach_no = request.getParameter("mach_no");
@@ -597,21 +667,27 @@ public class SiteController {
 		String vender_name = request.getParameter("vender_name");
 		String power_num = request.getParameter("power_num");
 		String cus_no = request.getParameter("cus_no");
-		String creator = request.getParameter("creator");
+		String creator = request.getParameter("user_no");
 		String use_type = request.getParameter("use_type");
 		String mach_type = request.getParameter("mach_type");
 		String fuel_type = request.getParameter("fuel_type");
 		String state = request.getParameter("state");
 		String purch_time = request.getParameter("purch_time");
+		String note = request.getParameter("note");
+		String volumeno = request.getParameter("volumeno");
+		String gprsno = request.getParameter("gprsno");
 		try {
-			int result = service.addAssets(mach_name, mach_no, model_no, vender_name, power_num, cus_no, creator, 
-					use_type, mach_type, fuel_type, state, purch_time);
+			BigDecimal power_num_decimal = new BigDecimal(power_num); 
+			BigDecimal volumeno_decimal = new BigDecimal(volumeno); 
+			int result = service.addAssets(mach_name, mach_no, model_no, vender_name, power_num_decimal, cus_no,creator, 
+					use_type, mach_type, fuel_type, state, purch_time, note,volumeno_decimal,gprsno);
 			if (result <= 0) {
 				resultMap.put("result", "false");
 				resultMap.put("errorMsg", "操作失败");
 			}
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -628,6 +704,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject addOil(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String co_no = request.getParameter("co_no");
 		String co_time = request.getParameter("co_time");
@@ -645,6 +725,7 @@ public class SiteController {
 			}
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -661,13 +742,20 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getMachineNumByStatus(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		try {
 			Map<String, Object> data = service.getMachineNumByStatus(user_cus);
-			resultMap.put("data", data);
+			List list = service.getMachineList(user_cus);
+			resultMap.put("data", list);
+			resultMap.put("statusList", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -684,6 +772,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getOnlineMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		try {
@@ -691,6 +783,7 @@ public class SiteController {
 			resultMap.put("data", list);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -707,13 +800,20 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getOfflineMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		try {
+			Map<String, Object> data = service.getMachineNumByStatus(user_cus);
 			List list = service.getOfflineMachine(user_cus);
 			resultMap.put("data", list);
+			resultMap.put("statusList", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -730,6 +830,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getActiveMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		try {
@@ -737,6 +841,7 @@ public class SiteController {
 			resultMap.put("data", list);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -753,6 +858,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getStopMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		try {
@@ -760,6 +869,7 @@ public class SiteController {
 			resultMap.put("data", list);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -776,17 +886,24 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject searchMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
-		String user_cus = request.getParameter("user_cus");
-		String state1 = request.getParameter("state1");
+   		String user_cus = request.getParameter("user_cus");
+		String state = request.getParameter("state");
 		String st_state = request.getParameter("st_state");
 		String mach_type = request.getParameter("mach_type");
-		String search = request.getParameter("search");
+		String fuel_type = request.getParameter("fuel_type");
+		String Acity_electricity = request.getParameter("Acity_electricity");
+		String search1 = request.getParameter("search1");
 		try {
-			List list = service.searchMachine(user_cus, state1, st_state, mach_type, search);
+			List list = service.searchMachine(user_cus, state, st_state, mach_type,fuel_type,Acity_electricity,search1);
 			resultMap.put("data", list);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -803,6 +920,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject startMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		String flag = request.getParameter("flag");
@@ -831,6 +952,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject offMachine(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		String flag = request.getParameter("flag");
@@ -843,6 +968,7 @@ public class SiteController {
 			}
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -859,11 +985,15 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject changeModel(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		String modelflag = request.getParameter("modelflag");
 		String user_no = request.getParameter("user_no");
-		try {
+		try { 
 			String code = "84 05 02 00 00 01 00 03 16"; 
 			if (modelflag.equals("4")) {
 				code = "84 05 02 00 00 02 00 04 16";
@@ -875,6 +1005,7 @@ public class SiteController {
 			}
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -891,6 +1022,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject changeProtectModel(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		String modelflag = request.getParameter("modelflag");
@@ -907,6 +1042,7 @@ public class SiteController {
 			}
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -923,6 +1059,10 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getMachineMap(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		try {
@@ -930,6 +1070,7 @@ public class SiteController {
 			resultMap.put("data", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
@@ -946,18 +1087,135 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject searchMachineInUse(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		String strat_time = request.getParameter("strat_time");
 		String end_time = request.getParameter("end_time");
 		try {
-			Map<String, Object> data = service.searchMachineInUse(user_cus, strat_time, end_time);
+			List data = service.searchMachineInUse(user_cus, strat_time, end_time);
 			resultMap.put("data", data);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
+			e.printStackTrace();
+			resultMap.put("result", "false"); 
+			resultMap.put("errorMsg", "程序异常");
+		}
+		return resultMap;
+	}	
+	
+	/**
+	 * 38.	移动油机交流主数据明细
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/getSiteDetailed.do",method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject getSiteDetailed(HttpServletRequest request,
+			HttpServletResponse response) {
+
+
+
+
+		JSONObject resultMap = new JSONObject();
+		String mach_no= request.getParameter("mach_no");
+		try {
+			List list = service.getSiteDetailed(mach_no);
+			resultMap.put("data", list);
+			resultMap.put("result", "true"); 
+		} catch (Exception e){
+			e.printStackTrace();
 			resultMap.put("result", "false"); 
 			resultMap.put("errorMsg", "程序异常");
 		}
 		return resultMap;
 	}
+	/**
+	 * 39.	移动油机交流主数据明细
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/getSiteDetailed1.do",method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject getSiteDetailed1(HttpServletRequest request,
+			HttpServletResponse response) {
+
+
+
+
+		JSONObject resultMap = new JSONObject();
+		String mach_no= request.getParameter("mach_no");
+		try {
+			List list = service.getSiteDetailed1(mach_no);
+			resultMap.put("data", list);
+			resultMap.put("result", "true"); 
+		} catch (Exception e){
+			e.printStackTrace();
+			resultMap.put("result", "false"); 
+			resultMap.put("errorMsg", "程序异常");
+		}
+		return resultMap;
+	}
+
+	/**
+	 *  四十.	警报信息查询明细
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/getSiteWaring.do",method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject getSiteWaring(HttpServletRequest request,
+			HttpServletResponse response) {
+
+
+
+
+		JSONObject resultMap = new JSONObject();
+		String user_cus= request.getParameter("user_cus");
+		try {
+			List list = service.getSiteWaring(user_cus);
+			resultMap.put("data", list);
+			resultMap.put("result", "true"); 
+		} catch (Exception e){
+			e.printStackTrace();
+			resultMap.put("result", "false"); 
+			resultMap.put("errorMsg", "程序异常");
+		}
+		return resultMap;
+	}
+	
+	/**
+	 *  四十一.	警报信息查询明细
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/getSiteWaring1.do",method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject getSiteWaring1(HttpServletRequest request,
+			HttpServletResponse response) {
+
+
+
+
+		JSONObject resultMap = new JSONObject();
+		String user_cus= request.getParameter("user_cus");
+		try {
+			List list = service.getSiteWaring1(user_cus);
+			resultMap.put("data", list);
+			resultMap.put("result", "true"); 
+		} catch (Exception e){
+			e.printStackTrace();
+			resultMap.put("result", "false"); 
+			resultMap.put("errorMsg", "程序异常");
+		}
+		return resultMap;
+	}
+	
 }

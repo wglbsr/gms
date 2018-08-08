@@ -22,9 +22,9 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
-    public List<CUser> getAllUser(@RequestParam(value = "id", required = false) Integer id) {
-        return userService.getAllUser();
-
-    }
+//    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+//    public List<CUser> getAllUser(@RequestParam(value = "id", required = false) Integer id) {
+//        return userService.getAllUser();
+//
+//    }
 }

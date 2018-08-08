@@ -1,5 +1,5 @@
 package com.dyny.gms.db.pojo;
-@Deprecated
+
 public class Users {
 	private String username;
 	private String password;

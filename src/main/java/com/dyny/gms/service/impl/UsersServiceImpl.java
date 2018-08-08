@@ -1,11 +1,11 @@
 package com.dyny.gms.service.impl;
 
-import com.dyny.gms.db.dao.UsersMapper;
-import com.dyny.gms.db.pojo.Users;
 import com.dyny.gms.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-@Deprecated
+import com.dyny.gms.db.dao.UsersMapper;
+import com.dyny.gms.db.pojo.Users;
+
 @Service
 public class UsersServiceImpl implements UsersService {
 	@Autowired

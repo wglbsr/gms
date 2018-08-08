@@ -1,14 +1,15 @@
 package com.dyny.gms.service.impl;
 
-import com.dyny.gms.db.dao.SiteMapper;
-import com.dyny.gms.service.SiteService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@Deprecated
+
+import com.dyny.gms.service.SiteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.dyny.gms.db.dao.SiteMapper;
+
 @Service
 public class SiteServiceImpl implements SiteService {
 	@Autowired
@@ -84,39 +85,39 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public Map<String, Object> getStartVoltage(String stationId) {
+	public Map<String, Object> getStartVoltage(String mach_no) {
 		// TODO Auto-generated method stub
-		return mapper.getStartVoltage(stationId);
+		return mapper.getStartVoltage(mach_no);
 	}
 
 	@Override
-	public int modifyStartVoltage(int changeVoltage, String stationId) {
+	public int modifyStartVoltage(BigDecimal changeVoltage, String mach_no) {
 		// TODO Auto-generated method stub
-		return mapper.modifyStartVoltage(changeVoltage, stationId);
+		return mapper.modifyStartVoltage(changeVoltage, mach_no);
 	}
 	
 	@Override
-	public Map<String, Object> getCareTime(String stationId) {
+	public Map<String, Object> getCareTime(String mach_no) {
 		// TODO Auto-generated method stub
-		return mapper.getCareTime(stationId);
+		return mapper.getCareTime(mach_no);
 	}
 
 	@Override
-	public int modifyCareTime(int currentServiceTime, String stationId) {
+	public int modifyCareTime(BigDecimal currentServiceTime, String mach_no) {
 		// TODO Auto-generated method stub
-		return mapper.modifyCareTime(currentServiceTime, stationId);
+		return mapper.modifyCareTime(currentServiceTime, mach_no);
 	}
 
 	@Override
-	public Map<String, Object> getStopTime(String stationId) {
+	public Map<String, Object> getStopTime(String mach_no) {
 		// TODO Auto-generated method stub
-		return mapper.getStopTime(stationId);
+		return mapper.getStopTime(mach_no);
 	}
 
 	@Override
-	public int modifyStopTime(int currentStopTime, String stationId) {
+	public int modifyStopTime(BigDecimal currentStopTime, String mach_no) {
 		// TODO Auto-generated method stub
-		return mapper.modifyStopTime(currentStopTime, stationId);
+		return mapper.modifyStopTime(currentStopTime, mach_no);
 	}
 
 	@Override
@@ -165,11 +166,11 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public int addAssets(String mach_name, String mach_no, String model_no,
-			String vender_name, String power_num, String cus_no,
+			String vender_name, BigDecimal power_num, String cus_no,
 			String creator, String use_type, String mach_type,
-			String fuel_type, String state, String purch_time) {
+			String fuel_type, String state, String purch_time, String note,BigDecimal volumeno,String gprsno) {
 		// TODO Auto-generated method stub
-		return mapper.addAssets(mach_name, mach_no, model_no, vender_name, power_num, cus_no, creator, use_type, mach_type, fuel_type, state, purch_time);
+		return mapper.addAssets(mach_name, mach_no, model_no, vender_name, power_num, cus_no, creator, use_type, mach_type, fuel_type, state, purch_time, note,volumeno,gprsno);
 	}
 
 	@Override
@@ -221,10 +222,10 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public List searchMachine(String user_cus, String state1, String st_state,
-			String mach_type, String search) {
+	public List searchMachine(String user_cus, String state, String st_state,
+			String mach_type,String fuel_type,String Acity_electricity,String search1) {
 		// TODO Auto-generated method stub
-		return mapper.searchMachine(user_cus, state1, st_state, mach_type, search);
+		return mapper.searchMachine(user_cus,state,st_state,mach_type,fuel_type,Acity_electricity,search1);
 	}
 
 	@Override
@@ -247,7 +248,7 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public int changeProtectModel(String mach_no, int modelflag, String code,
+	public int changeProtectModel(String mach_no,  int modelflag, String code,
 			String user_no) {
 		// TODO Auto-generated method stub
 		return mapper.changeProtectModel(mach_no, modelflag, code, user_no);
@@ -260,10 +261,37 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public Map<String, Object> searchMachineInUse(String user_cus,
+	public List searchMachineInUse(String user_cus,
 			String strat_time, String end_time) {
 		// TODO Auto-generated method stub
 		return mapper.searchMachineInUse(user_cus, strat_time, end_time);
 	}
+
+	@Override
+	public List getMachineList(String user_cu) {
+		// TODO Auto-generated method stub
+		return mapper.getMachineList(user_cu);
+	}
+	@Override
+	public List getSiteDetailed(String mach_no) {
+		// TODO Auto-generated method stub
+		return mapper.getSiteDetailed(mach_no);
+	}
+	@Override
+	public List getSiteDetailed1(String mach_no) {
+		// TODO Auto-generated method stub
+		return mapper.getSiteDetailed1(mach_no);
+	}
+	@Override
+	public List getSiteWaring(String user_cus) {
+			// TODO Auto-generated method stub
+			return mapper.getSiteWaring(user_cus);
+		}
+	
+	@Override
+	public List getSiteWaring1(String user_cus) {
+			// TODO Auto-generated method stub
+			return mapper.getSiteWaring1(user_cus);
+		}
 
 }

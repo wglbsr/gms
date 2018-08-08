@@ -1,9 +1,10 @@
 package com.dyny.gms.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.utils.MD5Util;
 import com.dyny.gms.db.pojo.Users;
 import com.dyny.gms.service.UsersService;
-import com.dyny.gms.utils.MD5Util;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,19 +20,23 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author zhangmx
  */
-@Deprecated
 @Controller
 @RequestMapping(value="/users")
 public class UsersController {
 	
-
+	private final Logger log = Logger.getLogger(UsersController.class);
+	
 	@Autowired
 	private UsersService service;
 
-	@RequestMapping(value="/login.do",method = RequestMethod.GET)
+	@RequestMapping(value="/login.do",method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject login(HttpServletRequest request,
-							HttpServletResponse response) {
+			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -58,10 +63,14 @@ public class UsersController {
 		return resultMap;
 	}
 	
-	@RequestMapping(value="/register.do",method = RequestMethod.GET)
+	@RequestMapping(value="/register.do",method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject getAllMap(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -82,13 +91,18 @@ public class UsersController {
 		return resultMap;
 	}
 	
-	@RequestMapping(value="/modifyPassword.do",method = RequestMethod.GET)
+	@RequestMapping(value="/modifyPassword.do",method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject modifyPassword(HttpServletRequest request,
 			HttpServletResponse response) {
+
+
+
+
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
 		String newpassword = request.getParameter("newpassword");
+//		String oldpassword = request.getParameter("oldpassword");
 		try {
 			int result = service.updatePass(MD5Util.GetMD5By32(newpassword), username);
 			if (result <= 0) {
