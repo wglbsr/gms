@@ -1,14 +1,14 @@
 package com.dyny.gms.interceptor;
 
-import com.dyny.gms.utils.EhcacheUtil;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
 import org.apache.log4j.Logger;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.Set;
 
 /**
  * 登陆拦截器
@@ -61,6 +61,20 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (modelAndView == null) {
+            logger.info("modelAndView is null");
+        }else{
+            ModelMap modelMap = modelAndView.getModelMap();
+            modelAndView.getModel();
+            Set<String> keySet = modelMap.keySet();
+            for (String key : keySet) {
+                logger.info(key + ":" + modelMap.get(key));
+            }
+        }
+
+       OutputStream op =  response.getOutputStream();
+
+
 
     }
 

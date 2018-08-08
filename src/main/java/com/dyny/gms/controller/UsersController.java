@@ -33,10 +33,6 @@ public class UsersController {
 	@ResponseBody
 	public JSONObject login(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -67,10 +63,6 @@ public class UsersController {
 	@ResponseBody
 	public JSONObject getAllMap(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -95,10 +87,6 @@ public class UsersController {
 	@ResponseBody
 	public JSONObject modifyPassword(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
 		String newpassword = request.getParameter("newpassword");

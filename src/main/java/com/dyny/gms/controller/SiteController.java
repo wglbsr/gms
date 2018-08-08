@@ -1,21 +1,19 @@
 package com.dyny.gms.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
 import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.service.SiteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.dyny.gms.service.SiteService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -43,10 +41,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getAllSite(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username="admin"; //= request.getParameter("user_cus");
 		try {
@@ -142,10 +136,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getOffLineSite(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("user_cus");
 		String stationConnnectState = request.getParameter("stationConnnectState");
@@ -170,10 +160,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getOnlineSite(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("user_cus");
 		String stationConnnectState = request.getParameter("stationConnnectState");
@@ -198,10 +184,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getActiveSite(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("user_cus");
 		String stationState = request.getParameter("stationState");
@@ -273,10 +255,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getSiteContent(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String stationId = request.getParameter("st_no");
 		try {
@@ -300,10 +278,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getStartVoltage(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		try {
@@ -327,10 +301,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject modifyStartVoltage(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String mach_no = request.getParameter("mach_no");
 		String changeVoltage = request.getParameter("changeVoltage");
