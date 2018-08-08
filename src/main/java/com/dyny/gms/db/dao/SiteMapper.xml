@@ -13,7 +13,8 @@
 	    <result column="generationTime" property="generationTime" javaType="string"/>
 	    <result column="inter_time" property="updateTime" javaType="string"/>
 	    <result column="lengthtime" property="updateTimeLength" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getAllSite" resultMap="allSiteMap" parameterType="java.lang.String">
 		select dbo.mach_type(mach_no) stationType, id, st_name, st_no, st_state, Acity_electricity, st_voltage,
 		isnull(dbo.get_time(mach_no),0) generationTime, inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
@@ -29,7 +30,8 @@
 	    <result column="st_state" property="stationConnnectState" javaType="string"/>
 	    <result column="Acity_electricity" property="stationState" javaType="string"/>
 	    <result column="st_coordinate" property="stationPosition" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getAllMap" resultMap="allMap" parameterType="java.lang.String">
 		select id, st_name, st_state, Acity_electricity, st_coordinate 
 		FROM View_mach
@@ -40,30 +42,40 @@
 	<!-- 六.	站点状态数量功能 -->
 	<resultMap type="map" id="numMap">  
 	    <result column="siteCount" property="siteCount" javaType="int"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getAllNum" resultMap="numMap" parameterType="java.lang.String">
 		select COUNT(1) siteCount 
 		FROM View_mach 
 		where (dbo.cus_no(mach_no) = #{username})
 	</select>
+
+
+	<!--******************************mark*******************************************-->
+
 	<select id="getOnlineNum" resultMap="numMap" parameterType="java.lang.String">
 		select COUNT(1) siteCount 
 		FROM View_mach 
 		where DATEDIFF(mi,inter_time,GETDATE()) &lt;= 3 
 		and (dbo.cus_no(mach_no) = #{username})
 	</select>
+	<!--******************************mark*******************************************-->
 	<select id="getOfflineNum" resultMap="numMap" parameterType="java.lang.String">
 		select COUNT(1) siteCount 
 		FROM View_mach 
 		where DATEDIFF(mi,inter_time,GETDATE()) &gt; 3 
 		and (dbo.cus_no(mach_no) = #{username})
 	</select>
+
+	<!--******************************mark*******************************************-->
 	<select id="getActiveNum" resultMap="numMap" parameterType="java.lang.String">
 		select COUNT(1) siteCount 
 		FROM View_mach
 		where state = 1 
 		and (dbo.cus_no(mach_no) = #{username})
 	</select>
+
+	<!--******************************mark*******************************************-->
 	<select id="getStopNum" resultMap="numMap" parameterType="java.lang.String">
 		select COUNT(1) siteCount 
 		FROM View_mach 
@@ -72,6 +84,7 @@
 	</select>
 	
 	<!-- 七.	搜索功能 -->
+	<!--******************************mark*******************************************-->
 	<select id="search" resultMap="allMap" >
 		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
 		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
@@ -87,6 +100,7 @@
 	</select>
 	
 	<!-- 八.	离线状态功能 -->
+	<!--******************************mark*******************************************-->
 	<select id="getOffLineSite" resultMap="allMap" >
 		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
 		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
@@ -97,6 +111,7 @@
 	</select>
 	
 	<!-- 九.	在线状态功能 -->
+	<!--******************************mark*******************************************-->
 	<select id="getOnlineSite" resultMap="allMap" >
 		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
 		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
@@ -107,6 +122,7 @@
 	</select>
 	
 	<!-- 十.	发电状态功能 -->
+	<!--******************************mark*******************************************-->
 	<select id="getActiveSite" resultMap="allMap" >
 		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
 		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
@@ -117,6 +133,7 @@
 	</select>
 	
 	<!-- 十一.	停电状态功能 -->
+	<!--******************************mark*******************************************-->
 	<select id="getStopSite" resultMap="allMap" >
 		select dbo.mach_type(mach_no), id, st_name, st_no, st_state, Acity_electricity, st_voltage,
 		isnull(dbo.get_time(mach_no),0), inter_time, DATEDIFF(SS,inter_time,GETDATE()) lengthtime 
@@ -155,7 +172,8 @@
 	    <result column="oliPercentage" property="generationTimeLength" javaType="string"/>
 	    <result column="stop_time" property="stopTime" javaType="string"/>
 	    <result column="state" property="startResult" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getSiteContent" resultMap="siteContentMap" >
 		select id, dbo.mach_type(mach_no) stationType, st_name, st_current, Acity_electricity, Cabinet_temperature,
 		external_temperature, start_Voltage, dbo.sum_time(mach_no) sum_time,
@@ -208,6 +226,7 @@
 	</update>
 	
 	<!-- 十八.	查看地图位置功能 -->
+	<!--******************************mark*******************************************-->
 	<select id="getMapByStationId" resultMap="allMap">
 		select id, st_name, st_state, Acity_electricity, st_coordinate
 		FROM View_mach
@@ -291,7 +310,8 @@
 	    <result column="creat_time" property="addOliTime" javaType="string"/>
 	    <result column="end_num-start_num" property="addOli" javaType="string"/>
 	    <result column="sumaddOli" property="sumaddOli" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getAddOilLog" resultMap="addOilLogMap" >
 		select mach_no, dbo.mach_name(mach_no) stationNumber, creat_time, end_num-start_num, dbo.sum_numlank1(mach_no) sumaddOli
 		from Ap_lank 
@@ -305,7 +325,8 @@
 	    <result column="start_time" property="strat_time" javaType="string"/>
 	    <result column="end_time" property="end_time" javaType="string"/>
 	    <result column="num_time" property="num_time" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getActiveElecLog" resultMap="activeElecLogMap" >
 		select mach_no, dbo.mach_name(mach_no) stationNumber,start_time, end_time, 
 		DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time 
@@ -376,30 +397,35 @@
 	<!-- 二十六.	移动油机运行情况 -->
 	<resultMap type="map" id="machineNumMap">  
 	    <result column="machineCount" property="machineCount" javaType="int"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getMachineAllNum" resultMap="machineNumMap" parameterType="java.lang.String">
 		select COUNT(1) machineCount 
 		FROM View_mach1 
 		where cus_no = #{user_cus}
 	</select>
+	<!--******************************mark*******************************************-->
 	<select id="getMachineOnlineNum" resultMap="machineNumMap" parameterType="java.lang.String">
 		select COUNT(1) machineCount 
 		FROM View_mach1 
 		where DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &lt;= 3 
 		and cus_no = #{user_cus}
 	</select>
+	<!--******************************mark*******************************************-->
 	<select id="getMachineOfflineNum" resultMap="machineNumMap" parameterType="java.lang.String">
 		select COUNT(1) machineCount 
 		FROM View_mach1 
 		where DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &gt; 3 
 		and cus_no = #{user_cus}
 	</select>
+	<!--******************************mark*******************************************-->
 	<select id="getMachineActiveNum" resultMap="machineNumMap" parameterType="java.lang.String">
 		select COUNT(1) machineCount 
 		FROM View_mach1
 		where state = 1 
 		and cus_no = #{user_cus}
 	</select>
+	<!--******************************mark*******************************************-->
 	<select id="getMachineStopNum" resultMap="machineNumMap" parameterType="java.lang.String">
 		select COUNT(1) machineCount 
 		FROM View_mach1 
@@ -418,7 +444,8 @@
 	    <result column="get_time" property="sum_power" javaType="string"/>
 	    <result column="inter_time" property="power_times" javaType="string"/>
 	    <result column="lengthtime" property="use_state" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getOnlineMachine" resultMap="machineStatusMap" >
 		select id, mach_no, mach_type, st_state, state1, al_voltage, 
 		dbo.get_time(mach_no) get_time, inter_time, lengthtime
@@ -426,7 +453,7 @@
 		WHERE cus_no = #{user_cus}
 		and DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &lt;= 3
 	</select>
-	
+	<!--******************************mark*******************************************-->
 	<!-- 二十八.	移动油机离线(双击离线) -->
 	<select id="getOfflineMachine" resultMap="machineStatusMap" >
 		select id, mach_no, mach_type, st_state, state1, al_voltage, 
@@ -435,7 +462,7 @@
 		WHERE cus_no = #{user_cus}
 		and DATEDIFF(mi,dbo.C_basis.inter_time,GETDATE()) &gt; 3 
 	</select>
-	
+	<!--******************************mark*******************************************-->
 	<!-- 二十九.	移动油机发电 -->
 	<select id="getActiveMachine" resultMap="machineStatusMap" >
 		select id, mach_no, mach_type, st_state, state1, al_voltage, 
@@ -444,7 +471,7 @@
 		WHERE cus_no = #{user_cus}
 		and state = 1
 	</select>
-	
+	<!--******************************mark*******************************************-->
 	<!-- 三十.	移动油机停机 -->
 	<select id="getStopMachine" resultMap="machineStatusMap" >
 		select id, mach_no, mach_type, st_state, state1, al_voltage, 
@@ -453,8 +480,8 @@
 		WHERE cus_no = #{user_cus}
 		and state = 0
 	</select>
-	
-	
+
+	<!--******************************mark*******************************************-->
 	<!-- 三十一.	移动油机查询 -->
 	<select id="searchMachine" resultMap="machineStatusMap" >
 		select id, mach_no, mach_type, st_state, state1, al_voltage, 
@@ -477,8 +504,7 @@
 		     AND (mach_no = CONCAT(CONCAT('%',#{search},'%')))
 		</if>
 	</select>
-	
-	<!-- 三十二.	启动功能 -->	
+	<!-- 三十二.	启动功能 -->
 	<insert id="startMachine" >
 		INSERT INTO Ap_collar VALUES(
 	    	#{mach_no, jdbcType = VARCHAR},
@@ -488,8 +514,7 @@
 	    	#{user_no, jdbcType = VARCHAR}
 	    )
 	</insert>
-	
-	<!-- 三十三.	熄火功能 -->	
+	<!-- 三十三.	熄火功能 -->
 	<insert id="offMachine" >
 		INSERT INTO Ap_collar  VALUES (
 			#{mach_no, jdbcType = VARCHAR},
@@ -521,14 +546,15 @@
 			#{user_no, jdbcType = VARCHAR}
 		)
 	</insert>
-	
+	<!--******************************mark*******************************************-->
 	<!-- 三十六.	移动油机地图位置 -->
 	<resultMap type="map" id="machineMapMap">  
 	    <result column="mach_no" property="stationId" javaType="string"/>
 	    <result column="mach_name" property="stationName" javaType="string"/>
 	    <result column="st_state" property="stationConnnectState" javaType="string"/>
 	    <result column="st_coordinate" property="stationPosition" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="getMachineMap" resultMap="machineMapMap" >
 		select mach_no,mach_name, st_state,st_coordinate
 		 from View_mach1
@@ -544,7 +570,8 @@
 	    <result column="st_no" property="city_electricity" javaType="string"/>
 	    <result column="mach_no" property="mach_no" javaType="string"/>
 	    <result column="co_add" property="co_add" javaType="string"/>
-	</resultMap> 
+	</resultMap>
+	<!--******************************mark*******************************************-->
 	<select id="searchMachineInUse" resultMap="machineInUseMap" >
 		SELECT co_no, co_time, co_per, co_tel, st_no, mach_no, co_add, creat_time, creat_per 
 		FROM Ap_collar 

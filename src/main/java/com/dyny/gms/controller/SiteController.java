@@ -712,10 +712,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getMachineNumByStatus(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String user_cus = request.getParameter("user_cus");
 		try {
