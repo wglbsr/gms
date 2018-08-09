@@ -674,10 +674,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject addOil(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String co_no = request.getParameter("co_no");
 		String co_time = request.getParameter("co_time");
@@ -1083,10 +1079,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getSiteDetailed(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String mach_no= request.getParameter("mach_no");
 		try {
@@ -1110,10 +1102,6 @@ public class SiteController {
 	@ResponseBody
 	public JSONObject getSiteDetailed1(HttpServletRequest request,
 			HttpServletResponse response) {
-
-
-
-
 		JSONObject resultMap = new JSONObject();
 		String mach_no= request.getParameter("mach_no");
 		try {

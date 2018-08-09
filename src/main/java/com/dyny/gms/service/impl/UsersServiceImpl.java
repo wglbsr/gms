@@ -1,9 +1,9 @@
 package com.dyny.gms.service.impl;
 
+import com.dyny.gms.db.dao.UsersMapper;
 import com.dyny.gms.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dyny.gms.db.dao.UsersMapper;
 import com.dyny.gms.db.pojo.Users;
 
 @Service

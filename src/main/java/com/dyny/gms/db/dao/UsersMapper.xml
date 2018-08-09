@@ -25,7 +25,7 @@
 	
 	
 	<select id="getByNameAndPass" resultMap="UsersBean">
-		select user_no, user_pass, user_level, state from C_user
+		select user_no, user_pass, user_level, user_cus,state from C_user
 		where user_no = #{username, jdbcType=VARCHAR} and user_pass=#{password, jdbcType=VARCHAR} 
 	</select>
 
