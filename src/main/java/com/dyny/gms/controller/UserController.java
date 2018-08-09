@@ -15,7 +15,7 @@ public class UserController {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello(@RequestParam(value = "id", required = false) Integer id) {
         System.out.println("hello");
-        return "hello";
+        return "hello 这是一个中文字符串";
 
     }
 

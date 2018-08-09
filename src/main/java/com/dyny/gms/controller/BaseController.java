@@ -31,13 +31,25 @@ public class BaseController {
         return this.getResult(false, data, errorMessage);
     }
 
+    public String getErrorResult(Object data) {
+        return this.getResult(false, data, "");
+    }
+
+    public String getErrorMsg(String msg) {
+        return this.getResult(false, null, msg);
+    }
+
+    public String getError() {
+        return this.getResult(false, null, null);
+    }
+
     private String getResult(boolean successFlag, Object data, String errorMessage) {
         if (successFlag) {
             this.result.put(DATA_KEY, data);
         } else {
             this.result.put(ERROR_MSG_KEY, errorMessage != null && errorMessage.isEmpty() ? DEFAULT_ERROR_MSG : errorMessage);
         }
-        this.result.put(RESULT_KEY, successFlag ? 0 : 1);
+        this.result.put(RESULT_KEY, successFlag);
         return this.result.toJSONString();
     }
 }

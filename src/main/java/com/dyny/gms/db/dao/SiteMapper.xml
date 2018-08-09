@@ -437,6 +437,19 @@
 		     AND cus_no = #{user_cus}
 		</if>
 	</select>
+
+
+    <select id="getMachineListWithUseType" resultMap="machineAllMap" parameterType="java.lang.String">
+        select mach_no,  st_state, city_electricity, Acity_electricity,al_voltage,
+        isnull(dbo.sum_time(mach_no),0)/60 sum_time ,dbo.sumnum_time(mach_no) sumnum_time,state,start_Voltage,
+        state1,isnull(lank_level,0) lank_per,
+        st_current,isnull(cabinet_temperature,0) external_temperature
+        from View_mach
+        where 1=1
+        <if test="user_cus != null and user_cus != '' ">
+            AND cus_no = #{user_cus}
+        </if>
+    </select>
 	<resultMap type="map" id="machineNumMap">  
 	    <result column="machineCount" property="machineCount" javaType="int"/>
 	</resultMap> 

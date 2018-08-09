@@ -100,12 +100,15 @@ public interface SiteService {
     /**
      * 二十六.
      */
+    public List getMachineList(String user_cu, String use_type);
+
     public List getMachineList(String user_cu);
 
     /**
      * 二十六.	移动油机运行情况（全部）
      */
     public Map<String, Object> getMachineNumByStatus(String user_cus);
+
 
     /**
      * 二十七.	移动油机在线(双击在线)

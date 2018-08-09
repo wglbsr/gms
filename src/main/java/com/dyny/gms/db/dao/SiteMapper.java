@@ -181,7 +181,16 @@ public interface SiteMapper {
 	 * 二十六.
 	 */
 	public List getMachineList(@Param(value = "user_cus") String user_cu);
-	
+
+	/**获得固定油机
+	 * 20180809
+	 * @param user_cu
+	 * @param use_type
+	 * @return
+	 */
+	public List getMachineListWithUseType(@Param(value = "user_cus") String user_cu,@Param(value = "use_type") String use_type);
+
+
 	/**
 	 * 二十六.	移动油机运行情况（全部）
 	 */

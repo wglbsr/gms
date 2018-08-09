@@ -354,6 +354,18 @@ public class SiteServiceImpl implements SiteService {
         return mapper.getMachineList(user_cu);
     }
 
+    /**获得固定油机,暂时只是添加多一个参数
+     * 20180809
+     * @param user_cu
+     * @param use_type
+     * @return
+     */
+    @Override
+    public List getMachineList(String user_cu,String use_type) {
+        // TODO Auto-generated method stub
+        return mapper.getMachineListWithUseType(user_cu,use_type);
+    }
+
     @Override
     public List getSiteDetailed(String mach_no) {
         // TODO Auto-generated method stub

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author zhangmx
  */
 @Controller
-@RequestMapping(value="/users")
+@RequestMapping(value="/ems/users",produces = {"application/json;charset=UTF-8"})
 public class UsersController {
 	
 	private final Logger log = Logger.getLogger(UsersController.class);
