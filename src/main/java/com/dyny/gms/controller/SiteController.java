@@ -1,6 +1,7 @@
 package com.dyny.gms.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.service.SiteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/ems/site", produces = {"application/json;charset=UTF-8"})
 public class SiteController extends BaseController {
+
+
 
     private final Logger log = Logger.getLogger(SiteController.class);
 
@@ -64,7 +67,7 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/getAllMap.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/getAllMap.do")
     @ResponseBody
     public JSONObject getAllMap(HttpServletRequest request,
                                 HttpServletResponse response) {
@@ -543,8 +546,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject addSiteInfo(HttpServletRequest request,
                                   HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String stationName = request.getParameter("stationName");
         String stationNumber = request.getParameter("stationNumber");
@@ -733,6 +734,27 @@ public class SiteController extends BaseController {
         return resultMap;
     }
 
+//    @RequestMapping(value = "/getMachineNumByStatusAndUseType.do", method = RequestMethod.POST)
+//    @ResponseBody
+//    public JSONObject getMachineNumByStatusAndUseType(HttpServletRequest request,
+//                                            HttpServletResponse response) {
+//        JSONObject resultMap = new JSONObject();
+//        String user_cus = request.getParameter("user_cus");
+//        String user_type = request.getParameter("use_type");
+//        try {
+//            Map<String, Object> data = service.getMachineNumByStatus(user_cus);
+//            List list = service.getMachineList(user_cus);
+//            resultMap.put("data", list);
+//            resultMap.put("statusList", data);
+//            resultMap.put("result", "true");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            resultMap.put("result", "false");
+//            resultMap.put("errorMsg", "程序异常");
+//        }
+//        return resultMap;
+//    }
+
 
     /**
      * @param request
@@ -745,10 +767,11 @@ public class SiteController extends BaseController {
                                  HttpServletResponse response) {
         String user_cus = request.getParameter("user_cus");
         String use_type = request.getParameter("use_type");
+        log.info("use_type:"+use_type);
+        log.info("user_cus:"+user_cus);
         List res;
         try {
-            System.out.println(use_type);
-            if ("移动".equals(use_type)) {
+            if (use_type != null && use_type.trim().equals("移动")) {
                 res = service.getMachineList(user_cus);
             } else {
                 res = service.getMachineList(user_cus, use_type);
@@ -796,8 +819,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject getOfflineMachine(HttpServletRequest request,
                                         HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
         try {
@@ -825,8 +846,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject getActiveMachine(HttpServletRequest request,
                                        HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
         try {
@@ -852,8 +871,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject getStopMachine(HttpServletRequest request,
                                      HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
         try {
@@ -879,8 +896,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject searchMachine(HttpServletRequest request,
                                     HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
         String state = request.getParameter("state");
@@ -912,8 +927,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject startMachine(HttpServletRequest request,
                                    HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String mach_no = request.getParameter("mach_no");
         String flag = request.getParameter("flag");
@@ -943,8 +956,6 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject offMachine(HttpServletRequest request,
                                  HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String mach_no = request.getParameter("mach_no");
         String flag = request.getParameter("flag");
@@ -1155,12 +1166,13 @@ public class SiteController extends BaseController {
     @ResponseBody
     public JSONObject getSiteWaring(HttpServletRequest request,
                                     HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
         try {
-            List list = service.getSiteWaring(user_cus);
+            List list = null;
+            if (user_cus != null && user_cus.isEmpty()) {
+                list = service.getSiteWaring(user_cus);
+            }
             resultMap.put("data", list);
             resultMap.put("result", "true");
         } catch (Exception e) {

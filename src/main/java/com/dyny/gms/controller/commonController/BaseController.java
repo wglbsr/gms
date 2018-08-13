@@ -1,4 +1,4 @@
-package com.dyny.gms.controller;
+package com.dyny.gms.controller.commonController;
 
 import com.alibaba.fastjson.JSONObject;
 

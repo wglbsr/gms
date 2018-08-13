@@ -1,5 +1,6 @@
 package com.dyny.gms.controller;
 
+import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.service.SiteService;
 import com.dyny.gms.service.impl.SiteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

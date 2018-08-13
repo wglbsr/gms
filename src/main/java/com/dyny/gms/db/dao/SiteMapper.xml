@@ -20,7 +20,7 @@
 		 FROM View_mach
 		where 1=1
 	 	<if test="username != null and username != '' ">
-		     AND (dbo.cus_no(mach_no) = #{username})
+		     AND ( dbo.cus_no(mach_no )  =  #{username})
 		</if>
 		order by id
 	</select>
@@ -34,11 +34,11 @@
 	    <result column="st_coordinate" property="stationPosition" javaType="string"/>
 	</resultMap> 
 	<select id="getAllMap" resultMap="allMap" parameterType="java.lang.String">
-		select id, st_name, st_state, Acity_electricity, st_coordinate 
+		select id, st_name, st_state, Acity_electricity, st_coordinate
 		FROM View_mach
 		where 1=1
-	 	<if test="username != null and username != '' ">
-		     AND (dbo.cus_no(mach_no) = #{username})
+		<if test="username != null and username != '' ">
+			AND ( dbo.cus_no(mach_no )  =  #{username})
 		</if>
 		order by id
 	</select>
@@ -447,7 +447,7 @@
         from View_mach
         where 1=1
         <if test="user_cus != null and user_cus != '' ">
-            AND cus_no = #{user_cus}
+            AND dbo.cus_no(mach_no) = #{user_cus}
         </if>
     </select>
 	<resultMap type="map" id="machineNumMap">  
@@ -525,7 +525,7 @@
 	
 	<!-- 二十八.	移动油机离线(双击离线) -->
 	<select id="getOfflineMachine" resultMap="machineStatusMap" >
-		select mach_no, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0) sum_time/60 ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
+		select mach_no, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60 sum_time,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
 		state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0) lank_per,st_current,isnull(cabinet_temperature,0) external_temperature,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level
 		from View_mach1
 		where 1=1

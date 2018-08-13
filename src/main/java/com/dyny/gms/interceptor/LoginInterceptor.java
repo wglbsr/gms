@@ -61,21 +61,21 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (modelAndView == null) {
-            logger.info("modelAndView is null");
-        }else{
-            ModelMap modelMap = modelAndView.getModelMap();
-            modelAndView.getModel();
-            Set<String> keySet = modelMap.keySet();
-            for (String key : keySet) {
-                logger.info(key + ":" + modelMap.get(key));
-            }
-        }
+//        if (modelAndView == null) {
+//            logger.info("modelAndView is null");
+//        }else{
+//            ModelMap modelMap = modelAndView.getModelMap();
+//            modelAndView.getModel();
+//            Set<String> keySet = modelMap.keySet();
+//            for (String key : keySet) {
+//                logger.info(key + ":" + modelMap.get(key));
+//            }
+//        }
+//
+//       OutputStream op =  response.getOutputStream();
+//
 
-       OutputStream op =  response.getOutputStream();
-
-
-
+//        logger.info("modelAndView is null");
     }
 
     @Override

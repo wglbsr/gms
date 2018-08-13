@@ -7,27 +7,34 @@
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://193.112.68.193:3306/dyny_test?characterEncoding=utf8"
-                        userId="root" password="Paladin123">
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+        <!--connectionURL="jdbc:mysql://193.112.68.193:3306/dyny_test?characterEncoding=utf8"-->
+        <!--userId="root" password="Paladin123">-->
+        <!--</jdbcConnection>-->
+
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                        connectionURL="jdbc:sqlserver://192.168.1.6:1433;DatabaseName=test1"
+                        userId="sa" password="dyny0763">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成模型的包名和位置 -->
-        <javaModelGenerator targetPackage="com.dyny.db.pojo" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.dyny.gms.db.pojo" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成的映射文件包名和位置 -->
-        <sqlMapGenerator targetPackage="com.dyny.db.mapping" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dyny.db.dao" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-        <table tableName="%"/>
+        <table tableName="t_enumeration" domainObjectName="Enumeration">
+            <columnRenamingRule searchString="^[^_]+" replaceString="" />
+        </table>
     </context>
 </generatorConfiguration>

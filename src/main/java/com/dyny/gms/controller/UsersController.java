@@ -48,9 +48,13 @@ public class UsersController {
 				resultMap.put("errorMsg", "用户账号已停用");
 				return resultMap;
 			}
+			String userCus = users.getUsercus();
+			if(userCus==null){
+				userCus="";
+			}
 			resultMap.put("username", users.getUsername());
 			resultMap.put("userlevel", users.getUserlevel());
-			resultMap.put("usercus", users.getUsercus());
+			resultMap.put("usercus", userCus);
 			resultMap.put("result", "true"); 
 		} catch (Exception e){
 			resultMap.put("result", "false"); 
