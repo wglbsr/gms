@@ -13,7 +13,7 @@
         <!--</jdbcConnection>-->
 
         <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-                        connectionURL="jdbc:sqlserver://192.168.1.6:1433;DatabaseName=test1"
+                        connectionURL="jdbc:sqlserver://192.168.1.6:1433;DatabaseName=dyny"
                         userId="sa" password="dyny0763">
         </jdbcConnection>
         <javaTypeResolver>
@@ -33,8 +33,14 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-        <table tableName="t_enumeration" domainObjectName="Enumeration">
-            <columnRenamingRule searchString="^[^_]+" replaceString="" />
+        <!--<table tableName="t_enumeration" domainObjectName="Enumeration">-->
+            <!--<columnRenamingRule searchString="^[^_]+" replaceString="" />-->
+        <!--</table>-->
+
+        <table tableName="c_basis" domainObjectName="Basis">
+        </table>
+
+        <table tableName="c_mach" domainObjectName="Generator">
         </table>
     </context>
 </generatorConfiguration>

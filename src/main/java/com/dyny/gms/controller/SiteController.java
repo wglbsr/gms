@@ -27,7 +27,6 @@ import java.util.Map;
 public class SiteController extends BaseController {
 
 
-
     private final Logger log = Logger.getLogger(SiteController.class);
 
     @Autowired
@@ -69,19 +68,20 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getAllMap.do")
     @ResponseBody
-    public JSONObject getAllMap(HttpServletRequest request,
+    public String getAllMap(HttpServletRequest request,
                                 HttpServletResponse response) {
         JSONObject resultMap = new JSONObject();
-        String username = request.getParameter("user_cus");
-        try {
-            List list = service.getAllMap(username);
-            resultMap.put("data", list);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+        String user_cus = request.getParameter("user_cus");
+//        try {
+//            List list = service.getAllMap(user_cus);
+//            resultMap.put("data", list);
+//            resultMap.put("result", "true");
+//        } catch (Exception e) {
+//            log.info(e);
+//            resultMap.put("result", "false");
+//            resultMap.put("errorMsg", "程序异常");
+//        }
+        return super.getSuccessResult(service.getAllMap(user_cus));
     }
 
     /**
@@ -107,6 +107,17 @@ public class SiteController extends BaseController {
         }
         return resultMap;
     }
+
+
+    @RequestMapping(value = "/getGeneratorDetail")
+    @ResponseBody
+    public String getGeneratorDetail(HttpServletRequest request,
+                                     HttpServletResponse response) {
+
+
+        return null;
+    }
+
 
     /**
      * 七.	搜索功能
@@ -767,8 +778,8 @@ public class SiteController extends BaseController {
                                  HttpServletResponse response) {
         String user_cus = request.getParameter("user_cus");
         String use_type = request.getParameter("use_type");
-        log.info("use_type:"+use_type);
-        log.info("user_cus:"+user_cus);
+        log.info("use_type:" + use_type);
+        log.info("user_cus:" + user_cus);
         List res;
         try {
             if (use_type != null && use_type.trim().equals("移动")) {

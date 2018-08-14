@@ -6,4 +6,6 @@ import java.util.Map;
 public interface GeneratorService {
 
     public List getGeneratorByCondition(Map<String, Object> condition);
+
+    public List getGeneratorDetail(String generatorNo);
 }

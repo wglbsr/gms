@@ -12,7 +12,7 @@ public interface SiteMapper {
 	
 	public List getAllSite(@Param("username") String username);
 	
-	public List getAllMap(@Param("username") String username);
+	public List getAllMap(@Param("user_cus") String username);
 	
 	/**
 	 * 所有站点数量

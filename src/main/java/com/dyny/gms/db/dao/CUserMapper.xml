@@ -10,7 +10,7 @@
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
-  <sql id="Example_Where_Clause">
+  <sql id="Example_Where_Clause_User">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -79,7 +79,7 @@
     <include refid="Base_Column_List" />
     from c_user
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause_User" />
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -98,7 +98,7 @@
   <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.CUserExample">
     delete from c_user
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause_User" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.CUser">
@@ -161,7 +161,7 @@
   <select id="countByExample" parameterType="com.dyny.gms.db.pojo.CUserExample" resultType="java.lang.Long">
     select count(*) from c_user
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause_User" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
