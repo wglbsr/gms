@@ -35,11 +35,11 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public int deleteGenerator(String generatorNo) {
-        return 0;
+        return generatorMapper.deleteByPrimaryKey(generatorNo);
     }
 
     @Override
     public int addGenerator(Generator generator) {
-        return 0;
+        return generatorMapper.insert(generator);
     }
 }
