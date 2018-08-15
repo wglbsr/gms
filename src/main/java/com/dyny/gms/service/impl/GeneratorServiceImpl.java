@@ -17,7 +17,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     GeneratorMapper generatorMapper;
 
     @Override
-    public List getGenerator(Map<String, Object> condition,boolean fullInfo) {
+    public List getGenerator(Map<String, Object> condition, boolean fullInfo) {
         String useType = (String) condition.get("use_type");
         String status = (String) condition.get("user_cus");
         return null;
@@ -30,7 +30,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public int updateGenerator(Generator generator) {
-        return 0;
+        return generatorMapper.updateByPrimaryKey(generator);
     }
 
     @Override

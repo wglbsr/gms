@@ -30,11 +30,9 @@ public class GeneratorController extends BaseController {
 
     @RequestMapping(value = "/updateGenerator", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String updateGenerator(HttpServletRequest request,
-                                  HttpServletResponse response) {
-        String machNo = request.getParameter("mach_no");
-        if (Tool.StringUtil.validStr(machNo)) {
-            return super.getSuccessResult(generatorService.getGeneratorDetail(machNo));
+    public String updateGenerator(@ModelAttribute Generator generator) {
+        if (generator != null) {
+            return super.getSuccessResult(generatorService.updateGenerator(generator));
         } else {
             return super.getErrorMsg("请输入机器编号");
         }
@@ -44,7 +42,7 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/getGeneratorList", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorList(HttpServletRequest request,
-                                  HttpServletResponse response) {
+                                   HttpServletResponse response) {
         String userCus = request.getParameter("user_cus");
         String machType = request.getParameter("mach_type");
         if (Tool.StringUtil.validStr("")) {
