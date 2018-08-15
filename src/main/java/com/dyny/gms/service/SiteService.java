@@ -6,29 +6,9 @@ import java.util.Map;
 
 
 public interface SiteService {
-    public List getAllSite(String username);
 
-    public Map<String, Object> getSiteNumByStatus(String username, int status);
-
-    public Map<String, Object> getMachineNumByStatus(String user_cus, int status);
 
     public List getAllMap(String username);
-
-    public Map<String, Object> getSiteNumByStatus(String username);
-
-    public List search(String username, String search);
-
-    public List getOffLineSite(String username);
-
-    public List getOnlineSite(String username);
-
-    public List getActiveSite(String username);
-
-    public List getStopSite(String username);
-
-    public Map<String, Object> getSiteHeadMsg(String stationId);
-
-    public List getSiteContent(String stationId);
 
     public Map<String, Object> getStartVoltage(String mach_no);
 
@@ -109,26 +89,6 @@ public interface SiteService {
      */
     public Map<String, Object> getMachineNumByStatus(String user_cus);
 
-
-    /**
-     * 二十七.	移动油机在线(双击在线)
-     */
-    public List getOnlineMachine(String user_cus);
-
-    /**
-     * 二十八.	移动油机离线(双击离线)
-     */
-    public List getOfflineMachine(String user_cus);
-
-    /**
-     * 二十九.	移动油机发电
-     */
-    public List getActiveMachine(String user_cus);
-
-    /**
-     * 三十.	移动油机停机
-     */
-    public List getStopMachine(String user_cus);
 
     /**
      * 三十一.	移动油机查询

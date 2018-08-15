@@ -10,54 +10,9 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SiteMapper {
 	
-	public List getAllSite(@Param("username") String username);
-	
+
 	public List getAllMap(@Param("user_cus") String username);
-	
-	/**
-	 * 所有站点数量
-	 * @return
-	 */
-	public Map<String, Object> getAllNum(@Param("username") String username);
-	
-	/**
-	 * 在线的站点
-	 * @return
-	 */
-	public Map<String, Object> getOnlineNum(@Param("username") String username);
-	
-	/**
-	 * 离线的站点数量
-	 * @return
-	 */
-	public Map<String, Object> getOfflineNum(@Param("username") String username);
-	
-	/**
-	 * 发电的站点数
-	 * @return
-	 */
-	public Map<String, Object> getActiveNum(@Param("username") String username);
-	
-	/**
-	 * 站点状态为停电的站点的数量
-	 * @return
-	 */
-	public Map<String, Object> getStopNum(@Param("username") String username);
-	
-	public List search(@Param("username") String username, @Param("search") String search);
-	
-	public List getOffLineSite(@Param("username") String username);
-	
-	public List getOnlineSite(@Param("username") String username);
-	
-	public List getActiveSite(@Param("username") String username);
-	
-	public List getStopSite(@Param("username") String username);
-	
-	public Map<String, Object> getSiteHeadMsg(String stationId);
-	
-	public List getSiteContent(String stationId);
-	
+
 	public Map<String, Object> getStartVoltage(String mach_no);
 	
 	public int modifyStartVoltage(@Param("changeVoltage") BigDecimal changeVoltage, @Param("mach_no") String mach_no);
@@ -215,26 +170,7 @@ public interface SiteMapper {
 	 * 二十六.	移动油机运行情况（停电）
 	 */
 	public Map<String, Object> getMachineStopNum(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十七.	移动油机在线(双击在线)
-	 */
-	public List getOnlineMachine(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十八.	移动油机离线(双击离线)
-	 */
-	public List getOfflineMachine(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十九.	移动油机发电
-	 */
-	public List getActiveMachine(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 三十.	移动油机停机
-	 */
-	public List getStopMachine(@Param(value = "user_cus") String user_cus);
+
 	
 	/**
 	 *  三十一.	移动油机查询 

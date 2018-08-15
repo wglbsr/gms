@@ -15,11 +15,7 @@ public class SiteServiceImpl implements SiteService {
     @Autowired
     private SiteMapper mapper;
 
-    @Override
-    public List getAllSite(String username) {
-        // TODO Auto-generated method stub
-        return mapper.getAllSite(username);
-    }
+
 
     @Override
     public List getAllMap(String username) {
@@ -27,95 +23,9 @@ public class SiteServiceImpl implements SiteService {
         return mapper.getAllMap(username);
     }
 
-    /**
-     * 性能极低!!!!!!!!!!!!!!!
-     *
-     * @param username
-     * @return
-     */
-    @Override
-    public Map<String, Object> getSiteNumByStatus(String username) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        Map<String, Object> allMap = mapper.getAllNum(username);
-        Map<String, Object> onlineMap = mapper.getOnlineNum(username);
-        Map<String, Object> offlineMap = mapper.getOfflineNum(username);
-        Map<String, Object> activeMap = mapper.getActiveNum(username);
-        Map<String, Object> stopMap = mapper.getStopNum(username);
-        result.put("allStationNum", allMap.get("siteCount"));
-        result.put("stationOnlineNum", onlineMap.get("siteCount"));
-        result.put("stationOfflineNum", offlineMap.get("siteCount"));
-        result.put("stationGenerationNum", activeMap.get("siteCount"));
-        result.put("stationInterruptionNum", stopMap.get("siteCount"));
-        return result;
-    }
 
-    @Override
-    public Map<String, Object> getSiteNumByStatus(String username, int status) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        switch (status) {
-            case 0:
-                Map<String, Object> allMap = mapper.getAllNum(username);
-                result.put("allStationNum", allMap.get("siteCount"));
-            case 1:
-                Map<String, Object> onlineMap = mapper.getOnlineNum(username);
-                result.put("stationOnlineNum", onlineMap.get("siteCount"));
-            case 2:
-                Map<String, Object> offlineMap = mapper.getOfflineNum(username);
-                result.put("stationOfflineNum", offlineMap.get("siteCount"));
-            case 3:
-                Map<String, Object> activeMap = mapper.getActiveNum(username);
-                result.put("stationGenerationNum", activeMap.get("siteCount"));
-            case 4:
-                Map<String, Object> stopMap = mapper.getStopNum(username);
-                result.put("stationInterruptionNum", stopMap.get("siteCount"));
-            default:
-                break;
-        }
 
-        return result;
-    }
 
-    @Override
-    public List search(String username, String search) {
-        // TODO Auto-generated method stub
-        return mapper.search(username, search);
-    }
-
-    @Override
-    public List getOffLineSite(String username) {
-        // TODO Auto-generated method stub
-        return mapper.getOffLineSite(username);
-    }
-
-    @Override
-    public List getOnlineSite(String username) {
-        // TODO Auto-generated method stub
-        return mapper.getOnlineSite(username);
-    }
-
-    @Override
-    public List getActiveSite(String username) {
-        // TODO Auto-generated method stub
-        return mapper.getActiveSite(username);
-    }
-
-    @Override
-    public List getStopSite(String username) {
-        // TODO Auto-generated method stub
-        return mapper.getStopSite(username);
-    }
-
-    @Override
-    public Map<String, Object> getSiteHeadMsg(String stationId) {
-        // TODO Auto-generated method stub
-        return mapper.getSiteHeadMsg(stationId);
-    }
-
-    @Override
-    public List getSiteContent(String stationId) {
-        // TODO Auto-generated method stub
-        return mapper.getSiteContent(stationId);
-    }
 
     @Override
     public Map<String, Object> getStartVoltage(String mach_no) {
@@ -250,56 +160,6 @@ public class SiteServiceImpl implements SiteService {
         result.put("generationNum", activeMap.get("machineCount"));
         result.put("interruptionNum", stopMap.get("machineCount"));
         return result;
-    }
-
-    @Override
-    public Map<String, Object> getMachineNumByStatus(String user_cus, int status) {
-        // TODO Auto-generated method stub
-        Map<String, Object> result = new HashMap<String, Object>();
-        switch (status) {
-            case 0:
-                Map<String, Object> allMap = mapper.getAllNum(user_cus);
-                result.put("allNum", allMap.get("machineCount"));
-            case 1:
-                Map<String, Object> onlineMap = mapper.getOnlineNum(user_cus);
-                result.put("onlineNum", onlineMap.get("machineCount"));
-            case 2:
-                Map<String, Object> offlineMap = mapper.getOfflineNum(user_cus);
-                result.put("offlineNum", offlineMap.get("machineCount"));
-            case 3:
-                Map<String, Object> activeMap = mapper.getActiveNum(user_cus);
-                result.put("generationNum", activeMap.get("machineCount"));
-            case 4:
-                Map<String, Object> stopMap = mapper.getStopNum(user_cus);
-                result.put("interruptionNum", stopMap.get("machineCount"));
-            default:
-                break;
-        }
-        return result;
-    }
-
-    @Override
-    public List getOnlineMachine(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getOnlineMachine(user_cus);
-    }
-
-    @Override
-    public List getOfflineMachine(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getOfflineMachine(user_cus);
-    }
-
-    @Override
-    public List getActiveMachine(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getActiveMachine(user_cus);
-    }
-
-    @Override
-    public List getStopMachine(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getStopMachine(user_cus);
     }
 
     @Override
