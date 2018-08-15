@@ -523,7 +523,8 @@
 
     </resultMap>
     <select id="getOnlineMachine" resultMap="machineStatusMap">
-        select mach_no, mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60 sum_time
+        select mach_no, mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60
+        sum_time
         ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
@@ -554,7 +555,8 @@
 
     <!-- 二十九.	移动油机发电 -->
     <select id="getActiveMachine" resultMap="machineStatusMap">
-        select mach_no, mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60 sum_time
+        select mach_no, mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60
+        sum_time
         ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
@@ -569,7 +571,8 @@
 
     <!-- 三十.	移动油机停机 -->
     <select id="getStopMachine" resultMap="machineStatusMap">
-        select mach_no,mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60 sum_time
+        select mach_no,mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60
+        sum_time
         ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
@@ -590,12 +593,13 @@
         dbo.get_time(mach_no) get_time, inter_time, lengthtime
          -->
         <!--<bind name="search" value="'%' + _parameter.search + '%'" /> -->
-        select mach_no,mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60 sum_time
+        select mach_no,mach_name, mach_type, st_state, city_electricity, al_voltage, isnull(dbo.sum_time(mach_no),0)/60
+        sum_time
         ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
         external_temperature,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level
-        from View_mach1
+        from view_generator_full_info
         WHERE 1 = 1
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}
@@ -618,7 +622,12 @@
         <if test="Acity_electricity != null and Acity_electricity != '' ">
             AND Acity_electricity = #{Acity_electricity}
         </if>
-
+        <if test="expr1 ==1 and expr1 == 0 ">
+            AND isnull(Expr1,1) = #{expr1}
+        </if>
+        <if test="use_type !=null and use_type != '' ">
+            AND use_type = #{use_type}
+        </if>
     </select>
 
     <!-- 三十二.	启动功能 -->

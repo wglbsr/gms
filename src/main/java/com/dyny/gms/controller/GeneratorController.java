@@ -39,4 +39,18 @@ public class GeneratorController extends BaseController {
             return super.getErrorMsg("请输入机器编号");
         }
     }
+
+
+    @RequestMapping(value = "/getGeneratorList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getGeneratorList(HttpServletRequest request,
+                                  HttpServletResponse response) {
+        String userCus = request.getParameter("user_cus");
+        String machType = request.getParameter("mach_type");
+        if (Tool.StringUtil.validStr("")) {
+            return super.getSuccessResult(generatorService.getGeneratorDetail(""));
+        } else {
+            return super.getErrorMsg("请输入机器编号");
+        }
+    }
 }

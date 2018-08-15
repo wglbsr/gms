@@ -126,6 +126,7 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/search.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject search(HttpServletRequest request,
@@ -151,6 +152,7 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getOffLineSite.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getOffLineSite(HttpServletRequest request,
@@ -176,6 +178,7 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getOnlineSite.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getOnlineSite(HttpServletRequest request,
@@ -201,6 +204,7 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getActiveSite.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getActiveSite(HttpServletRequest request,
@@ -226,6 +230,7 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/getStopSite.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getStopSite(HttpServletRequest request,
@@ -745,33 +750,14 @@ public class SiteController extends BaseController {
         return resultMap;
     }
 
-//    @RequestMapping(value = "/getMachineNumByStatusAndUseType.do", method = RequestMethod.POST)
-//    @ResponseBody
-//    public JSONObject getMachineNumByStatusAndUseType(HttpServletRequest request,
-//                                            HttpServletResponse response) {
-//        JSONObject resultMap = new JSONObject();
-//        String user_cus = request.getParameter("user_cus");
-//        String user_type = request.getParameter("use_type");
-//        try {
-//            Map<String, Object> data = service.getMachineNumByStatus(user_cus);
-//            List list = service.getMachineList(user_cus);
-//            resultMap.put("data", list);
-//            resultMap.put("statusList", data);
-//            resultMap.put("result", "true");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            resultMap.put("result", "false");
-//            resultMap.put("errorMsg", "程序异常");
-//        }
-//        return resultMap;
-//    }
-
 
     /**
      * @param request
      * @param response
      * @return
+     * 该接口已弃用,现在使用searchMachine代替
      */
+    @Deprecated
     @RequestMapping(value = "/getMachineList", method = RequestMethod.POST)
     @ResponseBody
     public String getMachineList(HttpServletRequest request,
@@ -796,11 +782,12 @@ public class SiteController extends BaseController {
 
     /**
      * 二十七.	移动油机在线(双击在线)
-     *
      * @param request
      * @param response
      * @return
-     */
+     * 该接口已弃用,现在使用searchMachine代替
+     * /
+    @Deprecated
     @RequestMapping(value = "/getOnlineMachine.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getOnlineMachine(HttpServletRequest request,
@@ -825,7 +812,9 @@ public class SiteController extends BaseController {
      * @param request
      * @param response
      * @return
+     * 该接口已弃用,现在使用searchMachine代替
      */
+    @Deprecated
     @RequestMapping(value = "/getOfflineMachine.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getOfflineMachine(HttpServletRequest request,
@@ -852,7 +841,9 @@ public class SiteController extends BaseController {
      * @param request
      * @param response
      * @return
+     * 该接口已弃用,现在使用searchMachine代替
      */
+    @Deprecated
     @RequestMapping(value = "/getActiveMachine.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getActiveMachine(HttpServletRequest request,
@@ -877,7 +868,9 @@ public class SiteController extends BaseController {
      * @param request
      * @param response
      * @return
+     * 该接口已弃用,现在使用searchMachine代替
      */
+    @Deprecated
     @RequestMapping(value = "/getStopMachine.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject getStopMachine(HttpServletRequest request,
@@ -915,8 +908,12 @@ public class SiteController extends BaseController {
         String fuel_type = request.getParameter("fuel_type");
         String Acity_electricity = request.getParameter("Acity_electricity");
         String search1 = request.getParameter("search1");
+        String use_type = request.getParameter("use_type");
+        String expr1Str = request.getParameter("expr1");
+        int expr1 = (Integer.valueOf(expr1Str==null||expr1Str.equals("")?"-1":expr1Str));
+
         try {
-            List list = service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1);
+            List list = service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1,expr1,use_type);
             resultMap.put("data", list);
             resultMap.put("result", "true");
         } catch (Exception e) {

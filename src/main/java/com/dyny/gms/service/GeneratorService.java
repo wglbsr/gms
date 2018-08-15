@@ -7,9 +7,10 @@ import java.util.Map;
 
 public interface GeneratorService {
 
-    public List getGenerator(Map<String, Object> condition);
+    public List getGenerator(Map<String, Object> condition,boolean fullInfo);
 
-    public List getGeneratorDetail(String generatorNo);
+
+    public Generator getGeneratorDetail(String generatorNo);
 
     public int updateGenerator(Generator generator);
 

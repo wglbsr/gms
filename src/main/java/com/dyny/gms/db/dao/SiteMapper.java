@@ -247,7 +247,9 @@ public interface SiteMapper {
             @Param("mach_type") String mach_type,
             @Param("fuel_type") String fuel_typ,
             @Param("Acity_electricity") String Acity_electricity,
-            @Param("search1") String search1);
+            @Param("search1") String search1,
+			@Param("expr1") int expr1,
+			@Param("use_type") String use_type);
 	
 	/**
 	 * 三十二.	启动功能

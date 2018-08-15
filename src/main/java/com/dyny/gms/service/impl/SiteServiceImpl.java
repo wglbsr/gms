@@ -304,9 +304,9 @@ public class SiteServiceImpl implements SiteService {
 
     @Override
     public List searchMachine(String user_cus, String state, String st_state,
-                              String mach_type, String fuel_type, String Acity_electricity, String search1) {
+                              String mach_type, String fuel_type, String Acity_electricity, String search1, int expr1,String use_type) {
         // TODO Auto-generated method stub
-        return mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1);
+        return mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1,  expr1,use_type);
     }
 
     @Override

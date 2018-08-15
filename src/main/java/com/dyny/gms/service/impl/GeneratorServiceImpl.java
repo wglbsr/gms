@@ -6,6 +6,7 @@ import com.dyny.gms.service.GeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,15 +17,15 @@ public class GeneratorServiceImpl implements GeneratorService {
     GeneratorMapper generatorMapper;
 
     @Override
-    public List getGenerator(Map<String, Object> condition) {
+    public List getGenerator(Map<String, Object> condition,boolean fullInfo) {
         String useType = (String) condition.get("use_type");
         String status = (String) condition.get("user_cus");
         return null;
     }
 
     @Override
-    public List getGeneratorDetail(String generatorNo) {
-        return null;//generatorMapper.getGeneratorDetail(generatorNo);
+    public Generator getGeneratorDetail(String generatorNo) {
+        return generatorMapper.selectByPrimaryKey(generatorNo);//generatorMapper.getGeneratorDetail(generatorNo);
     }
 
     @Override
