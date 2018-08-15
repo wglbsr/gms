@@ -430,7 +430,7 @@
         <if test="Acity_electricity != null and Acity_electricity != '' ">
             AND Acity_electricity = #{Acity_electricity}
         </if>
-        <if test="expr1 ==1 and expr1 == 0 ">
+        <if test="expr1 >=0 ">
             AND isnull(Expr1,1) = #{expr1}
         </if>
         <if test="use_type !=null and use_type != '' ">

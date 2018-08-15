@@ -510,8 +510,8 @@ public class SiteController extends BaseController {
         String user_cus = request.getParameter("user_cus");
         try {
             Map<String, Object> data = service.getMachineNumByStatus(user_cus);
-            List list = service.getMachineList(user_cus);
-            resultMap.put("data", list);
+//            List list = service.getMachineList(user_cus);
+//            resultMap.put("data", list);
             resultMap.put("statusList", data);
             resultMap.put("result", "true");
         } catch (Exception e) {

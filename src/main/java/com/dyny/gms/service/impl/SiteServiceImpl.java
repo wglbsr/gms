@@ -15,17 +15,11 @@ public class SiteServiceImpl implements SiteService {
     @Autowired
     private SiteMapper mapper;
 
-
-
     @Override
     public List getAllMap(String username) {
         // TODO Auto-generated method stub
         return mapper.getAllMap(username);
     }
-
-
-
-
 
     @Override
     public Map<String, Object> getStartVoltage(String mach_no) {
