@@ -37,8 +37,8 @@
             <!--<columnRenamingRule searchString="^[^_]+" replaceString="" />-->
         <!--</table>-->
 
-        <table tableName="c_basis" domainObjectName="Basis">
-        </table>
+ <!--       <table tableName="c_basis" domainObjectName="Basis">
+        </table>-->
 
         <table tableName="c_mach" domainObjectName="Generator">
         </table>

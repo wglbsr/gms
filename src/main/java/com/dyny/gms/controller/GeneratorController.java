@@ -1,6 +1,7 @@
 package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
+import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.service.GeneratorService;
 import com.dyny.gms.utils.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ public class GeneratorController extends BaseController {
     @ResponseBody
     public String getGeneratorDetail(HttpServletRequest request,
                                      HttpServletResponse response) {
+        String machNo = request.getParameter("mach_no");
+        if (Tool.StringUtil.validStr(machNo)) {
+            return super.getSuccessResult(generatorService.getGeneratorDetail(machNo));
+        } else {
+            return super.getErrorMsg("请输入机器编号");
+        }
+    }
+
+    @RequestMapping(value = "/updateGenerator", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateGenerator(HttpServletRequest request,
+                                  HttpServletResponse response) {
         String machNo = request.getParameter("mach_no");
         if (Tool.StringUtil.validStr(machNo)) {
             return super.getSuccessResult(generatorService.getGeneratorDetail(machNo));
