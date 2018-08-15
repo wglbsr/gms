@@ -434,7 +434,7 @@
 
     </resultMap>
     <select id="getMachineList" resultMap="machineAllMap" parameterType="java.lang.String">
-        select mach_no, mach_type, st_state, city_electricity, al_voltage,
+        select mach_no,mach_name, mach_type, st_state, city_electricity, al_voltage,
         isnull(dbo.sum_time(mach_no),0)/60 sum_time ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0)
         start_Vo,
         state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)

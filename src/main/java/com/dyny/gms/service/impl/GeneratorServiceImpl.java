@@ -10,8 +10,8 @@ import java.util.Map;
 @Service
 public class GeneratorServiceImpl implements GeneratorService {
 
-    @Autowired
-    GeneratorMapper generatorMapper;
+//    @Autowired
+//    GeneratorMapper generatorMapper;
 
     @Override
     public List getGeneratorByCondition(Map<String, Object> condition) {
@@ -22,6 +22,6 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Override
     public List getGeneratorDetail(String generatorNo) {
-        return generatorMapper.getGeneratorDetail(generatorNo);
+        return null;//generatorMapper.getGeneratorDetail(generatorNo);
     }
 }
