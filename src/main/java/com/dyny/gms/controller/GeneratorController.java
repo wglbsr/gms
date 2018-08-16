@@ -30,25 +30,13 @@ public class GeneratorController extends BaseController {
 
     @RequestMapping(value = "/updateGenerator", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String updateGenerator(@ModelAttribute Generator generator) {
+    public String updateGenerator(@RequestBody Generator generator) {
         if (generator != null) {
-            return super.getSuccessResult(generatorService.updateGenerator(generator));
+            super.getSuccessResult(generatorService.updateGenerator(generator));
+            return super.getSuccessResult(1);
         } else {
             return super.getErrorMsg("请输入机器编号");
         }
     }
 
-
-    @RequestMapping(value = "/getGeneratorList", produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public String getGeneratorList(HttpServletRequest request,
-                                   HttpServletResponse response) {
-        String userCus = request.getParameter("user_cus");
-        String machType = request.getParameter("mach_type");
-        if (Tool.StringUtil.validStr("")) {
-            return super.getSuccessResult(generatorService.getGeneratorDetail(""));
-        } else {
-            return super.getErrorMsg("请输入机器编号");
-        }
-    }
 }

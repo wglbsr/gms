@@ -420,9 +420,6 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Generator">
         update C_mach
         <set>
-            <if test="id != null">
-                id = #{id,jdbcType=INTEGER},
-            </if>
             <if test="machName != null">
                 mach_name = #{machName,jdbcType=NVARCHAR},
             </if>
@@ -488,7 +485,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Generator">
     update C_mach
-    set id = #{id,jdbcType=INTEGER},
+    set
       mach_name = #{machName,jdbcType=NVARCHAR},
       mach_type = #{machType,jdbcType=NVARCHAR},
       fuel_type = #{fuelType,jdbcType=NVARCHAR},
