@@ -43,7 +43,7 @@ public interface SiteService {
     /**
      * 二十三.	发电记录功能
      */
-    public Map<String, Object> getActiveElecLog(String st_no);
+    public String getGenerateLog(String user_cus , String mach_no,int pageNum,int pageSize,long startDate,long endDate);
 
     /**
      * 二十四.	油机资产管理

@@ -210,18 +210,30 @@
 	</select>
 
     <!-- 二十三.	发电记录功能 -->
-    <resultMap type="map" id="activeElecLogMap">
-        <result column="mach_no" property="stationName" javaType="string"/>
-        <result column="stationNumber" property="stationNumber" javaType="string"/>
-        <result column="start_time" property="strat_time" javaType="string"/>
+    <resultMap type="map" id="generateLogMap">
+        <result column="mach_name" property="mach_name" javaType="string"/>
+        <result column="mach_no" property="mach_no" javaType="string"/>
+        <result column="start_time" property="start_time" javaType="string"/>
         <result column="end_time" property="end_time" javaType="string"/>
         <result column="num_time" property="num_time" javaType="string"/>
     </resultMap>
-    <select id="getActiveElecLog" resultMap="activeElecLogMap">
-		select mach_no, dbo.mach_name(mach_no) stationNumber,start_time, end_time, 
-		DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time 
-		from Ap_time
-		where mach_no=#{st_no}
+    <select id="getGenerateLog" resultMap="generateLogMap">
+		select t.mach_no,m.mach_name, t.start_time, t.end_time,
+		DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time
+		from Ap_time t join C_mach m on m.mach_no=t.mach_no
+		<if test="user_cus!=null and user_cus!=''">
+            and m.cus_no=#{user_cus}
+        </if>
+        <if test="mach_no!=null and mach_no!=''">
+            and (m.mach_no like '%'+#{mach_no}+'%' or m.mach_name like '%'+#{mach_no}+'%')
+        </if>
+        <if test="start_date>0">
+            AND start_time &gt;= DATEADD(S,#{start_date},'1970-01-01 08:00:00')
+        </if>
+        <if test="end_date>0">
+            AND end_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
+        </if>
+        order by t.mach_no desc
 	</select>
 
 

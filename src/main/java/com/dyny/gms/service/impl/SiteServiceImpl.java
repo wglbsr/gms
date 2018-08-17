@@ -1,7 +1,6 @@
 package com.dyny.gms.service.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,9 +122,12 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     }
 
     @Override
-    public Map<String, Object> getActiveElecLog(String st_no) {
+    public String getGenerateLog(String user_cus , String mach_no,int pageNum,int pageSize,long startDate,long endDate) {
         // TODO Auto-generated method stub
-        return mapper.getActiveElecLog(st_no);
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        List result = mapper.getGenerateLog(user_cus,mach_no,startDate,endDate);
+        long total = page.getTotal();
+        return super.getSuccessResult(result,pageNum,pageSize,total);
     }
 
     @Override

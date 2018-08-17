@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -377,23 +375,33 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/getActiveElecLog.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/getGenerateLog.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getActiveElecLog(HttpServletRequest request,
+    public String getActiveElecLog(HttpServletRequest request,
                                        HttpServletResponse response) {
 
 
-        JSONObject resultMap = new JSONObject();
         String mach_no = request.getParameter("mach_no");
-        try {
-            Map<String, Object> data = service.getActiveElecLog(mach_no);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
+        String user_cus = request.getParameter("user_cus");
+        String page_num_str = request.getParameter("pageNum");
+        String page_size_str = request.getParameter("pageSize");
+        String startDateStr = request.getParameter("startDate");
+        String endDateStr = request.getParameter("endDate");
+        int page_num = 0;
+        int page_size= 0;
+        if (Tool.StringUtil.isNum(page_num_str,page_size_str)) {
+            page_num= Integer.valueOf(page_num_str);
+            page_size = Integer.valueOf(page_size_str);
         }
-        return resultMap;
+        long startDate = 0;
+        long endDate = 0;
+        if(Tool.StringUtil.isNum(startDateStr)){
+            startDate =Long.valueOf(startDateStr);
+        }
+        if(Tool.StringUtil.isNum(endDateStr)){
+            endDate = Long.valueOf(endDateStr);
+        }
+        return service.getGenerateLog(user_cus,mach_no,page_num,page_size,startDate,endDate);
     }
 
     /**

@@ -99,7 +99,10 @@ public interface SiteMapper {
 	/**
 	 * 二十三.	发电记录功能
 	 */
-	public Map<String, Object> getActiveElecLog(String st_no);
+	public List getGenerateLog( @Param("user_cus") String user_cus,
+								@Param("mach_no") String mach_no,
+								@Param("start_date") long start_date,
+								@Param("end_date") long end_date);
 	
 	/**
 	 * 二十四.	油机资产管理
