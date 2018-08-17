@@ -1,6 +1,7 @@
 package com.dyny.gms.service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +94,7 @@ public interface SiteService {
     /**
      * 三十一.	移动油机查询
      */
-    public List searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String search1, int expr1,String use_type);
+    public List searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String search1, int expr1, String use_type);
 
 
     /**
@@ -141,8 +142,6 @@ public interface SiteService {
      */
     public List getSiteWaring(String user_cus);
 
-    /**
-     * 四十一.警报信息查询明细
-     */
-    public List getSiteWaring1(String user_cus);
+
+    public String getSiteWaringList(String user_cus, int pageNum, int pageSize , String action, long startDate, long endDate);
 }

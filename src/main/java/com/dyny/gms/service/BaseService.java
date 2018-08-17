@@ -1,13 +1,10 @@
 package com.dyny.gms.service;
 
+import com.dyny.gms.controller.commonController.BaseController;
+
 import java.util.Map;
 
-public class BaseService {
-
-    public Object transformMapToPojo(Map<String, Object> pojo) {
+public class BaseService extends BaseController {
 
 
-        return null;
-
-    }
 }

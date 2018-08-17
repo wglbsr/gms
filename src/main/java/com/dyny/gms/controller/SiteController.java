@@ -3,6 +3,7 @@ package com.dyny.gms.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.service.SiteService;
+import com.dyny.gms.utils.Tool;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,27 +49,8 @@ public class SiteController extends BaseController {
                                 HttpServletResponse response) {
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
-//        try {
-//            List list = service.getAllMap(user_cus);
-//            resultMap.put("data", list);
-//            resultMap.put("result", "true");
-//        } catch (Exception e) {
-//            log.info(e);
-//            resultMap.put("result", "false");
-//            resultMap.put("errorMsg", "程序异常");
-//        }
         return super.getSuccessResult(service.getAllMap(user_cus));
     }
-
-    @RequestMapping(value = "/getGeneratorDetail")
-    @ResponseBody
-    public String getGeneratorDetail(HttpServletRequest request,
-                                     HttpServletResponse response) {
-
-
-        return null;
-    }
-
 
     /**
      * 十四.	查询启动电压功能
@@ -833,24 +816,32 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/getSiteWaring1.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/getSiteWaringList.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getSiteWaring1(HttpServletRequest request,
+    public String getSiteWaringList(HttpServletRequest request,
                                      HttpServletResponse response) {
-
-
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
-        try {
-            List list = service.getSiteWaring1(user_cus);
-            resultMap.put("data", list);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
+        String page_num_str = request.getParameter("pageNum");
+        String page_size_str = request.getParameter("pageSize");
+        String alarmType = request.getParameter("alarmType");
+        String startDateStr = request.getParameter("startDate");
+        String endDateStr = request.getParameter("endDate");
+        int page_num = 0;
+        int page_size= 0;
+        if (Tool.StringUtil.isNum(page_num_str,page_size_str)) {
+            page_num= Integer.valueOf(page_num_str);
+            page_size = Integer.valueOf(page_size_str);
         }
-        return resultMap;
+        long startDate = 0;
+        long endDate = 0;
+        if(Tool.StringUtil.isNum(startDateStr)){
+             startDate =Long.valueOf(startDateStr);
+        }
+        if(Tool.StringUtil.isNum(endDateStr)){
+            endDate = Long.valueOf(endDateStr);
+        }
+        return service.getSiteWaringList(user_cus,page_num,page_size,alarmType,startDate,endDate);
     }
 
 }

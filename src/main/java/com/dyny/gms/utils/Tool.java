@@ -521,6 +521,14 @@ public class Tool {
             return false;
         }
 
+        public static boolean isNum(String ...str) {
+            for(String temp:str){
+                if(!StringUtil.isNum(temp)) return false;
+            }
+
+            return true;
+        }
+
         /**
          *
          * @param content

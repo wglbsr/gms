@@ -1,6 +1,7 @@
 package com.dyny.gms.db.dao;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -244,6 +245,6 @@ public List getSiteWaring(@Param("user_cus") String user_cus);
 /**
  * 四十一.警报信息查询明细1
  */
-public List getSiteWaring1(@Param("user_cus") String user_cus);
+public List getSiteWaringList(@Param("user_cus") String user_cus,@Param("action") String action,@Param("start_date") long start_date,@Param("end_date") long end_date);
 
 }

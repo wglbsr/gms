@@ -32,8 +32,7 @@ public class GeneratorController extends BaseController {
     @ResponseBody
     public String updateGenerator(@RequestBody Generator generator) {
         if (generator != null) {
-            super.getSuccessResult(generatorService.updateGenerator(generator));
-            return super.getSuccessResult(1);
+            return super.getSuccessResult(super.getSuccessResult(generatorService.updateGenerator(generator)));
         } else {
             return super.getErrorMsg("请输入机器编号");
         }

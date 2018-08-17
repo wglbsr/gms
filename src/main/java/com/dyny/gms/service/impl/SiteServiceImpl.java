@@ -1,17 +1,29 @@
 package com.dyny.gms.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.dyny.gms.db.dao.SiteMapper;
+import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SiteService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SiteServiceImpl implements SiteService {
+public class SiteServiceImpl extends BaseService implements SiteService {
+    @Override
+    public String getSiteWaringList(String user_cus, int pageNum, int pageSize, String action,long startDate,long endDate) {
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        List result = mapper.getSiteWaringList(user_cus,action,startDate,endDate);
+        long total = page.getTotal();
+        return super.getSuccessResult(result, pageNum, pageSize, total);
+    }
+
     @Autowired
     private SiteMapper mapper;
 
@@ -158,9 +170,9 @@ public class SiteServiceImpl implements SiteService {
 
     @Override
     public List searchMachine(String user_cus, String state, String st_state,
-                              String mach_type, String fuel_type, String Acity_electricity, String search1, int expr1,String use_type) {
+                              String mach_type, String fuel_type, String Acity_electricity, String search1, int expr1, String use_type) {
         // TODO Auto-generated method stub
-        return mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1,  expr1,use_type);
+        return mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1, expr1, use_type);
     }
 
     @Override
@@ -208,16 +220,18 @@ public class SiteServiceImpl implements SiteService {
         return mapper.getMachineList(user_cu);
     }
 
-    /**获得固定油机,暂时只是添加多一个参数
+    /**
+     * 获得固定油机,暂时只是添加多一个参数
      * 20180809
+     *
      * @param user_cu
      * @param use_type
      * @return
      */
     @Override
-    public List getMachineList(String user_cu,String use_type) {
+    public List getMachineList(String user_cu, String use_type) {
         // TODO Auto-generated method stub
-        return mapper.getMachineListWithUseType(user_cu,use_type);
+        return mapper.getMachineListWithUseType(user_cu, use_type);
     }
 
     @Override
@@ -236,12 +250,6 @@ public class SiteServiceImpl implements SiteService {
     public List getSiteWaring(String user_cus) {
         // TODO Auto-generated method stub
         return mapper.getSiteWaring(user_cus);
-    }
-
-    @Override
-    public List getSiteWaring1(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getSiteWaring1(user_cus);
     }
 
 }
