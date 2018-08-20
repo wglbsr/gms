@@ -417,6 +417,9 @@
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
+    <update id="calculateGenerateTime">
+        UPDATE C_mach set i_total_generate_time = dbo.sum_time(mach_no)
+    </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Generator">
         update C_mach
         <set>

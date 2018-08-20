@@ -32,6 +32,8 @@ public interface GeneratorMapper {
 
     int updateByPrimaryKey(Generator record);
 
+    int calculateGenerateTime();
+
     List getGeneratorFullInfo(@Param("use_type") String use_type, @Param("mach_type") String mach_type,
                               @Param("fuel_type") String fuel_type, @Param("city_electricity") int city_electricity,
                               @Param("online") int online, @Param("user_cus") String user_cus);
