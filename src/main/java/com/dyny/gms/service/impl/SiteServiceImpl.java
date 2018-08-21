@@ -1,5 +1,6 @@
 package com.dyny.gms.service.impl;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -151,7 +152,7 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         params.setType(ExcelType.XSSF);
         Workbook workbook = ExcelExportUtil.exportExcel(params, GenerateRecordEntity.class, list);
         String excelFileName = Tool.DateUtil.getNowDateStringByPattern("yyyyMMddHHmmssSSS") + user_cus + ".xlsx";
-        FileOutputStream fos = new FileOutputStream(this.path + "/" + excelFileName);
+        FileOutputStream fos = new FileOutputStream(this.path + File.separator + excelFileName);
         workbook.write(fos);
         fos.close();
         return excelFileName;
