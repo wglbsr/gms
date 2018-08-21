@@ -4,24 +4,27 @@ import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.service.SiteService;
 import com.dyny.gms.utils.Tool;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-/**
- * project controller
- *
- * @author zhangmx
- */
+
 @Controller
 @RequestMapping(value = "/ems/site", produces = {"application/json;charset=UTF-8"})
 public class SiteController extends BaseController {
@@ -31,7 +34,6 @@ public class SiteController extends BaseController {
 
     @Autowired
     private SiteService service;
-
 
 
     /**
@@ -44,11 +46,39 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/getAllMap.do")
     @ResponseBody
     public String getAllMap(HttpServletRequest request,
-                                HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
+                            HttpServletResponse response) {
         String user_cus = request.getParameter("user_cus");
         return super.getSuccessResult(service.getAllMap(user_cus));
     }
+
+
+    @RequestMapping(value = "/exportGenerateTable", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String exportGenerateTable(@RequestParam(name = "user_cus", required = true) String user_cus,
+                                      @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
+                                      @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
+       String fileName =  service.getGenerateLogFile(user_cus, startDate, endDate);
+
+        return super.getSuccessResult(fileName);
+    }
+
+
+    @Value("${export.excel}")
+    private String excelPath;
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> download(@RequestParam(name = "fileName") String fileName) throws IOException {
+        File file = new File(excelPath + "/" + fileName);
+        if (!file.exists()) {
+            return null;
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
 
     /**
      * 十四.	查询启动电压功能
@@ -378,7 +408,7 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/getGenerateLog.do", method = RequestMethod.POST)
     @ResponseBody
     public String getActiveElecLog(HttpServletRequest request,
-                                       HttpServletResponse response) {
+                                   HttpServletResponse response) {
 
 
         String mach_no = request.getParameter("mach_no");
@@ -388,20 +418,20 @@ public class SiteController extends BaseController {
         String startDateStr = request.getParameter("startDate");
         String endDateStr = request.getParameter("endDate");
         int page_num = 0;
-        int page_size= 0;
-        if (Tool.StringUtil.isNum(page_num_str,page_size_str)) {
-            page_num= Integer.valueOf(page_num_str);
+        int page_size = 0;
+        if (Tool.StringUtil.isNum(page_num_str, page_size_str)) {
+            page_num = Integer.valueOf(page_num_str);
             page_size = Integer.valueOf(page_size_str);
         }
         long startDate = 0;
         long endDate = 0;
-        if(Tool.StringUtil.isNum(startDateStr)){
-            startDate =Long.valueOf(startDateStr);
+        if (Tool.StringUtil.isNum(startDateStr)) {
+            startDate = Long.valueOf(startDateStr);
         }
-        if(Tool.StringUtil.isNum(endDateStr)){
+        if (Tool.StringUtil.isNum(endDateStr)) {
             endDate = Long.valueOf(endDateStr);
         }
-        return service.getGenerateLog(user_cus,mach_no,page_num,page_size,startDate,endDate);
+        return service.getGenerateLog(user_cus, mach_no, page_num, page_size, startDate, endDate);
     }
 
     /**
@@ -514,7 +544,6 @@ public class SiteController extends BaseController {
     }
 
 
-
     /**
      * 三十一.	移动油机查询
      *
@@ -536,10 +565,10 @@ public class SiteController extends BaseController {
         String search1 = request.getParameter("search1");
         String use_type = request.getParameter("use_type");
         String expr1Str = request.getParameter("expr1");
-        int expr1 = (Integer.valueOf(expr1Str==null||expr1Str.equals("")?"-1":expr1Str));
+        int expr1 = (Integer.valueOf(expr1Str == null || expr1Str.equals("") ? "-1" : expr1Str));
 
         try {
-            List list = service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1,expr1,use_type);
+            List list = service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1, expr1, use_type);
             resultMap.put("data", list);
             resultMap.put("result", "true");
         } catch (Exception e) {
@@ -827,7 +856,7 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/getSiteWaringList.do", method = RequestMethod.POST)
     @ResponseBody
     public String getSiteWaringList(HttpServletRequest request,
-                                     HttpServletResponse response) {
+                                    HttpServletResponse response) {
         JSONObject resultMap = new JSONObject();
         String user_cus = request.getParameter("user_cus");
         String page_num_str = request.getParameter("pageNum");
@@ -836,20 +865,20 @@ public class SiteController extends BaseController {
         String startDateStr = request.getParameter("startDate");
         String endDateStr = request.getParameter("endDate");
         int page_num = 0;
-        int page_size= 0;
-        if (Tool.StringUtil.isNum(page_num_str,page_size_str)) {
-            page_num= Integer.valueOf(page_num_str);
+        int page_size = 0;
+        if (Tool.StringUtil.isNum(page_num_str, page_size_str)) {
+            page_num = Integer.valueOf(page_num_str);
             page_size = Integer.valueOf(page_size_str);
         }
         long startDate = 0;
         long endDate = 0;
-        if(Tool.StringUtil.isNum(startDateStr)){
-             startDate =Long.valueOf(startDateStr);
+        if (Tool.StringUtil.isNum(startDateStr)) {
+            startDate = Long.valueOf(startDateStr);
         }
-        if(Tool.StringUtil.isNum(endDateStr)){
+        if (Tool.StringUtil.isNum(endDateStr)) {
             endDate = Long.valueOf(endDateStr);
         }
-        return service.getSiteWaringList(user_cus,page_num,page_size,alarmType,startDate,endDate);
+        return service.getSiteWaringList(user_cus, page_num, page_size, alarmType, startDate, endDate);
     }
 
 }

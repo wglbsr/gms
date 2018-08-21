@@ -418,7 +418,7 @@
         </if>
     </update>
     <update id="calculateGenerateTime">
-        UPDATE C_mach set i_total_generate_time = dbo.sum_time(mach_no)
+        UPDATE C_mach set i_total_generate_time = dbo.sum_time(mach_no) , i_total_generate_cnt = dbo.sumnum_time(mach_no)
     </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Generator">
         update C_mach

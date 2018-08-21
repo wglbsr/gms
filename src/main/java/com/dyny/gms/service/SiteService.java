@@ -1,5 +1,7 @@
 package com.dyny.gms.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +45,10 @@ public interface SiteService {
     /**
      * 二十三.	发电记录功能
      */
-    public String getGenerateLog(String user_cus , String mach_no,int pageNum,int pageSize,long startDate,long endDate);
+    public String getGenerateLog(String user_cus, String mach_no, int pageNum, int pageSize, long startDate, long endDate);
+
+
+    public String getGenerateLogFile(String user_cus, long startDate, long endDate) throws FileNotFoundException, IOException;
 
     /**
      * 二十四.	油机资产管理
@@ -143,5 +148,5 @@ public interface SiteService {
     public List getSiteWaring(String user_cus);
 
 
-    public String getSiteWaringList(String user_cus, int pageNum, int pageSize , String action, long startDate, long endDate);
+    public String getSiteWaringList(String user_cus, int pageNum, int pageSize, String action, long startDate, long endDate);
 }

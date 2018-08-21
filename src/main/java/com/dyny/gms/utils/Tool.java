@@ -1,4 +1,5 @@
 package com.dyny.gms.utils;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -48,200 +49,20 @@ import com.alibaba.fastjson.JSONObject;
  * 2018-06-22 update
  *
  * @author wglbsr
- *
  */
 public class Tool {
     private static Logger logger = Logger.getLogger(Tool.class);
 
     public static void main(String[] args) throws IOException {
-        // 816~865 1~50
-        // 867~916 51~100
-        // System.out.println(Tool.StringUtil.isMailAddress("527109046@qq.com"));;
-//        for (int i = 51; i <= 100; i++) {
-//            Tool.NetUtil.downLoadFromUrl("http://media-shared.com/qr/qrcode_" + (816 + i) + ".png",
-//                    "qrcode_" + i + ".png", "/Users/wglbsr/qrCode", 2000);
-//        }
     }
-
-    /**
-     * 网络相关类
-     *
-     * @author wglbsr
-     *
-     */
-//    public static class NetUtil {
-//
-//        /**
-//         *
-//         * @param url
-//         * @param timeout_ms
-//         * @param retryTimes
-//         *            大于等于1
-//         * @return
-//         */
-//        public static org.jsoup.nodes.Document getDocByFakeBrowser(String url, int timeout_ms, int retryTimes) {
-//            org.jsoup.nodes.Document doc = null;
-//            retryTimes = retryTimes > 0 ? retryTimes : 1;
-//            timeout_ms = timeout_ms > 0 ? timeout_ms : 1500;
-//            for (int i = 0; i < retryTimes; i++) {
-//                try {
-//                    if (Tool.StringUtil.validStr(url)) {
-//                        doc = (org.jsoup.nodes.Document) Jsoup.connect(url).timeout(timeout_ms)
-//                                // w伪装
-//                                .userAgent(
-//                                        "Mozilla/5.0?(Windows?NT?6.1;?WOW64)?AppleWebKit/537.31?(KHTML,?like?Gecko)?Chrome/26.0.1410.64?Safari/537.31")
-//                                .get();
-//                    }
-//                } catch (Exception e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            return doc;
-//        }
-//
-//        /**
-//         * 从网络Url中下载文件
-//         *
-//         * @param urlStr
-//         * @param fileName
-//         * @param savePath
-//         * @throws IOException
-//         */
-//        public static int downLoadFromUrl(String urlStr, String fileName, String savePath, int timeout)
-//                throws IOException {
-//            // 文件保存位置
-//            File saveDir = new File(savePath);
-//            if (!saveDir.exists()) {
-//                saveDir.mkdir();
-//            }
-//            // 首先判断文件是否已经存在
-//            File file = new File(saveDir + File.separator + fileName);
-//            if (file.exists()) {
-//                return -1;
-//            }
-//            URL url = new URL(urlStr);
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setConnectTimeout(timeout);
-//            // 防止屏蔽程序抓取而返回403错误
-//            conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-//            // 得到输入流
-//            InputStream inputStream = conn.getInputStream();
-//            // 获取自己数组
-//            byte[] getData = Tool.FileUtil.readInputStream(inputStream);
-//            FileOutputStream fos = new FileOutputStream(file);
-//            fos.write(getData);
-//            if (fos != null) {
-//                fos.close();
-//            }
-//            if (inputStream != null) {
-//                inputStream.close();
-//            }
-//            return 1;
-//        }
-//
-//        /**
-//         *
-//         * @param uri
-//         * @return
-//         * @throws URISyntaxException
-//         * @throws ClientProtocolException
-//         * @throws IOException
-//         */
-//        public static String getURLContent(URI uri) throws URISyntaxException, ClientProtocolException, IOException {
-//            if (uri == null) {
-//                return null;
-//            }
-//            // System.out.println(uri.toString());
-//            HttpGet httpget = new HttpGet(uri);
-//            CloseableHttpClient httpclient = HttpClients.createDefault();
-//            CloseableHttpResponse response = httpclient.execute(httpget);
-//            String content = null;
-//            try {
-//                HttpEntity entity = response.getEntity();
-//                content = EntityUtils.toString(entity);
-//            } finally {
-//                response.close();
-//            }
-//            return content;
-//        }
-//
-//        /**
-//         *
-//         * @param params
-//         * @param host
-//         * @param path
-//         * @param scheme
-//         * @return
-//         * @throws URISyntaxException
-//         * @throws ClientProtocolException
-//         * @throws IOException
-//         */
-//        public static String getURLContent(Map<String, String> params, String host, String path, String scheme)
-//                throws URISyntaxException, ClientProtocolException, IOException {
-//
-//            URIBuilder uribuilder = new URIBuilder();
-//            uribuilder.setHost(host);
-//            uribuilder.setPath(path);
-//            uribuilder.setScheme(scheme);
-//            if (params == null) {
-//                return null;
-//            }
-//            Set<String> keyset = params.keySet();
-//            Iterator<String> it = keyset.iterator();
-//            while (it.hasNext()) {
-//                String key = (String) it.next();
-//                String content = params.get(key);
-//                uribuilder.setParameter(key, content);
-//            }
-//            URI uri = uribuilder.build();
-//            return getURLContent(uri);
-//        }
-//
-//        /**
-//         * 根据参数返回内容
-//         *
-//         * @param params
-//         * @param host
-//         * @param path
-//         * @param scheme
-//         * @return
-//         * @throws URISyntaxException
-//         * @throws ClientProtocolException
-//         * @throws IOException
-//         */
-//        public static String getURLContent(JSONObject params, String host, String path, String scheme)
-//                throws URISyntaxException, ClientProtocolException, IOException {
-//            URIBuilder uribuilder = new URIBuilder();
-//            uribuilder.setHost(host);
-//            uribuilder.setPath(path);
-//            uribuilder.setScheme(scheme);
-//            if (params == null) {
-//                return null;
-//            }
-//            Set<String> keyset = params.keySet();
-//            Iterator<String> it = keyset.iterator();
-//            while (it.hasNext()) {
-//                String key = (String) it.next();
-//                String content = params.getString(key);
-//                uribuilder.setParameter(key, content);
-//            }
-//            URI uri = uribuilder.build();
-//            return getURLContent(uri);
-//        }
-//    }
-
 
     /**
      * 文件工具类
      *
      * @author wglbsr
-     *
      */
     public static class FileUtil {
         /**
-         *
          * @param proPath
          * @return
          * @throws IOException
@@ -268,7 +89,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param filePath
          * @param fileContent
          * @throws IOException
@@ -286,7 +106,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param filePath
          * @return
          * @throws IOException
@@ -303,7 +122,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param filePath
          * @return
          * @throws IOException
@@ -320,7 +138,6 @@ public class Tool {
         }
 
         /**
-         *
          * @return
          */
         public static String getProjectPath() {
@@ -392,7 +209,6 @@ public class Tool {
      * 字符串工具类
      *
      * @author wglbsr
-     *
      */
     public static class StringUtil {
         /**
@@ -406,6 +222,11 @@ public class Tool {
                 return false;
             }
             return true;
+        }
+
+
+        public static String getRandomNum(int num) {
+            return "" + (int) (Math.random() * Math.pow(10, num));
         }
 
         /**
@@ -509,7 +330,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param str
          * @return
          */
@@ -521,16 +341,15 @@ public class Tool {
             return false;
         }
 
-        public static boolean isNum(String ...str) {
-            for(String temp:str){
-                if(!StringUtil.isNum(temp)) return false;
+        public static boolean isNum(String... str) {
+            for (String temp : str) {
+                if (!StringUtil.isNum(temp)) return false;
             }
 
             return true;
         }
 
         /**
-         *
          * @param content
          * @param regEx
          * @return
@@ -584,7 +403,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param content
          * @param regEx
          * @return
@@ -644,12 +462,10 @@ public class Tool {
      * 日期工具类
      *
      * @author wglbsr
-     *
      */
     public static class DateUtil {
 
         /**
-         *
          * @return
          */
         public static Date getNowDateTime() {
@@ -661,8 +477,14 @@ public class Tool {
             return currentTime_2;
         }
 
+        public static String timestampToStr(long timeStamp) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//这个是你要转成后的时间的格式
+            String sd = sdf.format(new Date(timeStamp));   // 时间戳转换成时间
+            return sd;
+        }
+
+
         /**
-         *
          * @return
          */
         public static String getNowDate() {
@@ -739,7 +561,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param date
          * @param pattern
          * @return
@@ -755,7 +576,6 @@ public class Tool {
         }
 
         /**
-         *
          * @param date
          * @param pattern
          * @return
@@ -798,7 +618,6 @@ public class Tool {
      * 短信操作类
      *
      * @author wglbsr
-     *
      */
     public static class MessageUtil {
 

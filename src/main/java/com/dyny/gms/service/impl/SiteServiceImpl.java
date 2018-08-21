@@ -1,24 +1,33 @@
 package com.dyny.gms.service.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.dao.SiteMapper;
+import com.dyny.gms.exportEntity.GenerateRecordEntity;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SiteService;
+import com.dyny.gms.utils.Tool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SiteServiceImpl extends BaseService implements SiteService {
     @Override
-    public String getSiteWaringList(String user_cus, int pageNum, int pageSize, String action,long startDate,long endDate) {
+    public String getSiteWaringList(String user_cus, int pageNum, int pageSize, String action, long startDate, long endDate) {
         Page page = PageHelper.startPage(pageNum, pageSize);
-        List result = mapper.getSiteWaringList(user_cus,action,startDate,endDate);
+        List result = mapper.getSiteWaringList(user_cus, action, startDate, endDate);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
@@ -122,12 +131,30 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     }
 
     @Override
-    public String getGenerateLog(String user_cus , String mach_no,int pageNum,int pageSize,long startDate,long endDate) {
+    public String getGenerateLog(String user_cus, String mach_no, int pageNum, int pageSize, long startDate, long endDate) {
         // TODO Auto-generated method stub
         Page page = PageHelper.startPage(pageNum, pageSize);
-        List result = mapper.getGenerateLog(user_cus,mach_no,startDate,endDate);
+        List result = mapper.getGenerateLog(user_cus, mach_no, startDate, endDate);
         long total = page.getTotal();
-        return super.getSuccessResult(result,pageNum,pageSize,total);
+        return super.getSuccessResult(result, pageNum, pageSize, total);
+    }
+
+    @Value("${export.excel}")
+    private String path;
+
+    @Override
+    public String getGenerateLogFile(String user_cus, long startDate, long endDate) throws FileNotFoundException, IOException {
+        // TODO Auto-generated method stub
+        List<Map> result = mapper.getGenerateLog(user_cus, null, startDate, endDate);
+        List<GenerateRecordEntity> list = GenerateRecordEntity.parseObjectToGenerateRecordEntity(result);
+        ExportParams params = new ExportParams("发电记录表", "发电记录表");
+        params.setType(ExcelType.XSSF);
+        Workbook workbook = ExcelExportUtil.exportExcel(params, GenerateRecordEntity.class, list);
+        String excelFileName = Tool.DateUtil.getNowDateStringByPattern("yyyyMMddHHmmssSSS") + user_cus + ".xlsx";
+        FileOutputStream fos = new FileOutputStream(this.path + "/" + excelFileName);
+        workbook.write(fos);
+        fos.close();
+        return excelFileName;
     }
 
     @Override
