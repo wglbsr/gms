@@ -24,7 +24,7 @@ public class SchedulingConfig {
     @Autowired
     GeneratorMapper generatorMapper;
 
-    @Scheduled(cron = "* * 4 * * ? ") // 每天凌晨四点计算发电时间
+    @Scheduled(cron = "0 0 4 * * ? ") // 每天凌晨四点计算发电时间
     public void getToken() {
 
         int size = generatorMapper.calculateGenerateTime();
@@ -38,7 +38,7 @@ public class SchedulingConfig {
     @Value("${export.delete.timeout}")
     private long timeout;
 
-    @Scheduled(cron = "* * 2 * * ? ") // 每天凌晨2点删除超时的文件
+    @Scheduled(cron = "0 0 2 * * ? ") // 每天凌晨2点删除超时的文件
     public void deleteExcelFile() {
         File file = new File(excelPath);
         int fileCnt = 0;
