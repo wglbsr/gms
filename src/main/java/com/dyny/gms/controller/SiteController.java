@@ -57,7 +57,7 @@ public class SiteController extends BaseController {
     public String exportGenerateTable(@RequestParam(name = "user_cus", required = true) String user_cus,
                                       @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                       @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
-       String fileName =  service.getGenerateLogFile(user_cus, startDate, endDate);
+        String fileName = service.getGenerateLogFile(user_cus, startDate, endDate);
 
         return super.getSuccessResult(fileName);
     }
@@ -553,30 +553,21 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/searchMachine.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject searchMachine(HttpServletRequest request,
-                                    HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String user_cus = request.getParameter("user_cus");
-        String state = request.getParameter("state");
-        String st_state = request.getParameter("st_state");
-        String mach_type = request.getParameter("mach_type");
-        String fuel_type = request.getParameter("fuel_type");
-        String Acity_electricity = request.getParameter("Acity_electricity");
-        String search1 = request.getParameter("search1");
-        String use_type = request.getParameter("use_type");
-        String expr1Str = request.getParameter("expr1");
-        int expr1 = (Integer.valueOf(expr1Str == null || expr1Str.equals("") ? "-1" : expr1Str));
+    public String searchMachine(@RequestParam(name = "user_cus", required = true) String user_cus,
+                                @RequestParam(name = "state", required = false, defaultValue = "") String state,
+                                @RequestParam(name = "st_state", required = false, defaultValue = "") String st_state,
+                                @RequestParam(name = "mach_type", required = false, defaultValue = "") String mach_type,
+                                @RequestParam(name = "fuel_type", required = false, defaultValue = "") String fuel_type,
+                                @RequestParam(name = "Acity_electricity", required = false, defaultValue = "") String Acity_electricity,
+                                @RequestParam(name = "generate_status", required = false, defaultValue = "") String generateStatus,
+                                @RequestParam(name = "expr1", required = false, defaultValue = "-1") int expr1,
+                                @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                @RequestParam(name = "content", required = false, defaultValue = "") String content,
+                                @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
+                                @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
+        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize,orderBy);
 
-        try {
-            List list = service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, search1, expr1, use_type);
-            resultMap.put("data", list);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
     }
 
     /**

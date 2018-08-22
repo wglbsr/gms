@@ -427,17 +427,20 @@
         <if test="state != null and state != '' ">
             AND state = #{state}
         </if>
-        <if test="st_state != null and st_state != '' ">
-            AND st_state = #{st_state}
+        <if test="online != null and online != '' ">
+            AND st_state = #{online}
         </if>
-        <if test="mach_type != null and mach_type != '' ">
-            AND mach_type = #{mach_type}
+        <if test="currentType != null and currentType != '' ">
+            AND mach_type = #{currentType}
         </if>
         <if test="fuel_type != null and fuel_type != '' ">
             AND fuel_type = #{fuel_type}
         </if>
-        <if test="search1 != null and search1 != '' ">
-            AND (mach_no like '%'+#{search1}+'%' or mach_name like '%'+#{search1}+'%')
+        <if test="generateStatus != null and generateStatus != '' ">
+            AND state1 = #{generateStatus}
+        </if>
+        <if test="content != null and content != '' ">
+            AND (mach_no like '%'+#{content}+'%' or mach_name like '%'+#{content}+'%')
         </if>
         <if test="Acity_electricity != null and Acity_electricity != '' ">
             AND Acity_electricity = #{Acity_electricity}

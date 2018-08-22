@@ -183,11 +183,12 @@ public interface SiteMapper {
 	public List searchMachine(
             @Param("user_cus") String user_cus,
             @Param("state") String state,
-            @Param("st_state") String st_state,
-            @Param("mach_type") String mach_type,
+            @Param("online") String online,
+            @Param("currentType") String currentType,
             @Param("fuel_type") String fuel_typ,
             @Param("Acity_electricity") String Acity_electricity,
-            @Param("search1") String search1,
+            @Param("content") String content,
+			@Param("generateStatus") String generateStatus,
 			@Param("expr1") int expr1,
 			@Param("use_type") String use_type);
 	

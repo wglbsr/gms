@@ -99,7 +99,7 @@ public interface SiteService {
     /**
      * 三十一.	移动油机查询
      */
-    public List searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String search1, int expr1, String use_type);
+    public String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String content, String generateStatus, int expr1, String use_type, int pageNum, int pageSize,String orderBy);
 
 
     /**
