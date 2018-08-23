@@ -16,6 +16,8 @@ public class GenerateRecordEntity {
             GenerateRecordEntity entity = new GenerateRecordEntity();
             entity.setEnd_time((String) temp.get("end_time"));
             entity.setStart_time((String) temp.get("start_time"));
+            entity.setE_end_time((String) temp.get("e_end_time"));
+            entity.setE_start_time((String) temp.get("e_start_time"));
             entity.setMach_name((String) temp.get("mach_name"));
             entity.setMach_no((String) temp.get("mach_no"));
             entity.setNum_time(Integer.valueOf((String) temp.get("num_time")));
@@ -79,6 +81,33 @@ public class GenerateRecordEntity {
         this.num_time = num_time;
     }
 
+
+    public String getE_start_time() {
+        return e_start_time;
+    }
+
+    public void setE_start_time(String e_start_time) {
+        this.e_start_time = e_start_time;
+    }
+
+    public void setE_end_time(String e_end_time) {
+        this.e_end_time = e_end_time;
+    }
+
+    public String getE_end_time() {
+        return e_end_time;
+    }
+
+    public void setE_start_time(long e_end_time) {
+
+        this.e_end_time = Tool.DateUtil.timestampToStr(e_end_time);
+    }
+
+    public void setE_end_time(long e_end_time) {
+        this.e_end_time = Tool.DateUtil.timestampToStr(e_end_time);
+    }
+
+
     @Excel(name = "油机编码", width = 30, isImportField = "true_st")
     private String mach_no = null;
     @Excel(name = "油机/基站名称", width = 30, isImportField = "true_st")
@@ -87,7 +116,10 @@ public class GenerateRecordEntity {
     private String start_time = null;
     @Excel(name = "结束发电时间", width = 30, isImportField = "true_st")
     private String end_time = null;
+    @Excel(name = "市电停电时间", width = 30, isImportField = "true_st")
+    private String e_start_time = null;
+    @Excel(name = "市电恢复时间", width = 30, isImportField = "true_st")
+    private String e_end_time = null;
     @Excel(name = "发电时长(分钟)", width = 30, isImportField = "true_st", isStatistics = true)
     private int num_time = 0;
-
 }

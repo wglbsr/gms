@@ -29,18 +29,16 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
-<!--        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
-        </javaClientGenerator>-->
+        </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
         <!--<table tableName="t_enumeration" domainObjectName="Enumeration">-->
-            <!--<columnRenamingRule searchString="^[^_]+" replaceString="" />-->
+        <!--<columnRenamingRule searchString="^[^_]+" replaceString="" />-->
         <!--</table>-->
 
- <!--       <table tableName="c_basis" domainObjectName="Basis">
-        </table>-->
-
-        <table tableName="c_mach" domainObjectName="Generator">
+        <table tableName="t_station" domainObjectName="Station">
+            <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>
 </generatorConfiguration>

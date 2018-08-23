@@ -18,14 +18,14 @@ public class GeneratorController extends BaseController {
 
     @RequestMapping(value = "/getGeneratorDetail", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getGeneratorDetail(HttpServletRequest request,
-                                     HttpServletResponse response) {
-        String machNo = request.getParameter("mach_no");
-        if (Tool.StringUtil.validStr(machNo)) {
+    public String getGeneratorDetail(@RequestParam(name = "mach_no", required = true) String machNo) {
             return super.getSuccessResult(generatorService.getGeneratorDetail(machNo));
-        } else {
-            return super.getErrorMsg("请输入机器编号");
-        }
+    }
+
+    @RequestMapping(value = "/getGeneratorByCusNo", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getGeneratorByCusNo(@RequestParam(name = "user_cus", required = true) String cusNo) {
+            return super.getSuccessResult(generatorService.getGeneratorDetail(cusNo));
     }
 
     @RequestMapping(value = "/updateGenerator", produces = {"application/json;charset=UTF-8"})

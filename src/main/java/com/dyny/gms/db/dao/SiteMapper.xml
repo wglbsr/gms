@@ -215,10 +215,12 @@
         <result column="mach_no" property="mach_no" javaType="string"/>
         <result column="start_time" property="start_time" javaType="string"/>
         <result column="end_time" property="end_time" javaType="string"/>
+        <result column="e_start_time" property="e_start_time" javaType="string"/><!--市电停电时间-->
+        <result column="e_end_time" property="e_end_time" javaType="string"/><!--市电恢复时间-->
         <result column="num_time" property="num_time" javaType="string"/>
     </resultMap>
     <select id="getGenerateLog" resultMap="generateLogMap">
-		select t.mach_no,m.mach_name, t.start_time, t.end_time,
+		select t.mach_no,m.mach_name, t.start_time, t.end_time ,dbo.get_close_start_time(t.mach_no,t.start_time) e_start_time,dbo.get_close_end_time(t.mach_no,t.start_time) e_end_time,
 		DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time
 		from Ap_time t join C_mach m on m.mach_no=t.mach_no
 		<if test="user_cus!=null and user_cus!=''">
