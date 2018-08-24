@@ -1,7 +1,6 @@
 package com.dyny.gms.task;
 
 import com.dyny.gms.db.dao.GeneratorMapper;
-import com.dyny.gms.utils.Tool;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.File;
-import java.sql.Timestamp;
 
 /**
  * 定时任务

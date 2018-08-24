@@ -516,6 +516,76 @@ public class GeneratorExample {
             return (Criteria) this;
         }
 
+        public Criteria andStNoIsNull() {
+            addCriterion("st_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoIsNotNull() {
+            addCriterion("st_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoEqualTo(String value) {
+            addCriterion("st_no =", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoNotEqualTo(String value) {
+            addCriterion("st_no <>", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoGreaterThan(String value) {
+            addCriterion("st_no >", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoGreaterThanOrEqualTo(String value) {
+            addCriterion("st_no >=", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoLessThan(String value) {
+            addCriterion("st_no <", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoLessThanOrEqualTo(String value) {
+            addCriterion("st_no <=", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoLike(String value) {
+            addCriterion("st_no like", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoNotLike(String value) {
+            addCriterion("st_no not like", value, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoIn(List<String> values) {
+            addCriterion("st_no in", values, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoNotIn(List<String> values) {
+            addCriterion("st_no not in", values, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoBetween(String value1, String value2) {
+            addCriterion("st_no between", value1, value2, "stNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andStNoNotBetween(String value1, String value2) {
+            addCriterion("st_no not between", value1, value2, "stNo");
+            return (Criteria) this;
+        }
+
         public Criteria andCusNoIsNull() {
             addCriterion("cus_no is null");
             return (Criteria) this;
@@ -1496,63 +1566,123 @@ public class GeneratorExample {
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeIsNull() {
+        public Criteria andTotalGenerateTimeIsNull() {
             addCriterion("i_total_generate_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeIsNotNull() {
+        public Criteria andTotalGenerateTimeIsNotNull() {
             addCriterion("i_total_generate_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeEqualTo(Integer value) {
-            addCriterion("i_total_generate_time =", value, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeEqualTo(Integer value) {
+            addCriterion("i_total_generate_time =", value, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeNotEqualTo(Integer value) {
-            addCriterion("i_total_generate_time <>", value, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeNotEqualTo(Integer value) {
+            addCriterion("i_total_generate_time <>", value, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeGreaterThan(Integer value) {
-            addCriterion("i_total_generate_time >", value, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeGreaterThan(Integer value) {
+            addCriterion("i_total_generate_time >", value, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("i_total_generate_time >=", value, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_total_generate_time >=", value, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeLessThan(Integer value) {
-            addCriterion("i_total_generate_time <", value, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeLessThan(Integer value) {
+            addCriterion("i_total_generate_time <", value, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeLessThanOrEqualTo(Integer value) {
-            addCriterion("i_total_generate_time <=", value, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeLessThanOrEqualTo(Integer value) {
+            addCriterion("i_total_generate_time <=", value, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeIn(List<Integer> values) {
-            addCriterion("i_total_generate_time in", values, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeIn(List<Integer> values) {
+            addCriterion("i_total_generate_time in", values, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeNotIn(List<Integer> values) {
-            addCriterion("i_total_generate_time not in", values, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeNotIn(List<Integer> values) {
+            addCriterion("i_total_generate_time not in", values, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeBetween(Integer value1, Integer value2) {
-            addCriterion("i_total_generate_time between", value1, value2, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeBetween(Integer value1, Integer value2) {
+            addCriterion("i_total_generate_time between", value1, value2, "totalGenerateTime");
             return (Criteria) this;
         }
 
-        public Criteria andITotalGenerateTimeNotBetween(Integer value1, Integer value2) {
-            addCriterion("i_total_generate_time not between", value1, value2, "iTotalGenerateTime");
+        public Criteria andTotalGenerateTimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_total_generate_time not between", value1, value2, "totalGenerateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntIsNull() {
+            addCriterion("i_total_generate_cnt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntIsNotNull() {
+            addCriterion("i_total_generate_cnt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntEqualTo(Integer value) {
+            addCriterion("i_total_generate_cnt =", value, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntNotEqualTo(Integer value) {
+            addCriterion("i_total_generate_cnt <>", value, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntGreaterThan(Integer value) {
+            addCriterion("i_total_generate_cnt >", value, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_total_generate_cnt >=", value, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntLessThan(Integer value) {
+            addCriterion("i_total_generate_cnt <", value, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntLessThanOrEqualTo(Integer value) {
+            addCriterion("i_total_generate_cnt <=", value, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntIn(List<Integer> values) {
+            addCriterion("i_total_generate_cnt in", values, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntNotIn(List<Integer> values) {
+            addCriterion("i_total_generate_cnt not in", values, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntBetween(Integer value1, Integer value2) {
+            addCriterion("i_total_generate_cnt between", value1, value2, "totalGenerateCnt");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalGenerateCntNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_total_generate_cnt not between", value1, value2, "totalGenerateCnt");
             return (Criteria) this;
         }
     }

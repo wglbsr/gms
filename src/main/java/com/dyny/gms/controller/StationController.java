@@ -19,7 +19,7 @@ public class StationController extends BaseController {
                                  @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                  @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                                  @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize) {
-        return stationService.getStationListByUsercus(usercus, pageNum, pageSize,orderBy);
+        return stationService.getStationListByUsercus(usercus, pageNum, pageSize, orderBy);
     }
 
     @RequestMapping(value = "/addStation", produces = {"application/json;charset=UTF-8"})
@@ -45,6 +45,12 @@ public class StationController extends BaseController {
     @ResponseBody
     public String getStationNo() {
         return "";
+    }
+
+    @RequestMapping(value = "/checkStationNo", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String checkStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
+        return super.getSuccessResult(stationService.checkStationNo(stationNo));
     }
 
 }

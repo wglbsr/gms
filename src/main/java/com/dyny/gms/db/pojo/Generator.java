@@ -16,6 +16,8 @@ public class Generator {
 
     private String useType;
 
+    private String stNo;
+
     private String cusNo;
 
     private String modelNo;
@@ -46,7 +48,9 @@ public class Generator {
 
     private String gprsno;
 
-    private Integer iTotalGenerateTime;
+    private Integer totalGenerateTime;
+
+    private Integer totalGenerateCnt;
 
     public String getMachNo() {
         return machNo;
@@ -94,6 +98,14 @@ public class Generator {
 
     public void setUseType(String useType) {
         this.useType = useType == null ? null : useType.trim();
+    }
+
+    public String getStNo() {
+        return stNo;
+    }
+
+    public void setStNo(String stNo) {
+        this.stNo = stNo == null ? null : stNo.trim();
     }
 
     public String getCusNo() {
@@ -216,11 +228,19 @@ public class Generator {
         this.gprsno = gprsno == null ? null : gprsno.trim();
     }
 
-    public Integer getiTotalGenerateTime() {
-        return iTotalGenerateTime;
+    public Integer getTotalGenerateTime() {
+        return totalGenerateTime;
     }
 
-    public void setiTotalGenerateTime(Integer iTotalGenerateTime) {
-        this.iTotalGenerateTime = iTotalGenerateTime;
+    public void setTotalGenerateTime(Integer totalGenerateTime) {
+        this.totalGenerateTime = totalGenerateTime;
+    }
+
+    public Integer getTotalGenerateCnt() {
+        return totalGenerateCnt;
+    }
+
+    public void setTotalGenerateCnt(Integer totalGenerateCnt) {
+        this.totalGenerateCnt = totalGenerateCnt;
     }
 }

@@ -11,6 +11,7 @@ public interface StationService {
 
     int updateStation(Station station);
 
+    int checkStationNo(String stationNo);
 
     int addStation(Station station);
 

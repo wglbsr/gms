@@ -25,20 +25,23 @@
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
     </resultMap>
     <select id="getAllMap" resultMap="allMap" parameterType="java.lang.String">
-         SELECT
-             i.id
-            ,dbo.p_name(i.mach_no) st_name
-            ,i.mach_no
-            ,i.st_coordinate
-            ,dbo.p_state(i.mach_no) st_state
-            ,dbo.p_Acityelectricity(i.mach_no)  Acity_electricity
+        SELECT
+        i.id
+        ,dbo.p_name(i.mach_no) st_name
+        ,i.mach_no
+        ,i.st_coordinate
+        ,dbo.p_state(i.mach_no) st_state
+        ,dbo.p_Acityelectricity(i.mach_no) Acity_electricity
         FROM
-            id i
-                JOIN c_mach m
-                ON m.mach_no=i.mach_no AND
-                m.cus_no=#{user_cus}
+        id i
+        JOIN c_mach m
+        ON m.mach_no=i.mach_no
+        <if test="user_cus!=''">
+            AND
+            m.cus_no=#{user_cus}
+        </if>
+    </select>
 
-  	</select>
 
     <!-- 六.	站点状态数量功能 -->
     <resultMap type="map" id="numMap">
@@ -220,10 +223,11 @@
         <result column="num_time" property="num_time" javaType="string"/>
     </resultMap>
     <select id="getGenerateLog" resultMap="generateLogMap">
-		select t.mach_no,m.mach_name, t.start_time, t.end_time ,dbo.get_close_start_time(t.mach_no,t.start_time) e_start_time,dbo.get_close_end_time(t.mach_no,t.start_time) e_end_time,
-		DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time
-		from Ap_time t join C_mach m on m.mach_no=t.mach_no
-		<if test="user_cus!=null and user_cus!=''">
+        select t.mach_no,m.mach_name, t.start_time, t.end_time ,dbo.get_close_start_time(t.mach_no,t.start_time)
+        e_start_time,dbo.get_close_end_time(t.mach_no,t.start_time) e_end_time,
+        DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time
+        from Ap_time t join C_mach m on m.mach_no=t.mach_no
+        <if test="user_cus!=null and user_cus!=''">
             and m.cus_no=#{user_cus}
         </if>
         <if test="mach_no!=null and mach_no!=''">
@@ -236,7 +240,7 @@
             AND end_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
         </if>
         order by t.start_time desc
-	</select>
+    </select>
 
 
     <!-- 二十四.	油机资产管理 -->
@@ -415,7 +419,8 @@
 
     <!-- 三十一.	移动油机查询 -->
     <select id="searchMachine" resultMap="machineStatusMap">
-        select mach_no,mach_name,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity, al_voltage, isnull(i_total_generate_time,0)/60
+        select mach_no,mach_name,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity,
+        al_voltage, isnull(i_total_generate_time,0)/60
         sum_time
         ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)
