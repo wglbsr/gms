@@ -55,9 +55,10 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/exportGenerateTable", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String exportGenerateTable(@RequestParam(name = "user_cus", required = true) String user_cus,
+                                      @RequestParam(name = "mach_no", required = true) String mach_no,
                                       @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                       @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
-        String fileName = service.getGenerateLogFile(user_cus, startDate, endDate);
+        String fileName = service.getGenerateLogFile(user_cus,mach_no, startDate, endDate);
 
         return super.getSuccessResult(fileName);
     }
@@ -525,22 +526,8 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getMachineNumByStatus.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getMachineNumByStatus(HttpServletRequest request,
-                                            HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String user_cus = request.getParameter("user_cus");
-        try {
-            Map<String, Object> data = service.getMachineNumByStatus(user_cus);
-//            List list = service.getMachineList(user_cus);
-//            resultMap.put("data", list);
-            resultMap.put("statusList", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String getMachineNumByStatus(@RequestParam(name = "user_cus") String user_cus) {
+        return super.getSuccessResult(service.getMachineNum(user_cus));
     }
 
 
@@ -566,7 +553,7 @@ public class SiteController extends BaseController {
                                 @RequestParam(name = "content", required = false, defaultValue = "") String content,
                                 @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                                 @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
-        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize,orderBy);
+        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize, orderBy);
 
     }
 

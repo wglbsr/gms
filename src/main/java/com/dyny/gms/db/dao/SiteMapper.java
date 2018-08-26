@@ -10,58 +10,63 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SiteMapper {
-	
 
-	public List getAllMap(@Param("user_cus") String username);
 
-	public Map<String, Object> getStartVoltage(String mach_no);
-	
-	public int modifyStartVoltage(@Param("changeVoltage") BigDecimal changeVoltage, @Param("mach_no") String mach_no);
-	
-	/**
-	 * 十六.	(1)查询保养时间功能
-	 * @param mach_no
-	 * @return
-	 */
-	public Map<String, Object> getCareTime(String mach_no);
-	
-	/**
-	 * 十六.(2)设定保养时间功能 
-	 * @param mach_no
-	 * @return
-	 */
-	public int modifyCareTime(@Param("currentServiceTime") BigDecimal currentServiceTime, @Param("mach_no") String stationId);
-	
-	/**
-	 * 十七.	(1)设定停机功能
-	 * @param mach_no
-	 * @return
-	 */
-	public Map<String, Object> getStopTime(String mach_no);
-	
-	/**
-	 * 十七.(2)设定停机功能 
-	 * @param mach_no
-	 * @return
-	 */
-	public int modifyStopTime(@Param("currentStopTime") BigDecimal currentStopTime, @Param("mach_no") String mach_no);
-	
-	/**
-	 * 十八.	查看地图位置功能
-	 * @param stationId
-	 * @return
-	 */
-	public Map<String, Object> getMapByStationId(String stationId);
-	
-	/**
-	 * 十九.	站点信息主功能
-	 */
-	public Map<String, Object> getSiteInfo(String stationId);
-	
-	/**
-	 * 二十.	站点信息修改功能
-	 */
-	public int modifySiteInfo(
+    public List getAllMap(@Param("user_cus") String username);
+
+    public Map<String, Object> getStartVoltage(String mach_no);
+
+    public int modifyStartVoltage(@Param("changeVoltage") BigDecimal changeVoltage, @Param("mach_no") String mach_no);
+
+    /**
+     * 十六.	(1)查询保养时间功能
+     *
+     * @param mach_no
+     * @return
+     */
+    public Map<String, Object> getCareTime(String mach_no);
+
+    /**
+     * 十六.(2)设定保养时间功能
+     *
+     * @param mach_no
+     * @return
+     */
+    public int modifyCareTime(@Param("currentServiceTime") BigDecimal currentServiceTime, @Param("mach_no") String stationId);
+
+    /**
+     * 十七.	(1)设定停机功能
+     *
+     * @param mach_no
+     * @return
+     */
+    public Map<String, Object> getStopTime(String mach_no);
+
+    /**
+     * 十七.(2)设定停机功能
+     *
+     * @param mach_no
+     * @return
+     */
+    public int modifyStopTime(@Param("currentStopTime") BigDecimal currentStopTime, @Param("mach_no") String mach_no);
+
+    /**
+     * 十八.	查看地图位置功能
+     *
+     * @param stationId
+     * @return
+     */
+    public Map<String, Object> getMapByStationId(String stationId);
+
+    /**
+     * 十九.	站点信息主功能
+     */
+    public Map<String, Object> getSiteInfo(String stationId);
+
+    /**
+     * 二十.	站点信息修改功能
+     */
+    public int modifySiteInfo(
             @Param("stationName") String stationName,
             @Param("stationNumber") String stationNumber,
             @Param("stationType") String stationType,
@@ -74,11 +79,11 @@ public interface SiteMapper {
             @Param("stationContactManB") String stationContactManB,
             @Param("contactManPhoneB") String contactManPhoneB,
             @Param("stationId") String stationId);
-	
-	/**
-	 * 二十一.	注册站点信息功能
-	 */
-	public int addSiteInfo(
+
+    /**
+     * 二十一.	注册站点信息功能
+     */
+    public int addSiteInfo(
             @Param("stationName") String stationName,
             @Param("stationNumber") String stationNumber,
             @Param("stationType") String stationType,
@@ -90,24 +95,24 @@ public interface SiteMapper {
             @Param("contactManPhoneA") String contactManPhoneA,
             @Param("stationContactManB") String stationContactManB,
             @Param("contactManPhoneB") String contactManPhoneB);
-	
-	/**
-	 * 二十二.	加油记录功能
-	 */
-	public Map<String, Object> getAddOilLog(String st_no);
-	
-	/**
-	 * 二十三.	发电记录功能
-	 */
-	public List getGenerateLog( @Param("user_cus") String user_cus,
-								@Param("mach_no") String mach_no,
-								@Param("start_date") long start_date,
-								@Param("end_date") long end_date);
-	
-	/**
-	 * 二十四.	油机资产管理
-	 */
-	public int addAssets(
+
+    /**
+     * 二十二.	加油记录功能
+     */
+    public Map<String, Object> getAddOilLog(String st_no);
+
+    /**
+     * 二十三.	发电记录功能
+     */
+    public List getGenerateLog(@Param("user_cus") String user_cus,
+                               @Param("mach_no") String mach_no,
+                               @Param("start_date") long start_date,
+                               @Param("end_date") long end_date);
+
+    /**
+     * 二十四.	油机资产管理
+     */
+    public int addAssets(
             @Param("mach_name") String mach_name,
             @Param("mach_no") String mach_no,
             @Param("model_no") String model_no,
@@ -123,11 +128,11 @@ public interface SiteMapper {
             @Param("note") String note,
             @Param("volumeno") BigDecimal volumeno,
             @Param("gprsno") String gprsno);
-	
-	/**
-	 * 二十五.	油机领用管理
-	 */
-	public int addOil(
+
+    /**
+     * 二十五.	油机领用管理
+     */
+    public int addOil(
             @Param("co_no") String co_no,
             @Param("co_time") String co_time,
             @Param("co_per") String co_per,
@@ -136,51 +141,31 @@ public interface SiteMapper {
             @Param("mach_no") String mach_no,
             @Param("use_address") String use_address,
             @Param("user_no") String user_no);
-	/**
-	 * 二十六.
-	 */
-	public List getMachineList(@Param(value = "user_cus") String user_cu);
 
-	/**获得固定油机
-	 * 20180809
-	 * @param user_cu
-	 * @param use_type
-	 * @return
-	 */
-	public List getMachineListWithUseType(@Param(value = "user_cus") String user_cu,@Param(value = "use_type") String use_type);
+    /**
+     * 二十六.
+     */
+    public List getMachineList(@Param(value = "user_cus") String user_cu);
+
+    /**
+     * 获得固定油机
+     * 20180809
+     *
+     * @param user_cu
+     * @param use_type
+     * @return
+     */
+    public List getMachineListWithUseType(@Param(value = "user_cus") String user_cu, @Param(value = "use_type") String use_type);
 
 
-	/**
-	 * 二十六.	移动油机运行情况（全部）
-	 */
-	public Map<String, Object> getMachineAllNum(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十六.	移动油机运行情况（在线）
-	 */
-	public Map<String, Object> getMachineOnlineNum(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十六.	移动油机运行情况（离线）
-	 */
-	public Map<String, Object> getMachineOfflineNum(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十六.	移动油机运行情况（发电）
-	 */
-	public Map<String, Object> getMachineActiveNum(@Param(value = "user_cus") String user_cus);
-	
-	/**
-	 * 二十六.	移动油机运行情况（停电）
-	 */
-	public Map<String, Object> getMachineStopNum(@Param(value = "user_cus") String user_cus);
+    public Map getMachineNum(@Param("user_cus") String user_cus);
 
-	
-	/**
-	 *  三十一.	移动油机查询 
-	 */
 
-	public List searchMachine(
+    /**
+     * 三十一.	移动油机查询
+     */
+
+    public List searchMachine(
             @Param("user_cus") String user_cus,
             @Param("state") String state,
             @Param("online") String online,
@@ -188,67 +173,69 @@ public interface SiteMapper {
             @Param("fuel_type") String fuel_typ,
             @Param("Acity_electricity") String Acity_electricity,
             @Param("content") String content,
-			@Param("generateStatus") String generateStatus,
-			@Param("expr1") int expr1,
-			@Param("use_type") String use_type);
-	
-	/**
-	 * 三十二.	启动功能
-	 */
-	public int startMachine(@Param("mach_no") String mach_no, @Param("user_no") String user_no);
-	
-	/**
-	 * 三十三.	熄火功能
-	 */
-	public int offMachine(@Param("mach_no") String mach_no, @Param("user_no") String user_no);
-	
-	/**
-	 * 三十四.	模式切换功能
-	 */
-	public int changeModel(
+            @Param("generateStatus") String generateStatus,
+            @Param("expr1") int expr1,
+            @Param("use_type") String use_type);
+
+    /**
+     * 三十二.	启动功能
+     */
+    public int startMachine(@Param("mach_no") String mach_no, @Param("user_no") String user_no);
+
+    /**
+     * 三十三.	熄火功能
+     */
+    public int offMachine(@Param("mach_no") String mach_no, @Param("user_no") String user_no);
+
+    /**
+     * 三十四.	模式切换功能
+     */
+    public int changeModel(
             @Param("mach_no") String mach_no,
             @Param("modelflag") int modelflag,
             @Param("code") String code,
             @Param("user_no") String user_no);
-	
-	/**
-	 * 三十五.	保护模式切换功能
-	 */
-	public int changeProtectModel(
+
+    /**
+     * 三十五.	保护模式切换功能
+     */
+    public int changeProtectModel(
             @Param("mach_no") String mach_no,
             @Param("modelflag") int modelflag,
             @Param("code") String code,
             @Param("user_no") String user_no);
-	
-	/**
-	 * 三十六.	移动油机地图位置
-	 */
-	public Map<String, Object> getMachineMap(String user_cus);
-	
-	/**
-	 * 三十七.	移动油机领用查询(25项目的补充)
-	 */
-	public List searchMachineInUse(
+
+    /**
+     * 三十六.	移动油机地图位置
+     */
+    public Map<String, Object> getMachineMap(String user_cus);
+
+    /**
+     * 三十七.	移动油机领用查询(25项目的补充)
+     */
+    public List searchMachineInUse(
             @Param("user_cus") String user_cus,
             @Param("strat_time") String strat_time,
             @Param("end_time") String end_time);
-	/**
-	 * 38.	移动油机交流主数据明细 
-	 */
-	public List getSiteDetailed(String mach_no);
-	
-	/**
-	 * 39.	移动油机交流主数据明细 
-	 */
-	public List getSiteDetailed1(String mach_no);
-	/**
-	 * 四十.警报信息查询明细
-	 */
-public List getSiteWaring(@Param("user_cus") String user_cus);
 
-/**
- * 四十一.警报信息查询明细1
- */
-public List getSiteWaringList(@Param("user_cus") String user_cus,@Param("action") String action,@Param("start_date") long start_date,@Param("end_date") long end_date);
+    /**
+     * 38.	移动油机交流主数据明细
+     */
+    public List getSiteDetailed(String mach_no);
+
+    /**
+     * 39.	移动油机交流主数据明细
+     */
+    public List getSiteDetailed1(String mach_no);
+
+    /**
+     * 四十.警报信息查询明细
+     */
+    public List getSiteWaring(@Param("user_cus") String user_cus);
+
+    /**
+     * 四十一.警报信息查询明细1
+     */
+    public List getSiteWaringList(@Param("user_cus") String user_cus, @Param("action") String action, @Param("start_date") long start_date, @Param("end_date") long end_date);
 
 }

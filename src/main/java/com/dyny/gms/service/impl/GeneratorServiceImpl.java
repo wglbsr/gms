@@ -28,6 +28,14 @@ public class GeneratorServiceImpl implements GeneratorService {
     }
 
     @Override
+    public int getGeneratorNumByStatus(String customerNo, String status) {
+        GeneratorExample example = new GeneratorExample();
+        GeneratorExample.Criteria criteria = example.createCriteria();
+        criteria.andCusNoEqualTo(customerNo);
+        return (int) generatorMapper.countByExample(example);
+    }
+
+    @Override
     public int relateGeneratorWithStation(String machNo, String stationNo, String cusNo, boolean relateFlag) {
         Generator generator = new Generator();
         GeneratorExample example = new GeneratorExample();

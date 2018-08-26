@@ -48,7 +48,7 @@ public interface SiteService {
     public String getGenerateLog(String user_cus, String mach_no, int pageNum, int pageSize, long startDate, long endDate);
 
 
-    public String getGenerateLogFile(String user_cus, long startDate, long endDate) throws FileNotFoundException, IOException;
+    public String getGenerateLogFile(String user_cus, String mach_no, long startDate, long endDate) throws FileNotFoundException, IOException;
 
     /**
      * 二十四.	油机资产管理
@@ -93,13 +93,13 @@ public interface SiteService {
     /**
      * 二十六.	移动油机运行情况（全部）
      */
-    public Map<String, Object> getMachineNumByStatus(String user_cus);
+    public Map<String, Object> getMachineNum(String user_cus);
 
 
     /**
      * 三十一.	移动油机查询
      */
-    public String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String content, String generateStatus, int expr1, String use_type, int pageNum, int pageSize,String orderBy);
+    public String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String content, String generateStatus, int expr1, String use_type, int pageNum, int pageSize, String orderBy);
 
 
     /**

@@ -355,48 +355,25 @@
         </if>
     </select>
     <resultMap type="map" id="machineNumMap">
-        <result column="machineCount" property="machineCount" javaType="int"/>
+        <result column="total" property="total" javaType="int"/>
+        <result column="online" property="online" javaType="int"/>
+        <result column="generating" property="generating" javaType="int"/>
     </resultMap>
-    <select id="getMachineAllNum" resultMap="machineNumMap" parameterType="java.lang.String">
-        select COUNT(1) machineCount
-        FROM View_mach1
-        where 1=1
+
+
+    <!--新方法-->
+    <select id="getMachineNum" resultMap="machineNumMap" parameterType="java.lang.String">
+        select
+        count(1) total ,
+        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=3 then 1 else 0 end) online,
+        sum(case when isnull(Expr1,1)=0 then 1 else 0 end) generating
+        from view_generator_full_info
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}
         </if>
     </select>
-    <select id="getMachineOnlineNum" resultMap="machineNumMap" parameterType="java.lang.String">
-        select COUNT(1) machineCount
-        FROM View_mach1
-        where DATEDIFF(mi,inter_time,GETDATE()) &lt;= 3
-        <if test="user_cus != null and user_cus != '' ">
-            AND cus_no = #{user_cus}
-        </if>
-    </select>
-    <select id="getMachineOfflineNum" resultMap="machineNumMap" parameterType="java.lang.String">
-        select COUNT(1) machineCount
-        FROM View_mach1
-        where (DATEDIFF(mi,inter_time,GETDATE())>3 or inter_time is null)
-        <if test="user_cus != null and user_cus != '' ">
-            AND cus_no = #{user_cus}
-        </if>
-    </select>
-    <select id="getMachineActiveNum" resultMap="machineNumMap" parameterType="java.lang.String">
-        select COUNT(1) machineCount
-        FROM View_mach1
-        where isnull(Expr1,1)=0
-        <if test="user_cus != null and user_cus != '' ">
-            AND cus_no = #{user_cus}
-        </if>
-    </select>
-    <select id="getMachineStopNum" resultMap="machineNumMap" parameterType="java.lang.String">
-        select COUNT(1) machineCount
-        FROM View_mach1
-        where isnull(Expr1,1) =1
-        <if test="user_cus != null and user_cus != '' ">
-            AND cus_no = #{user_cus}
-        </if>
-    </select>
+
+
 
     <!-- 二十七.	移动油机在线(双击在线) -->
     <resultMap type="map" id="machineStatusMap">
@@ -420,10 +397,11 @@
     <!-- 三十一.	移动油机查询 -->
     <select id="searchMachine" resultMap="machineStatusMap">
         select mach_no,mach_name,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity,
-        al_voltage, isnull(i_total_generate_time,0)/60
-        sum_time
-        ,dbo.sumnum_time(mach_no) sumnum_time,state,isnull(start_Vo,0) start_Vo,
-        state1,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(lank_level,0)
+        al_voltage,
+--         isnull(i_total_generate_time,0)/60  sum_time,
+--         dbo.sumnum_time(mach_no) sumnum_time,
+        state,isnull(start_Vo,0) start_Vo,
+        state1,isnull(Expr2,0)-isnull(i_total_generate_time,0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
         external_temperature,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level
         from view_generator_full_info

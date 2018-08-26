@@ -19,6 +19,7 @@ public class GeneratorController extends BaseController {
         return super.getSuccessResult(generatorService.getGeneratorDetail(machNo));
     }
 
+
     @RequestMapping(value = "/getGeneratorByCusNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorByCusNo(@RequestParam(name = "user_cus", required = true) String cusNo) {
@@ -49,6 +50,15 @@ public class GeneratorController extends BaseController {
                                              @RequestParam(name = "relate", required = true) boolean relate,
                                              @RequestParam(name = "user_cus", required = true) String user_cus) {
         return super.getSuccessResult(generatorService.relateGeneratorWithStation(machNo, stationNo, user_cus, relate));
+    }
+
+
+    @RequestMapping(value = "/getGeneratorNumByStatus", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getGeneratorNumByStatus(
+            @RequestParam(name = "status", required = true) String status,
+            @RequestParam(name = "user_cus", required = true) String user_cus) {
+        return super.getSuccessResult(generatorService.getGeneratorNumByStatus(status, user_cus));
     }
 
 

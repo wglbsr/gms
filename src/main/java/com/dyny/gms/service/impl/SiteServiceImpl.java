@@ -144,9 +144,9 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     private String path;
 
     @Override
-    public String getGenerateLogFile(String user_cus, long startDate, long endDate) throws FileNotFoundException, IOException {
+    public String getGenerateLogFile(String user_cus,String mach_no, long startDate, long endDate) throws FileNotFoundException, IOException {
         // TODO Auto-generated method stub
-        List<Map> result = mapper.getGenerateLog(user_cus, null, startDate, endDate);
+        List<Map> result = mapper.getGenerateLog(user_cus, mach_no, startDate, endDate);
         List<GenerateRecordEntity> list = GenerateRecordEntity.parseObjectToGenerateRecordEntity(result);
         ExportParams params = new ExportParams("发电记录表", "发电记录表");
         params.setType(ExcelType.XSSF);
@@ -182,19 +182,18 @@ public class SiteServiceImpl extends BaseService implements SiteService {
      * @return
      */
     @Override
-    public Map<String, Object> getMachineNumByStatus(String user_cus) {
+    public Map<String, Object> getMachineNum(String user_cus) {
         // TODO Auto-generated method stub
         Map<String, Object> result = new HashMap<String, Object>();
-        Map<String, Object> allMap = mapper.getMachineAllNum(user_cus);
-        Map<String, Object> onlineMap = mapper.getMachineOnlineNum(user_cus);
-        Map<String, Object> offlineMap = mapper.getMachineOfflineNum(user_cus);
-        Map<String, Object> activeMap = mapper.getMachineActiveNum(user_cus);
-        Map<String, Object> stopMap = mapper.getMachineStopNum(user_cus);
-        result.put("allNum", allMap.get("machineCount"));
-        result.put("onlineNum", onlineMap.get("machineCount"));
-        result.put("offlineNum", offlineMap.get("machineCount"));
-        result.put("generationNum", activeMap.get("machineCount"));
-        result.put("interruptionNum", stopMap.get("machineCount"));
+        Map<String, Integer> allMap = mapper.getMachineNum(user_cus);
+        int total = allMap.get("total");
+        int online = allMap.get("online");
+        int generating = allMap.get("generating");
+        result.put("allNum", total);
+        result.put("onlineNum", online);
+        result.put("offlineNum", total - online);
+        result.put("generatingNum", generating);
+        result.put("interruptionNum", total - generating);
         return result;
     }
 
