@@ -12,7 +12,11 @@ public class GeneratorController extends BaseController {
     @Autowired
     GeneratorService generatorService;
 
-
+    /**
+     * 获得油机详情
+     * @param machNo
+     * @return
+     */
     @RequestMapping(value = "/getGeneratorDetail", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorDetail(@RequestParam(name = "mach_no", required = true) String machNo) {
@@ -20,12 +24,22 @@ public class GeneratorController extends BaseController {
     }
 
 
+    /**
+     * 根据客户编号获得油机
+     * @param cusNo
+     * @return
+     */
     @RequestMapping(value = "/getGeneratorByCusNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorByCusNo(@RequestParam(name = "user_cus", required = true) String cusNo) {
         return super.getSuccessResult(generatorService.getGeneratorDetail(cusNo));
     }
 
+    /**
+     * 更新油机信息
+     * @param generator
+     * @return
+     */
     @RequestMapping(value = "/updateGenerator", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String updateGenerator(@RequestBody Generator generator) {
@@ -36,6 +50,13 @@ public class GeneratorController extends BaseController {
         }
     }
 
+
+    /**
+     * 获得指定客户编号的油机,条件为该基站的编号或者基站编号为空
+     * @param stationNo
+     * @param user_cus
+     * @return
+     */
     @RequestMapping(value = "/getGeneratorForStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorForStation(@RequestParam(name = "stationNo", required = true) String stationNo, @RequestParam(name = "user_cus", required = true) String user_cus) {
@@ -43,6 +64,14 @@ public class GeneratorController extends BaseController {
     }
 
 
+    /**
+     * 关联/取消关联油机
+     * @param stationNo
+     * @param machNo
+     * @param relate
+     * @param user_cus
+     * @return
+     */
     @RequestMapping(value = "/relateGeneratorWithStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String relateGeneratorWithStation(@RequestParam(name = "stationNo", required = false, defaultValue = "") String stationNo,
@@ -53,6 +82,12 @@ public class GeneratorController extends BaseController {
     }
 
 
+    /**
+     * 获得各个状态的油机数量,status参数暂时没有用上
+     * @param status
+     * @param user_cus
+     * @return
+     */
     @RequestMapping(value = "/getGeneratorNumByStatus", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorNumByStatus(
