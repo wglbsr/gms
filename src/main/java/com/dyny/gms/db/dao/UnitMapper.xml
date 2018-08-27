@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.UnitMapper">
+  <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Unit">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="s_unit_no" jdbcType="INTEGER" property="unitNo" />
+    <result column="s_unit_address" jdbcType="VARCHAR" property="unitAddress" />
+    <result column="s_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="s_operator_no" jdbcType="INTEGER" property="operatorNo" />
+    <result column="s_operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
+    <result column="i_level" jdbcType="TINYINT" property="level" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, s_unit_no, s_unit_address, s_remark, s_operator_no, s_operator_name, s_customer_no, 
+    i_level
+  </sql>
+  <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.UnitExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_unit
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_unit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_unit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.UnitExample">
+    delete from t_unit
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dyny.gms.db.pojo.Unit">
+    insert into t_unit (id, s_unit_no, s_unit_address, 
+      s_remark, s_operator_no, s_operator_name, 
+      s_customer_no, i_level)
+    values (#{id,jdbcType=INTEGER}, #{unitNo,jdbcType=INTEGER}, #{unitAddress,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{operatorNo,jdbcType=INTEGER}, #{operatorName,jdbcType=VARCHAR}, 
+      #{customerNo,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Unit">
+    insert into t_unit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="unitNo != null">
+        s_unit_no,
+      </if>
+      <if test="unitAddress != null">
+        s_unit_address,
+      </if>
+      <if test="remark != null">
+        s_remark,
+      </if>
+      <if test="operatorNo != null">
+        s_operator_no,
+      </if>
+      <if test="operatorName != null">
+        s_operator_name,
+      </if>
+      <if test="customerNo != null">
+        s_customer_no,
+      </if>
+      <if test="level != null">
+        i_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="unitNo != null">
+        #{unitNo,jdbcType=INTEGER},
+      </if>
+      <if test="unitAddress != null">
+        #{unitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        #{operatorNo,jdbcType=INTEGER},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dyny.gms.db.pojo.UnitExample" resultType="java.lang.Long">
+    select count(*) from t_unit
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_unit
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitNo != null">
+        s_unit_no = #{record.unitNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitAddress != null">
+        s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        s_remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorNo != null">
+        s_operator_no = #{record.operatorNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorName != null">
+        s_operator_name = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerNo != null">
+        s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        i_level = #{record.level,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_unit
+    set id = #{record.id,jdbcType=INTEGER},
+      s_unit_no = #{record.unitNo,jdbcType=INTEGER},
+      s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
+      s_remark = #{record.remark,jdbcType=VARCHAR},
+      s_operator_no = #{record.operatorNo,jdbcType=INTEGER},
+      s_operator_name = #{record.operatorName,jdbcType=VARCHAR},
+      s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      i_level = #{record.level,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Unit">
+    update t_unit
+    <set>
+      <if test="unitNo != null">
+        s_unit_no = #{unitNo,jdbcType=INTEGER},
+      </if>
+      <if test="unitAddress != null">
+        s_unit_address = #{unitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        s_remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        s_operator_no = #{operatorNo,jdbcType=INTEGER},
+      </if>
+      <if test="operatorName != null">
+        s_operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        s_customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        i_level = #{level,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Unit">
+    update t_unit
+    set s_unit_no = #{unitNo,jdbcType=INTEGER},
+      s_unit_address = #{unitAddress,jdbcType=VARCHAR},
+      s_remark = #{remark,jdbcType=VARCHAR},
+      s_operator_no = #{operatorNo,jdbcType=INTEGER},
+      s_operator_name = #{operatorName,jdbcType=VARCHAR},
+      s_customer_no = #{customerNo,jdbcType=VARCHAR},
+      i_level = #{level,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

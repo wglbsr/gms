@@ -3,7 +3,6 @@ package com.dyny.gms.controller;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.Contact;
 import com.dyny.gms.service.ContactService;
-import com.dyny.gms.utils.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
