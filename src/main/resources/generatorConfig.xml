@@ -40,7 +40,7 @@
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
             <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="t_contact" domainObjectName="Contact">
+        <table tableName="ap_operate" domainObjectName="Operate">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

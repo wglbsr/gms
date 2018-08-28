@@ -11,7 +11,9 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.db.dao.OperateMapper;
 import com.dyny.gms.db.dao.SiteMapper;
+import com.dyny.gms.db.pojo.Operate;
 import com.dyny.gms.exportEntity.GenerateRecordEntity;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SiteService;
@@ -35,6 +37,8 @@ public class SiteServiceImpl extends BaseService implements SiteService {
 
     @Autowired
     private SiteMapper mapper;
+    @Autowired
+    private OperateMapper operateMapper;
 
     @Override
     public List getAllMap(String username) {
@@ -51,7 +55,11 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     @Override
     public int modifyStartVoltage(BigDecimal changeVoltage, String mach_no) {
         // TODO Auto-generated method stub
-        return mapper.modifyStartVoltage(changeVoltage, mach_no);
+
+
+        int result = 0;
+        result += mapper.modifyStartVoltage(changeVoltage, mach_no);
+        return result;
     }
 
     @Override
@@ -144,7 +152,7 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     private String path;
 
     @Override
-    public String getGenerateLogFile(String user_cus,String mach_no, long startDate, long endDate) throws FileNotFoundException, IOException {
+    public String getGenerateLogFile(String user_cus, String mach_no, long startDate, long endDate) throws FileNotFoundException, IOException {
         // TODO Auto-generated method stub
         List<Map> result = mapper.getGenerateLog(user_cus, mach_no, startDate, endDate);
         List<GenerateRecordEntity> list = GenerateRecordEntity.parseObjectToGenerateRecordEntity(result);

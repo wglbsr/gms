@@ -374,7 +374,6 @@
     </select>
 
 
-
     <!-- 二十七.	移动油机在线(双击在线) -->
     <resultMap type="map" id="machineStatusMap">
         <result column="mach_no" property="mach_no" javaType="string"/>
@@ -398,8 +397,8 @@
     <select id="searchMachine" resultMap="machineStatusMap">
         select mach_no,mach_name,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity,
         al_voltage,
---         isnull(i_total_generate_time,0)/60  sum_time,
---         dbo.sumnum_time(mach_no) sumnum_time,
+        -- isnull(i_total_generate_time,0)/60 sum_time,
+        -- dbo.sumnum_time(mach_no) sumnum_time,
         state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(i_total_generate_time,0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
@@ -568,12 +567,13 @@
         <result column="Expr1" property="Expr1" javaType="string"/>
         <result column="al_voltage" property="al_voltage" javaType="string"/>
         <result column="state1" property="state1" javaType="string"/>
+        <result column="sys_mode" property="sys_mode" javaType="string"/>
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
 		select Acity_electricity,isnull(cabinet_temperature,0) external_temperature,isnull(CONVERT(varchar(100), inter_time, 20),0) inter_time ,isnull(dbo.mach_type(mach_no),0) stationType,
            isnull(start_Vo,0) start_Voltage,isnull(lank_level,0) lank_per,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level , isnull(st_current,0) st_current,state1,
            isnull(st_co,0) st_co ,isnull(dbo.sum_time(mach_no),0) sum_time,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(st_voltage,0) st_voltag,isnull(Expr1,0) Expr1,
-           isnull(al_voltage,0) al_voltage
+           isnull(al_voltage,0) al_voltage,isnull(sys_mode,0) sys_mode
 	    FROM View_mach1
 		WHERE mach_no = #{mach_no} 
 		order by mach_no

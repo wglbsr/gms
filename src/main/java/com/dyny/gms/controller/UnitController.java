@@ -4,11 +4,9 @@ import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.Unit;
 import com.dyny.gms.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
 public class UnitController extends BaseController {
 
     @Autowired
@@ -19,12 +17,14 @@ public class UnitController extends BaseController {
     @ResponseBody
     public String getUnit(@RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                           @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                          @RequestParam(name = "unitNo", required = false, defaultValue = "") String unitNo,
+                          @RequestParam(name = "orderBy", required = false, defaultValue = "id") String orderBy,
                           @RequestParam(name = "customerNo", required = true) String customerNo) {
         Unit unit = new Unit();
         unit.setCustomerNo(customerNo);
-        return unitService.getUnit(unit, pageNum, pageSize);
+        unit.setUnitNo(unitNo);
+        return unitService.getUnit(unit, pageNum, pageSize, orderBy);
     }
-
 
     @RequestMapping(value = "/updateUnit", produces = {"application/json;charset=UTF-8"})
     @ResponseBody

@@ -8,9 +8,10 @@ import com.dyny.gms.service.ContactService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ContactServiceImpl extends BaseService implements ContactService {
     @Autowired
     ContactMapper contactMapper;
@@ -39,6 +40,6 @@ public class ContactServiceImpl extends BaseService implements ContactService {
 
     @Override
     public int addContact(Contact contact) {
-        return contactMapper.insert(contact);
+        return contactMapper.insertSelective(contact);
     }
 }

@@ -3,13 +3,14 @@
 <mapper namespace="com.dyny.gms.db.dao.UnitMapper">
   <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Unit">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="s_unit_no" jdbcType="INTEGER" property="unitNo" />
+    <result column="s_unit_no" jdbcType="VARCHAR" property="unitNo" />
     <result column="s_unit_address" jdbcType="VARCHAR" property="unitAddress" />
     <result column="s_remark" jdbcType="VARCHAR" property="remark" />
     <result column="s_operator_no" jdbcType="INTEGER" property="operatorNo" />
     <result column="s_operator_name" jdbcType="VARCHAR" property="operatorName" />
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="i_level" jdbcType="TINYINT" property="level" />
+    <result column="s_unit_name" jdbcType="VARCHAR" property="unitName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, s_unit_no, s_unit_address, s_remark, s_operator_no, s_operator_name, s_customer_no, 
-    i_level
+    i_level, s_unit_name
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.UnitExample" resultMap="BaseResultMap">
     select
@@ -104,19 +105,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.Unit">
-    insert into t_unit (id, s_unit_no, s_unit_address, 
+    insert into t_unit ( s_unit_no, s_unit_address,
       s_remark, s_operator_no, s_operator_name, 
-      s_customer_no, i_level)
-    values (#{id,jdbcType=INTEGER}, #{unitNo,jdbcType=INTEGER}, #{unitAddress,jdbcType=VARCHAR}, 
+      s_customer_no, i_level, s_unit_name
+      )
+    values (#{unitNo,jdbcType=VARCHAR}, #{unitAddress,jdbcType=VARCHAR},
       #{remark,jdbcType=VARCHAR}, #{operatorNo,jdbcType=INTEGER}, #{operatorName,jdbcType=VARCHAR}, 
-      #{customerNo,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT})
+      #{customerNo,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{unitName,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Unit">
     insert into t_unit
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="unitNo != null">
         s_unit_no,
       </if>
@@ -138,13 +138,13 @@
       <if test="level != null">
         i_level,
       </if>
+      <if test="unitName != null">
+        s_unit_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="unitNo != null">
-        #{unitNo,jdbcType=INTEGER},
+        #{unitNo,jdbcType=VARCHAR},
       </if>
       <if test="unitAddress != null">
         #{unitAddress,jdbcType=VARCHAR},
@@ -164,6 +164,9 @@
       <if test="level != null">
         #{level,jdbcType=TINYINT},
       </if>
+      <if test="unitName != null">
+        #{unitName,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.dyny.gms.db.pojo.UnitExample" resultType="java.lang.Long">
@@ -179,7 +182,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.unitNo != null">
-        s_unit_no = #{record.unitNo,jdbcType=INTEGER},
+        s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
       </if>
       <if test="record.unitAddress != null">
         s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
@@ -199,6 +202,9 @@
       <if test="record.level != null">
         i_level = #{record.level,jdbcType=TINYINT},
       </if>
+      <if test="record.unitName != null">
+        s_unit_name = #{record.unitName,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,13 +213,14 @@
   <update id="updateByExample" parameterType="map">
     update t_unit
     set id = #{record.id,jdbcType=INTEGER},
-      s_unit_no = #{record.unitNo,jdbcType=INTEGER},
+      s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
       s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
       s_remark = #{record.remark,jdbcType=VARCHAR},
       s_operator_no = #{record.operatorNo,jdbcType=INTEGER},
       s_operator_name = #{record.operatorName,jdbcType=VARCHAR},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
-      i_level = #{record.level,jdbcType=TINYINT}
+      i_level = #{record.level,jdbcType=TINYINT},
+      s_unit_name = #{record.unitName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -222,7 +229,7 @@
     update t_unit
     <set>
       <if test="unitNo != null">
-        s_unit_no = #{unitNo,jdbcType=INTEGER},
+        s_unit_no = #{unitNo,jdbcType=VARCHAR},
       </if>
       <if test="unitAddress != null">
         s_unit_address = #{unitAddress,jdbcType=VARCHAR},
@@ -242,18 +249,22 @@
       <if test="level != null">
         i_level = #{level,jdbcType=TINYINT},
       </if>
+      <if test="unitName != null">
+        s_unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Unit">
     update t_unit
-    set s_unit_no = #{unitNo,jdbcType=INTEGER},
+    set s_unit_no = #{unitNo,jdbcType=VARCHAR},
       s_unit_address = #{unitAddress,jdbcType=VARCHAR},
       s_remark = #{remark,jdbcType=VARCHAR},
       s_operator_no = #{operatorNo,jdbcType=INTEGER},
       s_operator_name = #{operatorName,jdbcType=VARCHAR},
       s_customer_no = #{customerNo,jdbcType=VARCHAR},
-      i_level = #{level,jdbcType=TINYINT}
+      i_level = #{level,jdbcType=TINYINT},
+      s_unit_name = #{unitName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

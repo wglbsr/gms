@@ -3,7 +3,7 @@ package com.dyny.gms.db.pojo;
 public class Unit {
     private Integer id;
 
-    private Integer unitNo;
+    private String unitNo;
 
     private String unitAddress;
 
@@ -17,6 +17,8 @@ public class Unit {
 
     private Byte level;
 
+    private String unitName;
+
     public Integer getId() {
         return id;
     }
@@ -25,12 +27,12 @@ public class Unit {
         this.id = id;
     }
 
-    public Integer getUnitNo() {
+    public String getUnitNo() {
         return unitNo;
     }
 
-    public void setUnitNo(Integer unitNo) {
-        this.unitNo = unitNo;
+    public void setUnitNo(String unitNo) {
+        this.unitNo = unitNo == null ? null : unitNo.trim();
     }
 
     public String getUnitAddress() {
@@ -79,5 +81,13 @@ public class Unit {
 
     public void setLevel(Byte level) {
         this.level = level;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName == null ? null : unitName.trim();
     }
 }

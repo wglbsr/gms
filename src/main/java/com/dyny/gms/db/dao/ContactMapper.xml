@@ -160,9 +160,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="contactName != null">
         #{contactName,jdbcType=VARCHAR},
       </if>
@@ -207,9 +204,7 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_contact
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
+
       <if test="record.contactName != null">
         s_contact_name = #{record.contactName,jdbcType=VARCHAR},
       </if>
@@ -250,7 +245,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_contact
-    set id = #{record.id,jdbcType=INTEGER},
+    set
       s_contact_name = #{record.contactName,jdbcType=VARCHAR},
       s_contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
       s_station_no = #{record.stationNo,jdbcType=VARCHAR},

@@ -9,7 +9,7 @@ public interface UnitService {
 
     int deleteUnit(Unit unit);
 
-    String getUnit(Unit unit, int pageNum, int pageSize);
+    String getUnit(Unit unit, int pageNum, int pageSize,String orderBy);
 
     int addUnit(Unit unit);
 }

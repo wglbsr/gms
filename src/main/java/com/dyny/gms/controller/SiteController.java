@@ -670,9 +670,10 @@ public class SiteController extends BaseController {
         String modelflag = request.getParameter("modelflag");
         String user_no = request.getParameter("user_no");
         try {
+                         //84 05 AA AA AA AA AA 52 16
             String code = "84 05 AA AA AA AA AA 52 16";
             if (modelflag.equals("6")) {
-                code = "84 05 02 00 00 02 00 20 16";
+                code = "84 05 A0 A0 A0 A0 A0 32 16";//"84 05 02 00 00 02 00 20 16";
             }
             int result = service.changeModel(mach_no, Integer.valueOf(modelflag), code, user_no);
             if (result <= 0) {
