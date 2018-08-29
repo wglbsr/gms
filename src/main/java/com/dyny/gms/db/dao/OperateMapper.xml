@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.OperateMapper">
+    <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Operate">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
+        <result column="op_no" jdbcType="INTEGER" property="opNo"/>
+        <result column="op_num" jdbcType="VARCHAR" property="opNum"/>
+        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
+        <result column="creat_per" jdbcType="VARCHAR" property="creatPer"/>
+        <result column="action" jdbcType="BIT" property="action"/>
+        <result column="i_execute_id" jdbcType="INTEGER" property="executeId"/>
+        <result column="d_actual_execute_time" jdbcType="TIMESTAMP" property="actualExecuteTime"/>
+        <result column="b_deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, mach_no, op_no, op_num, creat_time, creat_per, action, i_execute_id, d_actual_execute_time, 
+    b_deleted
+  </sql>
+    <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.OperateExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from Ap_operate
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectMaxExeIdByMachNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select isnull(max(i_execute_id),0) i_execute_id from Ap_operate where mach_no=#{machNo,jdbcType=VARCHAR}
+
+  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Ap_operate
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Ap_operate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.OperateExample">
+        delete from Ap_operate
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.dyny.gms.db.pojo.Operate">
+    insert into Ap_operate ( mach_no, op_no,
+      op_num, creat_time, creat_per, 
+      action, i_execute_id, d_actual_execute_time, 
+      b_deleted)
+    values ( #{machNo,jdbcType=VARCHAR}, #{opNo,jdbcType=INTEGER},
+      #{opNum,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{creatPer,jdbcType=VARCHAR}, 
+      #{action,jdbcType=BIT}, #{executeId,jdbcType=INTEGER}, #{actualExecuteTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into Ap_operate (mach_no, op_no,
+        op_num, creat_time, creat_per,
+        action, i_execute_id, d_actual_execute_time,
+        b_deleted)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.machNo,jdbcType=VARCHAR}, #{item.opNo,jdbcType=INTEGER},
+            #{item.opNum,jdbcType=VARCHAR}, #{item.creatTime,jdbcType=TIMESTAMP}, #{item.creatPer,jdbcType=VARCHAR},
+            #{item.action,jdbcType=BIT}, #{item.executeId,jdbcType=INTEGER}, #{item.actualExecuteTime,jdbcType=TIMESTAMP},
+            #{item.deleted,jdbcType=BIT})
+        </foreach>
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Operate">
+        insert into Ap_operate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="machNo != null">
+                mach_no,
+            </if>
+            <if test="opNo != null">
+                op_no,
+            </if>
+            <if test="opNum != null">
+                op_num,
+            </if>
+            <if test="creatTime != null">
+                creat_time,
+            </if>
+            <if test="creatPer != null">
+                creat_per,
+            </if>
+            <if test="action != null">
+                action,
+            </if>
+            <if test="executeId != null">
+                i_execute_id,
+            </if>
+            <if test="actualExecuteTime != null">
+                d_actual_execute_time,
+            </if>
+            <if test="deleted != null">
+                b_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="machNo != null">
+                #{machNo,jdbcType=VARCHAR},
+            </if>
+            <if test="opNo != null">
+                #{opNo,jdbcType=INTEGER},
+            </if>
+            <if test="opNum != null">
+                #{opNum,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null">
+                #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatPer != null">
+                #{creatPer,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=BIT},
+            </if>
+            <if test="executeId != null">
+                #{executeId,jdbcType=INTEGER},
+            </if>
+            <if test="actualExecuteTime != null">
+                #{actualExecuteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.dyny.gms.db.pojo.OperateExample" resultType="java.lang.Long">
+        select count(*) from Ap_operate
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update Ap_operate
+        <set>
+
+            <if test="record.machNo != null">
+                mach_no = #{record.machNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.opNo != null">
+                op_no = #{record.opNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.opNum != null">
+                op_num = #{record.opNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.creatTime != null">
+                creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.creatPer != null">
+                creat_per = #{record.creatPer,jdbcType=VARCHAR},
+            </if>
+            <if test="record.action != null">
+                action = #{record.action,jdbcType=BIT},
+            </if>
+            <if test="record.executeId != null">
+                i_execute_id = #{record.executeId,jdbcType=INTEGER},
+            </if>
+            <if test="record.actualExecuteTime != null">
+                d_actual_execute_time = #{record.actualExecuteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.deleted != null">
+                b_deleted = #{record.deleted,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update Ap_operate
+        set
+        mach_no = #{record.machNo,jdbcType=VARCHAR},
+        op_no = #{record.opNo,jdbcType=INTEGER},
+        op_num = #{record.opNum,jdbcType=VARCHAR},
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+        creat_per = #{record.creatPer,jdbcType=VARCHAR},
+        action = #{record.action,jdbcType=BIT},
+        i_execute_id = #{record.executeId,jdbcType=INTEGER},
+        d_actual_execute_time = #{record.actualExecuteTime,jdbcType=TIMESTAMP},
+        b_deleted = #{record.deleted,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Operate">
+        update Ap_operate
+        <set>
+            <if test="machNo != null">
+                mach_no = #{machNo,jdbcType=VARCHAR},
+            </if>
+            <if test="opNo != null">
+                op_no = #{opNo,jdbcType=INTEGER},
+            </if>
+            <if test="opNum != null">
+                op_num = #{opNum,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null">
+                creat_time = #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatPer != null">
+                creat_per = #{creatPer,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                action = #{action,jdbcType=BIT},
+            </if>
+            <if test="executeId != null">
+                i_execute_id = #{executeId,jdbcType=INTEGER},
+            </if>
+            <if test="actualExecuteTime != null">
+                d_actual_execute_time = #{actualExecuteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                b_deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Operate">
+    update Ap_operate
+    set mach_no = #{machNo,jdbcType=VARCHAR},
+      op_no = #{opNo,jdbcType=INTEGER},
+      op_num = #{opNum,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      creat_per = #{creatPer,jdbcType=VARCHAR},
+      action = #{action,jdbcType=BIT},
+      i_execute_id = #{executeId,jdbcType=INTEGER},
+      d_actual_execute_time = #{actualExecuteTime,jdbcType=TIMESTAMP},
+      b_deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

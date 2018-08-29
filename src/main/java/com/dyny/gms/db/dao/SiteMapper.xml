@@ -24,6 +24,8 @@
         <result column="Acity_electricity" property="stationState" javaType="string"/>
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
     </resultMap>
+
+
     <select id="getAllMap" resultMap="allMap" parameterType="java.lang.String">
         SELECT
         i.id
@@ -390,7 +392,7 @@
         <result column="st_current" property="st_current" javaType="string"/>
         <result column="external_temperature" property="external_temperature" javaType="string"/>
         <result column="lank_level" property="lank_level" javaType="string"/>
-
+        <result column="sys_mode" property="sys_mode" javaType="string"/>
     </resultMap>
 
     <!-- 三十一.	移动油机查询 -->
@@ -402,7 +404,7 @@
         state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(i_total_generate_time,0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
-        external_temperature,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level
+        external_temperature,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level ,isnull(sys_mode,0) sys_mode
         from view_generator_full_info
         WHERE 1 = 1
         <if test="user_cus != null and user_cus != '' ">
@@ -439,7 +441,9 @@
 
     <!-- 三十二.	启动功能 -->
     <insert id="startMachine">
-		INSERT INTO Ap_operate VALUES(
+		INSERT INTO Ap_operate(mach_no, op_no,
+        op_num, creat_time, creat_per,
+        action) VALUES(
 	    	#{mach_no, jdbcType = VARCHAR},
 	    	1,
 	    	'84 05 01 00 00 00 01 02 16',
@@ -451,7 +455,9 @@
 
     <!-- 三十三.	熄火功能 -->
     <insert id="offMachine">
-		INSERT INTO Ap_operate  VALUES (
+		INSERT INTO Ap_operate(mach_no, op_no,
+        op_num, creat_time, creat_per,
+        action)  VALUES (
 			#{mach_no, jdbcType = VARCHAR},
 			2, 
 			'84 05 01 00 00 00 02 03 16',
@@ -463,7 +469,9 @@
 
     <!-- 三十四.	模式切换功能 -->
     <insert id="changeModel">
-		INSERT INTO Ap_operate  VALUES (
+		INSERT INTO Ap_operate (mach_no, op_no,
+        op_num, creat_time, creat_per,
+        action)  VALUES (
 			#{mach_no, jdbcType = VARCHAR}, 
 			#{modelflag, jdbcType =INTEGER},
 			#{code, jdbcType = VARCHAR},
@@ -475,7 +483,9 @@
 
     <!-- 三十五.	保护模式切换功能 -->
     <insert id="changeProtectModel">
-		INSERT INTO Ap_operate  VALUES (
+		INSERT INTO Ap_operate(mach_no, op_no,
+        op_num, creat_time, creat_per,
+        action)  VALUES (
 			#{mach_no, jdbcType = VARCHAR}, 
 			#{modelflag, jdbcType = INTEGER},
 			#{code, jdbcType = VARCHAR},

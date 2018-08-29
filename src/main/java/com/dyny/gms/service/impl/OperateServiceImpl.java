@@ -7,6 +7,7 @@ import com.dyny.gms.service.OperateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
 public class OperateServiceImpl implements OperateService {
     @Autowired
     OperateMapper operateMapper;
+    private static Integer START_GENGERATOR = 13;
+    private static Integer STOP_GENGERATOR = 16;
+
 
     @Override
     public int insertOperate(Operate operate) {
@@ -32,12 +36,35 @@ public class OperateServiceImpl implements OperateService {
 
     @Override
     public int deleteOperate(Operate operate) {
-        return operateMapper.deleteByPrimaryKey(operate.getId());
+        return operateMapper.updateByPrimaryKeySelective(operate);
+    }
+
+    @Override
+    public int getMaxOperateExeId(Operate operate) {
+        return operateMapper.selectMaxExeIdByMachNo(operate.getMachNo());
+    }
+
+    @Override
+    public int insertTimerOperateList(List<Operate> operateList) {
+        if (operateList == null || operateList.size() == 0) {
+            return 0;
+        }
+//        int maxExeId = operateMapper.selectMaxExeIdByMachNo(operateList.get(0).getMachNo());
+//        for (Operate operate : operateList) {
+//            maxExeId++;
+//            operate.setExecuteId(maxExeId % 255);
+//        }
+        return operateMapper.insertBatch(operateList);
     }
 
     @Override
     public Operate getOperate(Operate operate) {
         return operateMapper.selectByPrimaryKey(operate.getId());
+    }
+
+    @Override
+    public int updateOperate(Operate operate) {
+        return operateMapper.updateByPrimaryKeySelective(operate);
     }
 
 
@@ -46,8 +73,28 @@ public class OperateServiceImpl implements OperateService {
         OperateExample example = new OperateExample();
         OperateExample.Criteria criteria = example.createCriteria();
         criteria.andActualExecuteTimeGreaterThan(new Date());
-        criteria.andMachNoEqualTo(operate.getMachNo());
         criteria.andActualExecuteTimeIsNotNull();
+        criteria.andActionEqualTo(true);
+        criteria.andMachNoEqualTo(operate.getMachNo());
+        criteria.andDeletedEqualTo(false);
+        criteria.andExecuteIdIsNotNull();
+        return operateMapper.selectByExample(example);
+    }
+
+    @Override
+    public List getTimerOperateList(Operate operate) {
+        OperateExample example = new OperateExample();
+        OperateExample.Criteria criteria = example.createCriteria();
+        criteria.andActualExecuteTimeGreaterThan(new Date());
+        criteria.andActualExecuteTimeIsNotNull();
+        criteria.andActionEqualTo(true);
+        criteria.andMachNoEqualTo(operate.getMachNo());
+        List list = new ArrayList();
+        list.add(START_GENGERATOR);
+        list.add(STOP_GENGERATOR);
+        criteria.andOpNoIn(list);
+        criteria.andDeletedEqualTo(false);
+        criteria.andExecuteIdIsNotNull();
         return operateMapper.selectByExample(example);
     }
 }
