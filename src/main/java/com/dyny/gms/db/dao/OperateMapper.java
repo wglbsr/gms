@@ -2,12 +2,10 @@ package com.dyny.gms.db.dao;
 
 import com.dyny.gms.db.pojo.Operate;
 import com.dyny.gms.db.pojo.OperateExample;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface OperateMapper {
     long countByExample(OperateExample example);
@@ -18,11 +16,7 @@ public interface OperateMapper {
 
     int insert(Operate record);
 
-    int insertBatch(List<Operate> list);
-
     int insertSelective(Operate record);
-
-    int selectMaxExeIdByMachNo(String machNo);
 
     List<Operate> selectByExample(OperateExample example);
 
@@ -35,4 +29,9 @@ public interface OperateMapper {
     int updateByPrimaryKeySelective(Operate record);
 
     int updateByPrimaryKey(Operate record);
+
+    /*以下为手动添加的*/
+    int selectMaxExeIdByMachNo(String machNo);
+
+    int insertBatch(List<Operate> list);
 }

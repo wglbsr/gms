@@ -32,7 +32,6 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
         <!--<table tableName="t_enumeration" domainObjectName="Enumeration">-->
         <!--<columnRenamingRule searchString="^[^_]+" replaceString="" />-->
         <!--</table>-->
@@ -40,7 +39,7 @@
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
             <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="ap_operate" domainObjectName="Operate">
+        <table tableName="Ap_1oper2ate" domainObjectName="Operate">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

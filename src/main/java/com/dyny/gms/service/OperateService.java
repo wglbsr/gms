@@ -23,4 +23,6 @@ public interface OperateService {
     int getMaxOperateExeId(Operate operate);
 
     List getTimerOperateList(Operate operate);
+
+    int deleteAllTimerOperateByMachineNo(String customerNo);
 }

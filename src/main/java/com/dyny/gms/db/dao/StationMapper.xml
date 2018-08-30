@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dyny.gms.db.dao.StationMapper">
   <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Station">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="s_station_name" jdbcType="VARCHAR" property="stationName" />
     <result column="s_station_no" jdbcType="VARCHAR" property="stationNo" />
     <result column="s_station_coordinate" jdbcType="VARCHAR" property="stationCoordinate" />
@@ -18,6 +18,8 @@
     <result column="i_start_voltage" jdbcType="INTEGER" property="startVoltage" />
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="s_unit_address" jdbcType="VARCHAR" property="unitAddress" />
+    <result column="s_unit_no" jdbcType="VARCHAR" property="unitNo" />
+    <result column="s_operator_no" jdbcType="VARCHAR" property="operatorNo" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -80,7 +82,7 @@
   <sql id="Base_Column_List">
     id, s_station_name, s_station_no, s_station_coordinate, d_create_time, i_creator, 
     d_modify_time, i_modifier, i_status, s_remark, s_station_address, i_administrator, 
-    i_station_type, i_start_voltage, s_customer_no, s_unit_address
+    i_station_type, i_start_voltage, s_customer_no, s_unit_address, s_unit_no, s_operator_no
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultMap="BaseResultMap">
     select
@@ -96,6 +98,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_station
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_station
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.StationExample">
     delete from t_station
     <if test="_parameter != null">
@@ -108,13 +120,15 @@
       d_modify_time, i_modifier, i_status, 
       s_remark, s_station_address, i_administrator, 
       i_station_type, i_start_voltage, s_customer_no, 
-      s_unit_address)
+      s_unit_address, s_unit_no, s_operator_no
+      )
     values (#{id,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, #{stationNo,jdbcType=VARCHAR}, 
       #{stationCoordinate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
       #{modifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{stationAddress,jdbcType=VARCHAR}, #{administrator,jdbcType=INTEGER}, 
       #{stationType,jdbcType=INTEGER}, #{startVoltage,jdbcType=INTEGER}, #{customerNo,jdbcType=VARCHAR}, 
-      #{unitAddress,jdbcType=VARCHAR})
+      #{unitAddress,jdbcType=VARCHAR}, #{unitNo,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Station">
     insert into t_station
@@ -167,6 +181,12 @@
       <if test="unitAddress != null">
         s_unit_address,
       </if>
+      <if test="unitNo != null">
+        s_unit_no,
+      </if>
+      <if test="operatorNo != null">
+        s_operator_no,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -216,6 +236,12 @@
       </if>
       <if test="unitAddress != null">
         #{unitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null">
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        #{operatorNo,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -276,6 +302,12 @@
       <if test="record.unitAddress != null">
         s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.unitNo != null">
+        s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorNo != null">
+        s_operator_no = #{record.operatorNo,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -298,9 +330,89 @@
       i_station_type = #{record.stationType,jdbcType=INTEGER},
       i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
-      s_unit_address = #{record.unitAddress,jdbcType=VARCHAR}
+      s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
+      s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      s_operator_no = #{record.operatorNo,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Station">
+    update t_station
+    <set>
+      <if test="stationName != null">
+        s_station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationNo != null">
+        s_station_no = #{stationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stationCoordinate != null">
+        s_station_coordinate = #{stationCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        d_create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        i_creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null">
+        d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        i_modifier = #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        i_status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        s_remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="stationAddress != null">
+        s_station_address = #{stationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="administrator != null">
+        i_administrator = #{administrator,jdbcType=INTEGER},
+      </if>
+      <if test="stationType != null">
+        i_station_type = #{stationType,jdbcType=INTEGER},
+      </if>
+      <if test="startVoltage != null">
+        i_start_voltage = #{startVoltage,jdbcType=INTEGER},
+      </if>
+      <if test="customerNo != null">
+        s_customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitAddress != null">
+        s_unit_address = #{unitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null">
+        s_unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorNo != null">
+        s_operator_no = #{operatorNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Station">
+    update t_station
+    set s_station_name = #{stationName,jdbcType=VARCHAR},
+      s_station_no = #{stationNo,jdbcType=VARCHAR},
+      s_station_coordinate = #{stationCoordinate,jdbcType=VARCHAR},
+      d_create_time = #{createTime,jdbcType=TIMESTAMP},
+      i_creator = #{creator,jdbcType=INTEGER},
+      d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      i_modifier = #{modifier,jdbcType=INTEGER},
+      i_status = #{status,jdbcType=INTEGER},
+      s_remark = #{remark,jdbcType=VARCHAR},
+      s_station_address = #{stationAddress,jdbcType=VARCHAR},
+      i_administrator = #{administrator,jdbcType=INTEGER},
+      i_station_type = #{stationType,jdbcType=INTEGER},
+      i_start_voltage = #{startVoltage,jdbcType=INTEGER},
+      s_customer_no = #{customerNo,jdbcType=VARCHAR},
+      s_unit_address = #{unitAddress,jdbcType=VARCHAR},
+      s_unit_no = #{unitNo,jdbcType=VARCHAR},
+      s_operator_no = #{operatorNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

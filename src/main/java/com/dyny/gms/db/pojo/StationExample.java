@@ -1134,6 +1134,146 @@ public class StationExample {
             addCriterion("s_unit_address not between", value1, value2, "unitAddress");
             return (Criteria) this;
         }
+
+        public Criteria andUnitNoIsNull() {
+            addCriterion("s_unit_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoIsNotNull() {
+            addCriterion("s_unit_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoEqualTo(String value) {
+            addCriterion("s_unit_no =", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoNotEqualTo(String value) {
+            addCriterion("s_unit_no <>", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoGreaterThan(String value) {
+            addCriterion("s_unit_no >", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoGreaterThanOrEqualTo(String value) {
+            addCriterion("s_unit_no >=", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoLessThan(String value) {
+            addCriterion("s_unit_no <", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoLessThanOrEqualTo(String value) {
+            addCriterion("s_unit_no <=", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoLike(String value) {
+            addCriterion("s_unit_no like", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoNotLike(String value) {
+            addCriterion("s_unit_no not like", value, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoIn(List<String> values) {
+            addCriterion("s_unit_no in", values, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoNotIn(List<String> values) {
+            addCriterion("s_unit_no not in", values, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoBetween(String value1, String value2) {
+            addCriterion("s_unit_no between", value1, value2, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitNoNotBetween(String value1, String value2) {
+            addCriterion("s_unit_no not between", value1, value2, "unitNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoIsNull() {
+            addCriterion("s_operator_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoIsNotNull() {
+            addCriterion("s_operator_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoEqualTo(String value) {
+            addCriterion("s_operator_no =", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoNotEqualTo(String value) {
+            addCriterion("s_operator_no <>", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoGreaterThan(String value) {
+            addCriterion("s_operator_no >", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoGreaterThanOrEqualTo(String value) {
+            addCriterion("s_operator_no >=", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoLessThan(String value) {
+            addCriterion("s_operator_no <", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoLessThanOrEqualTo(String value) {
+            addCriterion("s_operator_no <=", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoLike(String value) {
+            addCriterion("s_operator_no like", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoNotLike(String value) {
+            addCriterion("s_operator_no not like", value, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoIn(List<String> values) {
+            addCriterion("s_operator_no in", values, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoNotIn(List<String> values) {
+            addCriterion("s_operator_no not in", values, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoBetween(String value1, String value2) {
+            addCriterion("s_operator_no between", value1, value2, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorNoNotBetween(String value1, String value2) {
+            addCriterion("s_operator_no not between", value1, value2, "operatorNo");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

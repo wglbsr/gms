@@ -15,7 +15,7 @@ public class Unit {
 
     private String customerNo;
 
-    private Byte level;
+    private Integer level;
 
     private String unitName;
 
@@ -75,11 +75,11 @@ public class Unit {
         this.customerNo = customerNo == null ? null : customerNo.trim();
     }
 
-    public Byte getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(Byte level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 

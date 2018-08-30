@@ -15,7 +15,7 @@ public class Operate {
 
     private String creatPer;
 
-    private Boolean action;
+    private Integer action;
 
     private Integer executeId;
 
@@ -71,11 +71,11 @@ public class Operate {
         this.creatPer = creatPer == null ? null : creatPer.trim();
     }
 
-    public Boolean getAction() {
+    public Integer getAction() {
         return action;
     }
 
-    public void setAction(Boolean action) {
+    public void setAction(Integer action) {
         this.action = action;
     }
 

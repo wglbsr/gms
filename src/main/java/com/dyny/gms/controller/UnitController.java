@@ -18,12 +18,13 @@ public class UnitController extends BaseController {
     public String getUnit(@RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                           @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
                           @RequestParam(name = "unitNo", required = false, defaultValue = "") String unitNo,
+                          @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
                           @RequestParam(name = "orderBy", required = false, defaultValue = "id") String orderBy,
                           @RequestParam(name = "customerNo", required = true) String customerNo) {
         Unit unit = new Unit();
         unit.setCustomerNo(customerNo);
         unit.setUnitNo(unitNo);
-        return unitService.getUnit(unit, pageNum, pageSize, orderBy);
+        return unitService.getUnit(unit, searchContent, pageNum, pageSize, orderBy);
     }
 
     @RequestMapping(value = "/updateUnit", produces = {"application/json;charset=UTF-8"})

@@ -72,9 +72,6 @@ public class OperateServiceImpl implements OperateService {
     public List getOperateList(Operate operate) {
         OperateExample example = new OperateExample();
         OperateExample.Criteria criteria = example.createCriteria();
-        criteria.andActualExecuteTimeGreaterThan(new Date());
-        criteria.andActualExecuteTimeIsNotNull();
-        criteria.andActionEqualTo(true);
         criteria.andMachNoEqualTo(operate.getMachNo());
         criteria.andDeletedEqualTo(false);
         criteria.andExecuteIdIsNotNull();
@@ -85,9 +82,6 @@ public class OperateServiceImpl implements OperateService {
     public List getTimerOperateList(Operate operate) {
         OperateExample example = new OperateExample();
         OperateExample.Criteria criteria = example.createCriteria();
-        criteria.andActualExecuteTimeGreaterThan(new Date());
-        criteria.andActualExecuteTimeIsNotNull();
-        criteria.andActionEqualTo(true);
         criteria.andMachNoEqualTo(operate.getMachNo());
         List list = new ArrayList();
         list.add(START_GENGERATOR);
@@ -96,5 +90,15 @@ public class OperateServiceImpl implements OperateService {
         criteria.andDeletedEqualTo(false);
         criteria.andExecuteIdIsNotNull();
         return operateMapper.selectByExample(example);
+    }
+
+    @Override
+    public int deleteAllTimerOperateByMachineNo(String machineNo) {
+        Operate operate = new Operate();
+        OperateExample example = new OperateExample();
+        example.or().andMachNoEqualTo(machineNo);
+        operate.setExecuteId(0);
+        operate.setDeleted(true);
+        return operateMapper.updateByExampleSelective(operate, example);
     }
 }

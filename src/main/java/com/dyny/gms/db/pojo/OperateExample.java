@@ -2,6 +2,7 @@ package com.dyny.gms.db.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class OperateExample {
@@ -103,6 +104,32 @@ public class OperateExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+        }
+
+        protected void addCriterionForJDBCTime(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Time(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCTime(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Time> timeList = new ArrayList<java.sql.Time>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                timeList.add(new java.sql.Time(iter.next().getTime()));
+            }
+            addCriterion(condition, timeList, property);
+        }
+
+        protected void addCriterionForJDBCTime(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -505,52 +532,52 @@ public class OperateExample {
             return (Criteria) this;
         }
 
-        public Criteria andActionEqualTo(Boolean value) {
+        public Criteria andActionEqualTo(Integer value) {
             addCriterion("action =", value, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionNotEqualTo(Boolean value) {
+        public Criteria andActionNotEqualTo(Integer value) {
             addCriterion("action <>", value, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionGreaterThan(Boolean value) {
+        public Criteria andActionGreaterThan(Integer value) {
             addCriterion("action >", value, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andActionGreaterThanOrEqualTo(Integer value) {
             addCriterion("action >=", value, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionLessThan(Boolean value) {
+        public Criteria andActionLessThan(Integer value) {
             addCriterion("action <", value, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionLessThanOrEqualTo(Boolean value) {
+        public Criteria andActionLessThanOrEqualTo(Integer value) {
             addCriterion("action <=", value, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionIn(List<Boolean> values) {
+        public Criteria andActionIn(List<Integer> values) {
             addCriterion("action in", values, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionNotIn(List<Boolean> values) {
+        public Criteria andActionNotIn(List<Integer> values) {
             addCriterion("action not in", values, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionBetween(Boolean value1, Boolean value2) {
+        public Criteria andActionBetween(Integer value1, Integer value2) {
             addCriterion("action between", value1, value2, "action");
             return (Criteria) this;
         }
 
-        public Criteria andActionNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andActionNotBetween(Integer value1, Integer value2) {
             addCriterion("action not between", value1, value2, "action");
             return (Criteria) this;
         }
@@ -616,62 +643,62 @@ public class OperateExample {
         }
 
         public Criteria andActualExecuteTimeIsNull() {
-            addCriterion("d_actual_execute_time is null");
+            addCriterion("t_actual_execute_time is null");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeIsNotNull() {
-            addCriterion("d_actual_execute_time is not null");
+            addCriterion("t_actual_execute_time is not null");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeEqualTo(Date value) {
-            addCriterion("d_actual_execute_time =", value, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time =", value, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeNotEqualTo(Date value) {
-            addCriterion("d_actual_execute_time <>", value, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time <>", value, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeGreaterThan(Date value) {
-            addCriterion("d_actual_execute_time >", value, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time >", value, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("d_actual_execute_time >=", value, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time >=", value, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeLessThan(Date value) {
-            addCriterion("d_actual_execute_time <", value, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time <", value, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeLessThanOrEqualTo(Date value) {
-            addCriterion("d_actual_execute_time <=", value, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time <=", value, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeIn(List<Date> values) {
-            addCriterion("d_actual_execute_time in", values, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time in", values, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeNotIn(List<Date> values) {
-            addCriterion("d_actual_execute_time not in", values, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time not in", values, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeBetween(Date value1, Date value2) {
-            addCriterion("d_actual_execute_time between", value1, value2, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time between", value1, value2, "actualExecuteTime");
             return (Criteria) this;
         }
 
         public Criteria andActualExecuteTimeNotBetween(Date value1, Date value2) {
-            addCriterion("d_actual_execute_time not between", value1, value2, "actualExecuteTime");
+            addCriterionForJDBCTime("t_actual_execute_time not between", value1, value2, "actualExecuteTime");
             return (Criteria) this;
         }
 

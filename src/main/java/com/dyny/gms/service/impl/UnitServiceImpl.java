@@ -29,13 +29,16 @@ public class UnitServiceImpl extends BaseService implements UnitService {
     }
 
     @Override
-    public String getUnit(Unit unit, int pageNum, int pageSize, String orderBy) {
+    public String getUnit(Unit unit, String searchContent, int pageNum, int pageSize, String orderBy) {
         UnitExample example = new UnitExample();
-        UnitExample.Criteria criteria = example.createCriteria();
-        if (Tool.StringUtil.validStr(unit.getUnitNo())) {
-            criteria.andUnitNoEqualTo(unit.getUnitNo());
+        if (Tool.StringUtil.validStr(searchContent)) {//模糊查找模式
+            example.or().andUnitNameLike(searchContent).andCustomerNoEqualTo(unit.getCustomerNo());
+            example.or().andUnitNoLike(searchContent).andCustomerNoEqualTo(unit.getCustomerNo());
+        } else {//精确查找模式
+            if (Tool.StringUtil.validStr(unit.getUnitNo())) {
+                example.or().andUnitNoEqualTo(unit.getUnitNo()).andCustomerNoEqualTo(unit.getCustomerNo());
+            }
         }
-        criteria.andCustomerNoEqualTo(unit.getCustomerNo());
         Page page = PageHelper.startPage(pageNum, pageSize);
         List result = unitMapper.selectByExample(example);
         int total = (int) page.getTotal();

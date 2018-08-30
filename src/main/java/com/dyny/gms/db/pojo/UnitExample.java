@@ -584,52 +584,52 @@ public class UnitExample {
             return (Criteria) this;
         }
 
-        public Criteria andLevelEqualTo(Byte value) {
+        public Criteria andLevelEqualTo(Integer value) {
             addCriterion("i_level =", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelNotEqualTo(Byte value) {
+        public Criteria andLevelNotEqualTo(Integer value) {
             addCriterion("i_level <>", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelGreaterThan(Byte value) {
+        public Criteria andLevelGreaterThan(Integer value) {
             addCriterion("i_level >", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelGreaterThanOrEqualTo(Byte value) {
+        public Criteria andLevelGreaterThanOrEqualTo(Integer value) {
             addCriterion("i_level >=", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelLessThan(Byte value) {
+        public Criteria andLevelLessThan(Integer value) {
             addCriterion("i_level <", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelLessThanOrEqualTo(Byte value) {
+        public Criteria andLevelLessThanOrEqualTo(Integer value) {
             addCriterion("i_level <=", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelIn(List<Byte> values) {
+        public Criteria andLevelIn(List<Integer> values) {
             addCriterion("i_level in", values, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelNotIn(List<Byte> values) {
+        public Criteria andLevelNotIn(List<Integer> values) {
             addCriterion("i_level not in", values, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelBetween(Byte value1, Byte value2) {
+        public Criteria andLevelBetween(Integer value1, Integer value2) {
             addCriterion("i_level between", value1, value2, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelNotBetween(Byte value1, Byte value2) {
+        public Criteria andLevelNotBetween(Integer value1, Integer value2) {
             addCriterion("i_level not between", value1, value2, "level");
             return (Criteria) this;
         }

@@ -4,10 +4,7 @@ import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.Operate;
 import com.dyny.gms.service.OperateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -62,6 +59,13 @@ public class OperateController extends BaseController {
         return super.getSuccessResult(operateService.getMaxOperateExeId(operate));
     }
 
+    @RequestMapping(value = "/deleteAllTimerOperateByMachineNo", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteAllTimerOperateByMachineNo(@RequestParam(name = "machineNo", required = true) String machineNo) {
+        return super.getSuccessResult(operateService.deleteAllTimerOperateByMachineNo(machineNo));
+    }
+
+
     @RequestMapping(value = "/deleteOperate", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String deleteOperate(@RequestBody Operate operate) {
@@ -74,7 +78,6 @@ public class OperateController extends BaseController {
     public String updateOperate(@RequestBody Operate operate) {
         return super.getSuccessResult(operateService.deleteOperate(operate));
     }
-
 
 
 }

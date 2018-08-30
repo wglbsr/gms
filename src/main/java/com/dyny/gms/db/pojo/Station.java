@@ -35,6 +35,10 @@ public class Station {
 
     private String unitAddress;
 
+    private String unitNo;
+
+    private String operatorNo;
+
     public Integer getId() {
         return id;
     }
@@ -161,5 +165,21 @@ public class Station {
 
     public void setUnitAddress(String unitAddress) {
         this.unitAddress = unitAddress == null ? null : unitAddress.trim();
+    }
+
+    public String getUnitNo() {
+        return unitNo;
+    }
+
+    public void setUnitNo(String unitNo) {
+        this.unitNo = unitNo == null ? null : unitNo.trim();
+    }
+
+    public String getOperatorNo() {
+        return operatorNo;
+    }
+
+    public void setOperatorNo(String operatorNo) {
+        this.operatorNo = operatorNo == null ? null : operatorNo.trim();
     }
 }

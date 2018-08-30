@@ -1,0 +1,24 @@
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into Ap_operate (mach_no, op_no,
+    op_num, creat_time, creat_per,
+    action, i_execute_id, d_actual_execute_time,
+    b_deleted)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      ( #{item.machNo,jdbcType=VARCHAR}, #{item.opNo,jdbcType=INTEGER},
+      #{item.opNum,jdbcType=VARCHAR}, #{item.creatTime,jdbcType=TIMESTAMP}, #{item.creatPer,jdbcType=VARCHAR},
+      #{item.action,jdbcType=BIT}, #{item.executeId,jdbcType=INTEGER}, #{item.actualExecuteTime,jdbcType=TIMESTAMP},
+      #{item.deleted,jdbcType=BIT})
+    </foreach>
+  </insert>
+
+
+  <select id="selectMaxExeIdByMachNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select isnull(max(i_execute_id),0) i_execute_id from Ap_operate where mach_no=#{machNo,jdbcType=VARCHAR}
+  </select>
+
+
+
+    int selectMaxExeIdByMachNo(String machNo);
+    int insertBatch(List<Operate> list);
+
