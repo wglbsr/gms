@@ -8,7 +8,7 @@ public interface ContactService {
 
     int deleteContact(Contact contact);
 
-    String getContact(Contact contact, int pageNum, int pageSize);
+    String getContact(Contact contact,String searchContent,  int pageNum, int pageSize,String orderBy);
 
     int addContact(Contact contact);
 }

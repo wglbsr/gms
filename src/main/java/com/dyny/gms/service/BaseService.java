@@ -10,7 +10,7 @@ public class BaseService extends BaseController {
 
     public String parsePojoAttrToColumnName(Object pojoAttr) {
 //        String attrName = pojoAttr.
-        if(pojoAttr instanceof String){
+        if (pojoAttr instanceof String) {
 
         }
 
@@ -22,5 +22,9 @@ public class BaseService extends BaseController {
     private String getPrefixByDataType(Field temp) {
 
         return "";
+    }
+
+    public String appendLike(String content) {
+        return "%" + content + "%";
     }
 }

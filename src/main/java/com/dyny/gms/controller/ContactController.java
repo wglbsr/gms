@@ -18,14 +18,16 @@ public class ContactController extends BaseController {
     @ResponseBody
     public String getContact(@RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                              @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
-                             @RequestParam(name = "unitId", required = false, defaultValue = "-1") int unitId,
+//                             @RequestParam(name = "unitId", required = false, defaultValue = "-1") int unitId,
+                             @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
+                             @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                              @RequestParam(name = "customerNo", required = true) String customerNo) {
         Contact contact = new Contact();
         contact.setCustomerNo(customerNo);
-        if (unitId >= 0) {
-            contact.setUnitId(unitId);
-        }
-        return contactService.getContact(contact, pageNum, pageSize);
+//        if (unitId >= 0) {
+//            contact.setUnitId(unitId);
+//        }
+        return contactService.getContact(contact,searchContent, pageNum, pageSize,orderBy);
     }
 
 

@@ -6,6 +6,8 @@ import com.dyny.gms.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UnitController extends BaseController {
 
@@ -25,6 +27,13 @@ public class UnitController extends BaseController {
         unit.setCustomerNo(customerNo);
         unit.setUnitNo(unitNo);
         return unitService.getUnit(unit, searchContent, pageNum, pageSize, orderBy);
+    }
+
+    //getUnitByUnitIdList
+    @RequestMapping(value = "/getUnitByUnitIdList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getUnitByUnitIdList(@RequestBody List<Integer> unitIdList) {
+        return super.getSuccessResult(unitService.getUnitByUnitIdList(unitIdList));
     }
 
     @RequestMapping(value = "/updateUnit", produces = {"application/json;charset=UTF-8"})

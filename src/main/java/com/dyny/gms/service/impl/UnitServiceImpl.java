@@ -32,14 +32,16 @@ public class UnitServiceImpl extends BaseService implements UnitService {
     public String getUnit(Unit unit, String searchContent, int pageNum, int pageSize, String orderBy) {
         UnitExample example = new UnitExample();
         if (Tool.StringUtil.validStr(searchContent)) {//模糊查找模式
-            example.or().andUnitNameLike(searchContent).andCustomerNoEqualTo(unit.getCustomerNo());
-            example.or().andUnitNoLike(searchContent).andCustomerNoEqualTo(unit.getCustomerNo());
+            example.or().andUnitNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo());
+            example.or().andUnitNoLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo());
+            example.or().andUnitAddressLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo());
         } else {//精确查找模式
             if (Tool.StringUtil.validStr(unit.getUnitNo())) {
                 example.or().andUnitNoEqualTo(unit.getUnitNo()).andCustomerNoEqualTo(unit.getCustomerNo());
             }
         }
         Page page = PageHelper.startPage(pageNum, pageSize);
+        page.setOrderBy(orderBy);
         List result = unitMapper.selectByExample(example);
         int total = (int) page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
@@ -48,5 +50,12 @@ public class UnitServiceImpl extends BaseService implements UnitService {
     @Override
     public int addUnit(Unit unit) {
         return unitMapper.insertSelective(unit);
+    }
+
+    @Override
+    public List getUnitByUnitIdList(List<Integer> unitIdList) {
+        UnitExample example = new UnitExample();
+        example.or().andIdIn(unitIdList);
+        return unitMapper.selectByExample(example);
     }
 }

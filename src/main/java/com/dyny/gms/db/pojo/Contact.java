@@ -9,8 +9,6 @@ public class Contact {
 
     private String contactPhone;
 
-    private String stationNo;
-
     private String remark;
 
     private Date createTime;
@@ -21,7 +19,7 @@ public class Contact {
 
     private Integer modifyUser;
 
-    private Byte permission;
+    private Integer permission;
 
     private String customerNo;
 
@@ -49,14 +47,6 @@ public class Contact {
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone == null ? null : contactPhone.trim();
-    }
-
-    public String getStationNo() {
-        return stationNo;
-    }
-
-    public void setStationNo(String stationNo) {
-        this.stationNo = stationNo == null ? null : stationNo.trim();
     }
 
     public String getRemark() {
@@ -99,11 +89,11 @@ public class Contact {
         this.modifyUser = modifyUser;
     }
 
-    public Byte getPermission() {
+    public Integer getPermission() {
         return permission;
     }
 
-    public void setPermission(Byte permission) {
+    public void setPermission(Integer permission) {
         this.permission = permission;
     }
 

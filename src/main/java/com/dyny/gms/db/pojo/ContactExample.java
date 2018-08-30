@@ -305,76 +305,6 @@ public class ContactExample {
             return (Criteria) this;
         }
 
-        public Criteria andStationNoIsNull() {
-            addCriterion("s_station_no is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoIsNotNull() {
-            addCriterion("s_station_no is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoEqualTo(String value) {
-            addCriterion("s_station_no =", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoNotEqualTo(String value) {
-            addCriterion("s_station_no <>", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoGreaterThan(String value) {
-            addCriterion("s_station_no >", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoGreaterThanOrEqualTo(String value) {
-            addCriterion("s_station_no >=", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoLessThan(String value) {
-            addCriterion("s_station_no <", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoLessThanOrEqualTo(String value) {
-            addCriterion("s_station_no <=", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoLike(String value) {
-            addCriterion("s_station_no like", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoNotLike(String value) {
-            addCriterion("s_station_no not like", value, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoIn(List<String> values) {
-            addCriterion("s_station_no in", values, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoNotIn(List<String> values) {
-            addCriterion("s_station_no not in", values, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoBetween(String value1, String value2) {
-            addCriterion("s_station_no between", value1, value2, "stationNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andStationNoNotBetween(String value1, String value2) {
-            addCriterion("s_station_no not between", value1, value2, "stationNo");
-            return (Criteria) this;
-        }
-
         public Criteria andRemarkIsNull() {
             addCriterion("s_remark is null");
             return (Criteria) this;
@@ -695,52 +625,52 @@ public class ContactExample {
             return (Criteria) this;
         }
 
-        public Criteria andPermissionEqualTo(Byte value) {
+        public Criteria andPermissionEqualTo(Integer value) {
             addCriterion("i_permission =", value, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionNotEqualTo(Byte value) {
+        public Criteria andPermissionNotEqualTo(Integer value) {
             addCriterion("i_permission <>", value, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionGreaterThan(Byte value) {
+        public Criteria andPermissionGreaterThan(Integer value) {
             addCriterion("i_permission >", value, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionGreaterThanOrEqualTo(Byte value) {
+        public Criteria andPermissionGreaterThanOrEqualTo(Integer value) {
             addCriterion("i_permission >=", value, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionLessThan(Byte value) {
+        public Criteria andPermissionLessThan(Integer value) {
             addCriterion("i_permission <", value, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionLessThanOrEqualTo(Byte value) {
+        public Criteria andPermissionLessThanOrEqualTo(Integer value) {
             addCriterion("i_permission <=", value, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionIn(List<Byte> values) {
+        public Criteria andPermissionIn(List<Integer> values) {
             addCriterion("i_permission in", values, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionNotIn(List<Byte> values) {
+        public Criteria andPermissionNotIn(List<Integer> values) {
             addCriterion("i_permission not in", values, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionBetween(Byte value1, Byte value2) {
+        public Criteria andPermissionBetween(Integer value1, Integer value2) {
             addCriterion("i_permission between", value1, value2, "permission");
             return (Criteria) this;
         }
 
-        public Criteria andPermissionNotBetween(Byte value1, Byte value2) {
+        public Criteria andPermissionNotBetween(Integer value1, Integer value2) {
             addCriterion("i_permission not between", value1, value2, "permission");
             return (Criteria) this;
         }

@@ -5,12 +5,14 @@ import com.dyny.gms.db.pojo.Contact;
 import com.dyny.gms.db.pojo.ContactExample;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.ContactService;
+import com.dyny.gms.utils.Tool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ContactServiceImpl extends BaseService implements ContactService {
     @Autowired
@@ -27,14 +29,18 @@ public class ContactServiceImpl extends BaseService implements ContactService {
     }
 
     @Override
-    public String getContact(Contact contact, int pageNum, int pageSize) {
+    public String getContact(Contact contact, String searchContent, int pageNum, int pageSize, String orderBy) {
         ContactExample example = new ContactExample();
-        ContactExample.Criteria criteria = example.createCriteria();
-        criteria.andStationNoEqualTo(contact.getStationNo());
-        criteria.andUnitIdEqualTo(contact.getUnitId());
+        if (Tool.StringUtil.validStr(searchContent)) {//模糊查找模式
+            example.or().andContactNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo());
+            example.or().andContactPhoneLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo());
+        } else {
+            example.or().andCustomerNoEqualTo(contact.getCustomerNo());
+        }
         Page page = PageHelper.startPage(pageNum, pageSize);
-        int total = (int) page.getTotal();
+        page.setOrderBy(orderBy);
         List result = contactMapper.selectByExample(example);
+        int total = (int) page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
 

@@ -5,13 +5,12 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="s_contact_name" jdbcType="VARCHAR" property="contactName" />
     <result column="s_contact_phone" jdbcType="VARCHAR" property="contactPhone" />
-    <result column="s_station_no" jdbcType="VARCHAR" property="stationNo" />
     <result column="s_remark" jdbcType="VARCHAR" property="remark" />
     <result column="d_create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="i_creator" jdbcType="INTEGER" property="creator" />
     <result column="d_modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="i_modify_user" jdbcType="INTEGER" property="modifyUser" />
-    <result column="i_permission" jdbcType="TINYINT" property="permission" />
+    <result column="i_permission" jdbcType="INTEGER" property="permission" />
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="i_unit_id" jdbcType="INTEGER" property="unitId" />
   </resultMap>
@@ -74,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, s_contact_name, s_contact_phone, s_station_no, s_remark, d_create_time, i_creator, 
-    d_modify_time, i_modify_user, i_permission, s_customer_no, i_unit_id
+    id, s_contact_name, s_contact_phone, s_remark, d_create_time, i_creator, d_modify_time, 
+    i_modify_user, i_permission, s_customer_no, i_unit_id
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.ContactExample" resultMap="BaseResultMap">
     select
@@ -109,15 +108,13 @@
   </delete>
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.Contact">
     insert into t_contact (id, s_contact_name, s_contact_phone, 
-      s_station_no, s_remark, d_create_time, 
-      i_creator, d_modify_time, i_modify_user, 
-      i_permission, s_customer_no, i_unit_id
-      )
+      s_remark, d_create_time, i_creator, 
+      d_modify_time, i_modify_user, i_permission, 
+      s_customer_no, i_unit_id)
     values (#{id,jdbcType=INTEGER}, #{contactName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
-      #{stationNo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=INTEGER}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=INTEGER}, 
-      #{permission,jdbcType=TINYINT}, #{customerNo,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}
-      )
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}, 
+      #{customerNo,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Contact">
     insert into t_contact
@@ -130,9 +127,6 @@
       </if>
       <if test="contactPhone != null">
         s_contact_phone,
-      </if>
-      <if test="stationNo != null">
-        s_station_no,
       </if>
       <if test="remark != null">
         s_remark,
@@ -160,14 +154,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="contactName != null">
         #{contactName,jdbcType=VARCHAR},
       </if>
       <if test="contactPhone != null">
         #{contactPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="stationNo != null">
-        #{stationNo,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -185,7 +179,7 @@
         #{modifyUser,jdbcType=INTEGER},
       </if>
       <if test="permission != null">
-        #{permission,jdbcType=TINYINT},
+        #{permission,jdbcType=INTEGER},
       </if>
       <if test="customerNo != null">
         #{customerNo,jdbcType=VARCHAR},
@@ -204,15 +198,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_contact
     <set>
-
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.contactName != null">
         s_contact_name = #{record.contactName,jdbcType=VARCHAR},
       </if>
       <if test="record.contactPhone != null">
         s_contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stationNo != null">
-        s_station_no = #{record.stationNo,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null">
         s_remark = #{record.remark,jdbcType=VARCHAR},
@@ -230,7 +223,7 @@
         i_modify_user = #{record.modifyUser,jdbcType=INTEGER},
       </if>
       <if test="record.permission != null">
-        i_permission = #{record.permission,jdbcType=TINYINT},
+        i_permission = #{record.permission,jdbcType=INTEGER},
       </if>
       <if test="record.customerNo != null">
         s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
@@ -245,16 +238,15 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_contact
-    set
+    set id = #{record.id,jdbcType=INTEGER},
       s_contact_name = #{record.contactName,jdbcType=VARCHAR},
       s_contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
-      s_station_no = #{record.stationNo,jdbcType=VARCHAR},
       s_remark = #{record.remark,jdbcType=VARCHAR},
       d_create_time = #{record.createTime,jdbcType=TIMESTAMP},
       i_creator = #{record.creator,jdbcType=INTEGER},
       d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
       i_modify_user = #{record.modifyUser,jdbcType=INTEGER},
-      i_permission = #{record.permission,jdbcType=TINYINT},
+      i_permission = #{record.permission,jdbcType=INTEGER},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
       i_unit_id = #{record.unitId,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -269,9 +261,6 @@
       </if>
       <if test="contactPhone != null">
         s_contact_phone = #{contactPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="stationNo != null">
-        s_station_no = #{stationNo,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         s_remark = #{remark,jdbcType=VARCHAR},
@@ -289,7 +278,7 @@
         i_modify_user = #{modifyUser,jdbcType=INTEGER},
       </if>
       <if test="permission != null">
-        i_permission = #{permission,jdbcType=TINYINT},
+        i_permission = #{permission,jdbcType=INTEGER},
       </if>
       <if test="customerNo != null">
         s_customer_no = #{customerNo,jdbcType=VARCHAR},
@@ -304,13 +293,12 @@
     update t_contact
     set s_contact_name = #{contactName,jdbcType=VARCHAR},
       s_contact_phone = #{contactPhone,jdbcType=VARCHAR},
-      s_station_no = #{stationNo,jdbcType=VARCHAR},
       s_remark = #{remark,jdbcType=VARCHAR},
       d_create_time = #{createTime,jdbcType=TIMESTAMP},
       i_creator = #{creator,jdbcType=INTEGER},
       d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       i_modify_user = #{modifyUser,jdbcType=INTEGER},
-      i_permission = #{permission,jdbcType=TINYINT},
+      i_permission = #{permission,jdbcType=INTEGER},
       s_customer_no = #{customerNo,jdbcType=VARCHAR},
       i_unit_id = #{unitId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
