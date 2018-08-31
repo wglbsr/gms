@@ -6,6 +6,9 @@ import com.dyny.gms.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
 public class StationController extends BaseController {
@@ -15,12 +18,30 @@ public class StationController extends BaseController {
 
     @RequestMapping(value = "/getStationList", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getStationList(@RequestParam(name = "user_cus", required = true) String usercus,
+    public String getStationList(@RequestParam(name = "customerNo", required = true) String customerNo,
                                  @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                  @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                                  @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize) {
-        return stationService.getStationListByUsercus(usercus, pageNum, pageSize, orderBy);
+        return stationService.getStationListByUsercus(customerNo, pageNum, pageSize, orderBy);
     }
+
+
+    @RequestMapping(value = "/getStationListByContactId", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getStationListByContactId(@RequestParam(name = "contactIdList", required = true) String contactIdListStr,
+                                            @RequestParam(name = "customerNo", required = true) String customerNo,
+                                            @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                            @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
+                                            @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize) {
+        List<Integer> contactIdList = new ArrayList<Integer>();
+        String[] contactIdListStrArr = contactIdListStr.split(",");
+        for (String temp : contactIdListStrArr) {
+            contactIdList.add(Integer.valueOf(temp));
+        }
+        return stationService.getStationListByContactId(customerNo, contactIdList, pageNum, pageSize, orderBy);
+    }
+
+    //getStationListByContactId
 
     @RequestMapping(value = "/addStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody

@@ -6,6 +6,8 @@ import com.dyny.gms.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ContactController extends BaseController {
 
@@ -18,18 +20,24 @@ public class ContactController extends BaseController {
     @ResponseBody
     public String getContact(@RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                              @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
-//                             @RequestParam(name = "unitId", required = false, defaultValue = "-1") int unitId,
                              @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
                              @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                              @RequestParam(name = "customerNo", required = true) String customerNo) {
         Contact contact = new Contact();
         contact.setCustomerNo(customerNo);
-//        if (unitId >= 0) {
-//            contact.setUnitId(unitId);
-//        }
-        return contactService.getContact(contact,searchContent, pageNum, pageSize,orderBy);
+        return contactService.getContact(contact, searchContent, pageNum, pageSize, orderBy);
     }
 
+
+    @RequestMapping(value = "/getContactByUnitId", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getContactByUnitId(
+            @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+            @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
+            @RequestParam(name = "unitId", required = true) int unitId) {
+        return contactService.getContactByUnitId(unitId, null, pageNum, pageSize, orderBy);
+    }
 
     @RequestMapping(value = "/updateContact", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -42,6 +50,13 @@ public class ContactController extends BaseController {
     @ResponseBody
     public String deleteContact(@RequestBody Contact contact) {
         return super.getSuccessResult(contactService.deleteContact(contact));
+    }
+
+
+    @RequestMapping(value = "/deleteContactByIdList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteContactByIdList(@RequestBody List<Integer> contactIdList) {
+        return super.getSuccessResult(contactService.deleteContactByIdList(contactIdList));
     }
 
 

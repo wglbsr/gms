@@ -1065,76 +1065,6 @@ public class StationExample {
             return (Criteria) this;
         }
 
-        public Criteria andUnitAddressIsNull() {
-            addCriterion("s_unit_address is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressIsNotNull() {
-            addCriterion("s_unit_address is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressEqualTo(String value) {
-            addCriterion("s_unit_address =", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressNotEqualTo(String value) {
-            addCriterion("s_unit_address <>", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressGreaterThan(String value) {
-            addCriterion("s_unit_address >", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressGreaterThanOrEqualTo(String value) {
-            addCriterion("s_unit_address >=", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressLessThan(String value) {
-            addCriterion("s_unit_address <", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressLessThanOrEqualTo(String value) {
-            addCriterion("s_unit_address <=", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressLike(String value) {
-            addCriterion("s_unit_address like", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressNotLike(String value) {
-            addCriterion("s_unit_address not like", value, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressIn(List<String> values) {
-            addCriterion("s_unit_address in", values, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressNotIn(List<String> values) {
-            addCriterion("s_unit_address not in", values, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressBetween(String value1, String value2) {
-            addCriterion("s_unit_address between", value1, value2, "unitAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andUnitAddressNotBetween(String value1, String value2) {
-            addCriterion("s_unit_address not between", value1, value2, "unitAddress");
-            return (Criteria) this;
-        }
-
         public Criteria andUnitNoIsNull() {
             addCriterion("s_unit_no is null");
             return (Criteria) this;
@@ -1272,6 +1202,66 @@ public class StationExample {
 
         public Criteria andOperatorNoNotBetween(String value1, String value2) {
             addCriterion("s_operator_no not between", value1, value2, "operatorNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("d_deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("d_deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Boolean value) {
+            addCriterion("d_deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Boolean value) {
+            addCriterion("d_deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Boolean value) {
+            addCriterion("d_deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("d_deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Boolean value) {
+            addCriterion("d_deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Boolean value) {
+            addCriterion("d_deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Boolean> values) {
+            addCriterion("d_deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Boolean> values) {
+            addCriterion("d_deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Boolean value1, Boolean value2) {
+            addCriterion("d_deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("d_deleted not between", value1, value2, "deleted");
             return (Criteria) this;
         }
     }

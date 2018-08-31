@@ -47,6 +47,13 @@ public class OperateController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/adjustTimeBtMachNo", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String adjustTimeBtMachNo(@RequestParam(name = "machineNo") String machineNo, @RequestParam(name = "username") String username) {
+        return super.getSuccessResult(operateService.adjustTimeBtMachNo(machineNo, username));
+    }
+
+
     @RequestMapping(value = "/getOperate", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getOperate(@RequestBody Operate operate) {

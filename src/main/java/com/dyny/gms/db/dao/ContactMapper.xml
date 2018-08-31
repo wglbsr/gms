@@ -13,6 +13,7 @@
     <result column="i_permission" jdbcType="INTEGER" property="permission" />
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="i_unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="d_deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, s_contact_name, s_contact_phone, s_remark, d_create_time, i_creator, d_modify_time, 
-    i_modify_user, i_permission, s_customer_no, i_unit_id
+    i_modify_user, i_permission, s_customer_no, i_unit_id, d_deleted
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.ContactExample" resultMap="BaseResultMap">
     select
@@ -110,11 +111,13 @@
     insert into t_contact (id, s_contact_name, s_contact_phone, 
       s_remark, d_create_time, i_creator, 
       d_modify_time, i_modify_user, i_permission, 
-      s_customer_no, i_unit_id)
+      s_customer_no, i_unit_id, d_deleted
+      )
     values (#{id,jdbcType=INTEGER}, #{contactName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
       #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}, 
-      #{customerNo,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER})
+      #{customerNo,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Contact">
     insert into t_contact
@@ -152,6 +155,9 @@
       <if test="unitId != null">
         i_unit_id,
       </if>
+      <if test="deleted != null">
+        d_deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -186,6 +192,9 @@
       </if>
       <if test="unitId != null">
         #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -231,6 +240,9 @@
       <if test="record.unitId != null">
         i_unit_id = #{record.unitId,jdbcType=INTEGER},
       </if>
+      <if test="record.deleted != null">
+        d_deleted = #{record.deleted,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +260,8 @@
       i_modify_user = #{record.modifyUser,jdbcType=INTEGER},
       i_permission = #{record.permission,jdbcType=INTEGER},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
-      i_unit_id = #{record.unitId,jdbcType=INTEGER}
+      i_unit_id = #{record.unitId,jdbcType=INTEGER},
+      d_deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +299,9 @@
       <if test="unitId != null">
         i_unit_id = #{unitId,jdbcType=INTEGER},
       </if>
+      <if test="deleted != null">
+        d_deleted = #{deleted,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -300,7 +316,8 @@
       i_modify_user = #{modifyUser,jdbcType=INTEGER},
       i_permission = #{permission,jdbcType=INTEGER},
       s_customer_no = #{customerNo,jdbcType=VARCHAR},
-      i_unit_id = #{unitId,jdbcType=INTEGER}
+      i_unit_id = #{unitId,jdbcType=INTEGER},
+      d_deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -11,6 +11,7 @@
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="i_level" jdbcType="INTEGER" property="level" />
     <result column="s_unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="b_deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, s_unit_no, s_unit_address, s_remark, s_operator_no, s_operator_name, s_customer_no, 
-    i_level, s_unit_name
+    i_level, s_unit_name, b_deleted
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.UnitExample" resultMap="BaseResultMap">
     select
@@ -107,12 +108,12 @@
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.Unit">
     insert into t_unit (id, s_unit_no, s_unit_address, 
       s_remark, s_operator_no, s_operator_name, 
-      s_customer_no, i_level, s_unit_name
-      )
+      s_customer_no, i_level, s_unit_name, 
+      b_deleted)
     values (#{id,jdbcType=INTEGER}, #{unitNo,jdbcType=VARCHAR}, #{unitAddress,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{operatorNo,jdbcType=INTEGER}, #{operatorName,jdbcType=VARCHAR}, 
-      #{customerNo,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{unitName,jdbcType=VARCHAR}
-      )
+      #{customerNo,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{unitName,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Unit">
     insert into t_unit
@@ -144,6 +145,9 @@
       <if test="unitName != null">
         s_unit_name,
       </if>
+      <if test="deleted != null">
+        b_deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -172,6 +176,9 @@
       </if>
       <if test="unitName != null">
         #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -211,6 +218,9 @@
       <if test="record.unitName != null">
         s_unit_name = #{record.unitName,jdbcType=VARCHAR},
       </if>
+      <if test="record.deleted != null">
+        b_deleted = #{record.deleted,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +236,8 @@
       s_operator_name = #{record.operatorName,jdbcType=VARCHAR},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
       i_level = #{record.level,jdbcType=INTEGER},
-      s_unit_name = #{record.unitName,jdbcType=VARCHAR}
+      s_unit_name = #{record.unitName,jdbcType=VARCHAR},
+      b_deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,6 +269,9 @@
       <if test="unitName != null">
         s_unit_name = #{unitName,jdbcType=VARCHAR},
       </if>
+      <if test="deleted != null">
+        b_deleted = #{deleted,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -270,7 +284,8 @@
       s_operator_name = #{operatorName,jdbcType=VARCHAR},
       s_customer_no = #{customerNo,jdbcType=VARCHAR},
       i_level = #{level,jdbcType=INTEGER},
-      s_unit_name = #{unitName,jdbcType=VARCHAR}
+      s_unit_name = #{unitName,jdbcType=VARCHAR},
+      b_deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

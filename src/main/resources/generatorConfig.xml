@@ -39,7 +39,13 @@
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
             <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="t_contact" domainObjectName="Contact">
+        <!--<table tableName="t_station" domainObjectName="Station">-->
+            <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
+        <!--</table>-->
+        <!--<table tableName="t_unit" domainObjectName="Unit">-->
+            <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
+        <!--</table>-->
+        <table tableName="t_contact_station_rel" domainObjectName="ContactStationRel">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

@@ -78,6 +78,27 @@ public class OperateServiceImpl implements OperateService {
         return operateMapper.selectByExample(example);
     }
 
+
+    /**
+     * unfinished!!!!!!!!!!
+     * @param machineNo
+     * @param username
+     * @return
+     */
+    @Override
+    public int adjustTimeBtMachNo(String machineNo, String username) {
+        String[] cmd = {"84", "08", "14", "yy", "yy", "mm", "dd", "hh", "MM", "ss", "check", "16"};
+        List cmdArr = new ArrayList();
+        Operate operate = new Operate();
+        operate.setCreatTime(new Date());
+        operate.setMachNo(machineNo);
+        operate.setOpNo(12);
+        operate.setDeleted(false);
+        operate.setAction(0);
+        operate.setCreatPer(username);
+        return operateMapper.insert(operate);
+    }
+
     @Override
     public List getTimerOperateList(Operate operate) {
         OperateExample example = new OperateExample();

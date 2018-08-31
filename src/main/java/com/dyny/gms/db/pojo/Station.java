@@ -33,11 +33,11 @@ public class Station {
 
     private String customerNo;
 
-    private String unitAddress;
-
     private String unitNo;
 
     private String operatorNo;
+
+    private Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -159,14 +159,6 @@ public class Station {
         this.customerNo = customerNo == null ? null : customerNo.trim();
     }
 
-    public String getUnitAddress() {
-        return unitAddress;
-    }
-
-    public void setUnitAddress(String unitAddress) {
-        this.unitAddress = unitAddress == null ? null : unitAddress.trim();
-    }
-
     public String getUnitNo() {
         return unitNo;
     }
@@ -181,5 +173,13 @@ public class Station {
 
     public void setOperatorNo(String operatorNo) {
         this.operatorNo = operatorNo == null ? null : operatorNo.trim();
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -1,6 +1,9 @@
 package com.dyny.gms.service.impl;
 
+import com.dyny.gms.db.dao.ContactStationRelMapper;
 import com.dyny.gms.db.dao.StationMapper;
+import com.dyny.gms.db.pojo.ContactStationRel;
+import com.dyny.gms.db.pojo.ContactStationRelExample;
 import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
 import com.dyny.gms.service.BaseService;
@@ -11,12 +14,17 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StationServiceImpl extends BaseService implements StationService {
+
+
     @Autowired
     StationMapper stationMapper;
+    @Autowired
+    ContactStationRelMapper contactStationRelMapper;
 
     @Override
     public int updateStation(Station station) {
@@ -25,6 +33,27 @@ public class StationServiceImpl extends BaseService implements StationService {
         criteria.andStationNoEqualTo(station.getStationNo());
         example.or(criteria);
         return stationMapper.updateByExample(station, example);
+    }
+
+    @Override
+    public String getStationListByContactId(String customerNo, List<Integer> contactIdList, int pageNum, int pageSize, String orderBy) {
+        StationExample stationExample = new StationExample();
+        ContactStationRelExample contactStationRelExample = new ContactStationRelExample();
+        contactStationRelExample.or().andContactIdIn(contactIdList).andDeletedEqualTo(false);
+        List<ContactStationRel> contactStationRels = contactStationRelMapper.selectByExample(contactStationRelExample);
+        if (contactStationRels == null || contactStationRels.size() == 0) {
+            return super.getSuccessResult(null, pageNum, pageSize, 0);
+        }
+        List stationNos = new ArrayList();
+        for (ContactStationRel temp : contactStationRels) {
+            stationNos.add(temp.getStationNo());
+        }
+        stationExample.or().andStationNoIn(stationNos).andCustomerNoEqualTo(customerNo);
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        page.setOrderBy(orderBy);
+        List result = stationMapper.selectByExample(stationExample);
+        long total = page.getTotal();
+        return super.getSuccessResult(result, pageNum, pageSize, total);
     }
 
     /**
@@ -42,17 +71,19 @@ public class StationServiceImpl extends BaseService implements StationService {
     }
 
     /**
-     * 删除基站
+     * 删除基站(逻辑删除)
      *
      * @param stationNo
      * @return
      */
     @Override
     public int deleteStation(String stationNo) {
+        Station station = new Station();
+        station.setDeleted(true);
         StationExample example = new StationExample();
         StationExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerNoEqualTo(stationNo);
-        return stationMapper.deleteByExample(example);
+        return stationMapper.updateByExampleSelective(station, example);
     }
 
     /**
@@ -68,7 +99,7 @@ public class StationServiceImpl extends BaseService implements StationService {
     public String getStationListByUsercus(String customerNo, int pageNum, int pageSize, String orderBy) {
         StationExample example = new StationExample();
         StationExample.Criteria criteria = example.createCriteria();
-        criteria.andCustomerNoEqualTo(customerNo);
+        criteria.andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false);
         Page page = PageHelper.startPage(pageNum, pageSize);
         if (Tool.StringUtil.validStr(orderBy)) {
             page.setOrderBy(orderBy);

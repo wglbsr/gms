@@ -25,4 +25,6 @@ public interface OperateService {
     List getTimerOperateList(Operate operate);
 
     int deleteAllTimerOperateByMachineNo(String customerNo);
+
+    int adjustTimeBtMachNo(String machineNo, String username);
 }

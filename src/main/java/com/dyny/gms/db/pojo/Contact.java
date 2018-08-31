@@ -25,6 +25,8 @@ public class Contact {
 
     private Integer unitId;
 
+    private Boolean deleted;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class Contact {
 
     public void setUnitId(Integer unitId) {
         this.unitId = unitId;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

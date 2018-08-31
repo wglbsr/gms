@@ -19,6 +19,8 @@ public class Unit {
 
     private String unitName;
 
+    private Boolean deleted;
+
     public Integer getId() {
         return id;
     }
@@ -89,5 +91,13 @@ public class Unit {
 
     public void setUnitName(String unitName) {
         this.unitName = unitName == null ? null : unitName.trim();
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

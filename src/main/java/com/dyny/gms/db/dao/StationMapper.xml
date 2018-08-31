@@ -17,9 +17,9 @@
     <result column="i_station_type" jdbcType="INTEGER" property="stationType" />
     <result column="i_start_voltage" jdbcType="INTEGER" property="startVoltage" />
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
-    <result column="s_unit_address" jdbcType="VARCHAR" property="unitAddress" />
     <result column="s_unit_no" jdbcType="VARCHAR" property="unitNo" />
     <result column="s_operator_no" jdbcType="VARCHAR" property="operatorNo" />
+    <result column="d_deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,7 +82,7 @@
   <sql id="Base_Column_List">
     id, s_station_name, s_station_no, s_station_coordinate, d_create_time, i_creator, 
     d_modify_time, i_modifier, i_status, s_remark, s_station_address, i_administrator, 
-    i_station_type, i_start_voltage, s_customer_no, s_unit_address, s_unit_no, s_operator_no
+    i_station_type, i_start_voltage, s_customer_no, s_unit_no, s_operator_no, d_deleted
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultMap="BaseResultMap">
     select
@@ -120,14 +120,14 @@
       d_modify_time, i_modifier, i_status, 
       s_remark, s_station_address, i_administrator, 
       i_station_type, i_start_voltage, s_customer_no, 
-      s_unit_address, s_unit_no, s_operator_no
+      s_unit_no, s_operator_no, d_deleted
       )
     values (#{id,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, #{stationNo,jdbcType=VARCHAR}, 
       #{stationCoordinate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
       #{modifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{stationAddress,jdbcType=VARCHAR}, #{administrator,jdbcType=INTEGER}, 
       #{stationType,jdbcType=INTEGER}, #{startVoltage,jdbcType=INTEGER}, #{customerNo,jdbcType=VARCHAR}, 
-      #{unitAddress,jdbcType=VARCHAR}, #{unitNo,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR}
+      #{unitNo,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR}, #{deleted,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Station">
@@ -178,14 +178,14 @@
       <if test="customerNo != null">
         s_customer_no,
       </if>
-      <if test="unitAddress != null">
-        s_unit_address,
-      </if>
       <if test="unitNo != null">
         s_unit_no,
       </if>
       <if test="operatorNo != null">
         s_operator_no,
+      </if>
+      <if test="deleted != null">
+        d_deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -234,14 +234,14 @@
       <if test="customerNo != null">
         #{customerNo,jdbcType=VARCHAR},
       </if>
-      <if test="unitAddress != null">
-        #{unitAddress,jdbcType=VARCHAR},
-      </if>
       <if test="unitNo != null">
         #{unitNo,jdbcType=VARCHAR},
       </if>
       <if test="operatorNo != null">
         #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -299,14 +299,14 @@
       <if test="record.customerNo != null">
         s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
       </if>
-      <if test="record.unitAddress != null">
-        s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
-      </if>
       <if test="record.unitNo != null">
         s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
       </if>
       <if test="record.operatorNo != null">
         s_operator_no = #{record.operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        d_deleted = #{record.deleted,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -330,9 +330,9 @@
       i_station_type = #{record.stationType,jdbcType=INTEGER},
       i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
-      s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
       s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
-      s_operator_no = #{record.operatorNo,jdbcType=VARCHAR}
+      s_operator_no = #{record.operatorNo,jdbcType=VARCHAR},
+      d_deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -382,14 +382,14 @@
       <if test="customerNo != null">
         s_customer_no = #{customerNo,jdbcType=VARCHAR},
       </if>
-      <if test="unitAddress != null">
-        s_unit_address = #{unitAddress,jdbcType=VARCHAR},
-      </if>
       <if test="unitNo != null">
         s_unit_no = #{unitNo,jdbcType=VARCHAR},
       </if>
       <if test="operatorNo != null">
         s_operator_no = #{operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        d_deleted = #{deleted,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -410,9 +410,9 @@
       i_station_type = #{stationType,jdbcType=INTEGER},
       i_start_voltage = #{startVoltage,jdbcType=INTEGER},
       s_customer_no = #{customerNo,jdbcType=VARCHAR},
-      s_unit_address = #{unitAddress,jdbcType=VARCHAR},
       s_unit_no = #{unitNo,jdbcType=VARCHAR},
-      s_operator_no = #{operatorNo,jdbcType=VARCHAR}
+      s_operator_no = #{operatorNo,jdbcType=VARCHAR},
+      d_deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
