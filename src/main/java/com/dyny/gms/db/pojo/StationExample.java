@@ -1264,6 +1264,206 @@ public class StationExample {
             addCriterion("d_deleted not between", value1, value2, "deleted");
             return (Criteria) this;
         }
+
+        public Criteria andStationLatitudeIsNull() {
+            addCriterion("s_station_latitude is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeIsNotNull() {
+            addCriterion("s_station_latitude is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeEqualTo(String value) {
+            addCriterion("s_station_latitude =", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeNotEqualTo(String value) {
+            addCriterion("s_station_latitude <>", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeGreaterThan(String value) {
+            addCriterion("s_station_latitude >", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeGreaterThanOrEqualTo(String value) {
+            addCriterion("s_station_latitude >=", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeLessThan(String value) {
+            addCriterion("s_station_latitude <", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeLessThanOrEqualTo(String value) {
+            addCriterion("s_station_latitude <=", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeLike(String value) {
+            addCriterion("s_station_latitude like", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeNotLike(String value) {
+            addCriterion("s_station_latitude not like", value, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeIn(List<String> values) {
+            addCriterion("s_station_latitude in", values, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeNotIn(List<String> values) {
+            addCriterion("s_station_latitude not in", values, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeBetween(String value1, String value2) {
+            addCriterion("s_station_latitude between", value1, value2, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLatitudeNotBetween(String value1, String value2) {
+            addCriterion("s_station_latitude not between", value1, value2, "stationLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeIsNull() {
+            addCriterion("s_station_longitude is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeIsNotNull() {
+            addCriterion("s_station_longitude is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeEqualTo(String value) {
+            addCriterion("s_station_longitude =", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeNotEqualTo(String value) {
+            addCriterion("s_station_longitude <>", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeGreaterThan(String value) {
+            addCriterion("s_station_longitude >", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeGreaterThanOrEqualTo(String value) {
+            addCriterion("s_station_longitude >=", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeLessThan(String value) {
+            addCriterion("s_station_longitude <", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeLessThanOrEqualTo(String value) {
+            addCriterion("s_station_longitude <=", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeLike(String value) {
+            addCriterion("s_station_longitude like", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeNotLike(String value) {
+            addCriterion("s_station_longitude not like", value, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeIn(List<String> values) {
+            addCriterion("s_station_longitude in", values, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeNotIn(List<String> values) {
+            addCriterion("s_station_longitude not in", values, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeBetween(String value1, String value2) {
+            addCriterion("s_station_longitude between", value1, value2, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andStationLongitudeNotBetween(String value1, String value2) {
+            addCriterion("s_station_longitude not between", value1, value2, "stationLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdIsNull() {
+            addCriterion("i_unit_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdIsNotNull() {
+            addCriterion("i_unit_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdEqualTo(Integer value) {
+            addCriterion("i_unit_id =", value, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdNotEqualTo(Integer value) {
+            addCriterion("i_unit_id <>", value, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdGreaterThan(Integer value) {
+            addCriterion("i_unit_id >", value, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_unit_id >=", value, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdLessThan(Integer value) {
+            addCriterion("i_unit_id <", value, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdLessThanOrEqualTo(Integer value) {
+            addCriterion("i_unit_id <=", value, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdIn(List<Integer> values) {
+            addCriterion("i_unit_id in", values, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdNotIn(List<Integer> values) {
+            addCriterion("i_unit_id not in", values, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdBetween(Integer value1, Integer value2) {
+            addCriterion("i_unit_id between", value1, value2, "unitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUnitIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_unit_id not between", value1, value2, "unitId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

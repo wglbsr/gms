@@ -3,6 +3,7 @@ package com.dyny.gms.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.service.SiteService;
+import com.dyny.gms.service.UserService;
 import com.dyny.gms.utils.Tool;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -58,7 +59,7 @@ public class SiteController extends BaseController {
                                       @RequestParam(name = "mach_no", required = true) String mach_no,
                                       @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                       @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
-        String fileName = service.getGenerateLogFile(user_cus,mach_no, startDate, endDate);
+        String fileName = service.getGenerateLogFile(user_cus, mach_no, startDate, endDate);
 
         return super.getSuccessResult(fileName);
     }
@@ -530,6 +531,8 @@ public class SiteController extends BaseController {
         return super.getSuccessResult(service.getMachineNum(user_cus));
     }
 
+    @Autowired
+    UserService userService;
 
     /**
      * 三十一.	移动油机查询
@@ -553,6 +556,11 @@ public class SiteController extends BaseController {
                                 @RequestParam(name = "content", required = false, defaultValue = "") String content,
                                 @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                                 @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
+        List<String> userCustomerList = userService.getAllChildrenCusNo("A001");
+        for (String temp : userCustomerList) {
+            System.out.println(temp);
+        }
+
         return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize, orderBy);
 
     }
@@ -670,7 +678,7 @@ public class SiteController extends BaseController {
         String modelflag = request.getParameter("modelflag");
         String user_no = request.getParameter("user_no");
         try {
-                         //84 05 AA AA AA AA AA 52 16
+            //84 05 AA AA AA AA AA 52 16
             String code = "84 05 AA AA AA AA AA 52 16";
             if (modelflag.equals("6")) {
                 code = "84 05 A0 A0 A0 A0 A0 32 16";//"84 05 02 00 00 02 00 20 16";

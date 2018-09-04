@@ -39,6 +39,12 @@ public class Station {
 
     private Boolean deleted;
 
+    private String stationLatitude;
+
+    private String stationLongitude;
+
+    private Integer unitId;
+
     public Integer getId() {
         return id;
     }
@@ -181,5 +187,29 @@ public class Station {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getStationLatitude() {
+        return stationLatitude;
+    }
+
+    public void setStationLatitude(String stationLatitude) {
+        this.stationLatitude = stationLatitude == null ? null : stationLatitude.trim();
+    }
+
+    public String getStationLongitude() {
+        return stationLongitude;
+    }
+
+    public void setStationLongitude(String stationLongitude) {
+        this.stationLongitude = stationLongitude == null ? null : stationLongitude.trim();
+    }
+
+    public Integer getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Integer unitId) {
+        this.unitId = unitId;
     }
 }

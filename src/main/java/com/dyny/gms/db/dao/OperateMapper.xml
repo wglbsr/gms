@@ -282,6 +282,9 @@
       b_deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+
   <!--***************************************************************************以下为手动添加的*********************************************************************************************************-->
   <insert id="insertBatch" parameterType="java.util.List">
     insert into Ap_operate (mach_no, op_no,

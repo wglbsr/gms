@@ -23,8 +23,7 @@ public class SchedulingConfig {
     GeneratorMapper generatorMapper;
 
     @Scheduled(cron = "0 0 4 * * ? ") // 每天凌晨四点计算发电时间
-    public void getToken() {
-
+    public void calculateGenerateTime() {
         int size = generatorMapper.calculateGenerateTime();
         logger.info("计算发电时间任务完成，影响行数:" + size);
     }
@@ -38,6 +37,7 @@ public class SchedulingConfig {
 
     @Scheduled(cron = "0 0 2 * * ? ") // 每天凌晨2点删除超时的文件
     public void deleteExcelFile() {
+        logger.info("开始执行删除超时文件任务");
         File file = new File(excelPath);
         int fileCnt = 0;
         if (!file.isDirectory()) {

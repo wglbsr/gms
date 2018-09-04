@@ -12,9 +12,11 @@ public interface ContactService {
 
     int deleteContactByIdList(List<Integer> contactIdList);
 
-    String getContact(Contact contact,String searchContent,  int pageNum, int pageSize,String orderBy);
+    String getContact(Contact contact, String searchContent, int pageNum, int pageSize, String orderBy);
 
     int addContact(Contact contact);
+
+    List getContactByStationNo(String stationNo,boolean justId);
 
     String getContactByUnitId(int unitId, String searchContent, int pageNum, int pageSize, String orderBy);
 }

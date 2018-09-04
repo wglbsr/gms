@@ -1,5 +1,7 @@
 package com.dyny.gms.db.pojo;
 
+import java.util.Date;
+
 public class User {
     private String userNo;
 
@@ -13,9 +15,13 @@ public class User {
 
     private Integer state;
 
-    private String note;
-
     private String parentCusNo;
+
+    private String usernameCn;
+
+    private Date createTime;
+
+    private String note;
 
     public String getUserNo() {
         return userNo;
@@ -65,19 +71,35 @@ public class User {
         this.state = state;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note == null ? null : note.trim();
-    }
-
     public String getParentCusNo() {
         return parentCusNo;
     }
 
     public void setParentCusNo(String parentCusNo) {
         this.parentCusNo = parentCusNo == null ? null : parentCusNo.trim();
+    }
+
+    public String getUsernameCn() {
+        return usernameCn;
+    }
+
+    public void setUsernameCn(String usernameCn) {
+        this.usernameCn = usernameCn == null ? null : usernameCn.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 }

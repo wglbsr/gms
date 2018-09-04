@@ -37,7 +37,7 @@ public class UsersController {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		try {
-			Users users = service.getByNameAndPass(username, MD5Util.GetMD5By32(password));
+			Users users = service.getByNameAndPass(username,  MD5Util.GetMD5By32(password));
 			if (null == users) {
 				resultMap.put("result", "false"); 
 				resultMap.put("errorMsg", "用户名或密码错误");
@@ -62,7 +62,9 @@ public class UsersController {
 		}
 		return resultMap;
 	}
-	
+
+
+	@Deprecated
 	@RequestMapping(value="/register.do",method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject getAllMap(HttpServletRequest request,

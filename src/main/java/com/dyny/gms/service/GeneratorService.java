@@ -23,4 +23,7 @@ public interface GeneratorService {
     int relateGeneratorWithStation(String machNo,String stationNo,String CusNo,boolean relateFlag);
 
     int getGeneratorNumByStatus(String customerNo,String status);
+
+    int disrelateGeneratorWithStationByStationNo(String stationNo);
+
 }

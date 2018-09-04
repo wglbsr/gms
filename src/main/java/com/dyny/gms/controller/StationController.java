@@ -2,6 +2,7 @@ package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.Station;
+import com.dyny.gms.db.pojo.StationForPage;
 import com.dyny.gms.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,31 +42,29 @@ public class StationController extends BaseController {
         return stationService.getStationListByContactId(customerNo, contactIdList, pageNum, pageSize, orderBy);
     }
 
-    //getStationListByContactId
 
     @RequestMapping(value = "/addStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String addGenerator(@RequestBody Station Station) {
-        return super.getSuccessResult(stationService.addStation(Station));
+    public String addStation(@RequestBody StationForPage stationForPage) {
+        return super.getSuccessResult(stationService.addStation(stationForPage));
     }
 
     @RequestMapping(value = "/updateStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String updateGenerator(@RequestBody Station Station) {
+    public String updateStation(@RequestBody Station Station) {
         return super.getSuccessResult(stationService.updateStation(Station));
     }
 
     @RequestMapping(value = "/deleteStationByStationNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String deleteGenerator(@RequestParam(name = "stationNo", required = true) String stationNo) {
+    public String deleteStationByStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
         return super.getSuccessResult(stationService.deleteStation(stationNo));
     }
 
-
-    @RequestMapping(value = "/getStationNo", produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/getStationByStationNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getStationNo() {
-        return "";
+    public String getStationByStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
+        return super.getSuccessResult(stationService.getStationByStationNo(stationNo));
     }
 
     @RequestMapping(value = "/checkStationNo", produces = {"application/json;charset=UTF-8"})

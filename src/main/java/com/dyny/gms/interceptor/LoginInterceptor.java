@@ -1,5 +1,6 @@
 package com.dyny.gms.interceptor;
 
+import com.dyny.gms.utils.EhcacheUtil;
 import org.apache.log4j.Logger;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -51,14 +52,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 //            logger.info("插入到缓存!");
 //        }
 
-
         String origin = request.getHeader("Origin");
-        response.setHeader("Access-Control-Allow-Origin", origin!=null&&!origin.isEmpty() ? "*" : origin);
+        response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, PATCH");
         response.setHeader("Access-Control-Max-Age", "0");
         response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("XDomainRequestAllowed","1");
+        response.setHeader("XDomainRequestAllowed", "1");
         return true;
     }
 
