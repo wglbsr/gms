@@ -2,10 +2,8 @@ package com.dyny.gms.service.impl;
 
 import com.dyny.gms.db.dao.ContactMapper;
 import com.dyny.gms.db.dao.ContactStationRelMapper;
-import com.dyny.gms.db.pojo.Contact;
-import com.dyny.gms.db.pojo.ContactExample;
-import com.dyny.gms.db.pojo.ContactStationRel;
-import com.dyny.gms.db.pojo.ContactStationRelExample;
+import com.dyny.gms.db.dao.GeneratorContactRelMapper;
+import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.ContactService;
 import com.dyny.gms.utils.Tool;
@@ -58,18 +56,19 @@ public class ContactServiceImpl extends BaseService implements ContactService {
      */
     @Override
     public List getContactByStationNo(String stationNo, boolean justId) {
-        ContactExample example = new ContactExample();
         ContactStationRelExample contactStationRelExample = new ContactStationRelExample();
+        contactStationRelExample.or().andStationNoEqualTo(stationNo).andDeletedEqualTo(false);
         List<ContactStationRel> contactStationRels = contactStationRelMapper.selectByExample(contactStationRelExample);
-        List<Integer> contactId = new ArrayList<>();
+        List<Integer> contactIdList = new ArrayList<>();
         for (ContactStationRel temp : contactStationRels) {
-            contactId.add(temp.getContactId());
+            contactIdList.add(temp.getContactId());
         }
         if (justId) {
-            return contactId;
+            return contactIdList;
         }
-        example.or().andIdIn(contactId).andDeletedEqualTo(false);
-        return contactMapper.selectByExample(example);
+        ContactExample contactExample = new ContactExample();
+        contactExample.or().andIdIn(contactIdList).andDeletedEqualTo(false);
+        return contactMapper.selectByExample(contactExample);
     }
 
     @Override
@@ -87,6 +86,7 @@ public class ContactServiceImpl extends BaseService implements ContactService {
         int total = (int) page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
+
 
     @Override
     public String getContactByUnitId(int unitId, String searchContent, int pageNum, int pageSize, String orderBy) {

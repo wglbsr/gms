@@ -24,21 +24,31 @@ public class SchedulingConfig {
 
     @Scheduled(cron = "0 0 4 * * ? ") // 每天凌晨四点计算发电时间
     public void calculateGenerateTime() {
-        int size = generatorMapper.calculateGenerateTime();
-        logger.info("计算发电时间任务完成，影响行数:" + size);
+        int size = generatorMapper.calculateGenerateTimeToMach();
+        int size2 = generatorMapper.calculateGenerateTimeToApTime();
+        logger.info("计算c_mach表发电时间任务完成，影响行数:" + size);
+        logger.info("计算ap_time表电时间任务完成，影响行数:" + size2);
     }
 
 
     @Value("${export.excel}")
-    private String excelPath;
+    private String excelExportPath;
+
+    @Value("${import.excel}")
+    private String excelImportPath;
 
     @Value("${export.delete.timeout}")
     private long timeout;
 
     @Scheduled(cron = "0 0 2 * * ? ") // 每天凌晨2点删除超时的文件
     public void deleteExcelFile() {
+        this.deleteFileByDir(excelExportPath);
+        this.deleteFileByDir(excelImportPath);
+    }
+
+    private void deleteFileByDir(String excelExportPath) {
         logger.info("开始执行删除超时文件任务");
-        File file = new File(excelPath);
+        File file = new File(excelExportPath);
         int fileCnt = 0;
         if (!file.isDirectory()) {
             logger.info("目录不存在");
@@ -46,6 +56,7 @@ public class SchedulingConfig {
         }
         for (File temp : file.listFiles()) {
             if (temp.isFile() && System.currentTimeMillis() - temp.lastModified() > this.timeout) {//超时删除
+                logger.info("文件名:" + temp.getName());
                 temp.delete();
                 fileCnt++;
             }

@@ -369,7 +369,7 @@
         count(1) total ,
         sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=3 then 1 else 0 end) online,
         sum(case when isnull(Expr1,1)=0 then 1 else 0 end) generating
-        from view_generator_full_info
+        from view_generator_full_info where 1=1
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}
         </if>

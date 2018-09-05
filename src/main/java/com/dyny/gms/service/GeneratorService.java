@@ -14,16 +14,30 @@ public interface GeneratorService {
 
     public int updateGenerator(Generator generator);
 
-    public int deleteGenerator(String generatorNo);
+    public int deleteGeneratorByGeneratorNo(String generatorNo);
 
     public int addGenerator(Generator generator);
 
     public List getGeneratorForStation(String stationNo, String cusNo);
 
-    int relateGeneratorWithStation(String machNo,String stationNo,String CusNo,boolean relateFlag);
+    int relateGeneratorWithStation(String machNo, String stationNo, String CusNo, boolean relateFlag, List<Integer> contactId);
 
-    int getGeneratorNumByStatus(String customerNo,String status);
+    int getGeneratorNumByStatus(String customerNo, String status);
 
     int disrelateGeneratorWithStationByStationNo(String stationNo);
+
+    int insertToGeneratorContactTable(String machNo, List<Integer> contactIdList);
+
+    int insertToGeneratorStationTable(String machNo, String stationNo);
+
+    int logicDeleteGeneratorStationTable(String machNo, String stationNo);
+
+    int logicDeleteGeneratorContactTable(String machNo, List<Integer> contactIdList);
+
+    int setEmptyStationNo(String generatorNo, String stationNo);
+
+    int logicDeleteGeneratorContactByStationNo(String stationNo);
+
+    List getGeneratorByStationNo(String stationNo);
 
 }

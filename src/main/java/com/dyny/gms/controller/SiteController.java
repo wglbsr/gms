@@ -556,11 +556,6 @@ public class SiteController extends BaseController {
                                 @RequestParam(name = "content", required = false, defaultValue = "") String content,
                                 @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
                                 @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
-        List<String> userCustomerList = userService.getAllChildrenCusNo("A001");
-        for (String temp : userCustomerList) {
-            System.out.println(temp);
-        }
-
         return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize, orderBy);
 
     }

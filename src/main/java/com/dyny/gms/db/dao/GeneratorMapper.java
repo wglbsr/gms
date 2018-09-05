@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 @Mapper
 public interface GeneratorMapper {
     long countByExample(GeneratorExample example);
@@ -31,5 +32,7 @@ public interface GeneratorMapper {
 
     int updateByPrimaryKey(Generator record);
 
-    int calculateGenerateTime();
+    int calculateGenerateTimeToMach();
+
+    int calculateGenerateTimeToApTime();
 }

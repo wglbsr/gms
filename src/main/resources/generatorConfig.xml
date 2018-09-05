@@ -45,7 +45,7 @@
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
             <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="t_generator_station_rel" domainObjectName="GeneratorStationRel">
+        <table tableName="t_generator_contact_rel" domainObjectName="GeneratorContactRel">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

@@ -26,7 +26,7 @@ public interface StationService {
 
     StationForPage getStationByStationNo(String stationNo);
 
-    int updateStation(StationForPage station);
+    int updateStationForPage(StationForPage station);
 
     int deleteContactStationRelByStationNo(String stationNo);
 

@@ -119,7 +119,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.Station">
-    insert into t_station (id, s_station_name, s_station_no, 
+    insert into t_station (s_station_name, s_station_no,
       s_station_coordinate, d_create_time, i_creator, 
       d_modify_time, i_modifier, i_status, 
       s_remark, s_station_address, i_administrator, 
@@ -127,7 +127,7 @@
       s_unit_no, s_operator_no, d_deleted, 
       s_station_latitude, s_station_longitude, i_unit_id
       )
-    values (#{id,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, #{stationNo,jdbcType=VARCHAR}, 
+    values (#{stationName,jdbcType=VARCHAR}, #{stationNo,jdbcType=VARCHAR},
       #{stationCoordinate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
       #{modifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{stationAddress,jdbcType=VARCHAR}, #{administrator,jdbcType=INTEGER}, 
@@ -139,9 +139,6 @@
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Station">
     insert into t_station
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="stationName != null">
         s_station_name,
       </if>
@@ -204,9 +201,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="stationName != null">
         #{stationName,jdbcType=VARCHAR},
       </if>
@@ -278,9 +272,6 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_station
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
       <if test="record.stationName != null">
         s_station_name = #{record.stationName,jdbcType=VARCHAR},
       </if>
@@ -348,7 +339,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_station
-    set id = #{record.id,jdbcType=INTEGER},
+    set
       s_station_name = #{record.stationName,jdbcType=VARCHAR},
       s_station_no = #{record.stationNo,jdbcType=VARCHAR},
       s_station_coordinate = #{record.stationCoordinate,jdbcType=VARCHAR},

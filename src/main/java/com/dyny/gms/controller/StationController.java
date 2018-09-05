@@ -6,7 +6,9 @@ import com.dyny.gms.db.pojo.StationForPage;
 import com.dyny.gms.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +53,8 @@ public class StationController extends BaseController {
 
     @RequestMapping(value = "/updateStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String updateStation(@RequestBody Station Station) {
-        return super.getSuccessResult(stationService.updateStation(Station));
+    public String updateStation(@RequestBody StationForPage Station) {
+        return super.getSuccessResult(stationService.updateStationForPage(Station));
     }
 
     @RequestMapping(value = "/deleteStationByStationNo", produces = {"application/json;charset=UTF-8"})
@@ -72,5 +74,32 @@ public class StationController extends BaseController {
     public String checkStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
         return super.getSuccessResult(stationService.checkStationNo(stationNo));
     }
+
+
+    @RequestMapping(value = "/importStationDataByExcel", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String importStationDataByExcel(@RequestParam("fileName") MultipartFile file) {
+        int re = 0;
+
+        if (file.isEmpty()) {
+            return "false";
+        }
+        String fileName = file.getOriginalFilename();
+        int size = (int) file.getSize();
+        String path = "F:/test";
+        File dest = new File(path + "/" + fileName);
+        if (!dest.getParentFile().exists()) { //判断文件父目录是否存在
+            dest.getParentFile().mkdir();
+        }else{
+
+        }
+        try {
+            return "true";
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            return super.getErrorMsg(e.getMessage());
+        }
+    }
+
 
 }

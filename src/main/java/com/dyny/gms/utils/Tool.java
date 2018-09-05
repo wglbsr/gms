@@ -1,14 +1,6 @@
 package com.dyny.gms.utils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -186,7 +178,27 @@ public class Tool {
             return prop.getProperty(key);
         }
 
+        /**
+         * 保存文件
+         *
+         * @param file
+         * @param filePath
+         * @param fileName
+         * @throws Exception
+         */
+        public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception {
+            File targetFile = new File(filePath);
+            if (!targetFile.exists()) {
+                targetFile.mkdirs();
+            }
+            FileOutputStream out = new FileOutputStream(filePath + fileName);
+            out.write(file);
+            out.flush();
+            out.close();
+        }
+
     }
+
 
     /**
      * 字符串工具类

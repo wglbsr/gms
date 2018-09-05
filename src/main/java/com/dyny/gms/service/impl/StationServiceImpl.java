@@ -211,14 +211,14 @@ public class StationServiceImpl extends BaseService implements StationService {
      * @return
      */
     @Override
-    public int updateStation(StationForPage station) {
+    public int updateStationForPage(StationForPage station) {
         String stationNo = station.getStationNo();
         List<Integer> contactIds1 = station.getContactIdList();
         List<Integer> contactIds2 = contactService.getContactByStationNo(stationNo, true);
         List<Integer> crossIdList = new ArrayList<>();
         for (Integer temp1 : contactIds1) {
             for (Integer temp2 : contactIds2) {
-                if (temp1 == temp2) {
+                if (temp1.intValue() == temp2.intValue()) {
                     crossIdList.add(temp1);
                 }
             }
@@ -231,8 +231,10 @@ public class StationServiceImpl extends BaseService implements StationService {
         contactStationRelForDelete.setDeleted(true);
         contactStationRelForDelete.setModifyTime(new Date());
         contactIds2.removeAll(crossIdList);//去掉无需改变的值
-        contactStationRelExample.or().andStationNoEqualTo(stationNo).andContactIdIn(contactIds2).andDeletedEqualTo(false);
-        contactStationRelMapper.updateByExampleSelective(contactStationRelForDelete, contactStationRelExample);
+        if (contactIds2.size() > 0) {
+            contactStationRelExample.or().andStationNoEqualTo(stationNo).andContactIdIn(contactIds2).andDeletedEqualTo(false);
+            contactStationRelMapper.updateByExampleSelective(contactStationRelForDelete, contactStationRelExample);
+        }
         //插入
         for (Integer temp : contactIds1) {
             ContactStationRel contactStationRel = new ContactStationRel();
@@ -265,6 +267,7 @@ public class StationServiceImpl extends BaseService implements StationService {
             contactStationRel.setContactId(contactId);
             contactStationRel.setStationNo(stationForPage.getStationNo());
             contactStationRel.setCreateTime(new Date());
+            contactStationRel.setDeleted(false);
             cnt2 += contactStationRelMapper.insert(contactStationRel) > 0 ? 1 : 0;
         }
         return cnt + cnt2;
