@@ -46,6 +46,7 @@ public class UnitServiceImpl extends BaseService implements UnitService {
             example.or().andUnitNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andUnitNoLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andUnitAddressLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
+            example.or().andRemarkLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
         } else {//精确查找模式
             if (Tool.StringUtil.validStr(unit.getUnitNo())) {
                 example.or().andUnitNoEqualTo(unit.getUnitNo()).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);

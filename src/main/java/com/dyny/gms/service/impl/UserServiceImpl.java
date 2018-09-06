@@ -72,6 +72,13 @@ public class UserServiceImpl extends BaseService implements UserService {
         return userCustomerNoList;
     }
 
+    @Override
+    public List<User> getNextLevelUser(String customerNo) {
+        UserExample example = new UserExample();
+        example.or().andParentCusNoEqualTo(customerNo);
+        return userMapper.selectByExample(example);
+    }
+
     /**
      * @param parentNo
      * @return

@@ -23,9 +23,10 @@ public class StationController extends BaseController {
     @ResponseBody
     public String getStationList(@RequestParam(name = "customerNo", required = true) String customerNo,
                                  @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
-                                 @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
+                                 @RequestParam(name = "orderBy", required = false, defaultValue = "id") String orderBy,
+                                 @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
                                  @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize) {
-        return stationService.getStationListByUsercus(customerNo, pageNum, pageSize, orderBy);
+        return stationService.getStationListByUsercus(customerNo, searchContent, pageNum, pageSize, orderBy);
     }
 
 
@@ -90,7 +91,7 @@ public class StationController extends BaseController {
         File dest = new File(path + "/" + fileName);
         if (!dest.getParentFile().exists()) { //判断文件父目录是否存在
             dest.getParentFile().mkdir();
-        }else{
+        } else {
 
         }
         try {

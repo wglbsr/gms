@@ -26,6 +26,8 @@
         <result column="gprsno" jdbcType="VARCHAR" property="gprsno"/>
         <result column="i_total_generate_time" jdbcType="INTEGER" property="totalGenerateTime"/>
         <result column="i_total_generate_cnt" jdbcType="INTEGER" property="totalGenerateCnt"/>
+        <result column="b_deleted" jdbcType="BIT" property="deleted"/>
+        <result column="b_activated" jdbcType="BIT" property="activated"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -90,7 +92,8 @@
     <sql id="Base_Column_List">
     mach_no, id, mach_name, mach_type, fuel_type, use_type, st_no, cus_no, model_no, 
     vender_name, power_num, Purch_time, state, note, creat_time, creator, ver_no, maintain_time, 
-    stop_time, start_Voltage, volumeno, gprsno, i_total_generate_time, i_total_generate_cnt
+    stop_time, start_Voltage, volumeno, gprsno, i_total_generate_time, i_total_generate_cnt, 
+    b_deleted, b_activated
   </sql>
     <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.GeneratorExample" resultMap="BaseResultMap">
         select
@@ -130,8 +133,8 @@
       state, note, creat_time, 
       creator, ver_no, maintain_time, 
       stop_time, start_Voltage, volumeno, 
-      gprsno, i_total_generate_time, i_total_generate_cnt
-      )
+      gprsno, i_total_generate_time, i_total_generate_cnt, 
+      b_deleted, b_activated)
     values (#{machNo,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{machName,jdbcType=NVARCHAR}, 
       #{machType,jdbcType=NVARCHAR}, #{fuelType,jdbcType=NVARCHAR}, #{useType,jdbcType=NVARCHAR}, 
       #{stNo,jdbcType=VARCHAR}, #{cusNo,jdbcType=VARCHAR}, #{modelNo,jdbcType=VARCHAR}, 
@@ -139,8 +142,8 @@
       #{state,jdbcType=VARCHAR}, #{note,jdbcType=NVARCHAR}, #{creatTime,jdbcType=TIMESTAMP}, 
       #{creator,jdbcType=VARCHAR}, #{verNo,jdbcType=VARCHAR}, #{maintainTime,jdbcType=NUMERIC}, 
       #{stopTime,jdbcType=NUMERIC}, #{startVoltage,jdbcType=NUMERIC}, #{volumeno,jdbcType=NUMERIC}, 
-      #{gprsno,jdbcType=VARCHAR}, #{totalGenerateTime,jdbcType=INTEGER}, #{totalGenerateCnt,jdbcType=INTEGER}
-      )
+      #{gprsno,jdbcType=VARCHAR}, #{totalGenerateTime,jdbcType=INTEGER}, #{totalGenerateCnt,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=BIT}, #{activated,jdbcType=BIT})
   </insert>
     <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Generator">
         insert into C_mach
@@ -217,6 +220,12 @@
             <if test="totalGenerateCnt != null">
                 i_total_generate_cnt,
             </if>
+            <if test="deleted != null">
+                b_deleted,
+            </if>
+            <if test="activated != null">
+                b_activated,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="machNo != null">
@@ -290,6 +299,12 @@
             </if>
             <if test="totalGenerateCnt != null">
                 #{totalGenerateCnt,jdbcType=INTEGER},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+            <if test="activated != null">
+                #{activated,jdbcType=BIT},
             </if>
         </trim>
     </insert>
@@ -374,18 +389,17 @@
             <if test="record.totalGenerateCnt != null">
                 i_total_generate_cnt = #{record.totalGenerateCnt,jdbcType=INTEGER},
             </if>
+            <if test="record.deleted != null">
+                b_deleted = #{record.deleted,jdbcType=BIT},
+            </if>
+            <if test="record.activated != null">
+                b_activated = #{record.activated,jdbcType=BIT},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <update id="calculateGenerateTimeToMach">
-                UPDATE C_mach set i_total_generate_time = dbo.sum_time(mach_no) , i_total_generate_cnt = dbo.sumnum_time(mach_no)
-                </update>
-
-    <update id="calculateGenerateTimeToApTime">
-             UPDATE ap_time set i_generate_time = DATEDIFF(mi, start_time, end_time)
-                </update>
     <update id="updateByExample" parameterType="map">
         update C_mach
         set mach_no = #{record.machNo,jdbcType=VARCHAR},
@@ -411,7 +425,9 @@
         volumeno = #{record.volumeno,jdbcType=NUMERIC},
         gprsno = #{record.gprsno,jdbcType=VARCHAR},
         i_total_generate_time = #{record.totalGenerateTime,jdbcType=INTEGER},
-        i_total_generate_cnt = #{record.totalGenerateCnt,jdbcType=INTEGER}
+        i_total_generate_cnt = #{record.totalGenerateCnt,jdbcType=INTEGER},
+        b_deleted = #{record.deleted,jdbcType=BIT},
+        b_activated = #{record.activated,jdbcType=BIT}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -419,6 +435,9 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Generator">
         update C_mach
         <set>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
             <if test="machName != null">
                 mach_name = #{machName,jdbcType=NVARCHAR},
             </if>
@@ -485,12 +504,18 @@
             <if test="totalGenerateCnt != null">
                 i_total_generate_cnt = #{totalGenerateCnt,jdbcType=INTEGER},
             </if>
+            <if test="deleted != null">
+                b_deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="activated != null">
+                b_activated = #{activated,jdbcType=BIT},
+            </if>
         </set>
         where mach_no = #{machNo,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Generator">
     update C_mach
-    set
+    set id = #{id,jdbcType=INTEGER},
       mach_name = #{machName,jdbcType=NVARCHAR},
       mach_type = #{machType,jdbcType=NVARCHAR},
       fuel_type = #{fuelType,jdbcType=NVARCHAR},
@@ -512,7 +537,18 @@
       volumeno = #{volumeno,jdbcType=NUMERIC},
       gprsno = #{gprsno,jdbcType=VARCHAR},
       i_total_generate_time = #{totalGenerateTime,jdbcType=INTEGER},
-      i_total_generate_cnt = #{totalGenerateCnt,jdbcType=INTEGER}
+      i_total_generate_cnt = #{totalGenerateCnt,jdbcType=INTEGER},
+      b_deleted = #{deleted,jdbcType=BIT},
+      b_activated = #{activated,jdbcType=BIT}
     where mach_no = #{machNo,jdbcType=VARCHAR}
   </update>
+
+    <!--以下为手动添加-->
+    <update id="calculateGenerateTimeToMach">
+                UPDATE C_mach set i_total_generate_time = dbo.sum_time(mach_no) , i_total_generate_cnt = dbo.sumnum_time(mach_no)
+    </update>
+
+    <update id="calculateGenerateTimeToApTime">
+             UPDATE ap_time set i_generate_time = DATEDIFF(mi, start_time, end_time)
+    </update>
 </mapper>

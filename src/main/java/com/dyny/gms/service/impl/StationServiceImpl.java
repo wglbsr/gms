@@ -158,9 +158,10 @@ public class StationServiceImpl extends BaseService implements StationService {
     public int logicDeleteStation(String stationNo) {
         Station station = new Station();
         station.setDeleted(true);
+        station.setModifyTime(new Date());
         StationExample example = new StationExample();
         StationExample.Criteria criteria = example.createCriteria();
-        criteria.andCustomerNoEqualTo(stationNo);
+        criteria.andStationNoEqualTo(stationNo);
         return stationMapper.updateByExampleSelective(station, example);
     }
 
@@ -175,14 +176,20 @@ public class StationServiceImpl extends BaseService implements StationService {
      * @return
      */
     @Override
-    public String getStationListByUsercus(String customerNo, int pageNum, int pageSize, String orderBy) {
+    public String getStationListByUsercus(String customerNo, String searchContent, int pageNum, int pageSize, String orderBy) {
         StationExample example = new StationExample();
-        StationExample.Criteria criteria = example.createCriteria();
-        criteria.andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false);
-        Page page = PageHelper.startPage(pageNum, pageSize);
-        if (Tool.StringUtil.validStr(orderBy)) {
-            page.setOrderBy(orderBy);
+        if (Tool.StringUtil.validStr(searchContent)) {
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNameLike(super.appendLike(searchContent));
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationLatitudeLike(super.appendLike(searchContent));
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationLongitudeLike(super.appendLike(searchContent));
+        } else {
+            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false);
         }
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        page.setOrderBy(orderBy);
         List result = stationMapper.selectByExample(example);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);

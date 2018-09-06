@@ -248,6 +248,16 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
+    public int generatorRegister(Generator generator) {
+        generator.setCreatTime(new Date());
+        generator.setActivated(false);
+        generator.setDeleted(false);
+        generator.setTotalGenerateCnt(0);
+        generator.setTotalGenerateTime(0);
+        return generatorMapper.insert(generator);
+    }
+
+    @Override
     public int logicDeleteGeneratorContactByStationNo(String stationNo) {
         if (!Tool.StringUtil.validStr(stationNo)) {
             return 0;

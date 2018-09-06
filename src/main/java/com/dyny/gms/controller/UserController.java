@@ -37,6 +37,12 @@ public class UserController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/getNextLevelUser", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String getNextLevelUser(@RequestParam(value = "customerNo", required = true) String customerNo) {
+        return super.getSuccessResult(userService.getNextLevelUser(customerNo));
+    }
+
+
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String userRegister(@RequestBody User user) {

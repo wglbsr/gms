@@ -40,4 +40,6 @@ public interface GeneratorService {
 
     List getGeneratorByStationNo(String stationNo);
 
+    int generatorRegister(Generator generator);
+
 }

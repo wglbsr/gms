@@ -77,6 +77,7 @@ public class ContactServiceImpl extends BaseService implements ContactService {
         if (Tool.StringUtil.validStr(searchContent)) {//模糊查找模式
             example.or().andContactNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andContactPhoneLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
+            example.or().andRemarkLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
         } else {
             example.or().andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
         }

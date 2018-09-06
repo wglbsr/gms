@@ -52,6 +52,10 @@ public class Generator {
 
     private Integer totalGenerateCnt;
 
+    private Boolean deleted;
+
+    private Boolean activated;
+
     public String getMachNo() {
         return machNo;
     }
@@ -242,5 +246,21 @@ public class Generator {
 
     public void setTotalGenerateCnt(Integer totalGenerateCnt) {
         this.totalGenerateCnt = totalGenerateCnt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
     }
 }

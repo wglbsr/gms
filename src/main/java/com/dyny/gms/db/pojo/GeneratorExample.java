@@ -1685,6 +1685,126 @@ public class GeneratorExample {
             addCriterion("i_total_generate_cnt not between", value1, value2, "totalGenerateCnt");
             return (Criteria) this;
         }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("b_deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("b_deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Boolean value) {
+            addCriterion("b_deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Boolean value) {
+            addCriterion("b_deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Boolean value) {
+            addCriterion("b_deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("b_deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Boolean value) {
+            addCriterion("b_deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Boolean value) {
+            addCriterion("b_deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Boolean> values) {
+            addCriterion("b_deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Boolean> values) {
+            addCriterion("b_deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_deleted not between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedIsNull() {
+            addCriterion("b_activated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedIsNotNull() {
+            addCriterion("b_activated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedEqualTo(Boolean value) {
+            addCriterion("b_activated =", value, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedNotEqualTo(Boolean value) {
+            addCriterion("b_activated <>", value, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedGreaterThan(Boolean value) {
+            addCriterion("b_activated >", value, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("b_activated >=", value, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedLessThan(Boolean value) {
+            addCriterion("b_activated <", value, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedLessThanOrEqualTo(Boolean value) {
+            addCriterion("b_activated <=", value, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedIn(List<Boolean> values) {
+            addCriterion("b_activated in", values, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedNotIn(List<Boolean> values) {
+            addCriterion("b_activated not in", values, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_activated between", value1, value2, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivatedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_activated not between", value1, value2, "activated");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
