@@ -105,16 +105,14 @@
     insert into t_customer (s_customer_no, d_create_time,
       d_modify_time, b_deleted, s_customer_name, 
       s_remark)
-    values ( #{customerNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+    values (#{customerNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{modifyTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{customerName,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Customer">
     insert into t_customer
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+
       <if test="customerNo != null">
         s_customer_no,
       </if>
@@ -135,9 +133,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+
       <if test="customerNo != null">
         #{customerNo,jdbcType=VARCHAR},
       </if>
