@@ -167,7 +167,7 @@ public class StationServiceImpl extends BaseService implements StationService {
 
 
     /**
-     * 根据用户编号获得基站列表
+     * 根据用户编号获得基站列表,代码太臃肿,需要改善
      *
      * @param customerNo
      * @param pageNum
@@ -176,17 +176,30 @@ public class StationServiceImpl extends BaseService implements StationService {
      * @return
      */
     @Override
-    public String getStationListByUsercus(String customerNo, String searchContent, int pageNum, int pageSize, String orderBy) {
+    public String getStationListByUsercus(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy) {
         StationExample example = new StationExample();
-        if (Tool.StringUtil.validStr(searchContent)) {
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNameLike(super.appendLike(searchContent));
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationLatitudeLike(super.appendLike(searchContent));
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationLongitudeLike(super.appendLike(searchContent));
-        } else {
-            example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false);
+        if (level >= this.ADMIN_LEVEL) {
+            if (Tool.StringUtil.validStr(searchContent)) {
+                example.or().andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
+                example.or().andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
+                example.or().andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
+                example.or().andDeletedEqualTo(false).andStationNameLike(super.appendLike(searchContent));
+                example.or().andDeletedEqualTo(false).andStationLatitudeLike(super.appendLike(searchContent));
+                example.or().andDeletedEqualTo(false).andStationLongitudeLike(super.appendLike(searchContent));
+            } else {
+                example.or().andDeletedEqualTo(false);
+            }
+        }else{
+            if (Tool.StringUtil.validStr(searchContent)) {
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNameLike(super.appendLike(searchContent));
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationLatitudeLike(super.appendLike(searchContent));
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationLongitudeLike(super.appendLike(searchContent));
+            } else {
+                example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false);
+            }
         }
         Page page = PageHelper.startPage(pageNum, pageSize);
         page.setOrderBy(orderBy);

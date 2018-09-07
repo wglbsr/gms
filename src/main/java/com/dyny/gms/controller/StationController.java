@@ -23,10 +23,11 @@ public class StationController extends BaseController {
     @ResponseBody
     public String getStationList(@RequestParam(name = "customerNo", required = true) String customerNo,
                                  @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                 @RequestParam(name = "userLevel", required = false, defaultValue = "0") int userLevel,
                                  @RequestParam(name = "orderBy", required = false, defaultValue = "id") String orderBy,
                                  @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
                                  @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize) {
-        return stationService.getStationListByUsercus(customerNo, searchContent, pageNum, pageSize, orderBy);
+        return stationService.getStationListByUsercus(customerNo, userLevel, searchContent, pageNum, pageSize, orderBy);
     }
 
 

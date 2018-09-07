@@ -72,6 +72,11 @@ public class ContactServiceImpl extends BaseService implements ContactService {
     }
 
     @Override
+    public Contact getContactByUnitId(int contactId) {
+        return contactMapper.selectByPrimaryKey(contactId);
+    }
+
+    @Override
     public String getContact(Contact contact, String searchContent, int pageNum, int pageSize, String orderBy) {
         ContactExample example = new ContactExample();
         if (Tool.StringUtil.validStr(searchContent)) {//模糊查找模式

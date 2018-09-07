@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class BaseService extends BaseController {
 
+    protected static int ADMIN_LEVEL = 200;
+
     /**
      * 获取所有子用户（只获取用户编号）
      *

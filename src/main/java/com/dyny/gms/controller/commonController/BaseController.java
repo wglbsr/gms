@@ -1,6 +1,7 @@
 package com.dyny.gms.controller.commonController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class BaseController {
 
@@ -15,8 +16,8 @@ public class BaseController {
     private static String RESULT_KEY = "result";
     private static String DEFAULT_ERROR_MSG = "内部错误!";
 
-    private static long DEFAULT_PAGE_SIZE=20;
-    private static long DEFAULT_PAGE_NUM=1;
+    private static long DEFAULT_PAGE_SIZE = 20;
+    private static long DEFAULT_PAGE_NUM = 1;
 
     /**
      * 返回成功信息
@@ -61,13 +62,13 @@ public class BaseController {
             this.result.put(DATA_KEY, data);
             this.result.put(PAGE_SIZE_KEY, pageSize);
             this.result.put(PAGE_NUM_KEY, pageNum);
-            long totalPageNum = pageSize>0?(totalNum / pageSize + (totalNum % pageSize > 0 ? 1 : 0)):0;
-            this.result.put(TOTAL_PAGE_NUM_KEY,totalPageNum);
+            long totalPageNum = pageSize > 0 ? (totalNum / pageSize + (totalNum % pageSize > 0 ? 1 : 0)) : 0;
+            this.result.put(TOTAL_PAGE_NUM_KEY, totalPageNum);
             this.result.put(TOTAL_NUM_KEY, totalNum);
         } else {
             this.result.put(ERROR_MSG_KEY, errorMessage != null && errorMessage.isEmpty() ? DEFAULT_ERROR_MSG : errorMessage);
         }
         this.result.put(RESULT_KEY, successFlag);
-        return this.result.toJSONString();
+        return JSONObject.toJSONString(this.result, SerializerFeature.WriteMapNullValue);
     }
 }

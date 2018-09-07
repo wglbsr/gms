@@ -19,4 +19,6 @@ public interface ContactService {
     List getContactByStationNo(String stationNo,boolean justId);
 
     String getContactByUnitId(int unitId, String searchContent, int pageNum, int pageSize, String orderBy);
+
+    Contact getContactByUnitId(int contactId);
 }

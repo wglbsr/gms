@@ -1,16 +1,11 @@
 package com.dyny.gms.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.User;
-import com.dyny.gms.db.pojo.Users;
 import com.dyny.gms.service.UserService;
-import com.dyny.gms.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -50,6 +45,19 @@ public class UserController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/getUserByUserNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getUserByUserNo(@RequestParam(value = "userNo", required = true) String userNo) {
+        return super.getSuccessResult(userService.getUserByUserNo(userNo));
+    }
+
+    @RequestMapping(value = "/deleteUserByUserNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteUserByUserNo(@RequestParam(value = "userNo", required = true) String userNo) {
+        return super.getSuccessResult(userService.deleteUserByUserNo(userNo));
+    }
+
+
     @RequestMapping(value = "/checkUsername", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String checkUsername(@RequestParam(value = "username", required = true) String username) {
@@ -66,15 +74,17 @@ public class UserController extends BaseController {
         return super.getSuccessResult(userService.changePassword(username, oldPassword, newPassword));
     }
 
+//getUserListByCustomerNoAndLevel
 
-    /**
-     * @return
-     */
-    private String getToken() {
-        //1.生成token
-        //2.保存到缓存
 
-        return "";
+    @RequestMapping(value = "/getUserListByCustomerNoAndLevel", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getUserListByCustomerNoAndLevel(@RequestParam(value = "level", required = true) int level,
+                                                  @RequestParam(value = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                                  @RequestParam(value = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                                  @RequestParam(value = "searchContent", required = false, defaultValue = "") String searchContent,
+                                                  @RequestParam(value = "customerNo", required = true) String customerNo) {
+        return userService.getUserListByCustomerNoAndLevel(customerNo, level, searchContent, pageNum, pageSize);
     }
 
 

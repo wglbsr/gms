@@ -694,6 +694,126 @@ public class UserExample {
             addCriterion("d_create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("b_deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("b_deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Boolean value) {
+            addCriterion("b_deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Boolean value) {
+            addCriterion("b_deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Boolean value) {
+            addCriterion("b_deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("b_deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Boolean value) {
+            addCriterion("b_deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Boolean value) {
+            addCriterion("b_deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Boolean> values) {
+            addCriterion("b_deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Boolean> values) {
+            addCriterion("b_deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_deleted not between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeIsNull() {
+            addCriterion("d_modify_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeIsNotNull() {
+            addCriterion("d_modify_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeEqualTo(Date value) {
+            addCriterion("d_modify_time =", value, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeNotEqualTo(Date value) {
+            addCriterion("d_modify_time <>", value, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeGreaterThan(Date value) {
+            addCriterion("d_modify_time >", value, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("d_modify_time >=", value, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeLessThan(Date value) {
+            addCriterion("d_modify_time <", value, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeLessThanOrEqualTo(Date value) {
+            addCriterion("d_modify_time <=", value, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeIn(List<Date> values) {
+            addCriterion("d_modify_time in", values, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeNotIn(List<Date> values) {
+            addCriterion("d_modify_time not in", values, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeBetween(Date value1, Date value2) {
+            addCriterion("d_modify_time between", value1, value2, "modifyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyTimeNotBetween(Date value1, Date value2) {
+            addCriterion("d_modify_time not between", value1, value2, "modifyTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -45,7 +45,7 @@
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
             <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="t_custowwmer" domainObjectName="Cuswwtomer">
+        <table tableName="C_us2er" domainObjectName="U2ser">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

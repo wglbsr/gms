@@ -20,7 +20,7 @@ public interface StationService {
 
     String getStationListByCondition(Station station, int pageNum, int pageSize);
 
-    String getStationListByUsercus(String customerNo,String searchContent, int pageNum, int pageSize, String orderBy);
+    String getStationListByUsercus(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy);
 
     String getStationListByContactId(String customerNo, List<Integer> ContactId, int pageNum, int pageSize, String orderBy);
 

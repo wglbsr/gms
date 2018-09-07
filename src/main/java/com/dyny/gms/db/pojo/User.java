@@ -21,6 +21,10 @@ public class User {
 
     private Date createTime;
 
+    private Boolean deleted;
+
+    private Date modifyTime;
+
     private String note;
 
     public String getUserNo() {
@@ -93,6 +97,22 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public String getNote() {

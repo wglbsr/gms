@@ -19,4 +19,10 @@ public interface UserService {
 
     List<User> getNextLevelUser(String customerNo);
 
+    List<User> getUserByUserNo(String userNo);
+
+    String getUserListByCustomerNoAndLevel(String customerNo, int level, String searchContent, int pageNum, int PageSize);
+
+    int deleteUserByUserNo(String userNo);
+
 }

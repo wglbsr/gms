@@ -39,6 +39,14 @@ public class ContactController extends BaseController {
         return contactService.getContactByUnitId(unitId, null, pageNum, pageSize, orderBy);
     }
 
+
+    @RequestMapping(value = "/getContactByContactId", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getContactByContactId(
+            @RequestParam(name = "contactId", required = true) int contactId) {
+        return super.getSuccessResult(contactService.getContactByUnitId(contactId));
+    }
+
     @RequestMapping(value = "/updateContact", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String updateContact(@RequestBody Contact contact) {

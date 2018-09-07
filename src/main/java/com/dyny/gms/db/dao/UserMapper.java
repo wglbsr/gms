@@ -2,12 +2,10 @@ package com.dyny.gms.db.dao;
 
 import com.dyny.gms.db.pojo.User;
 import com.dyny.gms.db.pojo.UserExample;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface UserMapper {
     long countByExample(UserExample example);
@@ -37,6 +35,4 @@ public interface UserMapper {
     int updateByPrimaryKeyWithBLOBs(User record);
 
     int updateByPrimaryKey(User record);
-
-    int selectMaxId();
 }
