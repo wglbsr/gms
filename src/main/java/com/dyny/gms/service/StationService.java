@@ -4,6 +4,7 @@ import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
 import com.dyny.gms.db.pojo.StationForPage;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface StationService {
@@ -14,7 +15,7 @@ public interface StationService {
 
     int updateStation(Station station);
 
-    int checkStationNo(String stationNo);
+    long checkStationNo(String stationNo);
 
     int addStation(StationForPage station);
 

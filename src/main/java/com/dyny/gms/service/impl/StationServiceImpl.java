@@ -1,10 +1,7 @@
 package com.dyny.gms.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dyny.gms.db.dao.ContactMapper;
-import com.dyny.gms.db.dao.ContactStationRelMapper;
-import com.dyny.gms.db.dao.GeneratorMapper;
-import com.dyny.gms.db.dao.StationMapper;
+import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.ContactService;
@@ -13,15 +10,19 @@ import com.dyny.gms.service.StationService;
 import com.dyny.gms.utils.Tool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class StationServiceImpl extends BaseService implements StationService {
+    private final Logger logger = Logger.getLogger(StationServiceImpl.class);
+
     //service
     @Autowired
     GeneratorService generatorService;
@@ -110,11 +111,12 @@ public class StationServiceImpl extends BaseService implements StationService {
      * @return
      */
     @Override
-    public int checkStationNo(String stationNo) {
+    public long checkStationNo(String stationNo) {
         StationExample example = new StationExample();
         StationExample.Criteria criteria = example.createCriteria();
-        criteria.andCustomerNoEqualTo(stationNo);
-        return (int) stationMapper.countByExample(example);
+        criteria.andStationNoEqualTo(stationNo);
+        long cnt = stationMapper.countByExample(example);
+        return cnt;
     }
 
     /**
@@ -177,6 +179,7 @@ public class StationServiceImpl extends BaseService implements StationService {
      */
     @Override
     public String getStationListByUsercus(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy) {
+//        this.insertRegion();
         StationExample example = new StationExample();
         if (level >= this.ADMIN_LEVEL) {
             if (Tool.StringUtil.validStr(searchContent)) {
@@ -189,7 +192,7 @@ public class StationServiceImpl extends BaseService implements StationService {
             } else {
                 example.or().andDeletedEqualTo(false);
             }
-        }else{
+        } else {
             if (Tool.StringUtil.validStr(searchContent)) {
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
@@ -314,4 +317,22 @@ public class StationServiceImpl extends BaseService implements StationService {
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
+
+//    @Autowired
+//    RegionMapper regionMapper;
+//
+//    public void insertRegion() throws IOException {
+//        List<String> valuesStr = Tool.FileUtil.fileRead("C:\\Users\\wglbs\\OneDrive\\德远能源\\insert.sql");
+//        for (String temp : valuesStr) {
+//            String[] tempStrList = temp.split(",");
+//            if (tempStrList.length == 3) {
+//                Region region = new Region();
+//                region.setAddressId(Integer.valueOf(tempStrList[0]));
+//                region.setName(tempStrList[1]);
+//                logger.info("插入:"+tempStrList[1]);
+//                region.setParentAddressId(Integer.valueOf(tempStrList[2]));
+//                regionMapper.insert(region);
+//            }
+//        }
+//    }
 }
