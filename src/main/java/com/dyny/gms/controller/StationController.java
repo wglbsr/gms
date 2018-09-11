@@ -3,8 +3,14 @@ package com.dyny.gms.controller;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.StationForPage;
 import com.dyny.gms.service.StationService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,13 +91,26 @@ public class StationController extends BaseController {
         return super.getSuccessResult(stationService.checkStationNo(stationNo));
     }
 
+    @Value("${import.example}")
+    private String excelExamplePath;
+
+    @GetMapping("/downloadImportFileExample")
+    public ResponseEntity<byte[]> downloadImportFileExample() throws IOException {
+        File file = new File(excelExamplePath);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", file.getName());
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
     @Value("${import.excel}")
     private String excelImportPath;
 
 
     @RequestMapping(value = "/importStationDataByExcel", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String importStationDataByExcel(@RequestParam("file") MultipartFile file) throws IOException {
+    public String importStationDataByExcel(@RequestParam("file") MultipartFile file, @RequestParam("customerNo") String customerNo) throws IOException {
         int re = 0;
         if (file.isEmpty()) {
             return super.getSuccessResult(0);
@@ -109,7 +128,7 @@ public class StationController extends BaseController {
         } else {
             file.transferTo(fileAbsPath);
         }
-        return super.getSuccessResult(stationService.importStationFromExcelFile(fileAbsPath));
+        return super.getSuccessResult(stationService.importStationFromExcelFile(fileAbsPath, customerNo));
 
     }
 

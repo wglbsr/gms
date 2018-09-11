@@ -186,18 +186,19 @@ public class StationServiceImpl extends BaseService implements StationService {
     }
 
     @Override
-    public int importStationFromExcelFile(File file) {
+    public int importStationFromExcelFile(File file,String customerNo) {
         ImportParams params = new ImportParams();
-        params.setTitleRows(1);
+        params.setTitleRows(0);
         params.setHeadRows(1);
-        params.setSheetNum(1);
-        params.setStartSheetIndex(1);
         long start = new Date().getTime();
         List<StationImportEntity> importList = ExcelImportUtil.importExcel(file, StationImportEntity.class, params);
         List<String> stationNoTotal = importList.stream().map(StationImportEntity::getStationNo).collect(Collectors.toList());//java8语法
-        StationExample stationExample = new StationExample();
-        stationExample.or().andStationNoIn(stationNoTotal).andDeletedEqualTo(false);
-        List<Station> updateList = stationMapper.selectByExample(stationExample);
+        List<Station> updateList = new ArrayList<>();
+        if (stationNoTotal.size() > 0) {
+            StationExample stationExample = new StationExample();
+            stationExample.or().andStationNoIn(stationNoTotal).andDeletedEqualTo(false);
+            updateList = stationMapper.selectByExample(stationExample);
+        }
         List<Station> insertList = new ArrayList<>();
         List<String> stationNoUpdate = updateList.stream().map(Station::getStationNo).collect(Collectors.toList());//java8语法
         updateList.clear();
@@ -210,18 +211,22 @@ public class StationServiceImpl extends BaseService implements StationService {
             station.setStationLatitude(temp.getStationLatitude());
             station.setStationLongitude(temp.getStationLongitude());
             station.setStationType(temp.getStationType());
-            if (stationNoUpdate.contains(temp.getStationNo())) {
+            if (stationNoUpdate != null && stationNoUpdate.contains(temp.getStationNo())) {
                 station.setModifyTime(new Date());
                 updateList.add(station);
             } else {
-                station.setCustomerNo("");
+                station.setDeleted(false);
+                station.setCustomerNo(customerNo);
                 station.setCreateTime(new Date());
                 insertList.add(station);
             }
         }
-        stationMapper.updateBatchByStationNo(updateList);
-        stationMapper.insertBatch(insertList);
-
+        if(updateList.size()>0){
+            stationMapper.updateBatchByStationNo(updateList);
+        }
+        if(insertList.size()>0){
+            stationMapper.insertBatch(insertList);
+        }
         return 0;
     }
 

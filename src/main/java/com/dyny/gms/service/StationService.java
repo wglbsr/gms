@@ -38,5 +38,5 @@ public interface StationService {
 
     int disrelateStationToUnit(int unitId);
 
-    int importStationFromExcelFile(File file);
+    int importStationFromExcelFile(File file,String customerNo);
 }

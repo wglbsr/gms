@@ -28,7 +28,7 @@ public class StationImportEntity {
     private String stationAddress;
 
     private Integer administrator;
-    @Excel(name = "类型", width = 30, isImportField = "true_st")
+    @Excel(name = "站点类型", width = 30, isImportField = "true_st")
     private String stationType;
 
     private Integer startVoltage;

@@ -1,124 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dyny.gms.db.dao.StationMapper">
-  <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Station">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="s_station_name" jdbcType="VARCHAR" property="stationName" />
-    <result column="s_station_no" jdbcType="VARCHAR" property="stationNo" />
-    <result column="s_station_coordinate" jdbcType="VARCHAR" property="stationCoordinate" />
-    <result column="d_create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="i_creator" jdbcType="INTEGER" property="creator" />
-    <result column="d_modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
-    <result column="i_modifier" jdbcType="INTEGER" property="modifier" />
-    <result column="i_status" jdbcType="INTEGER" property="status" />
-    <result column="s_remark" jdbcType="VARCHAR" property="remark" />
-    <result column="s_station_address" jdbcType="VARCHAR" property="stationAddress" />
-    <result column="i_administrator" jdbcType="INTEGER" property="administrator" />
-    <result column="s_station_type" jdbcType="VARCHAR" property="stationType" />
-    <result column="i_start_voltage" jdbcType="INTEGER" property="startVoltage" />
-    <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
-    <result column="s_unit_no" jdbcType="VARCHAR" property="unitNo" />
-    <result column="s_operator_no" jdbcType="VARCHAR" property="operatorNo" />
-    <result column="d_deleted" jdbcType="BIT" property="deleted" />
-    <result column="s_station_latitude" jdbcType="VARCHAR" property="stationLatitude" />
-    <result column="s_station_longitude" jdbcType="VARCHAR" property="stationLongitude" />
-    <result column="i_unit_id" jdbcType="INTEGER" property="unitId" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Station">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="s_station_name" jdbcType="VARCHAR" property="stationName"/>
+        <result column="s_station_no" jdbcType="VARCHAR" property="stationNo"/>
+        <result column="s_station_coordinate" jdbcType="VARCHAR" property="stationCoordinate"/>
+        <result column="d_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="i_creator" jdbcType="INTEGER" property="creator"/>
+        <result column="d_modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="i_modifier" jdbcType="INTEGER" property="modifier"/>
+        <result column="i_status" jdbcType="INTEGER" property="status"/>
+        <result column="s_remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="s_station_address" jdbcType="VARCHAR" property="stationAddress"/>
+        <result column="i_administrator" jdbcType="INTEGER" property="administrator"/>
+        <result column="s_station_type" jdbcType="VARCHAR" property="stationType"/>
+        <result column="i_start_voltage" jdbcType="INTEGER" property="startVoltage"/>
+        <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo"/>
+        <result column="s_unit_no" jdbcType="VARCHAR" property="unitNo"/>
+        <result column="s_operator_no" jdbcType="VARCHAR" property="operatorNo"/>
+        <result column="d_deleted" jdbcType="BIT" property="deleted"/>
+        <result column="s_station_latitude" jdbcType="VARCHAR" property="stationLatitude"/>
+        <result column="s_station_longitude" jdbcType="VARCHAR" property="stationLongitude"/>
+        <result column="i_unit_id" jdbcType="INTEGER" property="unitId"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     id, s_station_name, s_station_no, s_station_coordinate, d_create_time, i_creator, 
     d_modify_time, i_modifier, i_status, s_remark, s_station_address, i_administrator, 
     s_station_type, i_start_voltage, s_customer_no, s_unit_no, s_operator_no, d_deleted, 
     s_station_latitude, s_station_longitude, i_unit_id
   </sql>
-  <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from t_station
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_station
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_station
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_station
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_station
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.StationExample">
-    delete from t_station
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.dyny.gms.db.pojo.Station">
+    <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.StationExample">
+        delete from t_station
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.dyny.gms.db.pojo.Station">
     insert into t_station (id, s_station_name, s_station_no, 
       s_station_coordinate, d_create_time, i_creator, 
       d_modify_time, i_modifier, i_status, 
@@ -136,310 +138,310 @@
       #{stationLatitude,jdbcType=VARCHAR}, #{stationLongitude,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Station">
-    insert into t_station
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="stationName != null">
-        s_station_name,
-      </if>
-      <if test="stationNo != null">
-        s_station_no,
-      </if>
-      <if test="stationCoordinate != null">
-        s_station_coordinate,
-      </if>
-      <if test="createTime != null">
-        d_create_time,
-      </if>
-      <if test="creator != null">
-        i_creator,
-      </if>
-      <if test="modifyTime != null">
-        d_modify_time,
-      </if>
-      <if test="modifier != null">
-        i_modifier,
-      </if>
-      <if test="status != null">
-        i_status,
-      </if>
-      <if test="remark != null">
-        s_remark,
-      </if>
-      <if test="stationAddress != null">
-        s_station_address,
-      </if>
-      <if test="administrator != null">
-        i_administrator,
-      </if>
-      <if test="stationType != null">
-        s_station_type,
-      </if>
-      <if test="startVoltage != null">
-        i_start_voltage,
-      </if>
-      <if test="customerNo != null">
-        s_customer_no,
-      </if>
-      <if test="unitNo != null">
-        s_unit_no,
-      </if>
-      <if test="operatorNo != null">
-        s_operator_no,
-      </if>
-      <if test="deleted != null">
-        d_deleted,
-      </if>
-      <if test="stationLatitude != null">
-        s_station_latitude,
-      </if>
-      <if test="stationLongitude != null">
-        s_station_longitude,
-      </if>
-      <if test="unitId != null">
-        i_unit_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="stationName != null">
-        #{stationName,jdbcType=VARCHAR},
-      </if>
-      <if test="stationNo != null">
-        #{stationNo,jdbcType=VARCHAR},
-      </if>
-      <if test="stationCoordinate != null">
-        #{stationCoordinate,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=INTEGER},
-      </if>
-      <if test="modifyTime != null">
-        #{modifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifier != null">
-        #{modifier,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="stationAddress != null">
-        #{stationAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="administrator != null">
-        #{administrator,jdbcType=INTEGER},
-      </if>
-      <if test="stationType != null">
-        #{stationType,jdbcType=VARCHAR},
-      </if>
-      <if test="startVoltage != null">
-        #{startVoltage,jdbcType=INTEGER},
-      </if>
-      <if test="customerNo != null">
-        #{customerNo,jdbcType=VARCHAR},
-      </if>
-      <if test="unitNo != null">
-        #{unitNo,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorNo != null">
-        #{operatorNo,jdbcType=VARCHAR},
-      </if>
-      <if test="deleted != null">
-        #{deleted,jdbcType=BIT},
-      </if>
-      <if test="stationLatitude != null">
-        #{stationLatitude,jdbcType=VARCHAR},
-      </if>
-      <if test="stationLongitude != null">
-        #{stationLongitude,jdbcType=VARCHAR},
-      </if>
-      <if test="unitId != null">
-        #{unitId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultType="java.lang.Long">
-    select count(*) from t_station
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update t_station
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.stationName != null">
+    <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Station">
+        insert into t_station
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="stationName != null">
+                s_station_name,
+            </if>
+            <if test="stationNo != null">
+                s_station_no,
+            </if>
+            <if test="stationCoordinate != null">
+                s_station_coordinate,
+            </if>
+            <if test="createTime != null">
+                d_create_time,
+            </if>
+            <if test="creator != null">
+                i_creator,
+            </if>
+            <if test="modifyTime != null">
+                d_modify_time,
+            </if>
+            <if test="modifier != null">
+                i_modifier,
+            </if>
+            <if test="status != null">
+                i_status,
+            </if>
+            <if test="remark != null">
+                s_remark,
+            </if>
+            <if test="stationAddress != null">
+                s_station_address,
+            </if>
+            <if test="administrator != null">
+                i_administrator,
+            </if>
+            <if test="stationType != null">
+                s_station_type,
+            </if>
+            <if test="startVoltage != null">
+                i_start_voltage,
+            </if>
+            <if test="customerNo != null">
+                s_customer_no,
+            </if>
+            <if test="unitNo != null">
+                s_unit_no,
+            </if>
+            <if test="operatorNo != null">
+                s_operator_no,
+            </if>
+            <if test="deleted != null">
+                d_deleted,
+            </if>
+            <if test="stationLatitude != null">
+                s_station_latitude,
+            </if>
+            <if test="stationLongitude != null">
+                s_station_longitude,
+            </if>
+            <if test="unitId != null">
+                i_unit_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="stationName != null">
+                #{stationName,jdbcType=VARCHAR},
+            </if>
+            <if test="stationNo != null">
+                #{stationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="stationCoordinate != null">
+                #{stationCoordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=INTEGER},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                #{modifier,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="stationAddress != null">
+                #{stationAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="administrator != null">
+                #{administrator,jdbcType=INTEGER},
+            </if>
+            <if test="stationType != null">
+                #{stationType,jdbcType=VARCHAR},
+            </if>
+            <if test="startVoltage != null">
+                #{startVoltage,jdbcType=INTEGER},
+            </if>
+            <if test="customerNo != null">
+                #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNo != null">
+                #{unitNo,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorNo != null">
+                #{operatorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+            <if test="stationLatitude != null">
+                #{stationLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="stationLongitude != null">
+                #{stationLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="unitId != null">
+                #{unitId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultType="java.lang.Long">
+        select count(*) from t_station
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_station
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.stationName != null">
+                s_station_name = #{record.stationName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stationNo != null">
+                s_station_no = #{record.stationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stationCoordinate != null">
+                s_station_coordinate = #{record.stationCoordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                d_create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.creator != null">
+                i_creator = #{record.creator,jdbcType=INTEGER},
+            </if>
+            <if test="record.modifyTime != null">
+                d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.modifier != null">
+                i_modifier = #{record.modifier,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                i_status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.remark != null">
+                s_remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stationAddress != null">
+                s_station_address = #{record.stationAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.administrator != null">
+                i_administrator = #{record.administrator,jdbcType=INTEGER},
+            </if>
+            <if test="record.stationType != null">
+                s_station_type = #{record.stationType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.startVoltage != null">
+                i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
+            </if>
+            <if test="record.customerNo != null">
+                s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.unitNo != null">
+                s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.operatorNo != null">
+                s_operator_no = #{record.operatorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deleted != null">
+                d_deleted = #{record.deleted,jdbcType=BIT},
+            </if>
+            <if test="record.stationLatitude != null">
+                s_station_latitude = #{record.stationLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stationLongitude != null">
+                s_station_longitude = #{record.stationLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="record.unitId != null">
+                i_unit_id = #{record.unitId,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_station
+        set id = #{record.id,jdbcType=INTEGER},
         s_station_name = #{record.stationName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stationNo != null">
         s_station_no = #{record.stationNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stationCoordinate != null">
         s_station_coordinate = #{record.stationCoordinate,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null">
         d_create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.creator != null">
         i_creator = #{record.creator,jdbcType=INTEGER},
-      </if>
-      <if test="record.modifyTime != null">
         d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.modifier != null">
         i_modifier = #{record.modifier,jdbcType=INTEGER},
-      </if>
-      <if test="record.status != null">
         i_status = #{record.status,jdbcType=INTEGER},
-      </if>
-      <if test="record.remark != null">
         s_remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stationAddress != null">
         s_station_address = #{record.stationAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.administrator != null">
         i_administrator = #{record.administrator,jdbcType=INTEGER},
-      </if>
-      <if test="record.stationType != null">
         s_station_type = #{record.stationType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.startVoltage != null">
         i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
-      </if>
-      <if test="record.customerNo != null">
         s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.unitNo != null">
         s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.operatorNo != null">
         s_operator_no = #{record.operatorNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.deleted != null">
         d_deleted = #{record.deleted,jdbcType=BIT},
-      </if>
-      <if test="record.stationLatitude != null">
         s_station_latitude = #{record.stationLatitude,jdbcType=VARCHAR},
-      </if>
-      <if test="record.stationLongitude != null">
         s_station_longitude = #{record.stationLongitude,jdbcType=VARCHAR},
-      </if>
-      <if test="record.unitId != null">
-        i_unit_id = #{record.unitId,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update t_station
-    set id = #{record.id,jdbcType=INTEGER},
-      s_station_name = #{record.stationName,jdbcType=VARCHAR},
-      s_station_no = #{record.stationNo,jdbcType=VARCHAR},
-      s_station_coordinate = #{record.stationCoordinate,jdbcType=VARCHAR},
-      d_create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      i_creator = #{record.creator,jdbcType=INTEGER},
-      d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
-      i_modifier = #{record.modifier,jdbcType=INTEGER},
-      i_status = #{record.status,jdbcType=INTEGER},
-      s_remark = #{record.remark,jdbcType=VARCHAR},
-      s_station_address = #{record.stationAddress,jdbcType=VARCHAR},
-      i_administrator = #{record.administrator,jdbcType=INTEGER},
-      s_station_type = #{record.stationType,jdbcType=VARCHAR},
-      i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
-      s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
-      s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
-      s_operator_no = #{record.operatorNo,jdbcType=VARCHAR},
-      d_deleted = #{record.deleted,jdbcType=BIT},
-      s_station_latitude = #{record.stationLatitude,jdbcType=VARCHAR},
-      s_station_longitude = #{record.stationLongitude,jdbcType=VARCHAR},
-      i_unit_id = #{record.unitId,jdbcType=INTEGER}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Station">
-    update t_station
-    <set>
-      <if test="stationName != null">
-        s_station_name = #{stationName,jdbcType=VARCHAR},
-      </if>
-      <if test="stationNo != null">
-        s_station_no = #{stationNo,jdbcType=VARCHAR},
-      </if>
-      <if test="stationCoordinate != null">
-        s_station_coordinate = #{stationCoordinate,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        d_create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creator != null">
-        i_creator = #{creator,jdbcType=INTEGER},
-      </if>
-      <if test="modifyTime != null">
-        d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifier != null">
-        i_modifier = #{modifier,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        i_status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        s_remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="stationAddress != null">
-        s_station_address = #{stationAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="administrator != null">
-        i_administrator = #{administrator,jdbcType=INTEGER},
-      </if>
-      <if test="stationType != null">
-        s_station_type = #{stationType,jdbcType=VARCHAR},
-      </if>
-      <if test="startVoltage != null">
-        i_start_voltage = #{startVoltage,jdbcType=INTEGER},
-      </if>
-      <if test="customerNo != null">
-        s_customer_no = #{customerNo,jdbcType=VARCHAR},
-      </if>
-      <if test="unitNo != null">
-        s_unit_no = #{unitNo,jdbcType=VARCHAR},
-      </if>
-      <if test="operatorNo != null">
-        s_operator_no = #{operatorNo,jdbcType=VARCHAR},
-      </if>
-      <if test="deleted != null">
-        d_deleted = #{deleted,jdbcType=BIT},
-      </if>
-      <if test="stationLatitude != null">
-        s_station_latitude = #{stationLatitude,jdbcType=VARCHAR},
-      </if>
-      <if test="stationLongitude != null">
-        s_station_longitude = #{stationLongitude,jdbcType=VARCHAR},
-      </if>
-      <if test="unitId != null">
-        i_unit_id = #{unitId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Station">
+        i_unit_id = #{record.unitId,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dyny.gms.db.pojo.Station">
+        update t_station
+        <set>
+            <if test="stationName != null">
+                s_station_name = #{stationName,jdbcType=VARCHAR},
+            </if>
+            <if test="stationNo != null">
+                s_station_no = #{stationNo,jdbcType=VARCHAR},
+            </if>
+            <if test="stationCoordinate != null">
+                s_station_coordinate = #{stationCoordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                d_create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                i_creator = #{creator,jdbcType=INTEGER},
+            </if>
+            <if test="modifyTime != null">
+                d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                i_modifier = #{modifier,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                i_status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                s_remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="stationAddress != null">
+                s_station_address = #{stationAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="administrator != null">
+                i_administrator = #{administrator,jdbcType=INTEGER},
+            </if>
+            <if test="stationType != null">
+                s_station_type = #{stationType,jdbcType=VARCHAR},
+            </if>
+            <if test="startVoltage != null">
+                i_start_voltage = #{startVoltage,jdbcType=INTEGER},
+            </if>
+            <if test="customerNo != null">
+                s_customer_no = #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNo != null">
+                s_unit_no = #{unitNo,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorNo != null">
+                s_operator_no = #{operatorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                d_deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="stationLatitude != null">
+                s_station_latitude = #{stationLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="stationLongitude != null">
+                s_station_longitude = #{stationLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="unitId != null">
+                i_unit_id = #{unitId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.Station">
     update t_station
     set s_station_name = #{stationName,jdbcType=VARCHAR},
       s_station_no = #{stationNo,jdbcType=VARCHAR},
@@ -464,98 +466,99 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--***************************************************************************以下为手动添加的*********************************************************************************************************-->
-  <insert id="insertBatch" parameterType="java.util.List">
-    insert into t_station (s_station_name, s_station_no,
-    s_station_coordinate, d_create_time, i_creator,
-    d_modify_time, i_modifier, i_status,
-    s_remark, s_station_address, i_administrator,
-    i_station_type, i_start_voltage, s_customer_no,
-    s_unit_no, s_operator_no, d_deleted,
-    s_station_latitude, s_station_longitude, i_unit_id
-    ) values
-    <foreach collection="list" item="item" index="index" separator=",">
-      (
-      #{item.stationName,jdbcType=VARCHAR},
-      #{item.stationNo,jdbcType=VARCHAR},
-      #{item.stationCoordinate,jdbcType=VARCHAR},
-      #{item.createTime,jdbcType=TIMESTAMP},
-      #{item.creator,jdbcType=INTEGER},
-      #{item.modifyTime,jdbcType=TIMESTAMP},
-      #{item.modifier,jdbcType=INTEGER},
-      #{item.status,jdbcType=INTEGER},
-      #{item.remark,jdbcType=VARCHAR},
-      #{item.stationAddress,jdbcType=VARCHAR},
-      #{item.administrator,jdbcType=INTEGER},
-      #{item.stationType,jdbcType=VARCHAR},
-      #{item.startVoltage,jdbcType=INTEGER},
-      #{item.customerNo,jdbcType=VARCHAR},
-      #{item.unitNo,jdbcType=VARCHAR},
-      #{item.operatorNo,jdbcType=VARCHAR},
-      #{item.deleted,jdbcType=BIT},
-      #{item.stationLatitude,jdbcType=VARCHAR},
-      #{item.stationLongitude,jdbcType=VARCHAR},
-      #{item.unitId,jdbcType=INTEGER}
-      )
-    </foreach>
-  </insert>
+    <!--***************************************************************************以下为手动添加的*********************************************************************************************************-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_station (s_station_name, s_station_no,
+        s_station_coordinate, d_create_time, i_creator,
+        d_modify_time, i_modifier, i_status,
+        s_remark, s_station_address, i_administrator,
+        s_station_type, i_start_voltage, s_customer_no,
+        s_unit_no, s_operator_no, d_deleted,
+        s_station_latitude, s_station_longitude, i_unit_id
+        ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.stationName,jdbcType=VARCHAR},
+            #{item.stationNo,jdbcType=VARCHAR},
+            #{item.stationCoordinate,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.creator,jdbcType=INTEGER},
+            #{item.modifyTime,jdbcType=TIMESTAMP},
+            #{item.modifier,jdbcType=INTEGER},
+            #{item.status,jdbcType=INTEGER},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.stationAddress,jdbcType=VARCHAR},
+            #{item.administrator,jdbcType=INTEGER},
+            #{item.stationType,jdbcType=VARCHAR},
+            #{item.startVoltage,jdbcType=INTEGER},
+            #{item.customerNo,jdbcType=VARCHAR},
+            #{item.unitNo,jdbcType=VARCHAR},
+            #{item.operatorNo,jdbcType=VARCHAR},
+            #{item.deleted,jdbcType=BIT},
+            #{item.stationLatitude,jdbcType=VARCHAR},
+            #{item.stationLongitude,jdbcType=VARCHAR},
+            #{item.unitId,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
 
-  <update id="updateBatchByStationNo" parameterType="java.util.List">
-    <foreach collection="list" item="item" index="index" separator=";">
-      update t_station
-      set
-      <if test="s_station_name != null">
-        s_station_name = #{item.stationName,jdbcType=VARCHAR},
-      </if>
-      <if test="s_station_coordinate != null">
-        s_station_coordinate = #{item.stationCoordinate,jdbcType=VARCHAR},
-      </if>
-      <if test="d_modify_time != null">
-        d_modify_time = #{item.modifyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="i_modifier != null">
-        i_modifier = #{item.modifier,jdbcType=INTEGER},
-      </if>
-      <if test="i_status != null">
-        i_status = #{item.status,jdbcType=INTEGER},
-      </if>
-      <if test="s_remark != null">
-        s_remark = #{item.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="s_station_address != null">
-        s_station_address = #{item.stationAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="i_administrator != null">
-        i_administrator = #{item.administrator,jdbcType=INTEGER},
-      </if>
-      <if test="i_station_type != null">
-        i_station_type = #{item.stationType,jdbcType=VARCHAR},
-      </if>
-      <if test="i_start_voltage != null">
-        i_start_voltage = #{item.startVoltage,jdbcType=INTEGER},
-      </if>
-      <if test="s_customer_no != null">
-        s_customer_no = #{item.customerNo,jdbcType=VARCHAR},
-      </if>
-      <if test="s_unit_no != null">
-        s_unit_no = #{item.unitNo,jdbcType=VARCHAR},
-      </if>
-      <if test="s_operator_no != null">
-        s_operator_no = #{item.operatorNo,jdbcType=VARCHAR},
-      </if>
-      <if test="d_deleted != null">
-        d_deleted = #{item.deleted,jdbcType=BIT},
-      </if>
-      <if test="s_station_latitude != null">
-        s_station_latitude = #{item.stationLatitude,jdbcType=VARCHAR},
-      </if>
-      <if test="s_station_longitude != null">
-        s_station_longitude = #{item.stationLongitude,jdbcType=VARCHAR},
-      </if>
-      <if test="i_unit_id != null">
-        i_unit_id = #{item.unitId,jdbcType=INTEGER}
-      </if>
-      where s_station_no = #{item.stationNo,jdbcType=VARCHAR}
-    </foreach>
-  </update>
+    <update id="updateBatchByStationNo" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update t_station
+            <trim prefix="set" suffixOverrides=",">
+                <if test="item.stationName != null">
+                    s_station_name = #{item.stationName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.stationCoordinate != null">
+                    s_station_coordinate = #{item.stationCoordinate,jdbcType=VARCHAR},
+                </if>
+                <if test="item.modifyTime != null">
+                    d_modify_time = #{item.modifyTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.modifier != null">
+                    i_modifier = #{item.modifier,jdbcType=INTEGER},
+                </if>
+                <if test="item.status != null">
+                    i_status = #{item.status,jdbcType=INTEGER},
+                </if>
+                <if test="item.remark != null">
+                    s_remark = #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.stationAddress != null">
+                    s_station_address = #{item.stationAddress,jdbcType=VARCHAR},
+                </if>
+                <if test="item.administrator != null">
+                    i_administrator = #{item.administrator,jdbcType=INTEGER},
+                </if>
+                <if test="item.stationType != null">
+                    s_station_type = #{item.stationType,jdbcType=VARCHAR},
+                </if>
+                <if test="item.startVoltage != null">
+                    i_start_voltage = #{item.startVoltage,jdbcType=INTEGER},
+                </if>
+                <if test="item.customerNo != null">
+                    s_customer_no = #{item.customerNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.unitNo != null">
+                    s_unit_no = #{item.unitNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.operatorNo != null">
+                    s_operator_no = #{item.operatorNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.deleted != null">
+                    d_deleted = #{item.deleted,jdbcType=BIT},
+                </if>
+                <if test="item.stationLatitude != null">
+                    s_station_latitude = #{item.stationLatitude,jdbcType=VARCHAR},
+                </if>
+                <if test="item.stationLongitude != null">
+                    s_station_longitude = #{item.stationLongitude,jdbcType=VARCHAR},
+                </if>
+                <if test="item.unitId != null">
+                    i_unit_id = #{item.unitId,jdbcType=INTEGER},
+                </if>
+            </trim>
+            where s_station_no = #{item.stationNo,jdbcType=VARCHAR}
+        </foreach>
+    </update>
 </mapper>
