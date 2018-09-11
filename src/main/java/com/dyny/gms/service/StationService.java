@@ -4,6 +4,7 @@ import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
 import com.dyny.gms.db.pojo.StationForPage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,4 +33,10 @@ public interface StationService {
     int deleteContactStationRelByStationNo(String stationNo);
 
     int logicDeleteStation(String stationNo);
+
+    List getStationByStationNoList(List<String> stationNoList);
+
+    int disrelateStationToUnit(int unitId);
+
+    int importStationFromExcelFile(File file);
 }

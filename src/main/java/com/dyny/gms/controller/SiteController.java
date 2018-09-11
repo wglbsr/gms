@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-
+@Deprecated
 @Controller
 @RequestMapping(value = "/ems/site", produces = {"application/json;charset=UTF-8"})
 public class SiteController extends BaseController {
@@ -55,8 +55,8 @@ public class SiteController extends BaseController {
 
     @RequestMapping(value = "/exportGenerateTable", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String exportGenerateTable(@RequestParam(name = "user_cus", required = true) String user_cus,
-                                      @RequestParam(name = "mach_no", required = true) String mach_no,
+    public String exportGenerateTable(@RequestParam(name = "user_cus", required = false,defaultValue = "") String user_cus,
+                                      @RequestParam(name = "mach_no", required = false,defaultValue = "") String mach_no,
                                       @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                       @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
         String fileName = service.getGenerateLogFile(user_cus, mach_no, startDate, endDate);
@@ -269,136 +269,7 @@ public class SiteController extends BaseController {
         return resultMap;
     }
 
-    /**
-     * 十九.	站点信息主功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/getSiteInfo.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject getSiteInfo(HttpServletRequest request,
-                                  HttpServletResponse response) {
 
-
-        JSONObject resultMap = new JSONObject();
-        String stationId = request.getParameter("stationId");
-        try {
-            Map<String, Object> data = service.getSiteInfo(stationId);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
-
-    /**
-     * 二十.	站点信息修改功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/modifySiteInfo.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject modifySiteInfo(HttpServletRequest request,
-                                     HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String stationName = request.getParameter("stationName");
-        String stationNumber = request.getParameter("stationNumber");
-        String stationType = request.getParameter("stationType");
-        String usercus = request.getParameter("usercus");
-        String stationPosition = request.getParameter("stationPosition");
-        String stationAddress = request.getParameter("stationAddress");
-        String companyAddress = request.getParameter("companyAddress");
-        String stationContactManA = request.getParameter("stationContactManA");
-        String contactManPhoneA = request.getParameter("contactManPhoneA");
-        String stationContactManB = request.getParameter("stationContactManB");
-        String contactManPhoneB = request.getParameter("contactManPhoneB");
-        String stationId = request.getParameter("stationId");
-        try {
-            int result = service.modifySiteInfo(stationName, stationNumber, stationType, usercus, stationPosition, stationAddress,
-                    companyAddress, stationContactManA, contactManPhoneA, stationContactManB, contactManPhoneB, stationId);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "修改失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
-
-    /**
-     * 二十一.	注册站点信息功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/addSiteInfo.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject addSiteInfo(HttpServletRequest request,
-                                  HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String stationName = request.getParameter("stationName");
-        String stationNumber = request.getParameter("stationNumber");
-        String stationType = request.getParameter("stationType");
-        String usercus = request.getParameter("usercus");
-        String stationPosition = request.getParameter("stationPosition");
-        String stationAddress = request.getParameter("stationAddress");
-        String companyAddress = request.getParameter("companyAddress");
-        String stationContactManA = request.getParameter("stationContactManA");
-        String contactManPhoneA = request.getParameter("contactManPhoneA");
-        String stationContactManB = request.getParameter("stationContactManB");
-        String contactManPhoneB = request.getParameter("contactManPhoneB");
-        try {
-            int result = service.addSiteInfo(stationName, stationNumber, stationType, usercus, stationPosition, stationAddress,
-                    companyAddress, stationContactManA, contactManPhoneA, stationContactManB, contactManPhoneB);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "注册失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
-
-    /**
-     * 二十二.	加油记录功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/getAddOilLog.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject getAddOilLog(HttpServletRequest request,
-                                   HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            Map<String, Object> data = service.getAddOilLog(mach_no);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
 
     /**
      * 二十三.	发电记录功能
@@ -436,52 +307,7 @@ public class SiteController extends BaseController {
         return service.getGenerateLog(user_cus, mach_no, page_num, page_size, startDate, endDate);
     }
 
-    /**
-     * 二十四.	油机资产管理
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/addAssets.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject addAssets(HttpServletRequest request,
-                                HttpServletResponse response) {
 
-
-        JSONObject resultMap = new JSONObject();
-        String mach_name = request.getParameter("mach_name");
-        String mach_no = request.getParameter("mach_no");
-        String model_no = request.getParameter("model_no");
-        String vender_name = request.getParameter("vender_name");
-        String power_num = request.getParameter("power_num");
-        String cus_no = request.getParameter("cus_no");
-        String creator = request.getParameter("user_no");
-        String use_type = request.getParameter("use_type");
-        String mach_type = request.getParameter("mach_type");
-        String fuel_type = request.getParameter("fuel_type");
-        String state = request.getParameter("state");
-        String purch_time = request.getParameter("purch_time");
-        String note = request.getParameter("note");
-        String volumeno = request.getParameter("volumeno");
-        String gprsno = request.getParameter("gprsno");
-        try {
-            BigDecimal power_num_decimal = new BigDecimal(power_num);
-            BigDecimal volumeno_decimal = new BigDecimal(volumeno);
-            int result = service.addAssets(mach_name, mach_no, model_no, vender_name, power_num_decimal, cus_no, creator,
-                    use_type, mach_type, fuel_type, state, purch_time, note, volumeno_decimal, gprsno);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "操作失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
 
     /**
      * 二十五.	油机领用管理

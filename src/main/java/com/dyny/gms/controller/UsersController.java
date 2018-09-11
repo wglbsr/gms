@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author zhangmx
  */
+@Deprecated
 @Controller
 @RequestMapping(value="/ems/users",produces = {"application/json;charset=UTF-8"})
 public class UsersController {

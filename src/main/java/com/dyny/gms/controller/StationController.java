@@ -1,16 +1,17 @@
 package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
-import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationForPage;
 import com.dyny.gms.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -72,36 +73,44 @@ public class StationController extends BaseController {
         return super.getSuccessResult(stationService.getStationByStationNo(stationNo));
     }
 
+    @RequestMapping(value = "/getStationByStationNoList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getStationByStationNoList(@RequestParam(name = "stationNo", required = true) String stationNoListStr) {
+        return super.getSuccessResult(stationService.getStationByStationNoList(Arrays.asList(stationNoListStr.split(","))));
+    }
+
     @RequestMapping(value = "/checkStationNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String checkStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
         return super.getSuccessResult(stationService.checkStationNo(stationNo));
     }
 
+    @Value("${import.excel}")
+    private String excelImportPath;
+
 
     @RequestMapping(value = "/importStationDataByExcel", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String importStationDataByExcel(@RequestParam("fileName") MultipartFile file) {
+    public String importStationDataByExcel(@RequestParam("file") MultipartFile file) throws IOException {
         int re = 0;
-
         if (file.isEmpty()) {
-            return "false";
+            return super.getSuccessResult(0);
         }
         String fileName = file.getOriginalFilename();
         int size = (int) file.getSize();
-        String path = "F:/test";
-        File dest = new File(path + "/" + fileName);
-        if (!dest.getParentFile().exists()) { //判断文件父目录是否存在
-            dest.getParentFile().mkdir();
+        String path = excelImportPath;
+        File fileAbsPath = new File(path + File.separator + fileName);
+        //覆盖旧文件
+        if (fileAbsPath.exists()) {
+            fileAbsPath.delete();
+        }
+        if (!fileAbsPath.getParentFile().exists()) { //判断文件父目录是否存在
+            fileAbsPath.getParentFile().mkdirs();
         } else {
+            file.transferTo(fileAbsPath);
+        }
+        return super.getSuccessResult(stationService.importStationFromExcelFile(fileAbsPath));
 
-        }
-        try {
-            return "true";
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            return super.getErrorMsg(e.getMessage());
-        }
     }
 
 

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
+@Deprecated
 public interface SiteService {
 
 
@@ -27,21 +27,6 @@ public interface SiteService {
 
     public Map<String, Object> getMapByStationId(String stationId);
 
-    public Map<String, Object> getSiteInfo(String stationId);
-
-    public int modifySiteInfo(String stationName, String stationNumber, String stationType, String usercus, String stationPosition,
-                              String stationAddress, String companyAddress, String stationContactManA, String contactManPhoneA, String stationContactManB,
-                              String contactManPhoneB, String stationId);
-
-    public int addSiteInfo(String stationName, String stationNumber, String stationType, String usercus, String stationPosition,
-                           String stationAddress, String companyAddress, String stationContactManA, String contactManPhoneA, String stationContactManB,
-                           String contactManPhoneB);
-
-    /**
-     * 二十二.	加油记录功能
-     */
-    public Map<String, Object> getAddOilLog(String st_no);
-
     /**
      * 二十三.	发电记录功能
      */
@@ -50,25 +35,6 @@ public interface SiteService {
 
     public String getGenerateLogFile(String user_cus, String mach_no, long startDate, long endDate) throws FileNotFoundException, IOException;
 
-    /**
-     * 二十四.	油机资产管理
-     */
-    public int addAssets(
-            String mach_name,
-            String mach_no,
-            String model_no,
-            String vender_name,
-            BigDecimal power_num,
-            String cus_no,
-            String creator,
-            String use_type,
-            String mach_type,
-            String fuel_type,
-            String state,
-            String purch_time,
-            String note,
-            BigDecimal volumeno,
-            String gprsno);
 
     /**
      * 二十五.	油机领用管理

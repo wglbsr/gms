@@ -14,7 +14,7 @@
     <result column="s_remark" jdbcType="VARCHAR" property="remark" />
     <result column="s_station_address" jdbcType="VARCHAR" property="stationAddress" />
     <result column="i_administrator" jdbcType="INTEGER" property="administrator" />
-    <result column="i_station_type" jdbcType="INTEGER" property="stationType" />
+    <result column="s_station_type" jdbcType="VARCHAR" property="stationType" />
     <result column="i_start_voltage" jdbcType="INTEGER" property="startVoltage" />
     <result column="s_customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="s_unit_no" jdbcType="VARCHAR" property="unitNo" />
@@ -85,7 +85,7 @@
   <sql id="Base_Column_List">
     id, s_station_name, s_station_no, s_station_coordinate, d_create_time, i_creator, 
     d_modify_time, i_modifier, i_status, s_remark, s_station_address, i_administrator, 
-    i_station_type, i_start_voltage, s_customer_no, s_unit_no, s_operator_no, d_deleted, 
+    s_station_type, i_start_voltage, s_customer_no, s_unit_no, s_operator_no, d_deleted, 
     s_station_latitude, s_station_longitude, i_unit_id
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.StationExample" resultMap="BaseResultMap">
@@ -119,19 +119,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.Station">
-    insert into t_station (s_station_name, s_station_no,
+    insert into t_station (id, s_station_name, s_station_no, 
       s_station_coordinate, d_create_time, i_creator, 
       d_modify_time, i_modifier, i_status, 
       s_remark, s_station_address, i_administrator, 
-      i_station_type, i_start_voltage, s_customer_no, 
+      s_station_type, i_start_voltage, s_customer_no, 
       s_unit_no, s_operator_no, d_deleted, 
       s_station_latitude, s_station_longitude, i_unit_id
       )
-    values (#{stationName,jdbcType=VARCHAR}, #{stationNo,jdbcType=VARCHAR},
+    values (#{id,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, #{stationNo,jdbcType=VARCHAR}, 
       #{stationCoordinate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
       #{modifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR}, #{stationAddress,jdbcType=VARCHAR}, #{administrator,jdbcType=INTEGER}, 
-      #{stationType,jdbcType=INTEGER}, #{startVoltage,jdbcType=INTEGER}, #{customerNo,jdbcType=VARCHAR}, 
+      #{stationType,jdbcType=VARCHAR}, #{startVoltage,jdbcType=INTEGER}, #{customerNo,jdbcType=VARCHAR}, 
       #{unitNo,jdbcType=VARCHAR}, #{operatorNo,jdbcType=VARCHAR}, #{deleted,jdbcType=BIT}, 
       #{stationLatitude,jdbcType=VARCHAR}, #{stationLongitude,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}
       )
@@ -139,6 +139,9 @@
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Station">
     insert into t_station
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="stationName != null">
         s_station_name,
       </if>
@@ -173,7 +176,7 @@
         i_administrator,
       </if>
       <if test="stationType != null">
-        i_station_type,
+        s_station_type,
       </if>
       <if test="startVoltage != null">
         i_start_voltage,
@@ -201,6 +204,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="stationName != null">
         #{stationName,jdbcType=VARCHAR},
       </if>
@@ -235,7 +241,7 @@
         #{administrator,jdbcType=INTEGER},
       </if>
       <if test="stationType != null">
-        #{stationType,jdbcType=INTEGER},
+        #{stationType,jdbcType=VARCHAR},
       </if>
       <if test="startVoltage != null">
         #{startVoltage,jdbcType=INTEGER},
@@ -272,6 +278,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_station
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.stationName != null">
         s_station_name = #{record.stationName,jdbcType=VARCHAR},
       </if>
@@ -306,7 +315,7 @@
         i_administrator = #{record.administrator,jdbcType=INTEGER},
       </if>
       <if test="record.stationType != null">
-        i_station_type = #{record.stationType,jdbcType=INTEGER},
+        s_station_type = #{record.stationType,jdbcType=VARCHAR},
       </if>
       <if test="record.startVoltage != null">
         i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
@@ -339,7 +348,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_station
-    set
+    set id = #{record.id,jdbcType=INTEGER},
       s_station_name = #{record.stationName,jdbcType=VARCHAR},
       s_station_no = #{record.stationNo,jdbcType=VARCHAR},
       s_station_coordinate = #{record.stationCoordinate,jdbcType=VARCHAR},
@@ -351,7 +360,7 @@
       s_remark = #{record.remark,jdbcType=VARCHAR},
       s_station_address = #{record.stationAddress,jdbcType=VARCHAR},
       i_administrator = #{record.administrator,jdbcType=INTEGER},
-      i_station_type = #{record.stationType,jdbcType=INTEGER},
+      s_station_type = #{record.stationType,jdbcType=VARCHAR},
       i_start_voltage = #{record.startVoltage,jdbcType=INTEGER},
       s_customer_no = #{record.customerNo,jdbcType=VARCHAR},
       s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
@@ -401,7 +410,7 @@
         i_administrator = #{administrator,jdbcType=INTEGER},
       </if>
       <if test="stationType != null">
-        i_station_type = #{stationType,jdbcType=INTEGER},
+        s_station_type = #{stationType,jdbcType=VARCHAR},
       </if>
       <if test="startVoltage != null">
         i_start_voltage = #{startVoltage,jdbcType=INTEGER},
@@ -443,7 +452,7 @@
       s_remark = #{remark,jdbcType=VARCHAR},
       s_station_address = #{stationAddress,jdbcType=VARCHAR},
       i_administrator = #{administrator,jdbcType=INTEGER},
-      i_station_type = #{stationType,jdbcType=INTEGER},
+      s_station_type = #{stationType,jdbcType=VARCHAR},
       i_start_voltage = #{startVoltage,jdbcType=INTEGER},
       s_customer_no = #{customerNo,jdbcType=VARCHAR},
       s_unit_no = #{unitNo,jdbcType=VARCHAR},
@@ -453,5 +462,100 @@
       s_station_longitude = #{stationLongitude,jdbcType=VARCHAR},
       i_unit_id = #{unitId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--***************************************************************************以下为手动添加的*********************************************************************************************************-->
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into t_station (s_station_name, s_station_no,
+    s_station_coordinate, d_create_time, i_creator,
+    d_modify_time, i_modifier, i_status,
+    s_remark, s_station_address, i_administrator,
+    i_station_type, i_start_voltage, s_customer_no,
+    s_unit_no, s_operator_no, d_deleted,
+    s_station_latitude, s_station_longitude, i_unit_id
+    ) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.stationName,jdbcType=VARCHAR},
+      #{item.stationNo,jdbcType=VARCHAR},
+      #{item.stationCoordinate,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.creator,jdbcType=INTEGER},
+      #{item.modifyTime,jdbcType=TIMESTAMP},
+      #{item.modifier,jdbcType=INTEGER},
+      #{item.status,jdbcType=INTEGER},
+      #{item.remark,jdbcType=VARCHAR},
+      #{item.stationAddress,jdbcType=VARCHAR},
+      #{item.administrator,jdbcType=INTEGER},
+      #{item.stationType,jdbcType=VARCHAR},
+      #{item.startVoltage,jdbcType=INTEGER},
+      #{item.customerNo,jdbcType=VARCHAR},
+      #{item.unitNo,jdbcType=VARCHAR},
+      #{item.operatorNo,jdbcType=VARCHAR},
+      #{item.deleted,jdbcType=BIT},
+      #{item.stationLatitude,jdbcType=VARCHAR},
+      #{item.stationLongitude,jdbcType=VARCHAR},
+      #{item.unitId,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+  <update id="updateBatchByStationNo" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" separator=";">
+      update t_station
+      set
+      <if test="s_station_name != null">
+        s_station_name = #{item.stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="s_station_coordinate != null">
+        s_station_coordinate = #{item.stationCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="d_modify_time != null">
+        d_modify_time = #{item.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="i_modifier != null">
+        i_modifier = #{item.modifier,jdbcType=INTEGER},
+      </if>
+      <if test="i_status != null">
+        i_status = #{item.status,jdbcType=INTEGER},
+      </if>
+      <if test="s_remark != null">
+        s_remark = #{item.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="s_station_address != null">
+        s_station_address = #{item.stationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="i_administrator != null">
+        i_administrator = #{item.administrator,jdbcType=INTEGER},
+      </if>
+      <if test="i_station_type != null">
+        i_station_type = #{item.stationType,jdbcType=VARCHAR},
+      </if>
+      <if test="i_start_voltage != null">
+        i_start_voltage = #{item.startVoltage,jdbcType=INTEGER},
+      </if>
+      <if test="s_customer_no != null">
+        s_customer_no = #{item.customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="s_unit_no != null">
+        s_unit_no = #{item.unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="s_operator_no != null">
+        s_operator_no = #{item.operatorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="d_deleted != null">
+        d_deleted = #{item.deleted,jdbcType=BIT},
+      </if>
+      <if test="s_station_latitude != null">
+        s_station_latitude = #{item.stationLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="s_station_longitude != null">
+        s_station_longitude = #{item.stationLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="i_unit_id != null">
+        i_unit_id = #{item.unitId,jdbcType=INTEGER}
+      </if>
+      where s_station_no = #{item.stationNo,jdbcType=VARCHAR}
+    </foreach>
   </update>
 </mapper>

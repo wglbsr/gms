@@ -2,10 +2,12 @@ package com.dyny.gms.db.dao;
 
 import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 @Mapper
 public interface StationMapper {
     long countByExample(StationExample example);
@@ -29,4 +31,8 @@ public interface StationMapper {
     int updateByPrimaryKeySelective(Station record);
 
     int updateByPrimaryKey(Station record);
+
+    int insertBatch(List<Station> list);
+
+    int updateBatchByStationNo(List<Station> list);
 }

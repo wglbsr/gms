@@ -5,7 +5,7 @@ import com.dyny.gms.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dyny.gms.db.pojo.Users;
-
+@Deprecated
 @Service
 public class UsersServiceImpl implements UsersService {
 	@Autowired

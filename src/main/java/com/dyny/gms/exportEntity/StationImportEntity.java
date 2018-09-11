@@ -1,12 +1,14 @@
-package com.dyny.gms.db.pojo;
+package com.dyny.gms.exportEntity;
+
+import cn.afterturn.easypoi.excel.annotation.Excel;
 
 import java.util.Date;
 
-public class Station {
+public class StationImportEntity {
     private Integer id;
-
+    @Excel(name = "基站名称", width = 30, isImportField = "true_st")
     private String stationName;
-
+    @Excel(name = "基站编码", width = 30, isImportField = "true_st")
     private String stationNo;
 
     private String stationCoordinate;
@@ -20,13 +22,13 @@ public class Station {
     private Integer modifier;
 
     private Integer status;
-
+    @Excel(name = "备注", width = 30, isImportField = "true_st")
     private String remark;
-
+    @Excel(name = "地址", width = 30, isImportField = "true_st")
     private String stationAddress;
 
     private Integer administrator;
-
+    @Excel(name = "类型", width = 30, isImportField = "true_st")
     private String stationType;
 
     private Integer startVoltage;
@@ -38,9 +40,9 @@ public class Station {
     private String operatorNo;
 
     private Boolean deleted;
-
+    @Excel(name = "经度", width = 30, isImportField = "true_st")
     private String stationLatitude;
-
+    @Excel(name = "纬度", width = 30, isImportField = "true_st")
     private String stationLongitude;
 
     private Integer unitId;
@@ -146,7 +148,7 @@ public class Station {
     }
 
     public void setStationType(String stationType) {
-        this.stationType = stationType == null ? null : stationType.trim();
+        this.stationType = stationType;
     }
 
     public Integer getStartVoltage() {

@@ -24,7 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+@Deprecated
 @Service
 public class SiteServiceImpl extends BaseService implements SiteService {
     @Override
@@ -92,52 +92,8 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return mapper.getMapByStationId(stationId);
     }
 
-    @Override
-    public Map<String, Object> getSiteInfo(String stationId) {
-        // TODO Auto-generated method stub
-        return mapper.getSiteInfo(stationId);
-    }
 
-    /**
-     * @param stationName
-     * @param stationNumber
-     * @param stationType
-     * @param usercus
-     * @param stationPosition
-     * @param stationAddress
-     * @param companyAddress
-     * @param stationContactManA
-     * @param contactManPhoneA
-     * @param stationContactManB
-     * @param contactManPhoneB
-     * @param stationId
-     * @return
-     */
-    @Override
-    public int modifySiteInfo(String stationName, String stationNumber,
-                              String stationType, String usercus, String stationPosition,
-                              String stationAddress, String companyAddress,
-                              String stationContactManA, String contactManPhoneA,
-                              String stationContactManB, String contactManPhoneB, String stationId) {
-        // TODO Auto-generated method stub
-        return mapper.modifySiteInfo(stationName, stationNumber, stationType, usercus, stationPosition, stationAddress, companyAddress, stationContactManA, contactManPhoneA, stationContactManB, contactManPhoneB, stationId);
-    }
 
-    @Override
-    public int addSiteInfo(String stationName, String stationNumber,
-                           String stationType, String usercus, String stationPosition,
-                           String stationAddress, String companyAddress,
-                           String stationContactManA, String contactManPhoneA,
-                           String stationContactManB, String contactManPhoneB) {
-        // TODO Auto-generated method stub
-        return mapper.addSiteInfo(stationName, stationNumber, stationType, usercus, stationPosition, stationAddress, companyAddress, stationContactManA, contactManPhoneA, stationContactManB, contactManPhoneB);
-    }
-
-    @Override
-    public Map<String, Object> getAddOilLog(String st_no) {
-        // TODO Auto-generated method stub
-        return mapper.getAddOilLog(st_no);
-    }
 
     @Override
     public String getGenerateLog(String user_cus, String mach_no, int pageNum, int pageSize, long startDate, long endDate) {
@@ -166,14 +122,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return excelFileName;
     }
 
-    @Override
-    public int addAssets(String mach_name, String mach_no, String model_no,
-                         String vender_name, BigDecimal power_num, String cus_no,
-                         String creator, String use_type, String mach_type,
-                         String fuel_type, String state, String purch_time, String note, BigDecimal volumeno, String gprsno) {
-        // TODO Auto-generated method stub
-        return mapper.addAssets(mach_name, mach_no, model_no, vender_name, power_num, cus_no, creator, use_type, mach_type, fuel_type, state, purch_time, note, volumeno, gprsno);
-    }
 
     @Override
     public int addOil(String co_no, String co_time, String co_per, String co_tel,

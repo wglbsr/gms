@@ -1,8 +1,12 @@
 package com.dyny.gms.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.afterturn.easypoi.util.PoiPublicUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
+import com.dyny.gms.exportEntity.StationImportEntity;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.ContactService;
 import com.dyny.gms.service.GeneratorService;
@@ -14,14 +18,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StationServiceImpl extends BaseService implements StationService {
     private final Logger logger = Logger.getLogger(StationServiceImpl.class);
+
 
     //service
     @Autowired
@@ -38,6 +44,29 @@ public class StationServiceImpl extends BaseService implements StationService {
     GeneratorMapper generatorMapper;
     @Autowired
     ContactMapper contactMapper;
+
+
+    /**
+     * 取消关联单位
+     *
+     * @param unitId
+     * @return
+     */
+    @Override
+    public int disrelateStationToUnit(int unitId) {
+        if (unitId <= 0) {
+            return 0;
+        }
+        //.将该基站关联的联系人置空
+
+        //.将基站的单位id置为空或0
+        Station station = new Station();
+        StationExample example = new StationExample();
+        station.setUnitId(0);
+        example.or().andUnitIdEqualTo(unitId);
+        return stationMapper.updateByExampleSelective(station, example);
+    }
+
 
     @Override
     public int updateStation(Station station) {
@@ -157,6 +186,46 @@ public class StationServiceImpl extends BaseService implements StationService {
     }
 
     @Override
+    public int importStationFromExcelFile(File file) {
+        ImportParams params = new ImportParams();
+        params.setTitleRows(1);
+        params.setHeadRows(1);
+        params.setSheetNum(1);
+        params.setStartSheetIndex(1);
+        long start = new Date().getTime();
+        List<StationImportEntity> importList = ExcelImportUtil.importExcel(file, StationImportEntity.class, params);
+        List<String> stationNoTotal = importList.stream().map(StationImportEntity::getStationNo).collect(Collectors.toList());//java8语法
+        StationExample stationExample = new StationExample();
+        stationExample.or().andStationNoIn(stationNoTotal).andDeletedEqualTo(false);
+        List<Station> updateList = stationMapper.selectByExample(stationExample);
+        List<Station> insertList = new ArrayList<>();
+        List<String> stationNoUpdate = updateList.stream().map(Station::getStationNo).collect(Collectors.toList());//java8语法
+        updateList.clear();
+        for (StationImportEntity temp : importList) {
+            Station station = new Station();
+            station.setStationName(temp.getStationName());
+            station.setStationNo(temp.getStationNo());
+            station.setStationAddress(temp.getStationAddress());
+            station.setRemark(temp.getRemark());
+            station.setStationLatitude(temp.getStationLatitude());
+            station.setStationLongitude(temp.getStationLongitude());
+            station.setStationType(temp.getStationType());
+            if (stationNoUpdate.contains(temp.getStationNo())) {
+                station.setModifyTime(new Date());
+                updateList.add(station);
+            } else {
+                station.setCustomerNo("");
+                station.setCreateTime(new Date());
+                insertList.add(station);
+            }
+        }
+        stationMapper.updateBatchByStationNo(updateList);
+        stationMapper.insertBatch(insertList);
+
+        return 0;
+    }
+
+    @Override
     public int logicDeleteStation(String stationNo) {
         Station station = new Station();
         station.setDeleted(true);
@@ -165,6 +234,16 @@ public class StationServiceImpl extends BaseService implements StationService {
         StationExample.Criteria criteria = example.createCriteria();
         criteria.andStationNoEqualTo(stationNo);
         return stationMapper.updateByExampleSelective(station, example);
+    }
+
+    @Override
+    public List getStationByStationNoList(List<String> stationNoList) {
+        if (stationNoList.size() == 0) {
+            return null;
+        }
+        StationExample stationExample = new StationExample();
+        stationExample.or().andStationNoIn(stationNoList);
+        return stationMapper.selectByExample(stationExample);
     }
 
 

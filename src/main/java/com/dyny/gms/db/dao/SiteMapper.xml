@@ -225,10 +225,24 @@
         <result column="num_time" property="num_time" javaType="string"/>
     </resultMap>
     <select id="getGenerateLog" resultMap="generateLogMap">
-        select t.mach_no,m.mach_name, t.start_time, t.end_time ,dbo.get_close_start_time(t.mach_no,t.start_time)
-        e_start_time,dbo.get_close_end_time(t.mach_no,t.start_time) e_end_time,
-        DATEDIFF(mi,start_time,ISNULL(end_time,GETDATE())) num_time
-        from Ap_time t join C_mach m on m.mach_no=t.mach_no
+        SELECT
+        t.mach_no,
+        ts.s_station_no,
+        ts.s_station_name,
+        m.mach_name,
+        t.start_time,
+        t.end_time,
+        dbo.get_close_start_time (t.mach_no, t.start_time) e_start_time,
+        dbo.get_close_end_time (t.mach_no, t.start_time) e_end_time,
+        DATEDIFF(
+        mi,
+        start_time,
+        ISNULL(end_time, GETDATE())
+        ) num_time
+        FROM
+        Ap_time t left join t_station ts on ts.s_station_no=t.st_no
+        JOIN C_mach m ON m.mach_no = t.mach_no
+        where 1=1
         <if test="user_cus!=null and user_cus!=''">
             and m.cus_no=#{user_cus}
         </if>
@@ -379,6 +393,8 @@
     <!-- 二十七.	移动油机在线(双击在线) -->
     <resultMap type="map" id="machineStatusMap">
         <result column="mach_no" property="mach_no" javaType="string"/>
+        <result column="st_no" property="st_no" javaType="string"/>
+        <result column="s_station_name" property="s_station_name" javaType="string"/>
         <result column="mach_type" property="mach_type" javaType="string"/>
         <result column="st_state" property="st_state" javaType="string"/>
         <result column="city_electricity" property="state1" javaType="string"/>
@@ -397,7 +413,7 @@
 
     <!-- 三十一.	移动油机查询 -->
     <select id="searchMachine" resultMap="machineStatusMap">
-        select mach_no,mach_name,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity,
+        select mach_no,mach_name,s_station_name,st_no,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity,
         al_voltage,
         -- isnull(i_total_generate_time,0)/60 sum_time,
         -- dbo.sumnum_time(mach_no) sumnum_time,

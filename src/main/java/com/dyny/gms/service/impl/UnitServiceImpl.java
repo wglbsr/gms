@@ -2,12 +2,10 @@ package com.dyny.gms.service.impl;
 
 import com.dyny.gms.db.dao.ContactMapper;
 import com.dyny.gms.db.dao.UnitMapper;
-import com.dyny.gms.db.pojo.Contact;
-import com.dyny.gms.db.pojo.ContactExample;
 import com.dyny.gms.db.pojo.Unit;
 import com.dyny.gms.db.pojo.UnitExample;
 import com.dyny.gms.service.BaseService;
-import com.dyny.gms.service.ContactService;
+import com.dyny.gms.service.StationService;
 import com.dyny.gms.service.UnitService;
 import com.dyny.gms.utils.Tool;
 import com.github.pagehelper.Page;
@@ -23,6 +21,8 @@ public class UnitServiceImpl extends BaseService implements UnitService {
     UnitMapper unitMapper;
     @Autowired
     ContactMapper contactMapper;
+    @Autowired
+    StationService stationService;
 
     @Override
     public int updateUnit(Unit unit) {
@@ -31,12 +31,15 @@ public class UnitServiceImpl extends BaseService implements UnitService {
 
     @Override
     public int deleteUnit(Unit unit) {
+        int unitId = unit.getId();
+//        1.将关联到该单位的基站取消关联
+//        stationService.disrelateStationToUnit(unitId);
+        //2.将单位的删除标志置为true
         UnitExample unitExample = new UnitExample();
-        unitExample.or().andIdEqualTo(unit.getId());
+        unitExample.or().andIdEqualTo(unitId);
         unit.setId(null);
         unit.setDeleted(true);
-        unitMapper.updateByExampleSelective(unit, unitExample);
-        return 0;
+        return unitMapper.updateByExampleSelective(unit, unitExample);
     }
 
     @Override

@@ -1,33 +1,94 @@
-                    <el-menu-item index="/index/generatorLocations">
-                      <span slot="title"  icon="iconfont icon-ditu">全站地图</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/generatorTable">
-                      <span slot="title"  icon="iconfont icon-fadianji">油机列表</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/stationTable">
-                      <span slot="title"  icon="iconfont myicon-zhuye">基站列表</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/contactTable">
-                      <span slot="title"  icon="iconfont icon-lianxiren">联系人列表</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/unitTable">
-                      <span slot="title"  icon="iconfont icon-danwei">单位列表</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/customerTable">
-                      <span slot="title"  icon="iconfont myicon-zhuye">客户列表</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/generatorRegister">
-                      <span slot="title"  icon="iconfont myicon-zhuye">注册油机</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/userRegister">
-                      <span slot="title"  icon="iconfont myicon-zhuye">注册用户</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/changePsw">
-                      <span slot="title"  icon="iconfont icon-xiugaimima">修改密码</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/generateTable">
-                      <span slot="title"  icon="iconfont icon-jilubiao">发电记录表</span>
-                    </el-menu-item>
-                    <el-menu-item index="/index/alarmTable">
-                      <span slot="title"  icon="iconfont icon-jilubiao">告警记录表</span>
-                    </el-menu-item>
+    <!--***************************************************************************以下为手动添加的*********************************************************************************************************-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_station (s_station_name, s_station_no,
+        s_station_coordinate, d_create_time, i_creator,
+        d_modify_time, i_modifier, i_status,
+        s_remark, s_station_address, i_administrator,
+        i_station_type, i_start_voltage, s_customer_no,
+        s_unit_no, s_operator_no, d_deleted,
+        s_station_latitude, s_station_longitude, i_unit_id
+        ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.stationName,jdbcType=VARCHAR},
+            #{item.stationNo,jdbcType=VARCHAR},
+            #{item.stationCoordinate,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.creator,jdbcType=INTEGER},
+            #{item.modifyTime,jdbcType=TIMESTAMP},
+            #{item.modifier,jdbcType=INTEGER},
+            #{item.status,jdbcType=INTEGER},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.stationAddress,jdbcType=VARCHAR},
+            #{item.administrator,jdbcType=INTEGER},
+            #{item.stationType,jdbcType=INTEGER},
+            #{item.startVoltage,jdbcType=INTEGER},
+            #{item.customerNo,jdbcType=VARCHAR},
+            #{item.unitNo,jdbcType=VARCHAR},
+            #{item.operatorNo,jdbcType=VARCHAR},
+            #{item.deleted,jdbcType=BIT},
+            #{item.stationLatitude,jdbcType=VARCHAR},
+            #{item.stationLongitude,jdbcType=VARCHAR},
+            #{item.unitId,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateBatchByStationNo" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update t_station
+            set
+            <if test="s_station_name != null">
+                s_station_name = #{item.stationName,jdbcType=VARCHAR},
+            </if>
+            <if test="s_station_coordinate != null">
+                s_station_coordinate = #{item.stationCoordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="d_modify_time != null">
+                d_modify_time = #{item.modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="i_modifier != null">
+                i_modifier = #{item.modifier,jdbcType=INTEGER},
+            </if>
+            <if test="i_status != null">
+                i_status = #{item.status,jdbcType=INTEGER},
+            </if>
+            <if test="s_remark != null">
+                s_remark = #{item.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="s_station_address != null">
+                s_station_address = #{item.stationAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="i_administrator != null">
+                i_administrator = #{item.administrator,jdbcType=INTEGER},
+            </if>
+            <if test="i_station_type != null">
+                i_station_type = #{item.stationType,jdbcType=INTEGER},
+            </if>
+            <if test="i_start_voltage != null">
+                i_start_voltage = #{item.startVoltage,jdbcType=INTEGER},
+            </if>
+            <if test="s_customer_no != null">
+                s_customer_no = #{item.customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="s_unit_no != null">
+                s_unit_no = #{item.unitNo,jdbcType=VARCHAR},
+            </if>
+            <if test="s_operator_no != null">
+                s_operator_no = #{item.operatorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="d_deleted != null">
+                d_deleted = #{item.deleted,jdbcType=BIT},
+            </if>
+            <if test="s_station_latitude != null">
+                s_station_latitude = #{item.stationLatitude,jdbcType=VARCHAR},
+            </if>
+            <if test="s_station_longitude != null">
+                s_station_longitude = #{item.stationLongitude,jdbcType=VARCHAR},
+            </if>
+            <if test="i_unit_id != null">
+                i_unit_id = #{item.unitId,jdbcType=INTEGER}
+            </if>
+            where s_station_no = #{item.stationNo,jdbcType=VARCHAR}
+        </foreach>
+    </update>
