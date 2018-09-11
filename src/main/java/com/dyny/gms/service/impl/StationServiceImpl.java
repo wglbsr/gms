@@ -186,7 +186,7 @@ public class StationServiceImpl extends BaseService implements StationService {
     }
 
     @Override
-    public int importStationFromExcelFile(File file,String customerNo) {
+    public int importStationFromExcelFile(File file, String customerNo) {
         ImportParams params = new ImportParams();
         params.setTitleRows(0);
         params.setHeadRows(1);
@@ -221,13 +221,14 @@ public class StationServiceImpl extends BaseService implements StationService {
                 insertList.add(station);
             }
         }
-        if(updateList.size()>0){
-            stationMapper.updateBatchByStationNo(updateList);
+        int cnt = 0;
+        if (updateList.size() > 0) {
+            cnt += stationMapper.updateBatchByStationNo(updateList);
         }
-        if(insertList.size()>0){
-            stationMapper.insertBatch(insertList);
+        if (insertList.size() > 0) {
+            cnt += stationMapper.insertBatch(insertList);
         }
-        return 0;
+        return cnt;
     }
 
     @Override

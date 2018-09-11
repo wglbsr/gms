@@ -23,6 +23,8 @@
         <result column="st_state" property="stationConnnectState" javaType="string"/>
         <result column="Acity_electricity" property="stationState" javaType="string"/>
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
+        <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
+        <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
     </resultMap>
 
 
@@ -31,6 +33,8 @@
         i.id
         ,dbo.p_name(i.mach_no) st_name
         ,i.mach_no
+        ,ts.s_station_latitude
+        ,ts.s_station_longitude
         ,i.st_coordinate
         ,dbo.p_state(i.mach_no) st_state
         ,dbo.p_Acityelectricity(i.mach_no) Acity_electricity
@@ -38,6 +42,7 @@
         id i
         JOIN c_mach m
         ON m.mach_no=i.mach_no
+        left join t_station ts on ts.s_station_no=m.st_no
         <if test="user_cus!=''">
             AND
             m.cus_no=#{user_cus}
@@ -517,10 +522,12 @@
         <result column="mach_name" property="stationName" javaType="string"/>
         <result column="st_state" property="stationConnnectState" javaType="string"/>
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
+        <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
+        <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
     </resultMap>
     <select id="getMachineMap" resultMap="machineMapMap">
-		select mach_no,mach_name, st_state,st_coordinate
-		 from View_mach1
+		select mach_no,mach_name, st_state,st_coordinate,s_station_latitude,s_station_longitude
+		 from view_generator_full_info
 		where mach_no = #{mach_no}
 	</select>
 

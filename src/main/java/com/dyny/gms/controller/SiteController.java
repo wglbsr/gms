@@ -527,22 +527,9 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getMachineMap.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getMachineMap(HttpServletRequest request,
-                                    HttpServletResponse response) {
+    public String getMachineMap(@RequestParam(name="mach_no",required = true) String mach_no) {
 
-
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            Map<String, Object> data = service.getMachineMap(mach_no);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+        return super.getSuccessResult(service.getMachineMap(mach_no));
     }
 
     /**
