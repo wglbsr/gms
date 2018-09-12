@@ -44,12 +44,11 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/getAllMap.do")
+    @RequestMapping(value = "/getGeneratorLocation.do")
     @ResponseBody
-    public String getAllMap(HttpServletRequest request,
-                            HttpServletResponse response) {
-        String user_cus = request.getParameter("user_cus");
-        return super.getSuccessResult(service.getAllMap(user_cus));
+    public String getGeneratorLocation(@RequestParam(name = "user_cus", required = false, defaultValue = "") String user_cus,
+                                       @RequestParam(name = "mach_no", required = false, defaultValue = "") String mach_no) {
+        return super.getSuccessResult(service.getGeneratorLocation(user_cus, mach_no));
     }
 
 
@@ -490,19 +489,6 @@ public class SiteController extends BaseController {
         return resultMap;
     }
 
-    /**
-     * 三十六.	移动油机地图位置
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/getMachineMap.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String getMachineMap(@RequestParam(name = "mach_no", required = true) String mach_no) {
-
-        return super.getSuccessResult(service.getMachineMap(mach_no));
-    }
 
     /**
      * 三十七.	移动油机领用查询(25项目的补充)
@@ -518,7 +504,6 @@ public class SiteController extends BaseController {
                                      @RequestParam(name = "end_time", required = true) String end_time) {
         return super.getSuccessResult(service.searchMachineInUse(user_cus, start_time, end_time));
     }
-
 
 
     /**
@@ -537,33 +522,20 @@ public class SiteController extends BaseController {
 
 
     /**
-     * 四十.	警报信息查询明细
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/getSiteWaring.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String getSiteWaring(@RequestParam(name = "user_cus", required = true) String user_cus) {
-        return super.getSuccessResult(service.getSiteWaring(user_cus));
-    }
-
-    /**
      * 四十一.	警报信息查询明细
      *
      * @param request
      * @param response
      * @return
      */
-    @RequestMapping(value = "/getSiteWaringList.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/getSiteWarningList.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getSiteWaringList(@RequestParam(name = "user_cus", required = true) String user_cus,
-                                    @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
-                                    @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
-                                    @RequestParam(name = "alarmType", required = true) String alarmType,
-                                    @RequestParam(name = "startDate", required = true) String startDateStr,
-                                    @RequestParam(name = "endDate", required = true) String endDateStr) {
+    public String getSiteWarningList(@RequestParam(name = "user_cus", required = true) String user_cus,
+                                     @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                     @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                     @RequestParam(name = "alarmType", required = false,defaultValue = "0") int alarmType,
+                                     @RequestParam(name = "startDate", required = false,defaultValue = "") String startDateStr,
+                                     @RequestParam(name = "endDate", required = false,defaultValue = "") String endDateStr) {
         long startDate = 0;
         long endDate = 0;
         if (Tool.StringUtil.isNum(startDateStr)) {
@@ -572,7 +544,7 @@ public class SiteController extends BaseController {
         if (Tool.StringUtil.isNum(endDateStr)) {
             endDate = Long.valueOf(endDateStr);
         }
-        return service.getSiteWaringList(user_cus, pageNum, pageSize, alarmType, startDate, endDate);
+        return service.getSiteWarningList(user_cus, pageNum, pageSize, alarmType, startDate, endDate);
     }
 
 }

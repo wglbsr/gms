@@ -19,22 +19,25 @@
     <!-- 五.	全站地图功能 -->
     <resultMap type="map" id="allMap">
         <result column="id" property="stationId" javaType="string"/>
-        <result column="st_name" property="stationName" javaType="string"/>
+        <result column="s_station_name" property="stationName" javaType="string"/>
+        <result column="mach_name" property="machName" javaType="string"/>
         <result column="st_state" property="stationConnnectState" javaType="string"/>
         <result column="Acity_electricity" property="stationState" javaType="string"/>
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
         <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
         <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
+
     </resultMap>
 
 
-    <select id="getAllMap" resultMap="allMap" parameterType="java.lang.String">
+    <select id="getGeneratorLocation" resultMap="allMap" parameterType="java.lang.String">
         SELECT
         i.id
-        ,dbo.p_name(i.mach_no) st_name
+        ,m.mach_name
         ,i.mach_no
         ,ts.s_station_latitude
         ,ts.s_station_longitude
+        ,ts.s_station_name
         ,i.st_coordinate
         ,dbo.p_state(i.mach_no) st_state
         ,dbo.p_Acityelectricity(i.mach_no) Acity_electricity
@@ -46,6 +49,10 @@
         <if test="user_cus!=''">
             AND
             m.cus_no=#{user_cus}
+        </if>
+        where 1=1
+        <if test="mach_no!=null and mach_no!=''">
+            and i.mach_no=#{mach_no}
         </if>
     </select>
 
@@ -197,7 +204,6 @@
     </select>
 
 
-
     <!-- 二十五.	油机领用管理 -->
     <insert id="addOil">
 			INSERT INTO Ap_collar (
@@ -268,7 +274,8 @@
 
     <!-- 三十一.	移动油机查询 -->
     <select id="searchMachine" resultMap="machineStatusMap">
-        select mach_no,mach_name,s_station_name,st_no,i_total_generate_time, mach_type, st_state, city_electricity,Acity_electricity,
+        select mach_no,mach_name,s_station_name,st_no,i_total_generate_time, mach_type, st_state,
+        city_electricity,Acity_electricity,
         al_voltage,
         -- isnull(i_total_generate_time,0)/60 sum_time,
         -- dbo.sumnum_time(mach_no) sumnum_time,
@@ -366,20 +373,6 @@
 		)
 	</insert>
 
-    <!-- 三十六.	移动油机地图位置 -->
-    <resultMap type="map" id="machineMapMap">
-        <result column="mach_no" property="stationId" javaType="string"/>
-        <result column="mach_name" property="stationName" javaType="string"/>
-        <result column="st_state" property="stationConnnectState" javaType="string"/>
-        <result column="st_coordinate" property="stationPosition" javaType="string"/>
-        <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
-        <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
-    </resultMap>
-    <select id="getMachineMap" resultMap="machineMapMap">
-		select mach_no,mach_name, st_state,st_coordinate,s_station_latitude,s_station_longitude
-		 from view_generator_full_info
-		where mach_no = #{mach_no}
-	</select>
 
     <!-- 三十七.	移动油机领用查询(25项目的补充) -->
     <resultMap type="map" id="machineInUseMap">
@@ -407,10 +400,12 @@
     </select>
 
 
-
     <!-- 三十九.	移动油机直流主数据明细 -->
     <resultMap type="map" id="SiteDetailedMap1">
         <result column="Acity_electricity" property="Acity_electricity" javaType="string"/>
+        <result column="s_station_name" property="stationName" javaType="string"/>
+        <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
+        <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
         <result column="external_temperature" property="external_temperature" javaType="string"/>
         <result column="inter_time" property="inter_time" javaType="string"/>
         <result column="stationType" property="stationType" javaType="string"/>
@@ -428,7 +423,7 @@
         <result column="sys_mode" property="sys_mode" javaType="string"/>
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
-		select Acity_electricity,isnull(cabinet_temperature,0) external_temperature,isnull(CONVERT(varchar(100), inter_time, 20),0) inter_time ,isnull(dbo.mach_type(mach_no),0) stationType,
+		select Acity_electricity,s_station_name,s_station_latitude,s_station_longitude,isnull(cabinet_temperature,0) external_temperature,isnull(CONVERT(varchar(100), inter_time, 20),0) inter_time ,isnull(dbo.mach_type(mach_no),0) stationType,
            isnull(start_Vo,0) start_Voltage,isnull(lank_level,0) lank_per,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level , isnull(st_current,0) st_current,state1,
            isnull(st_co,0) st_co ,isnull(dbo.sum_time(mach_no),0) sum_time,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(st_voltage,0) st_voltag,isnull(Expr1,0) Expr1,
            isnull(al_voltage,0) al_voltage,isnull(sys_mode,0) sys_mode
@@ -466,49 +461,45 @@
 
 
     <!-- 四十.	警报信息查询 -->
-    <resultMap type="map" id="getSiteWaringMap">
+    <resultMap type="map" id="getSiteWarningMap">
         <result column="ID" property="ID" javaType="string"/>
         <result column="mach_no" property="mach_no" javaType="string"/>
-        <result column="p_name" property="p_name" javaType="string"/>
         <result column="action" property="action" javaType="string"/>
+        <result column="s_station_name" property="stationName" javaType="string"/>
+        <result column="mach_name" property="machName" javaType="string"/>
         <result column="inter_time" property="inter_time" javaType="string"/>
     </resultMap>
-    <select id="getSiteWaring" resultMap="getSiteWaringMap">
-        select top 5 ID, mach_no,dbo.p_name(mach_no) p_name, action,CONVERT(varchar(100), inter_time, 20) inter_time
-        from Ap_warning
-        where 1=1
+    <select id="getSiteWarningList" resultMap="getSiteWarningMap">
+        SELECT
+        aw.ID,
+        aw.mach_no,
+        ts.s_station_name,
+        cm.mach_name,
+        ACTION,
+        CONVERT (
+        VARCHAR (100),
+        aw.inter_time,
+        20
+        ) inter_time
+        FROM
+        Ap_warning aw
+        LEFT JOIN c_mach cm ON cm.mach_no = aw.mach_no
+        LEFT JOIN t_station ts ON ts.s_station_no = cm.st_no
+        WHERE
+        1 = 1
         <if test="user_cus != null and user_cus != '' ">
-            AND (dbo.cus_no(mach_no) = #{user_cus})
+            AND (dbo.cus_no(aw.mach_no) = #{user_cus})
         </if>
-        order by id desc
-
-    </select>
-
-    <!-- 四十.	警报信息查询 -->
-    <resultMap type="map" id="getSiteWaringMap1">
-        <result column="ID" property="ID" javaType="string"/>
-        <result column="mach_no" property="mach_no" javaType="string"/>
-        <result column="p_name" property="p_name" javaType="string"/>
-        <result column="action" property="action" javaType="string"/>
-        <result column="inter_time" property="inter_time" javaType="string"/>
-    </resultMap>
-    <select id="getSiteWaringList" resultMap="getSiteWaringMap1">
-        select ID, mach_no,dbo.p_name(mach_no) p_name, action,CONVERT(varchar(100), inter_time, 20) inter_time
-        from Ap_warning
-        where 1=1
-        <if test="user_cus != null and user_cus != '' ">
-            AND (dbo.cus_no(mach_no) = #{user_cus})
-        </if>
-        <if test="action!=null and action !=''">
-            AND action like '%'+#{action}+'%'
+        <if test="action_type>0">
+            AND aw.action_type = #{action_type}
         </if>
         <if test="start_date>0">
-            AND inter_time &gt;= DATEADD(S,#{start_date},'1970-01-01 08:00:00')
+            AND aw.inter_time &gt;= DATEADD(S,#{start_date},'1970-01-01 08:00:00')
         </if>
         <if test="end_date>0">
-            AND inter_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
+            AND aw.inter_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
         </if>
-        order by id desc
+        order by aw.id desc
 
     </select>
 

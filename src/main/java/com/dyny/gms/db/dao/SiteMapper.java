@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 public interface SiteMapper {
 
 
-    public List getAllMap(@Param("user_cus") String username);
+    public List getGeneratorLocation(@Param("user_cus") String user_cus,@Param("mach_no") String mach_no);
 
     public Map<String, Object> getStartVoltage(String mach_no);
 
@@ -152,10 +152,10 @@ public interface SiteMapper {
             @Param("code") String code,
             @Param("user_no") String user_no);
 
-    /**
-     * 三十六.	移动油机地图位置
-     */
-    public Map<String, Object> getMachineMap(String user_cus);
+//    /**
+//     * 三十六.	移动油机地图位置
+//     */
+//    public Map<String, Object> getMachineMap(String user_cus);
 
     /**
      * 三十七.	移动油机领用查询(25项目的补充)
@@ -171,14 +171,10 @@ public interface SiteMapper {
      */
     public List getSiteDetailed1(String mach_no);
 
-    /**
-     * 四十.警报信息查询明细
-     */
-    public List getSiteWaring(@Param("user_cus") String user_cus);
 
     /**
      * 四十一.警报信息查询明细1
      */
-    public List getSiteWaringList(@Param("user_cus") String user_cus, @Param("action") String action, @Param("start_date") long start_date, @Param("end_date") long end_date);
+    public List getSiteWarningList(@Param("user_cus") String user_cus, @Param("action_type") int action_type, @Param("start_date") long start_date, @Param("end_date") long end_date);
 
 }

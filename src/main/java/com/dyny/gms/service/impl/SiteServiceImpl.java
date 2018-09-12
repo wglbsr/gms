@@ -22,13 +22,15 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 @Deprecated
 @Service
 public class SiteServiceImpl extends BaseService implements SiteService {
     @Override
-    public String getSiteWaringList(String user_cus, int pageNum, int pageSize, String action, long startDate, long endDate) {
+    public String getSiteWarningList(String user_cus, int pageNum, int pageSize, int action,
+                                                  long startDate, long endDate) {
         Page page = PageHelper.startPage(pageNum, pageSize);
-        List result = mapper.getSiteWaringList(user_cus, action, startDate, endDate);
+        List result = mapper.getSiteWarningList(user_cus, action, startDate, endDate);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
@@ -39,9 +41,9 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     private OperateMapper operateMapper;
 
     @Override
-    public List getAllMap(String username) {
+    public List getGeneratorLocation(String username,String machNo) {
         // TODO Auto-generated method stub
-        return mapper.getAllMap(username);
+        return mapper.getGeneratorLocation(username,machNo);
     }
 
     @Override
@@ -182,11 +184,11 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return mapper.changeProtectModel(mach_no, modelflag, code, user_no);
     }
 
-    @Override
-    public Map<String, Object> getMachineMap(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getMachineMap(user_cus);
-    }
+//    @Override
+//    public Map<String, Object> getMachineMap(String user_cus) {
+//        // TODO Auto-generated method stub
+//        return mapper.getMachineMap(user_cus);
+//    }
 
     @Override
     public List searchMachineInUse(String user_cus,
@@ -196,17 +198,11 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     }
 
 
-
     @Override
     public List getSiteDetailed1(String mach_no) {
         // TODO Auto-generated method stub
         return mapper.getSiteDetailed1(mach_no);
     }
 
-    @Override
-    public List getSiteWaring(String user_cus) {
-        // TODO Auto-generated method stub
-        return mapper.getSiteWaring(user_cus);
-    }
 
 }

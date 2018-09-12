@@ -18,7 +18,7 @@ public interface GeneratorService {
 
     public int addGenerator(Generator generator);
 
-    public List getGeneratorForStation(String stationNo, String cusNo);
+    public List getGeneratorForStation(String stationNo, String cusNo,String searchContent);
 
     int relateGeneratorWithStation(String machNo, String stationNo, String CusNo, boolean relateFlag, List<Integer> contactId);
 

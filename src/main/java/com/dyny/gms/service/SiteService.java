@@ -11,7 +11,7 @@ import java.util.Map;
 public interface SiteService {
 
 
-     List getAllMap(String username);
+     List getGeneratorLocation(String username,String machNo);
 
      Map<String, Object> getStartVoltage(String mach_no);
 
@@ -84,10 +84,10 @@ public interface SiteService {
      */
      int changeProtectModel(String mach_no, int modelflag, String code, String user_no);
 
-    /**
-     * 三十六.	移动油机地图位置
-     */
-     Map<String, Object> getMachineMap(String user_cus);
+//    /**
+//     * 三十六.	移动油机地图位置
+//     */
+//     Map<String, Object> getMachineMap(String user_cus);
 
     /**
      * 三十七.	移动油机领用查询(25项目的补充)
@@ -100,11 +100,6 @@ public interface SiteService {
      */
      List getSiteDetailed1(String mach_no);
 
-    /**
-     * 四十.警报信息查询明细
-     */
-     List getSiteWaring(String user_cus);
 
-
-     String getSiteWaringList(String user_cus, int pageNum, int pageSize, String action, long startDate, long endDate);
+     String getSiteWarningList(String user_cus, int pageNum, int pageSize, int action, long startDate, long endDate);
 }

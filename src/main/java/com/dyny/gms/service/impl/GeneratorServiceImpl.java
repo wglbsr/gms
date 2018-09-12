@@ -38,12 +38,18 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      * @return
      */
     @Override
-    public List getGeneratorForStation(String stationNo, String cusNo) {
+    public List getGeneratorForStation(String stationNo, String cusNo,String searchContent) {
         GeneratorExample example = new GeneratorExample();
-        GeneratorExample.Criteria criteria = example.createCriteria();
-        criteria.andStNoEqualTo(stationNo).andCusNoEqualTo(cusNo);
-        example.or().andStNoEqualTo("").andCusNoEqualTo(cusNo);
-        example.or().andStNoIsNull().andCusNoEqualTo(cusNo);
+//        GeneratorExample.Criteria criteria = example.createCriteria();
+//        criteria.andStNoEqualTo(stationNo).andCusNoEqualTo(cusNo);
+//        example.or().andStNoEqualTo("").andCusNoEqualTo(cusNo);
+//        example.or().andStNoIsNull().andCusNoEqualTo(cusNo);
+        example.or().andStNoEqualTo(stationNo).andCusNoEqualTo(cusNo).andMachNoLike(super.appendLike(searchContent));
+        example.or().andStNoIsNull().andCusNoEqualTo(cusNo).andMachNoLike(super.appendLike(searchContent));
+        example.or().andStNoEqualTo("").andCusNoEqualTo(cusNo).andMachNoLike(super.appendLike(searchContent));
+        example.or().andStNoEqualTo(stationNo).andCusNoEqualTo(cusNo).andMachNameLike(super.appendLike(searchContent));
+        example.or().andStNoIsNull().andCusNoEqualTo(cusNo).andMachNameLike(super.appendLike(searchContent));
+        example.or().andStNoEqualTo("").andCusNoEqualTo(cusNo).andMachNameLike(super.appendLike(searchContent));
         return generatorMapper.selectByExample(example);
     }
 

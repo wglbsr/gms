@@ -66,8 +66,10 @@ public class GeneratorController extends BaseController {
      */
     @RequestMapping(value = "/getGeneratorForStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getGeneratorForStation(@RequestParam(name = "stationNo", required = true) String stationNo, @RequestParam(name = "user_cus", required = true) String user_cus) {
-        return super.getSuccessResult(generatorService.getGeneratorForStation(stationNo, user_cus));
+    public String getGeneratorForStation(@RequestParam(name = "stationNo", required = true) String stationNo,
+                                         @RequestParam(name = "searchContent", required = false,defaultValue = "") String searchContent,
+                                         @RequestParam(name = "user_cus", required = true) String user_cus) {
+        return super.getSuccessResult(generatorService.getGeneratorForStation(stationNo, user_cus,searchContent));
     }
 
 

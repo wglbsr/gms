@@ -68,7 +68,7 @@ public class UsersController {
 	@Deprecated
 	@RequestMapping(value="/register.do",method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject getAllMap(HttpServletRequest request,
+	public JSONObject getGeneratorLocation(HttpServletRequest request,
 			HttpServletResponse response) {
 		JSONObject resultMap = new JSONObject();
 		String username = request.getParameter("username");
