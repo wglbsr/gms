@@ -32,7 +32,8 @@ public interface StationMapper {
 
     int updateByPrimaryKey(Station record);
 
-    int insertBatch(List<Station> list);
+    int updateBatchByStationNo(List<Station> stationList);
 
-    int updateBatchByStationNo(List<Station> list);
+    int insertBatch(List<Station> stationList);
+
 }

@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,7 +69,7 @@ public class StationController extends BaseController {
     @RequestMapping(value = "/deleteStationByStationNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String deleteStationByStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
-        return super.getSuccessResult(stationService.deleteStation(stationNo));
+        return super.getSuccessResult(stationService.deleteStationAndOtherData(stationNo));
     }
 
     @RequestMapping(value = "/getStationByStationNo", produces = {"application/json;charset=UTF-8"})

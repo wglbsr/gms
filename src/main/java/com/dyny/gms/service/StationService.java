@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface StationService {
 
-    int deleteStation(String stationNo);
+    int deleteStationAndOtherData(String stationNo);
 
     int updateStation(Station station, StationExample stationExample);
 
@@ -39,4 +39,6 @@ public interface StationService {
     int disrelateStationToUnit(int unitId);
 
     int importStationFromExcelFile(File file,String customerNo);
+
+    int deleteStation(String stationNo);
 }

@@ -10,10 +10,8 @@ import java.util.*;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
-import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.dao.OperateMapper;
 import com.dyny.gms.db.dao.SiteMapper;
-import com.dyny.gms.db.pojo.Operate;
 import com.dyny.gms.exportEntity.GenerateRecordEntity;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SiteService;
@@ -85,14 +83,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         // TODO Auto-generated method stub
         return mapper.modifyStopTime(currentStopTime, mach_no);
     }
-
-    @Override
-    public Map<String, Object> getMapByStationId(String stationId) {
-        // TODO Auto-generated method stub
-        return mapper.getMapByStationId(stationId);
-    }
-
-
 
 
     @Override
@@ -205,31 +195,7 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return mapper.searchMachineInUse(user_cus, strat_time, end_time);
     }
 
-    @Override
-    public List getMachineList(String user_cu) {
-        // TODO Auto-generated method stub
-        return mapper.getMachineList(user_cu);
-    }
 
-    /**
-     * 获得固定油机,暂时只是添加多一个参数
-     * 20180809
-     *
-     * @param user_cu
-     * @param use_type
-     * @return
-     */
-    @Override
-    public List getMachineList(String user_cu, String use_type) {
-        // TODO Auto-generated method stub
-        return mapper.getMachineListWithUseType(user_cu, use_type);
-    }
-
-    @Override
-    public List getSiteDetailed(String mach_no) {
-        // TODO Auto-generated method stub
-        return mapper.getSiteDetailed(mach_no);
-    }
 
     @Override
     public List getSiteDetailed1(String mach_no) {

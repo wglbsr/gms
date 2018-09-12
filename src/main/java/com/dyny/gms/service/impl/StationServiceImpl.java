@@ -2,7 +2,6 @@ package com.dyny.gms.service.impl;
 
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
-import cn.afterturn.easypoi.util.PoiPublicUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
@@ -155,7 +154,7 @@ public class StationServiceImpl extends BaseService implements StationService {
      * @return
      */
     @Override
-    public int deleteStation(String stationNo) {
+    public int deleteStationAndOtherData(String stationNo) {
         int cnt = 0;
         //1.删除联系人-基站关联表的相关记录
         cnt += this.deleteContactStationRelByStationNo(stationNo);
@@ -164,7 +163,9 @@ public class StationServiceImpl extends BaseService implements StationService {
         cnt += generatorService.disrelateGeneratorWithStationByStationNo(stationNo);
 
         //3.删除基站
-        cnt += this.logicDeleteStation(stationNo);
+//        cnt += this.logicDeleteStation(stationNo);//逻辑删除
+        cnt += this.deleteStation(stationNo);//暂时使用物理删除
+
 
         return cnt;
     }
@@ -240,6 +241,14 @@ public class StationServiceImpl extends BaseService implements StationService {
         StationExample.Criteria criteria = example.createCriteria();
         criteria.andStationNoEqualTo(stationNo);
         return stationMapper.updateByExampleSelective(station, example);
+    }
+
+    @Override
+    public int deleteStation(String stationNo) {
+        StationExample example = new StationExample();
+        StationExample.Criteria criteria = example.createCriteria();
+        criteria.andStationNoEqualTo(stationNo);
+        return stationMapper.deleteByExample(example);
     }
 
     @Override

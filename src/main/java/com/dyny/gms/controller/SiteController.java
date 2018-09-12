@@ -55,8 +55,8 @@ public class SiteController extends BaseController {
 
     @RequestMapping(value = "/exportGenerateTable", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String exportGenerateTable(@RequestParam(name = "user_cus", required = false,defaultValue = "") String user_cus,
-                                      @RequestParam(name = "mach_no", required = false,defaultValue = "") String mach_no,
+    public String exportGenerateTable(@RequestParam(name = "user_cus", required = false, defaultValue = "") String user_cus,
+                                      @RequestParam(name = "mach_no", required = false, defaultValue = "") String mach_no,
                                       @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                       @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
         String fileName = service.getGenerateLogFile(user_cus, mach_no, startDate, endDate);
@@ -243,33 +243,6 @@ public class SiteController extends BaseController {
         return resultMap;
     }
 
-    /**
-     * 十八.	查看地图位置功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/getMapByStationId.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject getMapByStationId(HttpServletRequest request,
-                                        HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String stationId = request.getParameter("stationId");
-        try {
-            Map<String, Object> data = service.getMapByStationId(stationId);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
-
-
 
     /**
      * 二十三.	发电记录功能
@@ -306,7 +279,6 @@ public class SiteController extends BaseController {
         }
         return service.getGenerateLog(user_cus, mach_no, page_num, page_size, startDate, endDate);
     }
-
 
 
     /**
@@ -527,7 +499,7 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getMachineMap.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getMachineMap(@RequestParam(name="mach_no",required = true) String mach_no) {
+    public String getMachineMap(@RequestParam(name = "mach_no", required = true) String mach_no) {
 
         return super.getSuccessResult(service.getMachineMap(mach_no));
     }
@@ -541,50 +513,13 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/searchMachineInUse.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject searchMachineInUse(HttpServletRequest request,
-                                         HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String user_cus = request.getParameter("user_cus");
-        String strat_time = request.getParameter("strat_time");
-        String end_time = request.getParameter("end_time");
-        try {
-            List data = service.searchMachineInUse(user_cus, strat_time, end_time);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String searchMachineInUse(@RequestParam(name = "user_cus", required = true) String user_cus,
+                                     @RequestParam(name = "start_time", required = true) String start_time,
+                                     @RequestParam(name = "end_time", required = true) String end_time) {
+        return super.getSuccessResult(service.searchMachineInUse(user_cus, start_time, end_time));
     }
 
-    /**
-     * 38.	移动油机交流主数据明细
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/getSiteDetailed.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject getSiteDetailed(HttpServletRequest request,
-                                      HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            List list = service.getSiteDetailed(mach_no);
-            resultMap.put("data", list);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
+
 
     /**
      * 39.	移动油机交流主数据明细
@@ -596,20 +531,8 @@ public class SiteController extends BaseController {
     @Deprecated
     @RequestMapping(value = "/getSiteDetailed1.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getSiteDetailed1(HttpServletRequest request,
-                                       HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            List list = service.getSiteDetailed1(mach_no);
-            resultMap.put("data", list);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String getSiteDetailed1(@RequestParam(name = "mach_no", required = true) String mach_no) {
+        return super.getSuccessResult(service.getSiteDetailed1(mach_no));
     }
 
 
@@ -622,23 +545,8 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getSiteWaring.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getSiteWaring(HttpServletRequest request,
-                                    HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String user_cus = request.getParameter("user_cus");
-        try {
-            List list = null;
-            if (user_cus != null && user_cus.isEmpty()) {
-                list = service.getSiteWaring(user_cus);
-            }
-            resultMap.put("data", list);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String getSiteWaring(@RequestParam(name = "user_cus", required = true) String user_cus) {
+        return super.getSuccessResult(service.getSiteWaring(user_cus));
     }
 
     /**
@@ -650,21 +558,12 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getSiteWaringList.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getSiteWaringList(HttpServletRequest request,
-                                    HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String user_cus = request.getParameter("user_cus");
-        String page_num_str = request.getParameter("pageNum");
-        String page_size_str = request.getParameter("pageSize");
-        String alarmType = request.getParameter("alarmType");
-        String startDateStr = request.getParameter("startDate");
-        String endDateStr = request.getParameter("endDate");
-        int page_num = 0;
-        int page_size = 0;
-        if (Tool.StringUtil.isNum(page_num_str, page_size_str)) {
-            page_num = Integer.valueOf(page_num_str);
-            page_size = Integer.valueOf(page_size_str);
-        }
+    public String getSiteWaringList(@RequestParam(name = "user_cus", required = true) String user_cus,
+                                    @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                    @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                    @RequestParam(name = "alarmType", required = true) String alarmType,
+                                    @RequestParam(name = "startDate", required = true) String startDateStr,
+                                    @RequestParam(name = "endDate", required = true) String endDateStr) {
         long startDate = 0;
         long endDate = 0;
         if (Tool.StringUtil.isNum(startDateStr)) {
@@ -673,7 +572,7 @@ public class SiteController extends BaseController {
         if (Tool.StringUtil.isNum(endDateStr)) {
             endDate = Long.valueOf(endDateStr);
         }
-        return service.getSiteWaringList(user_cus, page_num, page_size, alarmType, startDate, endDate);
+        return service.getSiteWaringList(user_cus, pageNum, pageSize, alarmType, startDate, endDate);
     }
 
 }
