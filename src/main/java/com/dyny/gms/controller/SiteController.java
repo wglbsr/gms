@@ -219,7 +219,7 @@ public class SiteController extends BaseController {
                                 @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                 @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
                                 @RequestParam(name = "content", required = false, defaultValue = "") String content,
-                                @RequestParam(name = "orderBy", required = false, defaultValue = "") String orderBy,
+                                @RequestParam(name = "orderBy", required = false, defaultValue = "mach_no") String orderBy,
                                 @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
         return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize, orderBy);
 

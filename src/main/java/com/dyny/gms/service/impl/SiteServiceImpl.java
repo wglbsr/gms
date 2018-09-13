@@ -145,9 +145,7 @@ public class SiteServiceImpl extends BaseService implements SiteService {
                                 String mach_type, String fuel_type, String Acity_electricity, String content, String generateStatus, int expr1, String use_type, int pageNum, int pageSize, String orderBy) {
         // TODO Auto-generated method stub
         Page page = PageHelper.startPage(pageNum, pageSize);
-        if (Tool.StringUtil.validStr(orderBy)) {
-            page.setOrderBy(orderBy);
-        }
+        page.setOrderBy(orderBy);
         List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
