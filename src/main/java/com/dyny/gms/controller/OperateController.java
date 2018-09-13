@@ -72,6 +72,12 @@ public class OperateController extends BaseController {
         return super.getSuccessResult(operateService.deleteAllTimerOperateByMachineNo(machineNo));
     }
 
+    @RequestMapping(value = "/deleteAllTimerOperateByMachineNoList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String deleteAllTimerOperateByMachineNoList(@RequestParam(name = "machineNoList", required = true) List<String> machineNoList) {
+        return super.getSuccessResult(operateService.deleteAllTimerOperateByMachineNoList(machineNoList));
+    }
+
 
     @RequestMapping(value = "/deleteOperate", produces = {"application/json;charset=UTF-8"})
     @ResponseBody

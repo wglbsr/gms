@@ -129,11 +129,6 @@
 		From C_mach
 		WHERE mach_no = #{mach_no}
 	</select>
-    <!-- 十七.	（2）设定停机功能 -->
-    <update id="modifyStopTime">
-        UPDATE C_mach SET stop_time = #{currentStopTime, jdbcType = DECIMAL} 
-        WHERE mach_no = #{mach_no}
-	</update>
 
 
     <!-- 十九.	站点信息主功能 -->
@@ -242,7 +237,7 @@
     <select id="getMachineNum" resultMap="machineNumMap" parameterType="java.lang.String">
         select
         count(1) total ,
-        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=3 then 1 else 0 end) online,
+        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=1 then 1 else 0 end) online,
         sum(case when isnull(Expr1,1)=0 then 1 else 0 end) generating
         from view_generator_full_info where 1=1
         <if test="user_cus != null and user_cus != '' ">
@@ -420,14 +415,36 @@
         <result column="Expr1" property="Expr1" javaType="string"/>
         <result column="al_voltage" property="al_voltage" javaType="string"/>
         <result column="state1" property="state1" javaType="string"/>
+        <result column="st_state" property="st_state" javaType="string"/>
         <result column="sys_mode" property="sys_mode" javaType="string"/>
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
-		select Acity_electricity,s_station_name,s_station_latitude,s_station_longitude,isnull(cabinet_temperature,0) external_temperature,isnull(CONVERT(varchar(100), inter_time, 20),0) inter_time ,isnull(dbo.mach_type(mach_no),0) stationType,
-           isnull(start_Vo,0) start_Voltage,isnull(lank_level,0) lank_per,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level , isnull(st_current,0) st_current,state1,
-           isnull(st_co,0) st_co ,isnull(dbo.sum_time(mach_no),0) sum_time,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(st_voltage,0) st_voltag,isnull(Expr1,0) Expr1,
-           isnull(al_voltage,0) al_voltage,isnull(sys_mode,0) sys_mode
-	    FROM view_generator_full_info
+            SELECT
+                Acity_electricity,
+                s_station_name,
+                s_station_latitude,
+                s_station_longitude,
+                st_state,
+                isnull(cabinet_temperature, 0) external_temperature,
+                isnull(
+                    CONVERT (VARCHAR(100), inter_time, 20),
+                    0
+                ) inter_time,
+                isnull(dbo.mach_type(mach_no), 0) stationType,
+                isnull(start_Vo, 0) start_Voltage,
+                isnull(lank_level, 0) lank_per,
+                isnull(lank_level, 0) * isnull(volumeno, 0) / 100 lank_level,
+                isnull(st_current, 0) st_current,
+                state1,
+                isnull(st_co, 0) st_co,
+                isnull(dbo.sum_time(mach_no), 0) sum_time,
+                isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
+                isnull(st_voltage, 0) st_voltag,
+                isnull(Expr1, 0) Expr1,
+                isnull(al_voltage, 0) al_voltage,
+                isnull(sys_mode, 0) sys_mode
+            FROM
+                view_generator_full_info
 		WHERE mach_no = #{mach_no} 
 		order by mach_no
 	</select>

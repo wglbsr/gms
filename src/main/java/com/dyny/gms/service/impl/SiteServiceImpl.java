@@ -80,11 +80,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return mapper.getStopTime(mach_no);
     }
 
-    @Override
-    public int modifyStopTime(BigDecimal currentStopTime, String mach_no) {
-        // TODO Auto-generated method stub
-        return mapper.modifyStopTime(currentStopTime, mach_no);
-    }
 
 
     @Override

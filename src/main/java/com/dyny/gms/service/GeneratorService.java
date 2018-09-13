@@ -2,23 +2,25 @@ package com.dyny.gms.service;
 
 import com.dyny.gms.db.pojo.Generator;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 public interface GeneratorService {
 
-    public List getGenerator(Map<String, Object> condition, boolean fullInfo);
+    int updateGenerator(List<Generator> generator);
 
+    List getGenerator(Map<String, Object> condition, boolean fullInfo);
 
-    public Generator getGeneratorDetail(String generatorNo);
+    Generator getGeneratorDetail(String generatorNo);
 
-    public int updateGenerator(Generator generator);
+    int updateGenerator(Generator generator);
 
-    public int deleteGeneratorByGeneratorNo(String generatorNo);
+    int deleteGeneratorByGeneratorNo(String generatorNo);
 
-    public int addGenerator(Generator generator);
+    int addGenerator(Generator generator);
 
-    public List getGeneratorForStation(String stationNo, String cusNo,String searchContent);
+    List getGeneratorForStation(String stationNo, String cusNo, String searchContent);
 
     int relateGeneratorWithStation(String machNo, String stationNo, String CusNo, boolean relateFlag, List<Integer> contactId);
 
@@ -41,5 +43,7 @@ public interface GeneratorService {
     List getGeneratorByStationNo(String stationNo);
 
     int generatorRegister(Generator generator);
+
+    int changeBootVoltage(List<String> generatorNoList, BigDecimal startVoltage);
 
 }

@@ -6,7 +6,10 @@ import com.dyny.gms.service.GeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -56,6 +59,18 @@ public class GeneratorController extends BaseController {
         }
     }
 
+    /**
+     * 更新油机信息
+     *
+     * @param generatorList
+     * @return
+     */
+    @RequestMapping(value = "/updateGeneratorList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateGeneratorList(@RequestBody List<Generator> generatorList) {
+        return super.getSuccessResult(generatorService.updateGenerator(generatorList));
+    }
+
 
     /**
      * 获得指定客户编号的油机,条件为该基站的编号或者基站编号为空
@@ -67,11 +82,25 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/getGeneratorForStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorForStation(@RequestParam(name = "stationNo", required = true) String stationNo,
-                                         @RequestParam(name = "searchContent", required = false,defaultValue = "") String searchContent,
+                                         @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
                                          @RequestParam(name = "user_cus", required = true) String user_cus) {
-        return super.getSuccessResult(generatorService.getGeneratorForStation(stationNo, user_cus,searchContent));
+        return super.getSuccessResult(generatorService.getGeneratorForStation(stationNo, user_cus, searchContent));
     }
 
+
+    /**
+     * 获得指定客户编号的油机,条件为该基站的编号或者基站编号为空
+     *
+     * @param stationNo
+     * @param user_cus
+     * @return
+     */
+    @RequestMapping(value = "/changeBootVoltage", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String changeBootVoltage(@RequestParam(name = "generatorNoList[]", required = true) List<String> generatorNoList,
+                                    @RequestParam(name = "bootVoltage", required = true) BigDecimal bootVoltage) {
+        return super.getSuccessResult(generatorService.changeBootVoltage(generatorNoList, bootVoltage));
+    }
 
     /**
      * 关联/取消关联油机

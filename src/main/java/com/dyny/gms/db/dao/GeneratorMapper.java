@@ -32,7 +32,11 @@ public interface GeneratorMapper {
 
     int updateByPrimaryKey(Generator record);
 
+    //****************************以下为手动添加*********************************************************
     int calculateGenerateTimeToMach();
 
     int calculateGenerateTimeToApTime();
+
+    int updateByPrimaryKeySelectiveBatch(List<Generator> records);
+
 }

@@ -11,6 +11,7 @@ import com.dyny.gms.utils.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +39,8 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      * @return
      */
     @Override
-    public List getGeneratorForStation(String stationNo, String cusNo,String searchContent) {
+    public List getGeneratorForStation(String stationNo, String cusNo, String searchContent) {
         GeneratorExample example = new GeneratorExample();
-//        GeneratorExample.Criteria criteria = example.createCriteria();
-//        criteria.andStNoEqualTo(stationNo).andCusNoEqualTo(cusNo);
-//        example.or().andStNoEqualTo("").andCusNoEqualTo(cusNo);
-//        example.or().andStNoIsNull().andCusNoEqualTo(cusNo);
         example.or().andStNoEqualTo(stationNo).andCusNoEqualTo(cusNo).andMachNoLike(super.appendLike(searchContent));
         example.or().andStNoIsNull().andCusNoEqualTo(cusNo).andMachNoLike(super.appendLike(searchContent));
         example.or().andStNoEqualTo("").andCusNoEqualTo(cusNo).andMachNoLike(super.appendLike(searchContent));
@@ -264,6 +261,18 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
+    public int changeBootVoltage(List<String> generatorNoList, BigDecimal startVoltage) {
+        if (generatorNoList == null || generatorNoList.size() == 0) {
+            return 0;
+        }
+        GeneratorExample generatorExample = new GeneratorExample();
+        generatorExample.or().andMachNoIn(generatorNoList);
+        Generator generator = new Generator();
+        generator.setStartVoltage(startVoltage);
+        return generatorMapper.updateByExampleSelective(generator, generatorExample);
+    }
+
+    @Override
     public int logicDeleteGeneratorContactByStationNo(String stationNo) {
         if (!Tool.StringUtil.validStr(stationNo)) {
             return 0;
@@ -293,7 +302,12 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
 
     @Override
     public int updateGenerator(Generator generator) {
-        return generatorMapper.updateByPrimaryKey(generator);
+        return generatorMapper.updateByPrimaryKeySelective(generator);
+    }
+
+    @Override
+    public int updateGenerator(List<Generator> generatorList) {
+        return generatorMapper.updateByPrimaryKeySelectiveBatch(generatorList);
     }
 
     @Override

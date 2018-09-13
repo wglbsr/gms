@@ -1,7 +1,6 @@
 package com.dyny.gms.db.dao;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,41 +41,6 @@ public interface SiteMapper {
      */
     public Map<String, Object> getStopTime(String mach_no);
 
-    /**
-     * 十七.(2)设定停机功能
-     *
-     * @param mach_no
-     * @return
-     */
-    public int modifyStopTime(@Param("currentStopTime") BigDecimal currentStopTime, @Param("mach_no") String mach_no);
-
-    /**
-     * 十八.	查看地图位置功能
-     *
-     * @param stationId
-     * @return
-     */
-//    public Map<String, Object> getMapByStationId(String stationId);
-
-
-    /**
-     * 二十.	站点信息修改功能
-     */
-    public int modifySiteInfo(
-            @Param("stationName") String stationName,
-            @Param("stationNumber") String stationNumber,
-            @Param("stationType") String stationType,
-            @Param("usercus") String usercus,
-            @Param("stationPosition") String stationPosition,
-            @Param("stationAddress") String stationAddress,
-            @Param("companyAddress") String companyAddress,
-            @Param("stationContactManA") String stationContactManA,
-            @Param("contactManPhoneA") String contactManPhoneA,
-            @Param("stationContactManB") String stationContactManB,
-            @Param("contactManPhoneB") String contactManPhoneB,
-            @Param("stationId") String stationId);
-
-
 
 
     /**
@@ -86,7 +50,6 @@ public interface SiteMapper {
                                @Param("mach_no") String mach_no,
                                @Param("start_date") long start_date,
                                @Param("end_date") long end_date);
-
 
 
     /**
@@ -152,10 +115,6 @@ public interface SiteMapper {
             @Param("code") String code,
             @Param("user_no") String user_no);
 
-//    /**
-//     * 三十六.	移动油机地图位置
-//     */
-//    public Map<String, Object> getMachineMap(String user_cus);
 
     /**
      * 三十七.	移动油机领用查询(25项目的补充)

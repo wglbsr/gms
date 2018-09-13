@@ -29,14 +29,9 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/ems/site", produces = {"application/json;charset=UTF-8"})
 public class SiteController extends BaseController {
-
-
     private final Logger log = Logger.getLogger(SiteController.class);
-
     @Autowired
     private SiteService service;
-
-
     /**
      * 五.	全站地图功能
      *
@@ -59,7 +54,6 @@ public class SiteController extends BaseController {
                                       @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                       @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws FileNotFoundException, IOException {
         String fileName = service.getGenerateLogFile(user_cus, mach_no, startDate, endDate);
-
         return super.getSuccessResult(fileName);
     }
 
@@ -90,19 +84,8 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getStartVoltage.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getStartVoltage(HttpServletRequest request,
-                                      HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            Map<String, Object> data = service.getStartVoltage(mach_no);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String getStartVoltage(@RequestParam(name = "mach_no", required = true) String mach_no) {
+        return super.getSuccessResult(service.getStartVoltage(mach_no));
     }
 
     /**
@@ -114,24 +97,9 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/modifyStartVoltage.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject modifyStartVoltage(HttpServletRequest request,
-                                         HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String changeVoltage = request.getParameter("changeVoltage");
-        try {
-            BigDecimal changeVoltage_decimal = new BigDecimal(changeVoltage);
-            int result = service.modifyStartVoltage(changeVoltage_decimal, mach_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "修改失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String modifyStartVoltage(@RequestParam(name = "mach_no", required = true) String mach_no,
+                                     @RequestParam(name = "changeVoltage", required = true) BigDecimal changeVoltage) {
+        return super.getSuccessResult(service.modifyStartVoltage(changeVoltage, mach_no));
     }
 
     /**
@@ -143,19 +111,8 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getCareTime.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getCareTime(HttpServletRequest request,
-                                  HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            Map<String, Object> data = service.getCareTime(mach_no);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String getCareTime(@RequestParam(name = "mach_no", required = true) String mach_no) {
+        return super.getSuccessResult(service.getCareTime(mach_no));
     }
 
     /**
@@ -167,24 +124,9 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/modifyCareTime.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject modifyCareTime(HttpServletRequest request,
-                                     HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String currentServiceTime = request.getParameter("currentServiceTime ");
-        try {
-            BigDecimal currentServiceTime_decimal = new BigDecimal(currentServiceTime);
-            int result = service.modifyCareTime(currentServiceTime_decimal, mach_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "修改失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String modifyCareTime(@RequestParam(name = "mach_no", required = true) String mach_no,
+                                 @RequestParam(name = "currentServiceTime", required = true) BigDecimal currentServiceTime) {
+        return getSuccessResult(service.modifyCareTime(currentServiceTime, mach_no));
     }
 
     /**
@@ -196,50 +138,8 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getStopTime.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject getStopTime(HttpServletRequest request,
-                                  HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        try {
-            Map<String, Object> data = service.getStopTime(mach_no);
-            resultMap.put("data", data);
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
-    }
-
-    /**
-     * 十七.(2)设定停机功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/modifyStopTime.do", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject modifyStopTime(HttpServletRequest request,
-                                     HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String currentStopTime = request.getParameter("currentStopTime");
-        try {
-            BigDecimal currentStopTime_decimal = new BigDecimal(currentStopTime);
-            int result = service.modifyStopTime(currentStopTime_decimal, mach_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "修改失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String getStopTime(@RequestParam(name = "mach_no", required = true) String mach_no) {
+        return super.getSuccessResult(service.getStopTime(mach_no));
     }
 
 
@@ -252,31 +152,13 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getGenerateLog.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getActiveElecLog(HttpServletRequest request,
-                                   HttpServletResponse response) {
-
-
-        String mach_no = request.getParameter("mach_no");
-        String user_cus = request.getParameter("user_cus");
-        String page_num_str = request.getParameter("pageNum");
-        String page_size_str = request.getParameter("pageSize");
-        String startDateStr = request.getParameter("startDate");
-        String endDateStr = request.getParameter("endDate");
-        int page_num = 0;
-        int page_size = 0;
-        if (Tool.StringUtil.isNum(page_num_str, page_size_str)) {
-            page_num = Integer.valueOf(page_num_str);
-            page_size = Integer.valueOf(page_size_str);
-        }
-        long startDate = 0;
-        long endDate = 0;
-        if (Tool.StringUtil.isNum(startDateStr)) {
-            startDate = Long.valueOf(startDateStr);
-        }
-        if (Tool.StringUtil.isNum(endDateStr)) {
-            endDate = Long.valueOf(endDateStr);
-        }
-        return service.getGenerateLog(user_cus, mach_no, page_num, page_size, startDate, endDate);
+    public String getActiveElecLog(@RequestParam(name = "mach_no", required = true) String mach_no,
+                                   @RequestParam(name = "user_cus", required = true) String user_cus,
+                                   @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                   @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                   @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
+                                   @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) {
+        return super.getSuccessResult(service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate));
     }
 
 
@@ -287,32 +169,18 @@ public class SiteController extends BaseController {
      * @param response
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/addOil.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject addOil(HttpServletRequest request,
-                             HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String co_no = request.getParameter("co_no");
-        String co_time = request.getParameter("co_time");
-        String co_per = request.getParameter("co_per");
-        String co_tel = request.getParameter("co_tel");
-        String st_no = request.getParameter("st_no");
-        String mach_no = request.getParameter("mach_no");
-        String use_address = request.getParameter("use_address");
-        String user_no = request.getParameter("user_no");
-        try {
-            int result = service.addOil(co_no, co_time, co_per, co_tel, st_no, mach_no, use_address, user_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "操作失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String addOil(@RequestParam(name = "co_no", required = true) String co_no,
+                         @RequestParam(name = "co_time", required = true) String co_time,
+                         @RequestParam(name = "co_per", required = true) String co_per,
+                         @RequestParam(name = "co_tel", required = true) String co_tel,
+                         @RequestParam(name = "st_no", required = true) String st_no,
+                         @RequestParam(name = "mach_no", required = true) String mach_no,
+                         @RequestParam(name = "use_address", required = true) String use_address,
+                         @RequestParam(name = "user_no", required = true) String user_no) {
+        return super.getSuccessResult(service.addOil(co_no, co_time, co_per, co_tel, st_no, mach_no, use_address, user_no));
     }
 
     /**
@@ -366,24 +234,9 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/startMachine.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject startMachine(HttpServletRequest request,
-                                   HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String flag = request.getParameter("flag");
-        String user_no = request.getParameter("user_no");
-        try {
-            int result = service.startMachine(mach_no, user_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "操作失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String startMachine(@RequestParam(name = "mach_no", required = true) String mach_no,
+                               @RequestParam(name = "user_no", required = true) String user_no) {
+        return super.getSuccessResult(service.startMachine(mach_no, user_no));
     }
 
     /**
@@ -395,25 +248,9 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/offMachine.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject offMachine(HttpServletRequest request,
-                                 HttpServletResponse response) {
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String flag = request.getParameter("flag");
-        String user_no = request.getParameter("user_no");
-        try {
-            int result = service.offMachine(mach_no, user_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "操作失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
-        }
-        return resultMap;
+    public String offMachine(@RequestParam(name = "mach_no", required = true) String mach_no,
+                             @RequestParam(name = "user_no", required = true) String user_no) {
+        return super.getSuccessResult(service.offMachine(mach_no, user_no));
     }
 
     /**
@@ -425,31 +262,14 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/changeModel.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject changeModel(HttpServletRequest request,
-                                  HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String modelflag = request.getParameter("modelflag");
-        String user_no = request.getParameter("user_no");
-        try {
-            String code = "84 05 02 00 00 01 00 03 16";
-            if (modelflag.equals("4")) {
-                code = "84 05 02 00 00 02 00 04 16";
-            }
-            int result = service.changeModel(mach_no, Integer.valueOf(modelflag), code, user_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "操作失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
+    public String changeModel(@RequestParam(name = "mach_no", required = true) String mach_no,
+                              @RequestParam(name = "modelflag", required = true) String modelflag,
+                              @RequestParam(name = "user_no", required = true) String user_no) {
+        String code = "84 05 02 00 00 01 00 03 16";
+        if (modelflag.equals("4")) {
+            code = "84 05 02 00 00 02 00 04 16";
         }
-        return resultMap;
+        return super.getSuccessResult(service.changeModel(mach_no, Integer.valueOf(modelflag), code, user_no));
     }
 
     /**
@@ -461,32 +281,15 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/changeProtectModel.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject changeProtectModel(HttpServletRequest request,
-                                         HttpServletResponse response) {
-
-
-        JSONObject resultMap = new JSONObject();
-        String mach_no = request.getParameter("mach_no");
-        String modelflag = request.getParameter("modelflag");
-        String user_no = request.getParameter("user_no");
-        try {
-            //84 05 AA AA AA AA AA 52 16
-            String code = "84 05 AA AA AA AA AA 52 16";
-            if (modelflag.equals("6")) {
-                code = "84 05 A0 A0 A0 A0 A0 32 16";//"84 05 02 00 00 02 00 20 16";
-            }
-            int result = service.changeModel(mach_no, Integer.valueOf(modelflag), code, user_no);
-            if (result <= 0) {
-                resultMap.put("result", "false");
-                resultMap.put("errorMsg", "操作失败");
-            }
-            resultMap.put("result", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("result", "false");
-            resultMap.put("errorMsg", "程序异常");
+    public String changeProtectModel(@RequestParam(name = "mach_no", required = true) String mach_no,
+                                     @RequestParam(name = "modelflag", required = true) String modelflag,
+                                     @RequestParam(name = "user_no", required = true) String user_no) {
+        //84 05 AA AA AA AA AA 52 16
+        String code = "84 05 AA AA AA AA AA 52 16";
+        if (modelflag.equals("6")) {
+            code = "84 05 A0 A0 A0 A0 A0 32 16";//"84 05 02 00 00 02 00 20 16";
         }
-        return resultMap;
+        return super.getSuccessResult(service.changeModel(mach_no, Integer.valueOf(modelflag), code, user_no));
     }
 
 
@@ -533,17 +336,9 @@ public class SiteController extends BaseController {
     public String getSiteWarningList(@RequestParam(name = "user_cus", required = true) String user_cus,
                                      @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                      @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
-                                     @RequestParam(name = "alarmType", required = false,defaultValue = "0") int alarmType,
-                                     @RequestParam(name = "startDate", required = false,defaultValue = "") String startDateStr,
-                                     @RequestParam(name = "endDate", required = false,defaultValue = "") String endDateStr) {
-        long startDate = 0;
-        long endDate = 0;
-        if (Tool.StringUtil.isNum(startDateStr)) {
-            startDate = Long.valueOf(startDateStr);
-        }
-        if (Tool.StringUtil.isNum(endDateStr)) {
-            endDate = Long.valueOf(endDateStr);
-        }
+                                     @RequestParam(name = "alarmType", required = false, defaultValue = "0") int alarmType,
+                                     @RequestParam(name = "startDate", required = false, defaultValue = "0") int startDate,
+                                     @RequestParam(name = "endDate", required = false, defaultValue = "0") int endDate) {
         return service.getSiteWarningList(user_cus, pageNum, pageSize, alarmType, startDate, endDate);
     }
 

@@ -530,7 +530,7 @@
     where mach_no = #{machNo,jdbcType=VARCHAR}
   </update>
 
-    <!--以下为手动添加-->
+    <!--*****************************以下为手动添加*********************************************************-->
     <update id="calculateGenerateTimeToMach">
                 UPDATE C_mach set i_total_generate_time = dbo.sum_time(mach_no) , i_total_generate_cnt = dbo.sumnum_time(mach_no)
     </update>
@@ -538,4 +538,87 @@
     <update id="calculateGenerateTimeToApTime">
              UPDATE ap_time set i_generate_time = DATEDIFF(mi, start_time, end_time)
     </update>
+
+    <update id="updateByPrimaryKeySelectiveBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update C_mach
+            <trim prefix="set" suffixOverrides=",">
+                <if test="item.machName != null">
+                    mach_name = #{item.machName,jdbcType=NVARCHAR},
+                </if>
+                <if test="item.machType != null">
+                    mach_type = #{item.machType,jdbcType=NVARCHAR},
+                </if>
+                <if test="item.fuelType != null">
+                    fuel_type = #{item.fuelType,jdbcType=NVARCHAR},
+                </if>
+                <if test="item.useType != null">
+                    use_type = #{item.useType,jdbcType=NVARCHAR},
+                </if>
+                <if test="item.stNo != null">
+                    st_no = #{item.stNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.cusNo != null">
+                    cus_no = #{item.cusNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.modelNo != null">
+                    model_no = #{item.modelNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.venderName != null">
+                    vender_name = #{item.venderName,jdbcType=NVARCHAR},
+                </if>
+                <if test="item.powerNum != null">
+                    power_num = #{item.powerNum,jdbcType=DECIMAL},
+                </if>
+                <if test="item.purchTime != null">
+                    Purch_time = #{item.purchTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.state != null">
+                    state = #{item.state,jdbcType=VARCHAR},
+                </if>
+                <if test="item.note != null">
+                    note = #{item.note,jdbcType=NVARCHAR},
+                </if>
+                <if test="item.creatTime != null">
+                    creat_time = #{item.creatTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.creator != null">
+                    creator = #{item.creator,jdbcType=VARCHAR},
+                </if>
+                <if test="item.verNo != null">
+                    ver_no = #{item.verNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.maintainTime != null">
+                    maintain_time = #{item.maintainTime,jdbcType=NUMERIC},
+                </if>
+                <if test="item.stopTime != null">
+                    stop_time = #{item.stopTime,jdbcType=NUMERIC},
+                </if>
+                <if test="item.startVoltage != null">
+                    start_Voltage = #{item.startVoltage,jdbcType=NUMERIC},
+                </if>
+                <if test="item.volumeno != null">
+                    volumeno = #{item.volumeno,jdbcType=NUMERIC},
+                </if>
+                <if test="item.gprsno != null">
+                    gprsno = #{item.gprsno,jdbcType=VARCHAR},
+                </if>
+                <if test="item.totalGenerateTime != null">
+                    i_total_generate_time = #{item.totalGenerateTime,jdbcType=INTEGER},
+                </if>
+                <if test="item.totalGenerateCnt != null">
+                    i_total_generate_cnt = #{item.totalGenerateCnt,jdbcType=INTEGER},
+                </if>
+                <if test="item.deleted != null">
+                    b_deleted = #{item.deleted,jdbcType=BIT},
+                </if>
+                <if test="item.activated != null">
+                    b_activated = #{item.activated,jdbcType=BIT},
+                </if>
+            </trim>
+            where mach_no = #{item.machNo,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+
+
 </mapper>

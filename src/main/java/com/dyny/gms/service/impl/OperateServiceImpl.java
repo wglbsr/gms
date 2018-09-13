@@ -27,11 +27,12 @@ public class OperateServiceImpl implements OperateService {
 
     @Override
     public int insertOperate(List<Operate> operateList) {
-        int re = 0;
-        for (Operate operate : operateList) {
-            re += operateMapper.insert(operate);
-        }
-        return re;
+//        int re = 0;
+//        for (Operate operate : operateList) {
+//            operate.setDeleted(false);
+//            re += operateMapper.insert(operate);
+//        }
+        return operateMapper.insertBatch(operateList);
     }
 
     @Override
@@ -81,6 +82,7 @@ public class OperateServiceImpl implements OperateService {
 
     /**
      * unfinished!!!!!!!!!!
+     *
      * @param machineNo
      * @param username
      * @return
@@ -114,12 +116,22 @@ public class OperateServiceImpl implements OperateService {
     }
 
     @Override
-    public int deleteAllTimerOperateByMachineNo(String machineNo) {
+    public int deleteAllTimerOperateByMachineNoList(List<String> generatorNoList) {
         Operate operate = new Operate();
         OperateExample example = new OperateExample();
-        example.or().andMachNoEqualTo(machineNo);
+        if (generatorNoList.size() == 0) {
+            return 0;
+        }
+        example.or().andMachNoIn(generatorNoList);
         operate.setExecuteId(0);
         operate.setDeleted(true);
         return operateMapper.updateByExampleSelective(operate, example);
+    }
+
+    @Override
+    public int deleteAllTimerOperateByMachineNo(String generatorNo) {
+        List<String> generatorNoList = new ArrayList<>();
+        generatorNoList.add(generatorNo);
+        return this.deleteAllTimerOperateByMachineNoList(generatorNoList);
     }
 }

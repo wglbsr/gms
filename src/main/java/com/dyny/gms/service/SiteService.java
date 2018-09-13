@@ -23,7 +23,6 @@ public interface SiteService {
 
      Map<String, Object> getStopTime(String mach_no);
 
-     int modifyStopTime(BigDecimal currentStopTime, String mach_no);
 
 
     /**
