@@ -41,4 +41,6 @@ public interface StationService {
     int importStationFromExcelFile(File file,String customerNo);
 
     int deleteStation(String stationNo);
+
+    String getWithoutGeneratorStationList(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy);
 }

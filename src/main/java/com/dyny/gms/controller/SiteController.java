@@ -152,13 +152,13 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getGenerateLog.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getActiveElecLog(@RequestParam(name = "mach_no", required = true) String mach_no,
+    public String getActiveElecLog(@RequestParam(name = "mach_no", required = false,defaultValue = "") String mach_no,
                                    @RequestParam(name = "user_cus", required = true) String user_cus,
                                    @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                    @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
                                    @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                    @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) {
-        return super.getSuccessResult(service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate));
+        return service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate);
     }
 
 

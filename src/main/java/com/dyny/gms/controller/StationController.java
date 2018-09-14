@@ -38,6 +38,17 @@ public class StationController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/getWithoutGeneratorStationList", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getWithoutGeneratorStationList(@RequestParam(name = "customerNo", required = true) String customerNo,
+                                 @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+                                 @RequestParam(name = "userLevel", required = false, defaultValue = "0") int userLevel,
+                                 @RequestParam(name = "orderBy", required = false, defaultValue = "id") String orderBy,
+                                 @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
+                                 @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize) {
+        return stationService.getWithoutGeneratorStationList(customerNo, userLevel, searchContent, pageNum, pageSize, orderBy);
+    }
+
     @RequestMapping(value = "/getStationListByContactId", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getStationListByContactId(@RequestParam(name = "contactIdList", required = true) String contactIdListStr,
@@ -128,7 +139,6 @@ public class StationController extends BaseController {
             file.transferTo(fileAbsPath);
         }
         return super.getSuccessResult(stationService.importStationFromExcelFile(fileAbsPath, customerNo));
-
     }
 
 

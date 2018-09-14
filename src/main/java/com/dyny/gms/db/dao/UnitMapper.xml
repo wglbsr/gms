@@ -228,7 +228,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_unit
-    set id = #{record.id,jdbcType=INTEGER},
+    set
       s_unit_no = #{record.unitNo,jdbcType=VARCHAR},
       s_unit_address = #{record.unitAddress,jdbcType=VARCHAR},
       s_remark = #{record.remark,jdbcType=VARCHAR},

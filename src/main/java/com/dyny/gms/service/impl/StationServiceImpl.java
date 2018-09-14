@@ -18,9 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +41,8 @@ public class StationServiceImpl extends BaseService implements StationService {
     GeneratorMapper generatorMapper;
     @Autowired
     ContactMapper contactMapper;
+    @Autowired
+    GeneratorStationRelMapper generatorStationRelMapper;
 
 
     /**
@@ -147,6 +147,37 @@ public class StationServiceImpl extends BaseService implements StationService {
         return cnt;
     }
 
+    @Override
+    public String getWithoutGeneratorStationList(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy) {
+        GeneratorStationRelExample generatorStationRelExample = new GeneratorStationRelExample();
+        generatorStationRelExample.or().andDeletedEqualTo(false).andStationNoIsNotNull();
+        List<GeneratorStationRel> generatorStationRelList = generatorStationRelMapper.selectByExample(generatorStationRelExample);
+        List<String> relatedGeneratorStationNoList = generatorStationRelList.stream().map(GeneratorStationRel::getStationNo).collect(Collectors.toList());
+        StationExample stationExample = new StationExample();
+
+        if (level >= this.ADMIN_LEVEL) {
+            if (Tool.StringUtil.validStr(searchContent)) {
+                stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
+                stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
+                stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationAddressLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
+            } else {
+                stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andDeletedEqualTo(false);
+            }
+        } else {
+            if (Tool.StringUtil.validStr(searchContent)) {
+                stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
+                stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
+                stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationAddressLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
+            } else {
+                stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andDeletedEqualTo(false);
+            }
+        }
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        List result = stationMapper.selectByExample(stationExample);
+        int total = (int) page.getTotal();
+        return super.getSuccessResult(result, pageNum, pageSize, total);
+    }
+
     /**
      * 删除基站(逻辑删除)
      *
@@ -223,11 +254,33 @@ public class StationServiceImpl extends BaseService implements StationService {
             }
         }
         int cnt = 0;
-        if (updateList.size() > 0) {
-            cnt += stationMapper.updateBatchByStationNo(updateList);
+        int updateSize = updateList.size();
+        int insertSize = insertList.size();
+        if (updateSize > 0) {
+            int lastTimeCnt = updateSize % this.MAX_SQL_SIZE;
+            int times = (updateSize / this.MAX_SQL_SIZE);
+            if (lastTimeCnt > 0) {
+                times++;
+            }
+            //因为sql长度有限制,因此需要分批插入,每次最多插入MAX_SQL_SIZE条
+            for (int i = 0; i < times; i++) {
+                int startIndex = i * this.MAX_SQL_SIZE;
+                int endIndex = i * this.MAX_SQL_SIZE + ((times - 1) == i ? lastTimeCnt : this.MAX_SQL_SIZE);
+                cnt += stationMapper.updateBatchByStationNo(updateList.subList(startIndex, endIndex - 1));
+            }
         }
-        if (insertList.size() > 0) {
-            cnt += stationMapper.insertBatch(insertList);
+        if (insertSize > 0) {
+            int lastTimeCnt = insertSize % this.MAX_SQL_SIZE;
+            int times = (insertSize / this.MAX_SQL_SIZE);
+            if (lastTimeCnt > 0) {
+                times++;
+            }
+            //因为sql长度有限制,因此需要分批插入,每次最多插入MAX_SQL_SIZE条
+            for (int i = 0; i < times; i++) {
+                int startIndex = i * this.MAX_SQL_SIZE;
+                int endIndex = i * this.MAX_SQL_SIZE + ((times - 1) == i ? lastTimeCnt : this.MAX_SQL_SIZE);
+                cnt += stationMapper.insertBatch(insertList.subList(startIndex, endIndex - 1));
+            }
         }
         return cnt;
     }
@@ -273,7 +326,6 @@ public class StationServiceImpl extends BaseService implements StationService {
      */
     @Override
     public String getStationListByUsercus(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy) {
-//        this.insertRegion();
         StationExample example = new StationExample();
         if (level >= this.ADMIN_LEVEL) {
             if (Tool.StringUtil.validStr(searchContent)) {
@@ -299,10 +351,27 @@ public class StationServiceImpl extends BaseService implements StationService {
             }
         }
         Page page = PageHelper.startPage(pageNum, pageSize);
-        page.setOrderBy(orderBy);
+        page.setOrderBy(this.getOrderByClause(orderBy));
         List result = stationMapper.selectByExample(example);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
+    }
+
+
+    private String getOrderByClause(String orderBy) {
+        Map<String, String> propertyMapColumn = new HashMap<String, String>();
+        propertyMapColumn.put("stationName", "s_station_name");
+        propertyMapColumn.put("stationNo", "s_station_No");
+        propertyMapColumn.put("stationAddress", "s_station_address");
+        propertyMapColumn.put("stationLongitude", "s_station_longitude");
+        propertyMapColumn.put("stationLatitude", "s_station_latitude");
+        Set<String> keySet = propertyMapColumn.keySet();
+        for (String temp : keySet) {
+            if (orderBy.contains(temp)) {
+                return orderBy.replace(temp, propertyMapColumn.get(temp));
+            }
+        }
+        return orderBy;
     }
 
 

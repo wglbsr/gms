@@ -163,7 +163,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_region
-    set id = #{record.id,jdbcType=INTEGER},
+    set
       s_name = #{record.name,jdbcType=VARCHAR},
       i_parent_address_id = #{record.parentAddressId,jdbcType=INTEGER},
       i_address_id = #{record.addressId,jdbcType=INTEGER}

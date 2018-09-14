@@ -220,7 +220,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_enumeration
-    set i_id = #{record.id,jdbcType=TINYINT},
+    set
       s_enum_value_text = #{record.enumValueText,jdbcType=VARCHAR},
       i_enum_value = #{record.enumValue,jdbcType=TINYINT},
       d_create_time = #{record.createTime,jdbcType=TIMESTAMP},

@@ -348,7 +348,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_station
-    set id = #{record.id,jdbcType=INTEGER},
+    set
       s_station_name = #{record.stationName,jdbcType=VARCHAR},
       s_station_no = #{record.stationNo,jdbcType=VARCHAR},
       s_station_coordinate = #{record.stationCoordinate,jdbcType=VARCHAR},
