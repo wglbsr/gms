@@ -29,8 +29,10 @@ public class OperateController extends BaseController {
 
     @RequestMapping(value = "/insertTimerOperateList", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String insertTimerOperateList(@RequestBody List<Operate> operateList) {
-        return super.getSuccessResult(operateService.insertTimerOperateList(operateList));
+    public String insertTimerOperateList(@RequestParam(name = "machineNo") List<String> operateList,
+                                         @RequestParam(name = "machineNo") int start,
+                                         @RequestParam(name = "machineNo") String cmd) {
+        return super.getSuccessResult(operateService.insertTimerOperateList(operateList, start, cmd));
     }
 
 
@@ -74,7 +76,7 @@ public class OperateController extends BaseController {
 
     @RequestMapping(value = "/deleteAllTimerOperateByMachineNoList", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String deleteAllTimerOperateByMachineNoList(@RequestParam(name = "machineNoList", required = true) List<String> machineNoList) {
+    public String deleteAllTimerOperateByMachineNoList(@RequestParam(name = "machineNoList[]", required = true) List<String> machineNoList) {
         return super.getSuccessResult(operateService.deleteAllTimerOperateByMachineNoList(machineNoList));
     }
 

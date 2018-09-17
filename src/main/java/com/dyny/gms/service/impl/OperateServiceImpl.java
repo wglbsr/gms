@@ -27,11 +27,9 @@ public class OperateServiceImpl implements OperateService {
 
     @Override
     public int insertOperate(List<Operate> operateList) {
-//        int re = 0;
-//        for (Operate operate : operateList) {
-//            operate.setDeleted(false);
-//            re += operateMapper.insert(operate);
-//        }
+        if (operateList == null || operateList.size() == 0) {
+            return 0;
+        }
         return operateMapper.insertBatch(operateList);
     }
 
@@ -46,16 +44,9 @@ public class OperateServiceImpl implements OperateService {
     }
 
     @Override
-    public int insertTimerOperateList(List<Operate> operateList) {
-        if (operateList == null || operateList.size() == 0) {
-            return 0;
-        }
-//        int maxExeId = operateMapper.selectMaxExeIdByMachNo(operateList.get(0).getMachNo());
-//        for (Operate operate : operateList) {
-//            maxExeId++;
-//            operate.setExecuteId(maxExeId % 255);
-//        }
-        return operateMapper.insertBatch(operateList);
+    public int insertTimerOperateList(List<String> machNoList,int start,String cmd) {
+        List<Operate>operateList = new ArrayList<>();
+        return 0;//operateMapper.insertBatch(null);
     }
 
     @Override
@@ -122,7 +113,10 @@ public class OperateServiceImpl implements OperateService {
         if (generatorNoList.size() == 0) {
             return 0;
         }
-        example.or().andMachNoIn(generatorNoList);
+        List<Integer> opList = new ArrayList<>();
+        opList.add(16);//关机命令编号
+        opList.add(13);//开机命令编号
+        example.or().andMachNoIn(generatorNoList).andOpNoIn(opList);
         operate.setExecuteId(0);
         operate.setDeleted(true);
         return operateMapper.updateByExampleSelective(operate, example);

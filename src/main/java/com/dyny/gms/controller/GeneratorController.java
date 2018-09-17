@@ -123,6 +123,29 @@ public class GeneratorController extends BaseController {
 
 
     /**
+     * 效率不高!!!!!!!!!!但基站与油机通常是1对1,应该不会超过1对3,因此性能差别应该不大
+     *
+     * @param stationNo
+     * @param machNoList
+     * @param relate
+     * @param user_cus
+     * @return
+     */
+    @RequestMapping(value = "/relateGeneratorListWithStation", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String relateGeneratorListWithStation(@RequestParam(name = "stationNo", required = false, defaultValue = "") String stationNo,
+                                                 @RequestParam(name = "machNoList[]", required = true) List<String> machNoList,
+                                                 @RequestParam(name = "relate", required = true) boolean relate,
+                                                 @RequestParam(name = "user_cus", required = true) String user_cus) {
+        int cnt = 0;
+        for (String temp : machNoList) {
+            cnt += generatorService.relateGeneratorWithStation(temp, stationNo, user_cus, relate, new ArrayList<Integer>());
+        }
+        return super.getSuccessResult(cnt);//暂时不需要选择油机操作人员
+    }
+
+
+    /**
      * 获得各个状态的油机数量,status参数暂时没有用上
      *
      * @param status

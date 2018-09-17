@@ -86,7 +86,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
                 return 0;
             }
             criteria.andStNoEqualTo(stationNo);
-            //.讲油机的基站编码置空
+            //.将油机的基站编码置空
             generator.setStNo("");
 
             //.将油机-基站关联表中的记录逻辑删除
@@ -97,12 +97,14 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
 
 
         } else {
+            //判断油机是否已经关联到基站,如果是则将油机-基站关联表中相关的记录逻辑删除
+            this.logicDeleteGeneratorStationTable(machNo, stationNo);
+
             //.保存在油机-基站关联表中，方便以后查看
             this.insertToGeneratorStationTable(machNo, stationNo);
 
             //.保存在油机-联系人关联表中
             this.insertToGeneratorContactTable(stationNo, contactIdList);
-
 
             //.将油机的基站编号改为目标基站
             generator.setStNo(stationNo);

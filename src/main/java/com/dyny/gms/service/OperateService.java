@@ -8,7 +8,7 @@ import java.util.List;
 public interface OperateService {
     int insertOperate(Operate operate);
 
-    int insertTimerOperateList(List<Operate> operateList);
+    int insertTimerOperateList(List<String> machNoList,int start,String cmd);
 
     Operate getOperate(Operate operate);
 
@@ -29,4 +29,5 @@ public interface OperateService {
     int adjustTimeBtMachNo(String machineNo, String username);
 
     int deleteAllTimerOperateByMachineNoList(List<String> generatorNoList);
+
 }
