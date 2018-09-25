@@ -265,12 +265,17 @@
         <result column="external_temperature" property="external_temperature" javaType="string"/>
         <result column="lank_level" property="lank_level" javaType="string"/>
         <result column="sys_mode" property="sys_mode" javaType="string"/>
+        <result column="output_voltage" property="output_voltage" javaType="string"/>
+        <result column="load_mode" property="load_mode" javaType="int"/>
+
     </resultMap>
 
     <!-- 三十一.	移动油机查询 -->
     <select id="searchMachine" resultMap="machineStatusMap">
-        select mach_no,mach_name,s_station_name,st_no,i_total_generate_time, mach_type, st_state,
+        select mach_no,mach_name,s_station_name,st_no,
+        i_total_generate_time, mach_type, st_state,
         city_electricity,Acity_electricity,
+        output_voltage,load_mode,
         al_voltage,
         -- isnull(i_total_generate_time,0)/60 sum_time,
         -- dbo.sumnum_time(mach_no) sumnum_time,
@@ -417,6 +422,9 @@
         <result column="state1" property="state1" javaType="string"/>
         <result column="st_state" property="st_state" javaType="string"/>
         <result column="sys_mode" property="sys_mode" javaType="string"/>
+        <result column="fuel_type" property="fuel_type" javaType="string"/>
+        <result column="output_voltage" property="output_voltage" javaType="string"/>
+        <result column="load_mode" property="load_mode" javaType="int"/>
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
             SELECT
@@ -424,7 +432,10 @@
                 s_station_name,
                 s_station_latitude,
                 s_station_longitude,
+                output_voltage,
+                load_mode,
                 st_state,
+                fuel_type,
                 isnull(cabinet_temperature, 0) external_temperature,
                 isnull(
                     CONVERT (VARCHAR(100), inter_time, 20),
