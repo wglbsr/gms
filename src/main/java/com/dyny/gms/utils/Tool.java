@@ -472,12 +472,31 @@ public class Tool {
             return currentTime_2;
         }
 
+        /**
+         * 时间戳转字符串
+         *
+         * @param timeStamp
+         * @return
+         */
         public static String timestampToStr(long timeStamp) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//这个是你要转成后的时间的格式
             String sd = sdf.format(new Date(timeStamp));   // 时间戳转换成时间
             return sd;
         }
 
+
+        /**
+         * 时间戳转date
+         * @param timestamp
+         * @return
+         * @throws ParseException
+         */
+        public static Date timestampToDate(long timestamp) throws ParseException {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateStr = format.format(timestamp);
+            Date date = format.parse(dateStr);
+            return date;
+        }
 
         /**
          * @return

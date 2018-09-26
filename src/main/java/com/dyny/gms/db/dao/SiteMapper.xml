@@ -46,13 +46,13 @@
         JOIN c_mach m
         ON m.mach_no=i.mach_no
         left join t_station ts on ts.s_station_no=m.st_no
-        <if test="user_cus!=''">
-            AND
-            m.cus_no=#{user_cus}
-        </if>
         where 1=1
         <if test="mach_no!=null and mach_no!=''">
             and i.mach_no=#{mach_no}
+        </if>
+        <if test="user_cus!=''">
+            AND
+            m.cus_no=#{user_cus}
         </if>
     </select>
 
@@ -237,7 +237,7 @@
     <select id="getMachineNum" resultMap="machineNumMap" parameterType="java.lang.String">
         select
         count(1) total ,
-        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=1 then 1 else 0 end) online,
+        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=3 then 1 else 0 end) online,
         sum(case when isnull(Expr1,1)=0 then 1 else 0 end) generating
         from view_generator_full_info where 1=1
         <if test="user_cus != null and user_cus != '' ">
