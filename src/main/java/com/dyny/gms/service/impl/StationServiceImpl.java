@@ -256,7 +256,7 @@ public class StationServiceImpl extends BaseService implements StationService {
         int cnt = 0;
         int updateSize = updateList.size();
         int insertSize = insertList.size();
-        if (updateSize > 0) {
+        if (updateSize > 1) {
             int lastTimeCnt = updateSize % this.MAX_SQL_SIZE;
             int times = (updateSize / this.MAX_SQL_SIZE);
             if (lastTimeCnt > 0) {
@@ -266,10 +266,13 @@ public class StationServiceImpl extends BaseService implements StationService {
             for (int i = 0; i < times; i++) {
                 int startIndex = i * this.MAX_SQL_SIZE;
                 int endIndex = i * this.MAX_SQL_SIZE + ((times - 1) == i ? lastTimeCnt : this.MAX_SQL_SIZE);
-                cnt += stationMapper.updateBatchByStationNo(updateList.subList(startIndex, endIndex - 1));
+                List temp = updateList.subList(startIndex, endIndex - 1);
+                cnt += stationMapper.updateBatchByStationNo(temp);
             }
+        } else if (updateSize == 1) {
+            cnt += stationMapper.updateBatchByStationNo(updateList);
         }
-        if (insertSize > 0) {
+        if (insertSize > 1) {
             int lastTimeCnt = insertSize % this.MAX_SQL_SIZE;
             int times = (insertSize / this.MAX_SQL_SIZE);
             if (lastTimeCnt > 0) {
@@ -279,8 +282,11 @@ public class StationServiceImpl extends BaseService implements StationService {
             for (int i = 0; i < times; i++) {
                 int startIndex = i * this.MAX_SQL_SIZE;
                 int endIndex = i * this.MAX_SQL_SIZE + ((times - 1) == i ? lastTimeCnt : this.MAX_SQL_SIZE);
-                cnt += stationMapper.insertBatch(insertList.subList(startIndex, endIndex - 1));
+                List temp = insertList.subList(startIndex, endIndex - 1);
+                cnt += stationMapper.insertBatch(temp);
             }
+        } else if (insertSize == 1) {
+            cnt += stationMapper.insertBatch(insertList);
         }
         return cnt;
     }
