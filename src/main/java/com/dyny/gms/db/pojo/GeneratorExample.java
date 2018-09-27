@@ -1566,6 +1566,126 @@ public class GeneratorExample {
             return (Criteria) this;
         }
 
+        public Criteria andMaintainDateIsNull() {
+            addCriterion("maintain_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateIsNotNull() {
+            addCriterion("maintain_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateEqualTo(Date value) {
+            addCriterion("maintain_date =", value, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateNotEqualTo(Date value) {
+            addCriterion("maintain_date <>", value, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateGreaterThan(Date value) {
+            addCriterion("maintain_date >", value, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("maintain_date >=", value, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateLessThan(Date value) {
+            addCriterion("maintain_date <", value, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateLessThanOrEqualTo(Date value) {
+            addCriterion("maintain_date <=", value, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateIn(List<Date> values) {
+            addCriterion("maintain_date in", values, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateNotIn(List<Date> values) {
+            addCriterion("maintain_date not in", values, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateBetween(Date value1, Date value2) {
+            addCriterion("maintain_date between", value1, value2, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainDateNotBetween(Date value1, Date value2) {
+            addCriterion("maintain_date not between", value1, value2, "maintainDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumIsNull() {
+            addCriterion("maintain_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumIsNotNull() {
+            addCriterion("maintain_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumEqualTo(Integer value) {
+            addCriterion("maintain_num =", value, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumNotEqualTo(Integer value) {
+            addCriterion("maintain_num <>", value, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumGreaterThan(Integer value) {
+            addCriterion("maintain_num >", value, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("maintain_num >=", value, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumLessThan(Integer value) {
+            addCriterion("maintain_num <", value, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumLessThanOrEqualTo(Integer value) {
+            addCriterion("maintain_num <=", value, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumIn(List<Integer> values) {
+            addCriterion("maintain_num in", values, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumNotIn(List<Integer> values) {
+            addCriterion("maintain_num not in", values, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumBetween(Integer value1, Integer value2) {
+            addCriterion("maintain_num between", value1, value2, "maintainNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaintainNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("maintain_num not between", value1, value2, "maintainNum");
+            return (Criteria) this;
+        }
+
         public Criteria andTotalGenerateTimeIsNull() {
             addCriterion("i_total_generate_time is null");
             return (Criteria) this;
@@ -1803,6 +1923,66 @@ public class GeneratorExample {
 
         public Criteria andActivatedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("b_activated not between", value1, value2, "activated");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionIsNull() {
+            addCriterion("i_board_version is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionIsNotNull() {
+            addCriterion("i_board_version is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionEqualTo(Integer value) {
+            addCriterion("i_board_version =", value, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionNotEqualTo(Integer value) {
+            addCriterion("i_board_version <>", value, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionGreaterThan(Integer value) {
+            addCriterion("i_board_version >", value, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_board_version >=", value, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionLessThan(Integer value) {
+            addCriterion("i_board_version <", value, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionLessThanOrEqualTo(Integer value) {
+            addCriterion("i_board_version <=", value, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionIn(List<Integer> values) {
+            addCriterion("i_board_version in", values, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionNotIn(List<Integer> values) {
+            addCriterion("i_board_version not in", values, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionBetween(Integer value1, Integer value2) {
+            addCriterion("i_board_version between", value1, value2, "boardVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andBoardVersionNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_board_version not between", value1, value2, "boardVersion");
             return (Criteria) this;
         }
     }

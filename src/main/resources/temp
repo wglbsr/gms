@@ -1,96 +1,47 @@
+    <!--*****************************手动添加******************************************-->
+    <resultMap id="PageResultMap" type="com.dyny.gms.db.pojo.LankForPage">
+        <result column="st_id" jdbcType="INTEGER" property="stId"/>
+        <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
+        <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
+        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
+        <result column="start_num" jdbcType="NUMERIC" property="startNum"/>
+        <result column="end_num" jdbcType="NUMERIC" property="endNum"/>
+        <result column="s_station_no" jdbcType="NUMERIC" property="stationNo"/>
+        <result column="s_station_name" jdbcType="NUMERIC" property="stationName"/>
+        <result column="mach_name" jdbcType="NUMERIC" property="machName"/>
+    </resultMap>
+    <select id="selectByCustomerNoAndKeyWord" resultMap="PageResultMap">
+        SELECT
+        al.mach_no,
+        al.st_no,
+        cm.mach_name,
+        ts.s_station_name,
+        al.creat_time,
+        al.end_num,
+        al.start_num
+        FROM
+        [dbo].[Ap_lank] al
+        JOIN C_mach cm ON cm.mach_no = al.mach_no
+        <if test="customerNo != null and customerNo !=''">
+            and cm.user_cus=#{customerNo}
+        </if>
+        <if test="keyWord != null and keyWord !=''">
+            and (cm.mach_no like '%'+#{keyWord}+'%' or cm.mach_name like '%'+#{keyWord}+'%')
+        </if>
+        LEFT JOIN t_station ts ON ts.s_station_no = al.st_no
+        where 1=1
+        <if test="startDate>0">
+            AND al.creat_time &gt;= DATEADD(S,#{startDate},'1970-01-01 08:00:00')
+        </if>
+        <if test="endDate>0">
+            AND al.creat_time &lt;= DATEADD(S,#{endDate},'1970-01-01 08:00:00')
+        </if>
+    </select>
 
-    <!--***************************************************************************以下为手动添加的*********************************************************************************************************-->
-    <insert id="insertBatch" parameterType="java.util.List">
-        insert into t_station (s_station_name, s_station_no,
-        s_station_coordinate, d_create_time, i_creator,
-        d_modify_time, i_modifier, i_status,
-        s_remark, s_station_address, i_administrator,
-        s_station_type, i_start_voltage, s_customer_no,
-        s_unit_no, s_operator_no, d_deleted,
-        s_station_latitude, s_station_longitude, i_unit_id
-        ) values
-        <foreach collection="list" item="item" index="index" separator=",">
-            (
-            #{item.stationName,jdbcType=VARCHAR},
-            #{item.stationNo,jdbcType=VARCHAR},
-            #{item.stationCoordinate,jdbcType=VARCHAR},
-            #{item.createTime,jdbcType=TIMESTAMP},
-            #{item.creator,jdbcType=INTEGER},
-            #{item.modifyTime,jdbcType=TIMESTAMP},
-            #{item.modifier,jdbcType=INTEGER},
-            #{item.status,jdbcType=INTEGER},
-            #{item.remark,jdbcType=VARCHAR},
-            #{item.stationAddress,jdbcType=VARCHAR},
-            #{item.administrator,jdbcType=INTEGER},
-            #{item.stationType,jdbcType=VARCHAR},
-            #{item.startVoltage,jdbcType=INTEGER},
-            #{item.customerNo,jdbcType=VARCHAR},
-            #{item.unitNo,jdbcType=VARCHAR},
-            #{item.operatorNo,jdbcType=VARCHAR},
-            #{item.deleted,jdbcType=BIT},
-            #{item.stationLatitude,jdbcType=VARCHAR},
-            #{item.stationLongitude,jdbcType=VARCHAR},
-            #{item.unitId,jdbcType=INTEGER}
-            )
-        </foreach>
-    </insert>
 
-    <update id="updateBatchByStationNo" parameterType="java.util.List">
-        <foreach collection="list" item="item" index="index" separator=";">
-            update t_station
-            <trim prefix="set" suffixOverrides=",">
-                <if test="item.stationName != null">
-                    s_station_name = #{item.stationName,jdbcType=VARCHAR},
-                </if>
-                <if test="item.stationCoordinate != null">
-                    s_station_coordinate = #{item.stationCoordinate,jdbcType=VARCHAR},
-                </if>
-                <if test="item.modifyTime != null">
-                    d_modify_time = #{item.modifyTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="item.modifier != null">
-                    i_modifier = #{item.modifier,jdbcType=INTEGER},
-                </if>
-                <if test="item.status != null">
-                    i_status = #{item.status,jdbcType=INTEGER},
-                </if>
-                <if test="item.remark != null">
-                    s_remark = #{item.remark,jdbcType=VARCHAR},
-                </if>
-                <if test="item.stationAddress != null">
-                    s_station_address = #{item.stationAddress,jdbcType=VARCHAR},
-                </if>
-                <if test="item.administrator != null">
-                    i_administrator = #{item.administrator,jdbcType=INTEGER},
-                </if>
-                <if test="item.stationType != null">
-                    s_station_type = #{item.stationType,jdbcType=VARCHAR},
-                </if>
-                <if test="item.startVoltage != null">
-                    i_start_voltage = #{item.startVoltage,jdbcType=INTEGER},
-                </if>
-                <if test="item.customerNo != null">
-                    s_customer_no = #{item.customerNo,jdbcType=VARCHAR},
-                </if>
-                <if test="item.unitNo != null">
-                    s_unit_no = #{item.unitNo,jdbcType=VARCHAR},
-                </if>
-                <if test="item.operatorNo != null">
-                    s_operator_no = #{item.operatorNo,jdbcType=VARCHAR},
-                </if>
-                <if test="item.deleted != null">
-                    d_deleted = #{item.deleted,jdbcType=BIT},
-                </if>
-                <if test="item.stationLatitude != null">
-                    s_station_latitude = #{item.stationLatitude,jdbcType=VARCHAR},
-                </if>
-                <if test="item.stationLongitude != null">
-                    s_station_longitude = #{item.stationLongitude,jdbcType=VARCHAR},
-                </if>
-                <if test="item.unitId != null">
-                    i_unit_id = #{item.unitId,jdbcType=INTEGER},
-                </if>
-            </trim>
-            where s_station_no = #{item.stationNo,jdbcType=VARCHAR}
-        </foreach>
-    </update>
+
+
+
+
+
+    List<LankForPage> selectByCustomerNoAndKeyWord(@Param("startDate") long startDate,@Param("endDate") long endDate,@Param("customerNo") String customerNo, @Param("keyWord") String keyWord);

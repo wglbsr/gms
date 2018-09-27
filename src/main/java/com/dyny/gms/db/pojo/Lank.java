@@ -16,6 +16,8 @@ public class Lank {
 
     private BigDecimal endNum;
 
+    private BigDecimal sumVolumeno;
+
     public Integer getStId() {
         return stId;
     }
@@ -62,5 +64,13 @@ public class Lank {
 
     public void setEndNum(BigDecimal endNum) {
         this.endNum = endNum;
+    }
+
+    public BigDecimal getSumVolumeno() {
+        return sumVolumeno;
+    }
+
+    public void setSumVolumeno(BigDecimal sumVolumeno) {
+        this.sumVolumeno = sumVolumeno;
     }
 }

@@ -1,230 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dyny.gms.db.dao.LankMapper">
-    <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Lank">
-        <result column="st_id" jdbcType="INTEGER" property="stId"/>
-        <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
-        <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
-        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
-        <result column="start_num" jdbcType="NUMERIC" property="startNum"/>
-        <result column="end_num" jdbcType="NUMERIC" property="endNum"/>
-    </resultMap>
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+  <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Lank">
+    <result column="st_id" jdbcType="INTEGER" property="stId" />
+    <result column="st_no" jdbcType="VARCHAR" property="stNo" />
+    <result column="mach_no" jdbcType="VARCHAR" property="machNo" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="start_num" jdbcType="NUMERIC" property="startNum" />
+    <result column="end_num" jdbcType="NUMERIC" property="endNum" />
+    <result column="sum_volumeno" jdbcType="NUMERIC" property="sumVolumeno" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-    <sql id="Base_Column_List">
-    st_id, st_no, mach_no, creat_time, start_num, end_num
+          </trim>
+        </if>
+      </foreach>
+    </where>
   </sql>
-    <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.LankExample" resultMap="BaseResultMap">
-        select
-        <if test="distinct">
-            distinct
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
         </if>
-        <include refid="Base_Column_List"/>
-        from Ap_lank
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-    </select>
-    <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.LankExample">
-        delete from Ap_lank
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </delete>
-    <insert id="insert" parameterType="com.dyny.gms.db.pojo.Lank">
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    st_id, st_no, mach_no, creat_time, start_num, end_num, sum_volumeno
+  </sql>
+  <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.LankExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Ap_lank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.LankExample">
+    delete from Ap_lank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dyny.gms.db.pojo.Lank">
     insert into Ap_lank (st_id, st_no, mach_no, 
-      creat_time, start_num, end_num
-      )
+      creat_time, start_num, end_num, 
+      sum_volumeno)
     values (#{stId,jdbcType=INTEGER}, #{stNo,jdbcType=VARCHAR}, #{machNo,jdbcType=VARCHAR}, 
-      #{creatTime,jdbcType=TIMESTAMP}, #{startNum,jdbcType=NUMERIC}, #{endNum,jdbcType=NUMERIC}
-      )
+      #{creatTime,jdbcType=TIMESTAMP}, #{startNum,jdbcType=NUMERIC}, #{endNum,jdbcType=NUMERIC}, 
+      #{sumVolumeno,jdbcType=NUMERIC})
   </insert>
-    <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Lank">
-        insert into Ap_lank
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="stId != null">
-                st_id,
-            </if>
-            <if test="stNo != null">
-                st_no,
-            </if>
-            <if test="machNo != null">
-                mach_no,
-            </if>
-            <if test="creatTime != null">
-                creat_time,
-            </if>
-            <if test="startNum != null">
-                start_num,
-            </if>
-            <if test="endNum != null">
-                end_num,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="stId != null">
-                #{stId,jdbcType=INTEGER},
-            </if>
-            <if test="stNo != null">
-                #{stNo,jdbcType=VARCHAR},
-            </if>
-            <if test="machNo != null">
-                #{machNo,jdbcType=VARCHAR},
-            </if>
-            <if test="creatTime != null">
-                #{creatTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="startNum != null">
-                #{startNum,jdbcType=NUMERIC},
-            </if>
-            <if test="endNum != null">
-                #{endNum,jdbcType=NUMERIC},
-            </if>
-        </trim>
-    </insert>
-    <select id="countByExample" parameterType="com.dyny.gms.db.pojo.LankExample" resultType="java.lang.Long">
-        select count(*) from Ap_lank
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        update Ap_lank
-        <set>
-            <if test="record.stId != null">
-                st_id = #{record.stId,jdbcType=INTEGER},
-            </if>
-            <if test="record.stNo != null">
-                st_no = #{record.stNo,jdbcType=VARCHAR},
-            </if>
-            <if test="record.machNo != null">
-                mach_no = #{record.machNo,jdbcType=VARCHAR},
-            </if>
-            <if test="record.creatTime != null">
-                creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="record.startNum != null">
-                start_num = #{record.startNum,jdbcType=NUMERIC},
-            </if>
-            <if test="record.endNum != null">
-                end_num = #{record.endNum,jdbcType=NUMERIC},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        update Ap_lank
-        set st_id = #{record.stId,jdbcType=INTEGER},
+  <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Lank">
+    insert into Ap_lank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stId != null">
+        st_id,
+      </if>
+      <if test="stNo != null">
+        st_no,
+      </if>
+      <if test="machNo != null">
+        mach_no,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+      <if test="startNum != null">
+        start_num,
+      </if>
+      <if test="endNum != null">
+        end_num,
+      </if>
+      <if test="sumVolumeno != null">
+        sum_volumeno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stId != null">
+        #{stId,jdbcType=INTEGER},
+      </if>
+      <if test="stNo != null">
+        #{stNo,jdbcType=VARCHAR},
+      </if>
+      <if test="machNo != null">
+        #{machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startNum != null">
+        #{startNum,jdbcType=NUMERIC},
+      </if>
+      <if test="endNum != null">
+        #{endNum,jdbcType=NUMERIC},
+      </if>
+      <if test="sumVolumeno != null">
+        #{sumVolumeno,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dyny.gms.db.pojo.LankExample" resultType="java.lang.Long">
+    select count(*) from Ap_lank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Ap_lank
+    <set>
+      <if test="record.stId != null">
+        st_id = #{record.stId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stNo != null">
         st_no = #{record.stNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.machNo != null">
         mach_no = #{record.machNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatTime != null">
         creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startNum != null">
         start_num = #{record.startNum,jdbcType=NUMERIC},
-        end_num = #{record.endNum,jdbcType=NUMERIC}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <resultMap id="PageResultMap" type="com.dyny.gms.db.pojo.LankForPage">
-        <result column="st_id" jdbcType="INTEGER" property="stId"/>
-        <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
-        <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
-        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
-        <result column="start_num" jdbcType="NUMERIC" property="startNum"/>
-        <result column="end_num" jdbcType="NUMERIC" property="endNum"/>
-        <result column="s_station_no" jdbcType="NUMERIC" property="stationNo"/>
-        <result column="s_station_name" jdbcType="NUMERIC" property="stationName"/>
-        <result column="mach_name" jdbcType="NUMERIC" property="machName"/>
-    </resultMap>
-    <select id="selectByCustomerNoAndKeyWord" resultMap="PageResultMap">
-        SELECT
-        al.mach_no,
-        al.st_no,
-        cm.mach_name,
-        ts.s_station_name,
-        al.creat_time,
-        al.end_num,
-        al.start_num
-        FROM
-        [dbo].[Ap_lank] al
-        JOIN C_mach cm ON cm.mach_no = al.mach_no
-        <if test="customerNo != null and customerNo !=''">
-            and cm.user_cus=#{customerNo}
-        </if>
-        <if test="keyWord != null and keyWord !=''">
-            and (cm.mach_no like '%'+#{keyWord}+'%' or cm.mach_name like '%'+#{keyWord}+'%')
-        </if>
-        LEFT JOIN t_station ts ON ts.s_station_no = al.st_no
-        where 1=1
-        <if test="startDate>0">
-            AND al.creat_time &gt;= DATEADD(S,#{startDate},'1970-01-01 08:00:00')
-        </if>
-        <if test="endDate>0">
-            AND al.creat_time &lt;= DATEADD(S,#{endDate},'1970-01-01 08:00:00')
-        </if>
+      </if>
+      <if test="record.endNum != null">
+        end_num = #{record.endNum,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sumVolumeno != null">
+        sum_volumeno = #{record.sumVolumeno,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Ap_lank
+    set st_id = #{record.stId,jdbcType=INTEGER},
+      st_no = #{record.stNo,jdbcType=VARCHAR},
+      mach_no = #{record.machNo,jdbcType=VARCHAR},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      start_num = #{record.startNum,jdbcType=NUMERIC},
+      end_num = #{record.endNum,jdbcType=NUMERIC},
+      sum_volumeno = #{record.sumVolumeno,jdbcType=NUMERIC}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!--*****************************手动添加******************************************-->
+  <resultMap id="PageResultMap" type="com.dyny.gms.db.pojo.LankForPage">
+    <result column="st_id" jdbcType="INTEGER" property="stId"/>
+    <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
+    <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
+    <result column="start_num" jdbcType="NUMERIC" property="startNum"/>
+    <result column="end_num" jdbcType="NUMERIC" property="endNum"/>
+    <result column="s_station_no" jdbcType="NUMERIC" property="stationNo"/>
+    <result column="s_station_name" jdbcType="NUMERIC" property="stationName"/>
+    <result column="mach_name" jdbcType="NUMERIC" property="machName"/>
+    <result column="sum_volumeno" jdbcType="NUMERIC" property="sumVolumeno"/>
+  </resultMap>
+  <select id="selectByCustomerNoAndKeyWord" resultMap="PageResultMap">
+    SELECT
+    al.mach_no,
+    al.st_no,
+    cm.mach_name,
+    ts.s_station_name,
+    al.creat_time,
+    al.end_num,
+    al.start_num,
+    al.sum_volumeno
+    FROM
+    [dbo].[Ap_lank] al
+    JOIN C_mach cm ON cm.mach_no = al.mach_no
+    <if test="customerNo != null and customerNo !=''">
+      and cm.user_cus=#{customerNo}
+    </if>
+    <if test="keyWord != null and keyWord !=''">
+      and (cm.mach_no like '%'+#{keyWord}+'%' or cm.mach_name like '%'+#{keyWord}+'%')
+    </if>
+    LEFT JOIN t_station ts ON ts.s_station_no = al.st_no
+    where 1=1
+    <if test="startDate>0">
+      AND al.creat_time &gt;= DATEADD(S,#{startDate},'1970-01-01 08:00:00')
+    </if>
+    <if test="endDate>0">
+      AND al.creat_time &lt;= DATEADD(S,#{endDate},'1970-01-01 08:00:00')
+    </if>
+  </select>
 
 
-    </select>
 </mapper>

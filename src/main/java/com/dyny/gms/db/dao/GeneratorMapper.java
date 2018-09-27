@@ -2,12 +2,10 @@ package com.dyny.gms.db.dao;
 
 import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.db.pojo.GeneratorExample;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface GeneratorMapper {
     long countByExample(GeneratorExample example);
@@ -32,11 +30,11 @@ public interface GeneratorMapper {
 
     int updateByPrimaryKey(Generator record);
 
-    //****************************以下为手动添加*********************************************************
+
+    /******************手动添加*************************/
     int calculateGenerateTimeToMach();
 
     int calculateGenerateTimeToApTime();
 
     int updateByPrimaryKeySelectiveBatch(List<Generator> records);
-
 }

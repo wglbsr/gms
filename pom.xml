@@ -5,7 +5,7 @@
 
     <groupId>com.dyny</groupId>
     <artifactId>gms</artifactId>
-    <version>1.0.15-SNAPSHOT</version>
+    <version>1.0.16</version>
     <packaging>jar</packaging>
 
     <name>gms</name>
@@ -22,8 +22,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>cn.afterturn</groupId>
@@ -123,7 +123,26 @@
     </dependencies>
 
     <build>
+        <finalName>  ${project.artifactId}-${project.version}-${current.time}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <name>current.time</name>
+                    <pattern>yyMMdd-HHmm</pattern>
+                    <timeZone>GMT+8</timeZone>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

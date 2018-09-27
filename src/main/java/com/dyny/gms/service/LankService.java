@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LankService {
     String getLank(String customerNo, String keyWord, int pageNum, int pageSize, long startDate, long endDate) throws ParseException;
+
+    int refuelManually(String generatorNo,float refuelVolumeno);
 }

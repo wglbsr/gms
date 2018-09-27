@@ -15,7 +15,9 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,4 +65,14 @@ public class LankServiceImpl extends BaseService implements LankService {
         int total = (int) page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
+
+    @Override
+    public int refuelManually(String generatorNo, float refuelVolumeno) {
+        Lank lank = new Lank();
+        lank.setCreatTime(new Date());
+        lank.setMachNo(generatorNo);
+        lank.setSumVolumeno(new BigDecimal(Double.toString(refuelVolumeno)));
+        return lankMapper.insert(lank);
+    }
+
 }

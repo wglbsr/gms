@@ -96,39 +96,39 @@
         <result column="start_Voltage" property="start_Voltage" javaType="string"/>
     </resultMap>
     <select id="getStartVoltage" resultMap="startVoltageMap">
-		select isnull(start_Voltage,0) start_Voltage
-		from C_mach
-		WHERE mach_no =  #{mach_no} 
-	</select>
+        select isnull(start_Voltage,0) start_Voltage
+        from C_mach
+        WHERE mach_no = #{mach_no}
+    </select>
 
     <!-- 十五.	设定启动电压功能 -->
     <update id="modifyStartVoltage">
-        UPDATE C_mach SET start_Voltage = #{changeVoltage, jdbcType = DECIMAL} 
-        WHERE mach_no =  #{mach_no}
-	</update>
+        UPDATE C_mach SET start_Voltage = #{changeVoltage, jdbcType = DECIMAL}
+        WHERE mach_no = #{mach_no}
+    </update>
 
     <!-- 十六.	(1)查询保养时间功能 -->
     <resultMap type="map" id="careTimeMap">
         <result column="currentServiceTime" property="currentServiceTime" javaType="string"/>
     </resultMap>
     <select id="getCareTime" resultMap="careTimeMap">
-		select  maintain_time as currentServiceTime   
-		From C_mach
-		WHERE mach_no = #{mach_no}
-	</select>
+        select maintain_time as currentServiceTime
+        From C_mach
+        WHERE mach_no = #{mach_no}
+    </select>
 
     <!-- 十六.	(2)设定保养时间功能 -->
     <update id="modifyCareTime">
-		UPDATE C_mach  SET maintain_time = #{currentServiceTime,jdbcType = DECIMAL} 
-		WHERE mach_no = #{mach_no}
-	</update>
+        UPDATE C_mach SET maintain_time = #{currentServiceTime,jdbcType = DECIMAL}
+        WHERE mach_no = #{mach_no}
+    </update>
 
     <!-- 十七.	（1）设定停机功能 -->
     <select id="getStopTime" resultMap="careTimeMap">
-		select  stop_time as currentServiceTime   
-		From C_mach
-		WHERE mach_no = #{mach_no}
-	</select>
+        select stop_time as currentServiceTime
+        From C_mach
+        WHERE mach_no = #{mach_no}
+    </select>
 
 
     <!-- 十九.	站点信息主功能 -->
@@ -147,11 +147,12 @@
         <result column="st_pertel2" property="contactManPhoneB" javaType="string"/>
     </resultMap>
     <select id="getSiteInfo" resultMap="siteInfoMap" parameterType="java.lang.Integer">
-		select id, st_name, st_no, st_type, cus_no, st_coordinate, st_add, unit_add, st_per1, st_pertel1, st_per2, st_pertel2 
-		FROM C_station
-		where id = #{stationId}
-		order by id
-	</select>
+        select id, st_name, st_no, st_type, cus_no, st_coordinate, st_add, unit_add, st_per1, st_pertel1, st_per2,
+        st_pertel2
+        FROM C_station
+        where id = #{stationId}
+        order by id
+    </select>
 
 
     <!-- 二十三.	发电记录功能 -->
@@ -201,29 +202,29 @@
 
     <!-- 二十五.	油机领用管理 -->
     <insert id="addOil">
-			INSERT INTO Ap_collar (
-				co_no,
-				co_time,
-				co_per,
-				co_tel,
-				st_no,
-				mach_no,
-				co_add,
-				creat_time,
-				creat_per
-			)
-		    VALUES(
-		    	#{co_no, jdbcType = VARCHAR},
-		    	#{co_time, jdbcType = VARCHAR},
-		    	#{co_per, jdbcType = VARCHAR},
-		    	#{co_tel, jdbcType = VARCHAR},
-		    	#{st_no, jdbcType = VARCHAR},
-		    	#{mach_no, jdbcType = VARCHAR},
-		    	#{use_address, jdbcType = VARCHAR},
-		    	getdate(),
-		    	#{user_no, jdbcType = VARCHAR}
-		    )
-	</insert>
+        INSERT INTO Ap_collar (
+        co_no,
+        co_time,
+        co_per,
+        co_tel,
+        st_no,
+        mach_no,
+        co_add,
+        creat_time,
+        creat_per
+        )
+        VALUES(
+        #{co_no, jdbcType = VARCHAR},
+        #{co_time, jdbcType = VARCHAR},
+        #{co_per, jdbcType = VARCHAR},
+        #{co_tel, jdbcType = VARCHAR},
+        #{st_no, jdbcType = VARCHAR},
+        #{mach_no, jdbcType = VARCHAR},
+        #{use_address, jdbcType = VARCHAR},
+        getdate(),
+        #{user_no, jdbcType = VARCHAR}
+        )
+    </insert>
 
 
     <resultMap type="map" id="machineNumMap">
@@ -319,59 +320,59 @@
 
     <!-- 三十二.	启动功能 -->
     <insert id="startMachine">
-		INSERT INTO Ap_operate(mach_no, op_no,
+        INSERT INTO Ap_operate(mach_no, op_no,
         op_num, creat_time, creat_per,
         action) VALUES(
-	    	#{mach_no, jdbcType = VARCHAR},
-	    	1,
-	    	'84 05 01 00 00 00 01 02 16',
-	    	getdate(),
-	    	#{user_no, jdbcType = VARCHAR},
-	    	'0'
-	    )
-	</insert>
+        #{mach_no, jdbcType = VARCHAR},
+        1,
+        '84 05 01 00 00 00 01 02 16',
+        getdate(),
+        #{user_no, jdbcType = VARCHAR},
+        '0'
+        )
+    </insert>
 
     <!-- 三十三.	熄火功能 -->
     <insert id="offMachine">
-		INSERT INTO Ap_operate(mach_no, op_no,
+        INSERT INTO Ap_operate(mach_no, op_no,
         op_num, creat_time, creat_per,
-        action)  VALUES (
-			#{mach_no, jdbcType = VARCHAR},
-			2, 
-			'84 05 01 00 00 00 02 03 16',
-			getdate(),
-			#{user_no, jdbcType = VARCHAR},
-			'0'
-		)
-	</insert>
+        action) VALUES (
+        #{mach_no, jdbcType = VARCHAR},
+        2,
+        '84 05 01 00 00 00 02 03 16',
+        getdate(),
+        #{user_no, jdbcType = VARCHAR},
+        '0'
+        )
+    </insert>
 
     <!-- 三十四.	模式切换功能 -->
     <insert id="changeModel">
-		INSERT INTO Ap_operate (mach_no, op_no,
+        INSERT INTO Ap_operate (mach_no, op_no,
         op_num, creat_time, creat_per,
-        action)  VALUES (
-			#{mach_no, jdbcType = VARCHAR}, 
-			#{modelflag, jdbcType =INTEGER},
-			#{code, jdbcType = VARCHAR},
-			getdate(),
-			#{user_no, jdbcType = VARCHAR},
-			'0'
-				)
-	</insert>
+        action) VALUES (
+        #{mach_no, jdbcType = VARCHAR},
+        #{modelflag, jdbcType =INTEGER},
+        #{code, jdbcType = VARCHAR},
+        getdate(),
+        #{user_no, jdbcType = VARCHAR},
+        '0'
+        )
+    </insert>
 
     <!-- 三十五.	保护模式切换功能 -->
     <insert id="changeProtectModel">
-		INSERT INTO Ap_operate(mach_no, op_no,
+        INSERT INTO Ap_operate(mach_no, op_no,
         op_num, creat_time, creat_per,
-        action)  VALUES (
-			#{mach_no, jdbcType = VARCHAR}, 
-			#{modelflag, jdbcType = INTEGER},
-			#{code, jdbcType = VARCHAR},
-			getdate(),
-			#{user_no, jdbcType = VARCHAR},
-			'0'
-		)
-	</insert>
+        action) VALUES (
+        #{mach_no, jdbcType = VARCHAR},
+        #{modelflag, jdbcType = INTEGER},
+        #{code, jdbcType = VARCHAR},
+        getdate(),
+        #{user_no, jdbcType = VARCHAR},
+        '0'
+        )
+    </insert>
 
 
     <!-- 三十七.	移动油机领用查询(25项目的补充) -->
@@ -425,40 +426,44 @@
         <result column="fuel_type" property="fuel_type" javaType="string"/>
         <result column="output_voltage" property="output_voltage" javaType="string"/>
         <result column="load_mode" property="load_mode" javaType="int"/>
+        <result column="pro_mode" property="pro_mode" javaType="int"/>
+        <result column="i_board_version" property="boardVersion" javaType="int"/>
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
-            SELECT
-                Acity_electricity,
-                s_station_name,
-                s_station_latitude,
-                s_station_longitude,
-                output_voltage,
-                load_mode,
-                st_state,
-                fuel_type,
-                isnull(cabinet_temperature, 0) external_temperature,
-                isnull(
-                    CONVERT (VARCHAR(100), inter_time, 20),
-                    0
-                ) inter_time,
-                isnull(dbo.mach_type(mach_no), 0) stationType,
-                isnull(start_Vo, 0) start_Voltage,
-                isnull(lank_level, 0) lank_per,
-                isnull(lank_level, 0) * isnull(volumeno, 0) / 100 lank_level,
-                isnull(st_current, 0) st_current,
-                state1,
-                isnull(st_co, 0) st_co,
-                isnull(dbo.sum_time(mach_no), 0) sum_time,
-                isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
-                isnull(st_voltage, 0) st_voltag,
-                isnull(Expr1, 0) Expr1,
-                isnull(al_voltage, 0) al_voltage,
-                isnull(sys_mode, 0) sys_mode
-            FROM
-                view_generator_full_info
-		WHERE mach_no = #{mach_no} 
-		order by mach_no
-	</select>
+        SELECT
+        Acity_electricity,
+        s_station_name,
+        s_station_latitude,
+        s_station_longitude,
+        output_voltage,
+        load_mode,
+        st_state,
+        fuel_type,
+        pro_mode,
+        i_board_version,
+        isnull(cabinet_temperature, 0) external_temperature,
+        isnull(
+        CONVERT (VARCHAR(100), inter_time, 20),
+        0
+        ) inter_time,
+        isnull(dbo.mach_type(mach_no), 0) stationType,
+        isnull(start_Vo, 0) start_Voltage,
+        isnull(lank_level, 0) lank_per,
+        isnull(lank_level, 0) * isnull(volumeno, 0) / 100 lank_level,
+        isnull(st_current, 0) st_current,
+        state1,
+        isnull(st_co, 0) st_co,
+        isnull(dbo.sum_time(mach_no), 0) sum_time,
+        isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
+        isnull(st_voltage, 0) st_voltag,
+        isnull(Expr1, 0) Expr1,
+        isnull(al_voltage, 0) al_voltage,
+        isnull(sys_mode, 0) sys_mode
+        FROM
+        view_generator_full_info
+        WHERE mach_no = #{mach_no}
+        order by mach_no
+    </select>
 
 
     <resultMap type="map" id="generatorDetail">
@@ -477,15 +482,34 @@
         <result column="Expr1" property="Expr1" javaType="string"/>
         <result column="al_voltage" property="al_voltage" javaType="string"/>
         <result column="state1" property="state1" javaType="string"/>
+        <result column="i_board_version" property="boardVersion" javaType="string"/>
     </resultMap>
     <select id="getGeneratorDetail" resultMap="generatorDetail">
-		select Acity_electricity,isnull(cabinet_temperature,0) external_temperature,isnull(CONVERT(varchar(100), inter_time, 20),0) inter_time ,isnull(dbo.mach_type(mach_no),0) stationType,
-           isnull(start_Vo,0) start_Voltage,isnull(lank_level,0) lank_per,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level , isnull(st_current,0) st_current,state1,
-           isnull(st_co,0) st_co ,isnull(dbo.sum_time(mach_no),0) sum_time,isnull(Expr2,0)-isnull(dbo.sum_time(mach_no),0)/60 maintain_time,isnull(st_voltage,0) st_voltag,isnull(Expr1,0) Expr1,isnull(al_voltage,0) al_voltage
-	    FROM view_generator_full_info
-		WHERE mach_no = #{mach_no}
-		order by mach_no
-	</select>
+        SELECT
+            Acity_electricity,
+            isnull(cabinet_temperature, 0) external_temperature,
+            isnull(
+                CONVERT (VARCHAR(100), inter_time, 20),
+                0
+            ) inter_time,
+            isnull(dbo.mach_type(mach_no), 0) stationType,
+            isnull(start_Vo, 0) start_Voltage,
+            isnull(lank_level, 0) lank_per,
+            isnull(lank_level, 0) * isnull(volumeno, 0) / 100 lank_level,
+            isnull(st_current, 0) st_current,
+            state1,
+            i_board_version,
+            isnull(st_co, 0) st_co,
+            isnull(dbo.sum_time(mach_no), 0) sum_time,
+            isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
+            isnull(st_voltage, 0) st_voltag,
+            isnull(Expr1, 0) Expr1,
+            isnull(al_voltage, 0) al_voltage
+        FROM
+            view_generator_full_info
+        WHERE mach_no = #{mach_no}
+        order by mach_no
+    </select>
 
 
     <!-- 四十.	警报信息查询 -->

@@ -1,5 +1,6 @@
 package com.dyny.gms.controller;
 
+import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.service.LankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 
 @RestController
-public class LankController {
+public class LankController extends BaseController {
     @Autowired
     LankService lankService;
 
@@ -28,5 +29,14 @@ public class LankController {
                                    @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                    @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) throws ParseException {
         return lankService.getLank(customerNo, keyWord, pageNum, pageSize, startDate, endDate);
+    }
+
+
+    @RequestMapping(value = "/refuelManually", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String refuelManually(@RequestParam(name = "generatorNo", required = true) String generatorNo,
+                                 @RequestParam(name = "refuelVolume", required = true) float refuelVolume
+                                 ) throws ParseException {
+        return super.getSuccessResult(lankService.refuelManually(generatorNo,refuelVolume));
     }
 }

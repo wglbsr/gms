@@ -485,6 +485,66 @@ public class LankExample {
             addCriterion("end_num not between", value1, value2, "endNum");
             return (Criteria) this;
         }
+
+        public Criteria andSumVolumenoIsNull() {
+            addCriterion("sum_volumeno is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoIsNotNull() {
+            addCriterion("sum_volumeno is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoEqualTo(BigDecimal value) {
+            addCriterion("sum_volumeno =", value, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoNotEqualTo(BigDecimal value) {
+            addCriterion("sum_volumeno <>", value, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoGreaterThan(BigDecimal value) {
+            addCriterion("sum_volumeno >", value, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("sum_volumeno >=", value, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoLessThan(BigDecimal value) {
+            addCriterion("sum_volumeno <", value, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("sum_volumeno <=", value, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoIn(List<BigDecimal> values) {
+            addCriterion("sum_volumeno in", values, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoNotIn(List<BigDecimal> values) {
+            addCriterion("sum_volumeno not in", values, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("sum_volumeno between", value1, value2, "sumVolumeno");
+            return (Criteria) this;
+        }
+
+        public Criteria andSumVolumenoNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("sum_volumeno not between", value1, value2, "sumVolumeno");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

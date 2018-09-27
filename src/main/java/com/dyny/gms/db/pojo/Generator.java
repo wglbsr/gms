@@ -48,6 +48,10 @@ public class Generator {
 
     private String gprsno;
 
+    private Date maintainDate;
+
+    private Integer maintainNum;
+
     private Integer totalGenerateTime;
 
     private Integer totalGenerateCnt;
@@ -55,6 +59,8 @@ public class Generator {
     private Boolean deleted;
 
     private Boolean activated;
+
+    private Integer boardVersion;
 
     public String getMachNo() {
         return machNo;
@@ -232,6 +238,22 @@ public class Generator {
         this.gprsno = gprsno == null ? null : gprsno.trim();
     }
 
+    public Date getMaintainDate() {
+        return maintainDate;
+    }
+
+    public void setMaintainDate(Date maintainDate) {
+        this.maintainDate = maintainDate;
+    }
+
+    public Integer getMaintainNum() {
+        return maintainNum;
+    }
+
+    public void setMaintainNum(Integer maintainNum) {
+        this.maintainNum = maintainNum;
+    }
+
     public Integer getTotalGenerateTime() {
         return totalGenerateTime;
     }
@@ -262,5 +284,13 @@ public class Generator {
 
     public void setActivated(Boolean activated) {
         this.activated = activated;
+    }
+
+    public Integer getBoardVersion() {
+        return boardVersion;
+    }
+
+    public void setBoardVersion(Integer boardVersion) {
+        this.boardVersion = boardVersion;
     }
 }
