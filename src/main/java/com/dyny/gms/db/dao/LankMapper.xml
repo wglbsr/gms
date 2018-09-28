@@ -208,7 +208,7 @@
     <result column="s_station_no" jdbcType="NUMERIC" property="stationNo"/>
     <result column="s_station_name" jdbcType="NUMERIC" property="stationName"/>
     <result column="mach_name" jdbcType="NUMERIC" property="machName"/>
-    <result column="sum_volumeno" jdbcType="NUMERIC" property="sumVolumeno"/>
+    <result column="sum_volumeno" jdbcType="NUMERIC" property="sumVolumeno" />
   </resultMap>
   <select id="selectByCustomerNoAndKeyWord" resultMap="PageResultMap">
     SELECT
@@ -238,6 +238,4 @@
       AND al.creat_time &lt;= DATEADD(S,#{endDate},'1970-01-01 08:00:00')
     </if>
   </select>
-
-
 </mapper>
