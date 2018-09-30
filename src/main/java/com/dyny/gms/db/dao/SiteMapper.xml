@@ -21,32 +21,40 @@
         <result column="id" property="stationId" javaType="string"/>
         <result column="s_station_name" property="stationName" javaType="string"/>
         <result column="mach_name" property="machName" javaType="string"/>
-        <result column="st_state" property="stationConnnectState" javaType="string"/>
-        <result column="Acity_electricity" property="stationState" javaType="string"/>
+        <result column="inter_time" property="interTime" javaType="java.sql.Timestamp"/>
+        <result column="city_electricity" property="cityElectricity" javaType="int"/>
+        <result column="state" property="state" javaType="int"/>
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
         <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
         <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
 
+        <!--以下两个字段已弃用,为了保证兼容性先保留,值为空-->
+        <result column="st_state" property="stationConnnectState" javaType="string"/>
+        <result column="Acity_electricity" property="stationState" javaType="string"/>
     </resultMap>
 
 
     <select id="getGeneratorLocation" resultMap="allMap" parameterType="java.lang.String">
         SELECT
-        i.id
-        ,m.mach_name
-        ,i.mach_no
-        ,ts.s_station_latitude
-        ,ts.s_station_longitude
-        ,ts.s_station_name
-        ,i.st_coordinate
-        ,dbo.p_state(i.mach_no) st_state
-        ,dbo.p_Acityelectricity(i.mach_no) Acity_electricity
+        i.id,
+        m.mach_name,
+        i.mach_no,
+        ts.s_station_latitude,
+        ts.s_station_longitude,
+        ts.s_station_name,
+        i.st_coordinate,
+        '' as stationConnnectState,
+        '' as st_state,
+        cb.city_electricity,
+        cb.inter_time,
+        cb.state
         FROM
         id i
-        JOIN c_mach m
-        ON m.mach_no=i.mach_no
-        left join t_station ts on ts.s_station_no=m.st_no
-        where 1=1
+        JOIN c_mach m ON m.mach_no = i.mach_no
+        LEFT JOIN t_station ts ON ts.s_station_no = m.st_no --
+        LEFT JOIN C_basis cb ON i.id = cb.id
+        WHERE
+        1 = 1
         <if test="mach_no!=null and mach_no!=''">
             and i.mach_no=#{mach_no}
         </if>
