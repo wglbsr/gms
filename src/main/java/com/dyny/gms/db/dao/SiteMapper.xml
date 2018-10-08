@@ -27,6 +27,7 @@
         <result column="st_coordinate" property="stationPosition" javaType="string"/>
         <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
         <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
+        <result column="st_no" property="stationNo" javaType="string"/>
 
         <!--以下两个字段已弃用,为了保证兼容性先保留,值为空-->
         <result column="st_state" property="stationConnnectState" javaType="string"/>
@@ -38,6 +39,7 @@
         SELECT
         i.id,
         m.mach_name,
+        m.st_no,
         i.mach_no,
         ts.s_station_latitude,
         ts.s_station_longitude,
