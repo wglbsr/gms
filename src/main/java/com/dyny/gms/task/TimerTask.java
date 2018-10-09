@@ -10,13 +10,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.File;
 
-/**
- * 定时任务
- */
 @Configuration
 @EnableScheduling
-public class SchedulingConfig {
-    private final Logger logger = Logger.getLogger(SchedulingConfig.class);
+public class TimerTask {
+    private final Logger logger = Logger.getLogger(TimerTask.class);
 
 
     @Autowired

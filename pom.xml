@@ -7,7 +7,7 @@
     <artifactId>gms</artifactId>
     <version>1.0.16</version>
     <packaging>jar</packaging>
-
+    <!--<packaging>war</packaging>-->
     <name>gms</name>
     <description>a generator manage System powered by Spring</description>
 
@@ -25,6 +25,29 @@
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     </properties>
     <dependencies>
+
+        <!--移除tomcat-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+             <!--移除嵌入式tomcat插件-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.springframework.boot</groupId>-->
+                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!--增加servlet依赖-->
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>javax.servlet-api</artifactId>-->
+            <!--<version>3.1.0</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+
+
+
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
@@ -98,7 +121,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
+            <optional>true</optional>
+            <!-- 这个需要为 true 热部署才有效 -->
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -119,6 +143,19 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.6</version>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!--自动给pojo加上 getter setter方法  使用@Data注解-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 
