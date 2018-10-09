@@ -42,8 +42,10 @@ public class SiteController extends BaseController {
     @RequestMapping(value = "/getGeneratorLocation.do")
     @ResponseBody
     public String getGeneratorLocation(@RequestParam(name = "user_cus", required = false, defaultValue = "") String user_cus,
-                                       @RequestParam(name = "mach_no", required = false, defaultValue = "") String mach_no) {
-        return super.getSuccessResult(service.getGeneratorLocation(user_cus, mach_no));
+                                       @RequestParam(name = "mach_no", required = false, defaultValue = "") String mach_no,
+                                       @RequestParam(name = "activate", required = false, defaultValue = "true") boolean activate,
+                                       @RequestParam(name = "inactivate", required = false, defaultValue = "true") boolean inactivate) {
+        return super.getSuccessResult(service.getGeneratorLocation(user_cus, mach_no,activate,inactivate));
     }
 
 
@@ -192,8 +194,10 @@ public class SiteController extends BaseController {
      */
     @RequestMapping(value = "/getMachineNumByStatus.do", method = RequestMethod.POST)
     @ResponseBody
-    public String getMachineNumByStatus(@RequestParam(name = "user_cus") String user_cus) {
-        return super.getSuccessResult(service.getMachineNum(user_cus));
+    public String getMachineNumByStatus(@RequestParam(name = "user_cus") String user_cus,
+                                        @RequestParam(name = "activate", required = false, defaultValue = "true") boolean activate,
+                                        @RequestParam(name = "inactivate", required = false, defaultValue = "true") boolean inactivate) {
+        return super.getSuccessResult(service.getMachineNum(user_cus,activate,inactivate));
     }
 
     @Autowired
@@ -218,10 +222,12 @@ public class SiteController extends BaseController {
                                 @RequestParam(name = "expr1", required = false, defaultValue = "-1") int expr1,
                                 @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                 @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                @RequestParam(name = "activate", required = false, defaultValue = "true") boolean activate,
+                                @RequestParam(name = "inactivate", required = false, defaultValue = "true") boolean inactivate,
                                 @RequestParam(name = "content", required = false, defaultValue = "") String content,
                                 @RequestParam(name = "orderBy", required = false, defaultValue = "mach_no") String orderBy,
                                 @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
-        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, pageNum, pageSize, orderBy);
+        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type,activate,inactivate, pageNum, pageSize, orderBy);
 
     }
 

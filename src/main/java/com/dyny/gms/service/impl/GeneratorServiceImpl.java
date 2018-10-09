@@ -275,6 +275,18 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
+    public int activateGenerator(List<String> generatorNoList, boolean activate) {
+        if (generatorNoList == null || generatorNoList.size() == 0) {
+            return 0;
+        }
+        GeneratorExample generatorExample = new GeneratorExample();
+        generatorExample.or().andMachNoIn(generatorNoList);
+        Generator generator = new Generator();
+        generator.setActivated(activate);
+        return generatorMapper.updateByExampleSelective(generator, generatorExample);
+    }
+
+    @Override
     public int logicDeleteGeneratorContactByStationNo(String stationNo) {
         if (!Tool.StringUtil.validStr(stationNo)) {
             return 0;

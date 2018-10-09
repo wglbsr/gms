@@ -6,12 +6,16 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 @Deprecated
 @Mapper
 public interface SiteMapper {
 
 
-    public List getGeneratorLocation(@Param("user_cus") String user_cus,@Param("mach_no") String mach_no);
+    public List getGeneratorLocation(@Param("user_cus") String user_cus,
+                                     @Param("mach_no") String mach_no,
+                                     @Param("activate") boolean activate,
+                                     @Param("inactivate") boolean inactivate);
 
     public Map<String, Object> getStartVoltage(String mach_no);
 
@@ -42,7 +46,6 @@ public interface SiteMapper {
     public Map<String, Object> getStopTime(String mach_no);
 
 
-
     /**
      * 二十三.	发电记录功能
      */
@@ -66,9 +69,9 @@ public interface SiteMapper {
             @Param("user_no") String user_no);
 
 
-
-
-    public Map getMachineNum(@Param("user_cus") String user_cus);
+    public Map getMachineNum(@Param("user_cus") String user_cus,
+                             @Param("activate") boolean activate,
+                             @Param("inactivate") boolean inactivate);
 
 
     /**
@@ -85,7 +88,9 @@ public interface SiteMapper {
             @Param("content") String content,
             @Param("generateStatus") String generateStatus,
             @Param("expr1") int expr1,
-            @Param("use_type") String use_type);
+            @Param("use_type") String use_type,
+            @Param("activate") boolean activate,
+            @Param("inactivate") boolean inactivate);
 
     /**
      * 三十二.	启动功能

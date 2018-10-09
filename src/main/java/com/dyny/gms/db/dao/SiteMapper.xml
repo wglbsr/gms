@@ -28,6 +28,7 @@
         <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
         <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
         <result column="st_no" property="stationNo" javaType="string"/>
+        <result column="b_activated" property="activate" javaType="string"/>
 
         <!--以下两个字段已弃用,为了保证兼容性先保留,值为空-->
         <result column="st_state" property="stationConnnectState" javaType="string"/>
@@ -49,10 +50,19 @@
         '' as st_state,
         cb.city_electricity,
         cb.inter_time,
+        m.b_activated,
         cb.state
         FROM
         id i
         JOIN c_mach m ON m.mach_no = i.mach_no
+        AND m.b_activated in (
+        <if test="activate">
+            1
+        </if>
+        <if test="inactivate">
+            ,0
+        </if>
+        )
         LEFT JOIN t_station ts ON ts.s_station_no = m.st_no --
         LEFT JOIN C_basis cb ON i.id = cb.id
         WHERE
@@ -64,6 +74,7 @@
             AND
             m.cus_no=#{user_cus}
         </if>
+
     </select>
 
 
@@ -254,6 +265,14 @@
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}
         </if>
+        AND b_activated in (
+        <if test="activate">
+            1
+        </if>
+        <if test="inactivate">
+            ,0
+        </if>
+        )
     </select>
 
 
@@ -264,7 +283,7 @@
         <result column="s_station_name" property="s_station_name" javaType="string"/>
         <result column="mach_type" property="mach_type" javaType="string"/>
         <result column="st_state" property="st_state" javaType="string"/>
-        <result column="city_electricity" property="state1" javaType="string"/>
+        <result column="city_electricity" property="city_electricity" javaType="string"/>
         <result column="al_voltage" property="al_voltage" javaType="string"/>
         <result column="sum_time" property="sum_time" javaType="string"/>
         <result column="sumnum_time" property="sumnum_time" javaType="string"/>
@@ -278,13 +297,14 @@
         <result column="sys_mode" property="sys_mode" javaType="string"/>
         <result column="output_voltage" property="output_voltage" javaType="string"/>
         <result column="load_mode" property="load_mode" javaType="int"/>
+        <result column="b_activated" property="activated" javaType="int"/>
 
     </resultMap>
 
     <!-- 三十一.	移动油机查询 -->
     <select id="searchMachine" resultMap="machineStatusMap">
         select mach_no,mach_name,s_station_name,st_no,
-        i_total_generate_time, mach_type, st_state,
+        i_total_generate_time, mach_type, st_state,b_activated,
         city_electricity,Acity_electricity,
         output_voltage,load_mode,
         al_voltage,
@@ -326,6 +346,16 @@
         <if test="use_type !=null and use_type != '' ">
             AND use_type = #{use_type}
         </if>
+        AND b_activated in (
+        <if test="activate">
+            1
+        </if>
+        <if test="inactivate">
+            ,0
+        </if>
+        )
+
+
     </select>
 
     <!-- 三十二.	启动功能 -->

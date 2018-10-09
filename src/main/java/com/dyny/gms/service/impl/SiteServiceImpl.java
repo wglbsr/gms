@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 public class SiteServiceImpl extends BaseService implements SiteService {
     @Override
     public String getSiteWarningList(String user_cus, int pageNum, int pageSize, int action,
-                                                  long startDate, long endDate) {
+                                     long startDate, long endDate) {
         Page page = PageHelper.startPage(pageNum, pageSize);
         List result = mapper.getSiteWarningList(user_cus, action, startDate, endDate);
         long total = page.getTotal();
@@ -41,9 +41,9 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     private OperateMapper operateMapper;
 
     @Override
-    public List getGeneratorLocation(String username,String machNo) {
+    public List getGeneratorLocation(String username, String machNo, boolean activate, boolean inactivate) {
         // TODO Auto-generated method stub
-        return mapper.getGeneratorLocation(username,machNo);
+        return mapper.getGeneratorLocation(username, machNo, activate, inactivate);
     }
 
     @Override
@@ -79,7 +79,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         // TODO Auto-generated method stub
         return mapper.getStopTime(mach_no);
     }
-
 
 
     @Override
@@ -125,10 +124,10 @@ public class SiteServiceImpl extends BaseService implements SiteService {
      * @return
      */
     @Override
-    public Map<String, Object> getMachineNum(String user_cus) {
+    public Map<String, Object> getMachineNum(String user_cus, boolean activate, boolean inactivate) {
         // TODO Auto-generated method stub
         Map<String, Object> result = new HashMap<String, Object>();
-        Map<String, Integer> allMap = mapper.getMachineNum(user_cus);
+        Map<String, Integer> allMap = mapper.getMachineNum(user_cus, activate, inactivate);
         int total = allMap.get("total");
         int online = allMap.get("online");
         int generating = allMap.get("generating");
@@ -141,12 +140,13 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     }
 
     @Override
-    public String searchMachine(String user_cus, String state, String st_state,
-                                String mach_type, String fuel_type, String Acity_electricity, String content, String generateStatus, int expr1, String use_type, int pageNum, int pageSize, String orderBy) {
+    public String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type,
+                                String Acity_electricity, String content, String generateStatus, int expr1, String use_type,
+                                boolean activate, boolean inactivate, int pageNum, int pageSize, String orderBy) {
         // TODO Auto-generated method stub
         Page page = PageHelper.startPage(pageNum, pageSize);
         page.setOrderBy(orderBy);
-        List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type);
+        List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }

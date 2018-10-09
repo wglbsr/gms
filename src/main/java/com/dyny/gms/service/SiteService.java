@@ -11,7 +11,7 @@ import java.util.Map;
 public interface SiteService {
 
 
-     List getGeneratorLocation(String username,String machNo);
+     List getGeneratorLocation(String username,String machNo,boolean activate,boolean inactivate);
 
      Map<String, Object> getStartVoltage(String mach_no);
 
@@ -54,13 +54,15 @@ public interface SiteService {
     /**
      * 二十六.	移动油机运行情况（全部）
      */
-     Map<String, Object> getMachineNum(String user_cus);
+     Map<String, Object> getMachineNum(String user_cus,boolean activate,boolean inactivate);
 
 
     /**
      * 三十一.	移动油机查询
      */
-     String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type, String Acity_electricity, String content, String generateStatus, int expr1, String use_type, int pageNum, int pageSize, String orderBy);
+     String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type,
+                          String Acity_electricity, String content, String generateStatus, int expr1,
+                          String use_type,boolean activate,boolean inactivate, int pageNum, int pageSize, String orderBy);
 
 
     /**

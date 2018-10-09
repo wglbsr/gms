@@ -46,4 +46,6 @@ public interface GeneratorService {
 
     int changeBootVoltage(List<String> generatorNoList, BigDecimal startVoltage);
 
+    int activateGenerator(List<String> generatorNoList, boolean activate);
+
 }
