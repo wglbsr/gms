@@ -41,9 +41,9 @@ public class StationImportEntity {
 
     private Boolean deleted;
     @Excel(name = "经度", width = 30, isImportField = "true_st")
-    private String stationLatitude;
-    @Excel(name = "纬度", width = 30, isImportField = "true_st")
     private String stationLongitude;
+    @Excel(name = "纬度", width = 30, isImportField = "true_st")
+    private String stationLatitude;
 
     private Integer unitId;
 
