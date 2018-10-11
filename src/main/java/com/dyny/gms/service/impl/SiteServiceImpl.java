@@ -41,9 +41,9 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     private OperateMapper operateMapper;
 
     @Override
-    public List getGeneratorLocation(String username, String machNo, boolean activate, boolean inactivate) {
+    public List getGeneratorLocation(String username, String machNo, boolean activate, boolean inactivate,String keyWord) {
         // TODO Auto-generated method stub
-        return mapper.getGeneratorLocation(username, machNo, activate, inactivate);
+        return mapper.getGeneratorLocation(username, machNo, activate, inactivate,keyWord);
     }
 
     @Override

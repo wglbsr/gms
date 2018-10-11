@@ -11,7 +11,7 @@ import java.util.Map;
 public interface SiteService {
 
 
-     List getGeneratorLocation(String username,String machNo,boolean activate,boolean inactivate);
+     List getGeneratorLocation(String username,String machNo,boolean activate,boolean inactivate,String keyWord);
 
      Map<String, Object> getStartVoltage(String mach_no);
 

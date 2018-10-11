@@ -74,7 +74,10 @@
             AND
             m.cus_no=#{user_cus}
         </if>
-
+        <if test="keyWord!=null and keyWord!=''">
+            and (i.mach_no like '%'+#{keyWord}+'%' or m.mach_name like '%'+#{keyWord}+'%' or
+                 m.st_no like '%'+#{keyWord}+'%' or ts.s_station_name like '%'+#{keyWord}+'%')
+        </if>
     </select>
 
 
@@ -445,6 +448,8 @@
     <resultMap type="map" id="SiteDetailedMap1">
         <result column="Acity_electricity" property="Acity_electricity" javaType="string"/>
         <result column="s_station_name" property="stationName" javaType="string"/>
+        <result column="mach_name" property="generatorName" javaType="string"/>
+        <result column="mach_no" property="generatorNo" javaType="string"/>
         <result column="s_station_latitude" property="stationLatitude" javaType="string"/>
         <result column="s_station_longitude" property="stationLongitude" javaType="string"/>
         <result column="external_temperature" property="external_temperature" javaType="string"/>
@@ -468,6 +473,7 @@
         <result column="load_mode" property="load_mode" javaType="int"/>
         <result column="pro_mode" property="pro_mode" javaType="int"/>
         <result column="i_board_version" property="boardVersion" javaType="int"/>
+        <result column="b_activated" property="activated" javaType="boolean"/>
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
         SELECT
@@ -480,7 +486,10 @@
         st_state,
         fuel_type,
         pro_mode,
+        mach_name,
+        mach_no,
         i_board_version,
+        b_activated,
         isnull(cabinet_temperature, 0) external_temperature,
         isnull(
         CONVERT (VARCHAR(100), inter_time, 20),

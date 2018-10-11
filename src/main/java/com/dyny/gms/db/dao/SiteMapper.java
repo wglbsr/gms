@@ -15,7 +15,8 @@ public interface SiteMapper {
     public List getGeneratorLocation(@Param("user_cus") String user_cus,
                                      @Param("mach_no") String mach_no,
                                      @Param("activate") boolean activate,
-                                     @Param("inactivate") boolean inactivate);
+                                     @Param("inactivate") boolean inactivate,
+                                     @Param("keyWord") String keyWord);
 
     public Map<String, Object> getStartVoltage(String mach_no);
 

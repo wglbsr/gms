@@ -37,20 +37,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //过滤掉登陆操作的token判断
-//        String method = request.getRequestURI();
-//        logger.info("executed method:" + method);
-//        int identity = Integer.valueOf(request.getParameter("id"));
-//        String token = request.getParameter(TOKEN_NAME);
-//        EhcacheUtil ehcacheUtil = EhcacheUtil.getInstance();
-//        Cache ca1 = ehcacheUtil.get(LOGIN_CACHE_NAME);
-//        if (ca1.isElementInMemory(token)) {
-//            Element ele = ca1.get(token);
-//            logger.info("已存在!identity:" + ele.getObjectValue());
-//        } else {
-//            Element element = new Element(token, identity);
-//            ca1.put(element);
-//            logger.info("插入到缓存!");
-//        }
 
         String origin = request.getHeader("Origin");
         response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);

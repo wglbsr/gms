@@ -43,9 +43,10 @@ public class SiteController extends BaseController {
     @ResponseBody
     public String getGeneratorLocation(@RequestParam(name = "user_cus", required = false, defaultValue = "") String user_cus,
                                        @RequestParam(name = "mach_no", required = false, defaultValue = "") String mach_no,
+                                       @RequestParam(name = "keyWord", required = false, defaultValue = "") String keyWord,
                                        @RequestParam(name = "activate", required = false, defaultValue = "true") boolean activate,
                                        @RequestParam(name = "inactivate", required = false, defaultValue = "true") boolean inactivate) {
-        return super.getSuccessResult(service.getGeneratorLocation(user_cus, mach_no,activate,inactivate));
+        return super.getSuccessResult(service.getGeneratorLocation(user_cus, mach_no,activate,inactivate,keyWord));
     }
 
 
