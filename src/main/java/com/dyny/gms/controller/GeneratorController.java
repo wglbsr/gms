@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -171,9 +172,26 @@ public class GeneratorController extends BaseController {
     @ResponseBody
     public String activateGenerator(
             @RequestParam(name = "generatorNoList[]", required = true) List<String> generatorNoList,
+            @RequestParam(name = "username", required = false, defaultValue = "") String username,
             @RequestParam(name = "activate", required = true) boolean activate) {
-        return super.getSuccessResult(generatorService.activateGenerator(generatorNoList, activate));
+        return super.getSuccessResult(generatorService.activateGenerator(generatorNoList, activate, username));
     }
+
+
+//    @RequestMapping(value = "/getActivateHistory", produces = {"application/json;charset=UTF-8"})
+//    @ResponseBody
+//    public String getActivateHistory(
+//            @RequestParam(name = "keyWord", required = false, defaultValue = "") String keyWord,
+//            @RequestParam(name = "customerNo", required = false, defaultValue = "") String customerNo,
+//            @RequestParam(name = "generatorNo", required = false, defaultValue = "") String generatorNo,
+//            @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
+//            @RequestParam(name = "endDate", required = false, defaultValue = "1854934178000l") long endDate,
+//            @RequestParam(name = "level", required = false, defaultValue = "0") int userLevel,
+//            @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
+//            @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+//            @RequestParam(name = "activate", required = false, defaultValue = "0") int activate) throws ParseException {
+//        return generatorService.getActivateHistory(keyWord, userLevel, generatorNo, customerNo, activate, pageNum, pageSize, startDate, endDate);
+//    }
 
     /**
      * 获得各个状态的油机数量,status参数暂时没有用上

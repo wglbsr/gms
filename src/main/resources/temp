@@ -1,47 +1,6 @@
-    <!--*****************************手动添加******************************************-->
-    <resultMap id="PageResultMap" type="com.dyny.gms.db.pojo.LankForPage">
-        <result column="st_id" jdbcType="INTEGER" property="stId"/>
-        <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
-        <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
-        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
-        <result column="start_num" jdbcType="NUMERIC" property="startNum"/>
-        <result column="end_num" jdbcType="NUMERIC" property="endNum"/>
-        <result column="s_station_no" jdbcType="NUMERIC" property="stationNo"/>
-        <result column="s_station_name" jdbcType="NUMERIC" property="stationName"/>
-        <result column="mach_name" jdbcType="NUMERIC" property="machName"/>
-    </resultMap>
-    <select id="selectByCustomerNoAndKeyWord" resultMap="PageResultMap">
-        SELECT
-        al.mach_no,
-        al.st_no,
-        cm.mach_name,
-        ts.s_station_name,
-        al.creat_time,
-        al.end_num,
-        al.start_num
-        FROM
-        [dbo].[Ap_lank] al
-        JOIN C_mach cm ON cm.mach_no = al.mach_no
-        <if test="customerNo != null and customerNo !=''">
-            and cm.user_cus=#{customerNo}
-        </if>
-        <if test="keyWord != null and keyWord !=''">
-            and (cm.mach_no like '%'+#{keyWord}+'%' or cm.mach_name like '%'+#{keyWord}+'%')
-        </if>
-        LEFT JOIN t_station ts ON ts.s_station_no = al.st_no
-        where 1=1
-        <if test="startDate>0">
-            AND al.creat_time &gt;= DATEADD(S,#{startDate},'1970-01-01 08:00:00')
-        </if>
-        <if test="endDate>0">
-            AND al.creat_time &lt;= DATEADD(S,#{endDate},'1970-01-01 08:00:00')
-        </if>
-    </select>
 
 
 
 
 
-
-
-    List<LankForPage> selectByCustomerNoAndKeyWord(@Param("startDate") long startDate,@Param("endDate") long endDate,@Param("customerNo") String customerNo, @Param("keyWord") String keyWord);
+ int insertBatch(List<ActivateHistory> activateHistoryList);

@@ -1,21 +1,24 @@
 package com.dyny.gms.service.impl;
 
-import com.dyny.gms.db.dao.GeneratorContactRelMapper;
-import com.dyny.gms.db.dao.GeneratorMapper;
-import com.dyny.gms.db.dao.GeneratorStationRelMapper;
+import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.ContactService;
 import com.dyny.gms.service.GeneratorService;
 import com.dyny.gms.utils.Tool;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GeneratorServiceImpl extends BaseService implements GeneratorService {
@@ -26,7 +29,10 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     GeneratorStationRelMapper generatorStationRelMapper;
     @Autowired
     GeneratorContactRelMapper generatorContactRelMapper;
-
+    @Autowired
+    ActivateHistoryMapper activateHistoryMapper;
+    @Autowired
+    StationMapper stationMapper;
 
     @Autowired
     ContactService contactService;
@@ -255,10 +261,14 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public int generatorRegister(Generator generator) {
         generator.setCreatTime(new Date());
-        generator.setActivated(false);
+        generator.setActivated(true);
         generator.setDeleted(false);
         generator.setTotalGenerateCnt(0);
         generator.setTotalGenerateTime(0);
+        List<String> generatorNoList = new ArrayList<>();
+        generatorNoList.add(generator.getMachNo());
+        //保存激活记录
+        this.saveActivateLog(generatorNoList, true, null);
         return generatorMapper.insert(generator);
     }
 
@@ -275,15 +285,100 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
-    public int activateGenerator(List<String> generatorNoList, boolean activate) {
+    public int activateGenerator(List<String> generatorNoList, boolean activate, String username) {
+        if (generatorNoList == null || generatorNoList.size() == 0) {
+            return 0;
+        }
+        //1.激活/停用油机
+        GeneratorExample generatorExample = new GeneratorExample();
+        generatorExample.or().andMachNoIn(generatorNoList);
+        Generator generator = new Generator();
+        generator.setActivated(activate);
+        int result = generatorMapper.updateByExampleSelective(generator, generatorExample);
+        //2.保存到激活/停用历史表
+        this.saveActivateLog(generatorNoList, activate, username);
+        return result;
+    }
+
+    @Override
+    public int saveActivateLog(List<String> generatorNoList, boolean activate, String username) {
         if (generatorNoList == null || generatorNoList.size() == 0) {
             return 0;
         }
         GeneratorExample generatorExample = new GeneratorExample();
         generatorExample.or().andMachNoIn(generatorNoList);
-        Generator generator = new Generator();
-        generator.setActivated(activate);
-        return generatorMapper.updateByExampleSelective(generator, generatorExample);
+        List<Generator> generatorList = generatorMapper.selectByExample(generatorExample);
+        List<String> stationNoList = generatorList.stream().map(Generator::getStNo).collect(Collectors.toList());
+        StationExample stationExample = new StationExample();
+        stationExample.or().andStationNoIn(stationNoList);
+        List<Station> stationList = stationMapper.selectByExample(stationExample);
+        List<ActivateHistory> activateHistoryList = new ArrayList<>();
+        for (Generator generatorTemp : generatorList) {
+            ActivateHistory activateHistory = new ActivateHistory();
+            String stationNo = generatorTemp.getStNo();
+            activateHistory.setCreateTime(new Date());
+            activateHistory.setActivated(activate);
+            activateHistory.setGeneratorNo(generatorTemp.getMachNo());
+            activateHistory.setGeneratorName(generatorTemp.getMachName());
+            if (Tool.StringUtil.validStr(username)) {
+                activateHistory.setUsername(username);
+            }
+            if (Tool.StringUtil.validStr(stationNo)) {
+                activateHistory.setStationNo(generatorTemp.getStNo());
+                for (Station stationTemp : stationList) {
+                    if (stationTemp.getStationNo().equals(stationNo)) {
+                        activateHistory.setStationName(stationTemp.getStationName());
+                        break;
+                    }
+                }
+            }
+            activateHistoryList.add(activateHistory);
+        }
+        if (activateHistoryList.size() == 0) {
+            return 0;
+        }
+        return activateHistoryMapper.insertBatch(activateHistoryList);
+    }
+
+    /**
+     * ***未完成
+     * 建议直接编写sql,减少代码量
+     * @param keyWord
+     * @param level
+     * @param generatorNo
+     * @param customerNo
+     * @param activate
+     * @param pageNum
+     * @param pageSize
+     * @param startTimestamp
+     * @param endTimestamp
+     * @return
+     * @throws ParseException
+     */
+    @Override
+    public String getActivateHistory(String keyWord, int level, String generatorNo, String customerNo, int activate, int pageNum, int pageSize, long startTimestamp, long endTimestamp) throws ParseException {
+        ActivateHistoryExample activateHistoryExample = new ActivateHistoryExample();
+        Date startDate = Tool.DateUtil.timestampToDate(startTimestamp);
+        Date endDate = Tool.DateUtil.timestampToDate(endTimestamp);
+        if (level >= super.ADMIN_LEVEL) {
+            if (Tool.StringUtil.validStr(keyWord)) {
+                activateHistoryExample.or().andGeneratorNoLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
+                activateHistoryExample.or().andGeneratorNameLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
+                activateHistoryExample.or().andStationNoLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
+                activateHistoryExample.or().andStationNameLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
+            }
+        } else if (level < super.ADMIN_LEVEL) {
+            if (Tool.StringUtil.validStr(keyWord)) {
+                activateHistoryExample.or().andGeneratorNoLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
+                activateHistoryExample.or().andGeneratorNameLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
+                activateHistoryExample.or().andStationNoLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
+                activateHistoryExample.or().andStationNameLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
+            }
+        }
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        List<ActivateHistory> activateHistoryList = activateHistoryMapper.selectByExample(activateHistoryExample);
+        int total = (int) page.getTotal();
+        return super.getSuccessResult(activateHistoryExample, pageNum, pageSize, total);
     }
 
     @Override
@@ -308,6 +403,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         }
         return cnt;
     }
+
 
     @Override
     public Generator getGeneratorDetail(String generatorNo) {

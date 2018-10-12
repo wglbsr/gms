@@ -3,6 +3,7 @@ package com.dyny.gms.service;
 import com.dyny.gms.db.pojo.Generator;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,10 @@ public interface GeneratorService {
 
     int changeBootVoltage(List<String> generatorNoList, BigDecimal startVoltage);
 
-    int activateGenerator(List<String> generatorNoList, boolean activate);
+    int activateGenerator(List<String> generatorNoList, boolean activate, String username);
+
+    int saveActivateLog(List<String> generatorNoList, boolean activate, String username);
+
+    String getActivateHistory(String keyWord,int level,String generatorNo, String customerNo, int activate, int pageNum, int pageSize, long startDate, long endDate) throws ParseException;
 
 }

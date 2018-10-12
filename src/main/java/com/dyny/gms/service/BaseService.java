@@ -44,6 +44,11 @@ public class BaseService extends BaseController {
         }
     }
 
+
+    protected long getFakeEndTimestamp() {
+        return 1854934178000l;
+    }
+
     /**
      * 获取所有子节点
      *
