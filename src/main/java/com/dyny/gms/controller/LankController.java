@@ -14,7 +14,6 @@ public class LankController extends BaseController {
 
 
     /**
-     * 二十三.	发电记录功能
      *
      * @param request
      * @param response
@@ -22,7 +21,7 @@ public class LankController extends BaseController {
      */
     @RequestMapping(value = "/getLankLog", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getActiveElecLog(@RequestParam(name = "keyWord", required = false, defaultValue = "") String keyWord,
+    public String getLankLog(@RequestParam(name = "keyWord", required = false, defaultValue = "") String keyWord,
                                    @RequestParam(name = "customerNo", required = true) String customerNo,
                                    @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                    @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
@@ -39,4 +38,6 @@ public class LankController extends BaseController {
                                  ) throws ParseException {
         return super.getSuccessResult(lankService.refuelManually(generatorNo,refuelVolume));
     }
+
+
 }

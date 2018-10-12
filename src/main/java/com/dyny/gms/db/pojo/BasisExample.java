@@ -306,53 +306,113 @@ public class BasisExample {
             return (Criteria) this;
         }
 
-        public Criteria andSysModeEqualTo(Boolean value) {
+        public Criteria andSysModeEqualTo(Integer value) {
             addCriterion("sys_mode =", value, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeNotEqualTo(Boolean value) {
+        public Criteria andSysModeNotEqualTo(Integer value) {
             addCriterion("sys_mode <>", value, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeGreaterThan(Boolean value) {
+        public Criteria andSysModeGreaterThan(Integer value) {
             addCriterion("sys_mode >", value, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSysModeGreaterThanOrEqualTo(Integer value) {
             addCriterion("sys_mode >=", value, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeLessThan(Boolean value) {
+        public Criteria andSysModeLessThan(Integer value) {
             addCriterion("sys_mode <", value, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeLessThanOrEqualTo(Boolean value) {
+        public Criteria andSysModeLessThanOrEqualTo(Integer value) {
             addCriterion("sys_mode <=", value, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeIn(List<Boolean> values) {
+        public Criteria andSysModeIn(List<Integer> values) {
             addCriterion("sys_mode in", values, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeNotIn(List<Boolean> values) {
+        public Criteria andSysModeNotIn(List<Integer> values) {
             addCriterion("sys_mode not in", values, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeBetween(Boolean value1, Boolean value2) {
+        public Criteria andSysModeBetween(Integer value1, Integer value2) {
             addCriterion("sys_mode between", value1, value2, "sysMode");
             return (Criteria) this;
         }
 
-        public Criteria andSysModeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSysModeNotBetween(Integer value1, Integer value2) {
             addCriterion("sys_mode not between", value1, value2, "sysMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeIsNull() {
+            addCriterion("pro_mode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeIsNotNull() {
+            addCriterion("pro_mode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeEqualTo(Boolean value) {
+            addCriterion("pro_mode =", value, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeNotEqualTo(Boolean value) {
+            addCriterion("pro_mode <>", value, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeGreaterThan(Boolean value) {
+            addCriterion("pro_mode >", value, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("pro_mode >=", value, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeLessThan(Boolean value) {
+            addCriterion("pro_mode <", value, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeLessThanOrEqualTo(Boolean value) {
+            addCriterion("pro_mode <=", value, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeIn(List<Boolean> values) {
+            addCriterion("pro_mode in", values, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeNotIn(List<Boolean> values) {
+            addCriterion("pro_mode not in", values, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeBetween(Boolean value1, Boolean value2) {
+            addCriterion("pro_mode between", value1, value2, "proMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProModeNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("pro_mode not between", value1, value2, "proMode");
             return (Criteria) this;
         }
 
@@ -1683,6 +1743,126 @@ public class BasisExample {
 
         public Criteria andStCoordinateNotBetween(String value1, String value2) {
             addCriterion("st_coordinate not between", value1, value2, "stCoordinate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageIsNull() {
+            addCriterion("output_voltage is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageIsNotNull() {
+            addCriterion("output_voltage is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageEqualTo(BigDecimal value) {
+            addCriterion("output_voltage =", value, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageNotEqualTo(BigDecimal value) {
+            addCriterion("output_voltage <>", value, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageGreaterThan(BigDecimal value) {
+            addCriterion("output_voltage >", value, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("output_voltage >=", value, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageLessThan(BigDecimal value) {
+            addCriterion("output_voltage <", value, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("output_voltage <=", value, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageIn(List<BigDecimal> values) {
+            addCriterion("output_voltage in", values, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageNotIn(List<BigDecimal> values) {
+            addCriterion("output_voltage not in", values, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("output_voltage between", value1, value2, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutputVoltageNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("output_voltage not between", value1, value2, "outputVoltage");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeIsNull() {
+            addCriterion("load_mode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeIsNotNull() {
+            addCriterion("load_mode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeEqualTo(Boolean value) {
+            addCriterion("load_mode =", value, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeNotEqualTo(Boolean value) {
+            addCriterion("load_mode <>", value, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeGreaterThan(Boolean value) {
+            addCriterion("load_mode >", value, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("load_mode >=", value, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeLessThan(Boolean value) {
+            addCriterion("load_mode <", value, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeLessThanOrEqualTo(Boolean value) {
+            addCriterion("load_mode <=", value, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeIn(List<Boolean> values) {
+            addCriterion("load_mode in", values, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeNotIn(List<Boolean> values) {
+            addCriterion("load_mode not in", values, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeBetween(Boolean value1, Boolean value2) {
+            addCriterion("load_mode between", value1, value2, "loadMode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoadModeNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("load_mode not between", value1, value2, "loadMode");
             return (Criteria) this;
         }
 

@@ -10,7 +10,9 @@ public class Basis {
 
     private Boolean state;
 
-    private Boolean sysMode;
+    private Integer sysMode;
+
+    private Boolean proMode;
 
     private BigDecimal lankLevel;
 
@@ -54,6 +56,10 @@ public class Basis {
 
     private String stCoordinate;
 
+    private BigDecimal outputVoltage;
+
+    private Boolean loadMode;
+
     private String item3;
 
     private String item4;
@@ -84,12 +90,20 @@ public class Basis {
         this.state = state;
     }
 
-    public Boolean getSysMode() {
+    public Integer getSysMode() {
         return sysMode;
     }
 
-    public void setSysMode(Boolean sysMode) {
+    public void setSysMode(Integer sysMode) {
         this.sysMode = sysMode;
+    }
+
+    public Boolean getProMode() {
+        return proMode;
+    }
+
+    public void setProMode(Boolean proMode) {
+        this.proMode = proMode;
     }
 
     public BigDecimal getLankLevel() {
@@ -258,6 +272,22 @@ public class Basis {
 
     public void setStCoordinate(String stCoordinate) {
         this.stCoordinate = stCoordinate == null ? null : stCoordinate.trim();
+    }
+
+    public BigDecimal getOutputVoltage() {
+        return outputVoltage;
+    }
+
+    public void setOutputVoltage(BigDecimal outputVoltage) {
+        this.outputVoltage = outputVoltage;
+    }
+
+    public Boolean getLoadMode() {
+        return loadMode;
+    }
+
+    public void setLoadMode(Boolean loadMode) {
+        this.loadMode = loadMode;
     }
 
     public String getItem3() {

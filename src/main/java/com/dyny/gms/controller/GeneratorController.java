@@ -2,6 +2,8 @@ package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.Generator;
+import com.dyny.gms.service.BaseService;
+import com.dyny.gms.service.BasisService;
 import com.dyny.gms.service.GeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import java.util.List;
 public class GeneratorController extends BaseController {
     @Autowired
     GeneratorService generatorService;
+    @Autowired
+    BasisService basisService;
 
     /**
      * 获得油机详情
@@ -175,6 +179,17 @@ public class GeneratorController extends BaseController {
             @RequestParam(name = "username", required = false, defaultValue = "") String username,
             @RequestParam(name = "activate", required = true) boolean activate) {
         return super.getSuccessResult(generatorService.activateGenerator(generatorNoList, activate, username));
+    }
+
+
+    @RequestMapping(value = "/getFuelInfo", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getFuelInfo(
+            @RequestParam(name = "offset", required = true) int offset,
+            @RequestParam(name = "machNo", required = true) String machNo,
+            @RequestParam(name = "startTimestamp", required = false, defaultValue = "") long startTimestamp,
+            @RequestParam(name = "endTimestamp", required = false, defaultValue = "") long endTimestamp) throws ParseException {
+        return super.getSuccessResult(basisService.getBasisByOffset(offset, machNo, startTimestamp, endTimestamp));
     }
 
 
