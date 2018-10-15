@@ -8,7 +8,6 @@ import com.dyny.gms.service.GeneratorService;
 import com.dyny.gms.utils.Tool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -310,6 +309,9 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         List<Generator> generatorList = generatorMapper.selectByExample(generatorExample);
         List<String> stationNoList = generatorList.stream().map(Generator::getStNo).collect(Collectors.toList());
         StationExample stationExample = new StationExample();
+        if (stationNoList == null || stationNoList.size() == 0) {
+            return 0;
+        }
         stationExample.or().andStationNoIn(stationNoList);
         List<Station> stationList = stationMapper.selectByExample(stationExample);
         List<ActivateHistory> activateHistoryList = new ArrayList<>();
@@ -343,6 +345,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     /**
      * ***未完成
      * 建议直接编写sql,减少代码量
+     *
      * @param keyWord
      * @param level
      * @param generatorNo
