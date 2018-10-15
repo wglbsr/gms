@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface BasisService {
 
-    List getBasisByOffset(int offset, String machNo, long startTimestamp, long endTimestamp) throws ParseException;
+    List getBasisByOffset(int offset, String machNo,int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException;
 }

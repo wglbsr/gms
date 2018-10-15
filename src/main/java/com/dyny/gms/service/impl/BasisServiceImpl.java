@@ -22,7 +22,7 @@ public class BasisServiceImpl extends BaseService implements BasisService {
     BasisMapper basisMapper;
 
     @Override
-    public List getBasisByOffset(int offset, String machNo, long startTimestamp, long endTimestamp) throws ParseException {
-        return basisMapper.selectByOffset(offset, machNo, Tool.DateUtil.timestampToDate(startTimestamp), Tool.DateUtil.timestampToDate(endTimestamp));
+    public List getBasisByOffset(int offset, String machNo,int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException {
+        return basisMapper.selectByOffset(offset, machNo,samplingInterval, Tool.DateUtil.timestampToDate(startTimestamp), Tool.DateUtil.timestampToDate(endTimestamp));
     }
 }

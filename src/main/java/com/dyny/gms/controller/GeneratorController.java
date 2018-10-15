@@ -182,14 +182,15 @@ public class GeneratorController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/getFuelInfo", produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/getBasisInfo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getFuelInfo(
             @RequestParam(name = "offset", required = true) int offset,
             @RequestParam(name = "machNo", required = true) String machNo,
+            @RequestParam(name = "samplingInterval", required = false,defaultValue = "3600") int samplingInterval,
             @RequestParam(name = "startTimestamp", required = false, defaultValue = "") long startTimestamp,
             @RequestParam(name = "endTimestamp", required = false, defaultValue = "") long endTimestamp) throws ParseException {
-        return super.getSuccessResult(basisService.getBasisByOffset(offset, machNo, startTimestamp, endTimestamp));
+        return super.getSuccessResult(basisService.getBasisByOffset(offset, machNo, samplingInterval,startTimestamp, endTimestamp));
     }
 
 

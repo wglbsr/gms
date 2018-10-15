@@ -32,6 +32,6 @@ public interface BasisMapper {
 
     int updateByPrimaryKey(Basis record);
 
-    List selectByOffset(@Param("offset") int offset, @Param("machNo") String machNo,
+    List selectByOffset(@Param("offset") int offset, @Param("machNo") String machNo,@Param("samplingInterval") int samplingInterval,//samplingInterval
                                @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

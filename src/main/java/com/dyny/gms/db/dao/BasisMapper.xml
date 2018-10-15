@@ -631,7 +631,7 @@
     S,
     '1970-01-01 08:00:00',
     inter_time
-    ) % (3600) &lt; #{offset,jdbcType=VARCHAR}
+    ) % (#{samplingInterval,jdbcType=INTEGER}) &lt; #{offset,jdbcType=VARCHAR}
     AND inter_time &lt; #{endDate,jdbcType=TIMESTAMP}
     AND inter_time &gt; #{startDate,jdbcType=TIMESTAMP}
     ORDER BY
