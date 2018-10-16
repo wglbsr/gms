@@ -1,12 +1,5 @@
 package com.dyny.gms.service.impl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.*;
-
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
@@ -22,6 +15,15 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Deprecated
 @Service
@@ -41,9 +43,9 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     private OperateMapper operateMapper;
 
     @Override
-    public List getGeneratorLocation(String username, String machNo, boolean activate, boolean inactivate,String keyWord) {
+    public List getGeneratorLocation(String username, String machNo, boolean activate, boolean inactivate, String keyWord) {
         // TODO Auto-generated method stub
-        return mapper.getGeneratorLocation(username, machNo, activate, inactivate,keyWord);
+        return mapper.getGeneratorLocation(username, machNo, activate, inactivate, keyWord);
     }
 
     @Override

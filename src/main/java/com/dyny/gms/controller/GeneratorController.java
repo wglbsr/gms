@@ -2,17 +2,14 @@ package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.Generator;
-import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.BasisService;
 import com.dyny.gms.service.GeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

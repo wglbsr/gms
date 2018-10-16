@@ -309,11 +309,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         List<Generator> generatorList = generatorMapper.selectByExample(generatorExample);
         List<String> stationNoList = generatorList.stream().map(Generator::getStNo).collect(Collectors.toList());
         StationExample stationExample = new StationExample();
-        if (stationNoList == null || stationNoList.size() == 0) {
-            return 0;
+        List<Station> stationList = new ArrayList<>();
+        if (stationNoList != null && stationNoList.size() > 0) {
+            stationExample.or().andStationNoIn(stationNoList);
+            stationList = stationMapper.selectByExample(stationExample);
         }
-        stationExample.or().andStationNoIn(stationNoList);
-        List<Station> stationList = stationMapper.selectByExample(stationExample);
         List<ActivateHistory> activateHistoryList = new ArrayList<>();
         for (Generator generatorTemp : generatorList) {
             ActivateHistory activateHistory = new ActivateHistory();
