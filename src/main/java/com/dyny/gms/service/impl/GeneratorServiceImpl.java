@@ -1,5 +1,6 @@
 package com.dyny.gms.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
@@ -326,7 +327,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
                 activateHistory.setUsername(username);
             }
             if (Tool.StringUtil.validStr(stationNo)) {
-                activateHistory.setStationNo(generatorTemp.getStNo());
+                activateHistory.setStationNo(stationNo);
                 for (Station stationTemp : stationList) {
                     if (stationTemp.getStationNo().equals(stationNo)) {
                         activateHistory.setStationName(stationTemp.getStationName());
@@ -382,6 +383,27 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         List<ActivateHistory> activateHistoryList = activateHistoryMapper.selectByExample(activateHistoryExample);
         int total = (int) page.getTotal();
         return super.getSuccessResult(activateHistoryExample, pageNum, pageSize, total);
+    }
+
+    @Override
+    public int saveGeneratorData(String generatorNo, JSONObject json) {
+        //1.保存到缓存
+
+        //2.json转为对象
+
+        //3.保存到DB
+
+        return 0;
+    }
+
+    @Override
+    public String getGeneratorDataFromCache(String generatorNo) {
+        //注意需要分页
+        //涉及的表c_mach,C_basis,t_station
+        //1.查找缓存
+
+
+        return null;
     }
 
     @Override
