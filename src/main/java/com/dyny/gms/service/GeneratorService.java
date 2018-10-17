@@ -1,6 +1,7 @@
 package com.dyny.gms.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.db.pojo.Basis;
 import com.dyny.gms.db.pojo.Generator;
 
 import java.math.BigDecimal;
@@ -54,7 +55,7 @@ public interface GeneratorService {
 
     String getActivateHistory(String keyWord, int level, String generatorNo, String customerNo, int activate, int pageNum, int pageSize, long startDate, long endDate) throws ParseException;
 
-    int saveGeneratorData(String generatorNo, JSONObject json);
+    int saveGeneratorData(String generatorNo, Basis json);
 
     String getGeneratorDataFromCache(String generatorNo);
 }

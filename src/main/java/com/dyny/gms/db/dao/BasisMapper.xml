@@ -130,7 +130,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.Basis">
-    insert into C_basis (id, mach_no, state, 
+    insert into C_basis (mach_no, state,
       sys_mode, pro_mode, lank_level, 
       cabinet_temperature, st_current, external_temperature, 
       st_voltage, al_voltage, city_electricity, 
@@ -141,7 +141,7 @@
       st_co, st_coordinate, output_voltage, 
       load_mode, item3, item4, 
       item5)
-    values (#{id,jdbcType=INTEGER}, #{machNo,jdbcType=VARCHAR}, #{state,jdbcType=BIT}, 
+    values ( #{machNo,jdbcType=VARCHAR}, #{state,jdbcType=BIT},
       #{sysMode,jdbcType=INTEGER}, #{proMode,jdbcType=BIT}, #{lankLevel,jdbcType=NUMERIC}, 
       #{cabinetTemperature,jdbcType=NUMERIC}, #{stCurrent,jdbcType=NUMERIC}, #{externalTemperature,jdbcType=NUMERIC}, 
       #{stVoltage,jdbcType=NUMERIC}, #{alVoltage,jdbcType=NUMERIC}, #{cityElectricity,jdbcType=BIT}, 
@@ -156,9 +156,6 @@
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Basis">
     insert into C_basis
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="machNo != null">
         mach_no,
       </if>
@@ -251,9 +248,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="machNo != null">
         #{machNo,jdbcType=VARCHAR},
       </if>
@@ -355,9 +349,6 @@
   <update id="updateByExampleSelective" parameterType="map">
     update C_basis
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
       <if test="record.machNo != null">
         mach_no = #{record.machNo,jdbcType=VARCHAR},
       </if>
@@ -455,7 +446,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update C_basis
-    set id = #{record.id,jdbcType=INTEGER},
+    set
       mach_no = #{record.machNo,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=BIT},
       sys_mode = #{record.sysMode,jdbcType=INTEGER},

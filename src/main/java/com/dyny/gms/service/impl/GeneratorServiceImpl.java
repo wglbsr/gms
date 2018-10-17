@@ -1,9 +1,11 @@
 package com.dyny.gms.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
+import com.dyny.gms.service.CacheService;
 import com.dyny.gms.service.ContactService;
 import com.dyny.gms.service.GeneratorService;
 import com.dyny.gms.utils.Tool;
@@ -33,9 +35,12 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     ActivateHistoryMapper activateHistoryMapper;
     @Autowired
     StationMapper stationMapper;
-
     @Autowired
     ContactService contactService;
+    @Autowired
+    CacheService cacheService;
+    @Autowired
+    BasisMapper basisMapper;
 
     /**
      * 根据基站编号和客户编号获取油机
@@ -386,14 +391,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
-    public int saveGeneratorData(String generatorNo, JSONObject json) {
-        //1.保存到缓存
-
-        //2.json转为对象
-
-        //3.保存到DB
-
-        return 0;
+    public int saveGeneratorData(String generatorNo, Basis basis) {
+        //1.转为json字符串保存到缓存
+        cacheService.setCache(generatorNo, JSONObject.toJSONString(basis));
+        //2.保存到DB
+        return basisMapper.insert(basis);
     }
 
     @Override

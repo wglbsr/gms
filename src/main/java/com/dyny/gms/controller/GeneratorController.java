@@ -1,6 +1,7 @@
 package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
+import com.dyny.gms.db.pojo.Basis;
 import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.service.BasisService;
 import com.dyny.gms.service.GeneratorService;
@@ -184,13 +185,17 @@ public class GeneratorController extends BaseController {
     public String getFuelInfo(
             @RequestParam(name = "offset", required = true) int offset,
             @RequestParam(name = "machNo", required = true) String machNo,
-            @RequestParam(name = "samplingInterval", required = false,defaultValue = "3600") int samplingInterval,
+            @RequestParam(name = "samplingInterval", required = false, defaultValue = "3600") int samplingInterval,
             @RequestParam(name = "startTimestamp", required = false, defaultValue = "") long startTimestamp,
             @RequestParam(name = "endTimestamp", required = false, defaultValue = "") long endTimestamp) throws ParseException {
-        return super.getSuccessResult(basisService.getBasisByOffset(offset, machNo, samplingInterval,startTimestamp, endTimestamp));
+        return super.getSuccessResult(basisService.getBasisByOffset(offset, machNo, samplingInterval, startTimestamp, endTimestamp));
     }
 
-
+    @RequestMapping(value = "/setBasis", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String setBasisInfo( @RequestBody Basis basis) throws ParseException {
+        return "";
+    }
 //    @RequestMapping(value = "/getActivateHistory", produces = {"application/json;charset=UTF-8"})
 //    @ResponseBody
 //    public String getActivateHistory(
