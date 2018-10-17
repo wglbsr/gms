@@ -35,11 +35,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //过滤掉登陆操作的token判断
-//        String userLevelStr = request.getParameter("userLevel");
-//        int level = Integer.valueOf(userLevelStr);
-//        if (level == this.DEMO_LEVEL) {
-//
-//        }
+        String uri = request.getRequestURI();
+        logger.info("request uri:" + uri);
         String origin = request.getHeader("Origin");
         response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, PATCH");

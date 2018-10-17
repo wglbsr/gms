@@ -54,7 +54,7 @@ public class UserServiceImpl extends BaseService implements UserService {
      */
     @Override
     public int deleteUserByUserNo(String userNo) {
-        if (CommonUtil.StringUtil.validStr(userNo)) {
+        if (CommonUtil.String.validStr(userNo)) {
             User user = new User();
             UserExample userExample = new UserExample();
             userExample.or().andUserNoEqualTo(userNo);
@@ -83,7 +83,7 @@ public class UserServiceImpl extends BaseService implements UserService {
             criteria1.andUserCusEqualTo(customerNo).andUserLevelLessThanOrEqualTo(level);
             criteria2.andUserCusEqualTo(customerNo).andUserLevelLessThanOrEqualTo(level);
         }
-        if (CommonUtil.StringUtil.validStr(searchContent)) {
+        if (CommonUtil.String.validStr(searchContent)) {
             criteria1.andUserNoLike(super.appendLike(searchContent));
             criteria2.andUsernameCnLike(super.appendLike(searchContent));
         }
@@ -106,7 +106,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> users = userMapper.selectByExample(example);
         List<String> userCustomerNoList = new ArrayList<>();
         for (User user : users) {
-            if (CommonUtil.StringUtil.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
+            if (CommonUtil.String.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
                 userCustomerNoList.add(user.getUserCus());
                 break;
             }
@@ -132,7 +132,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> users = userMapper.selectByExample(example);
         List<User> userList = new ArrayList<>();
         for (User user : users) {
-            if (CommonUtil.StringUtil.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
+            if (CommonUtil.String.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
                 userList.add(user);
             }
         }

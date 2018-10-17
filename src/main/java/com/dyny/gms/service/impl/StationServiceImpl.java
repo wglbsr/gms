@@ -156,7 +156,7 @@ public class StationServiceImpl extends BaseService implements StationService {
         StationExample stationExample = new StationExample();
 
         if (level >= this.ADMIN_LEVEL) {
-            if (CommonUtil.StringUtil.validStr(searchContent)) {
+            if (CommonUtil.String.validStr(searchContent)) {
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationAddressLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
@@ -164,7 +164,7 @@ public class StationServiceImpl extends BaseService implements StationService {
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andDeletedEqualTo(false);
             }
         } else {
-            if (CommonUtil.StringUtil.validStr(searchContent)) {
+            if (CommonUtil.String.validStr(searchContent)) {
                 stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationAddressLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
@@ -176,6 +176,11 @@ public class StationServiceImpl extends BaseService implements StationService {
         List result = stationMapper.selectByExample(stationExample);
         int total = (int) page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
+    }
+
+    @Override
+    public Station getStationDataFromCache(String stationNo) {
+        return null;
     }
 
     /**
@@ -334,7 +339,7 @@ public class StationServiceImpl extends BaseService implements StationService {
     public String getStationListByUsercus(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy) {
         StationExample example = new StationExample();
         if (level >= this.ADMIN_LEVEL) {
-            if (CommonUtil.StringUtil.validStr(searchContent)) {
+            if (CommonUtil.String.validStr(searchContent)) {
                 example.or().andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
                 example.or().andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
                 example.or().andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
@@ -345,7 +350,7 @@ public class StationServiceImpl extends BaseService implements StationService {
                 example.or().andDeletedEqualTo(false);
             }
         } else {
-            if (CommonUtil.StringUtil.validStr(searchContent)) {
+            if (CommonUtil.String.validStr(searchContent)) {
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
@@ -491,7 +496,7 @@ public class StationServiceImpl extends BaseService implements StationService {
 //    RegionMapper regionMapper;
 //
 //    public void insertRegion() throws IOException {
-//        List<String> valuesStr = CommonUtil.FileUtil.fileRead("C:\\Users\\wglbs\\OneDrive\\德远能源\\insert.sql");
+//        List<String> valuesStr = CommonUtil.File.fileRead("C:\\Users\\wglbs\\OneDrive\\德远能源\\insert.sql");
 //        for (String temp : valuesStr) {
 //            String[] tempStrList = temp.split(",");
 //            if (tempStrList.length == 3) {

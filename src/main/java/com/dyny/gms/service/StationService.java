@@ -43,4 +43,6 @@ public interface StationService {
     int deleteStation(String stationNo);
 
     String getWithoutGeneratorStationList(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy);
+
+    Station getStationDataFromCache(String stationNo);
 }

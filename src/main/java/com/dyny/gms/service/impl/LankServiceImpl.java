@@ -26,8 +26,8 @@ public class LankServiceImpl extends BaseService implements LankService {
     public String getLank(String customerNo, String keyWord, int pageNum, int pageSize, long startDate, long endDate) throws ParseException {
 //        LankExample lankExample = new LankExample();
 //        GeneratorExample generatorExample = new GeneratorExample();
-//        if (CommonUtil.StringUtil.validStr(customerNo)) {
-//            if (CommonUtil.StringUtil.validStr(keyWord)) {
+//        if (CommonUtil.String.validStr(customerNo)) {
+//            if (CommonUtil.String.validStr(keyWord)) {
 //                generatorExample.or().andCusNoEqualTo(customerNo).andMachNoLike(super.appendLike(keyWord));
 //                generatorExample.or().andCusNoEqualTo(customerNo).andMachNameLike(super.appendLike(keyWord));
 //                generatorExample.or().andCusNoEqualTo(customerNo).andStNoLike(super.appendLike(keyWord));
@@ -35,7 +35,7 @@ public class LankServiceImpl extends BaseService implements LankService {
 //                generatorExample.or().andCusNoEqualTo(customerNo);
 //            }
 //        } else {
-//            if (CommonUtil.StringUtil.validStr(keyWord)) {
+//            if (CommonUtil.String.validStr(keyWord)) {
 //                generatorExample.or().andMachNoLike(super.appendLike(keyWord));
 //                generatorExample.or().andMachNameLike(super.appendLike(keyWord));
 //                generatorExample.or().andStNoLike(super.appendLike(keyWord));
@@ -46,11 +46,11 @@ public class LankServiceImpl extends BaseService implements LankService {
 //        //获取油机编号
 //        List<String> generatorNoList = generators.stream().map(Generator::getMachNo).collect(Collectors.toList());
 //        if (startDate > 0 && endDate > 0) {
-//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeBetween(CommonUtil.DateUtil.timestampToDate(startDate), CommonUtil.DateUtil.timestampToDate(endDate));
+//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeBetween(CommonUtil.Date.timestampToDate(startDate), CommonUtil.Date.timestampToDate(endDate));
 //        } else if (startDate == 0 && endDate > 0) {
-//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeLessThan(CommonUtil.DateUtil.timestampToDate(endDate));
+//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeLessThan(CommonUtil.Date.timestampToDate(endDate));
 //        } else if (startDate > 0 && endDate == 0) {
-//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeGreaterThan(CommonUtil.DateUtil.timestampToDate(startDate));
+//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeGreaterThan(CommonUtil.Date.timestampToDate(startDate));
 //        } else {
 //            lankExample.or().andMachNoIn(generatorNoList);
 //        }

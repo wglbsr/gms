@@ -45,13 +45,13 @@ public class UnitServiceImpl extends BaseService implements UnitService {
     @Override
     public String getUnit(Unit unit, String searchContent, int pageNum, int pageSize, String orderBy) {
         UnitExample example = new UnitExample();
-        if (CommonUtil.StringUtil.validStr(searchContent)) {//模糊查找模式
+        if (CommonUtil.String.validStr(searchContent)) {//模糊查找模式
             example.or().andUnitNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andUnitNoLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andUnitAddressLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andRemarkLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
         } else {//精确查找模式
-            if (CommonUtil.StringUtil.validStr(unit.getUnitNo())) {
+            if (CommonUtil.String.validStr(unit.getUnitNo())) {
                 example.or().andUnitNoEqualTo(unit.getUnitNo()).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             } else {
                 example.or().andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);

@@ -1,6 +1,7 @@
 package com.dyny.gms.task;
 
 import com.dyny.gms.db.dao.GeneratorMapper;
+import com.dyny.gms.interceptor.LoginInterceptor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,7 @@ import java.io.File;
 @Configuration
 @EnableScheduling
 public class TimerTask {
-    private final Logger logger = Logger.getLogger(TimerTask.class);
+    private static Logger logger = Logger.getLogger(TimerTask.class);
 
 
     @Autowired

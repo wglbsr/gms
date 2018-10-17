@@ -55,7 +55,7 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     @Override
     public String getAllCustomer(String orderBy, int pageNum, int pageSize, String searchContent) {
         CustomerExample example = new CustomerExample();
-        if (CommonUtil.StringUtil.validStr(searchContent)) {
+        if (CommonUtil.String.validStr(searchContent)) {
             example.or().andDeletedEqualTo(false).andCustomerNameLike(super.appendLike(searchContent));
             example.or().andDeletedEqualTo(false).andCustomerNoLike(super.appendLike(searchContent));
         } else {

@@ -34,7 +34,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void setCache(String key, String value) {
-        if (CommonUtil.StringUtil.validStr(value)) {
+        if (CommonUtil.String.validStr(value)) {
             cacheDao.set(key, value);
         }
     }

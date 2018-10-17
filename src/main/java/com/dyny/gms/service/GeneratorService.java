@@ -55,7 +55,7 @@ public interface GeneratorService {
 
     String getActivateHistory(String keyWord, int level, String generatorNo, String customerNo, int activate, int pageNum, int pageSize, long startDate, long endDate) throws ParseException;
 
-    int saveGeneratorData(String generatorNo, Basis json);
+    int saveGeneratorData(Basis basis);
 
     String getGeneratorDataFromCache(String generatorNo);
 

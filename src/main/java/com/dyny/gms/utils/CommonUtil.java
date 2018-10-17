@@ -6,7 +6,6 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -28,7 +27,7 @@ import com.alibaba.fastjson.JSONObject;
 public class CommonUtil {
     private static Logger logger = Logger.getLogger(CommonUtil.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(java.lang.String[] args) throws IOException {
     }
 
     /**
@@ -36,25 +35,25 @@ public class CommonUtil {
      *
      * @author wglbsr
      */
-    public static class FileUtil {
+    public static class File {
         /**
          * @param proPath
          * @return
          * @throws IOException
          */
-        public static Properties getPros(String proPath) throws IOException {
-            String userDir = System.getProperty("user.dir");
-            String prosFilePath1 = userDir + File.separator + proPath;
-            String prosFilePath2 = userDir + File.separator + "src" + File.separator + proPath;
-            File test1 = new File(prosFilePath1);
-            File test2 = new File(prosFilePath2);
-            String realPath = "";
+        public static Properties getPros(java.lang.String proPath) throws IOException {
+            java.lang.String userDir = System.getProperty("user.dir");
+            java.lang.String prosFilePath1 = userDir + java.io.File.separator + proPath;
+            java.lang.String prosFilePath2 = userDir + java.io.File.separator + "src" + java.io.File.separator + proPath;
+            java.io.File test1 = new java.io.File(prosFilePath1);
+            java.io.File test2 = new java.io.File(prosFilePath2);
+            java.lang.String realPath = "";
             if (test1.exists()) {
                 realPath = prosFilePath1;
             } else if (test2.exists()) {
                 realPath = prosFilePath2;
             }
-            if (CommonUtil.StringUtil.validStr(realPath)) {
+            if (String.validStr(realPath)) {
                 FileInputStream fis = new FileInputStream(realPath);
                 Properties emailPros = new Properties();
                 emailPros.load(fis);
@@ -68,11 +67,11 @@ public class CommonUtil {
          * @param fileContent
          * @throws IOException
          */
-        public static void fileWrite(String filePath, List<String> fileContent) throws IOException {
+        public static void fileWrite(java.lang.String filePath, List<java.lang.String> fileContent) throws IOException {
             BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
             StringBuffer sb = new StringBuffer(4096);
-            for (String temp : fileContent) {
-                if (CommonUtil.StringUtil.validStr(temp.trim())) {
+            for (java.lang.String temp : fileContent) {
+                if (String.validStr(temp.trim())) {
                     sb.append(temp.trim()).append("\r\n");
                 }
             }
@@ -85,10 +84,10 @@ public class CommonUtil {
          * @return
          * @throws IOException
          */
-        public static List<String> fileRead(String filePath) throws IOException {
-            List<String> fileContent = new ArrayList<String>();
+        public static List<java.lang.String> fileRead(java.lang.String filePath) throws IOException {
+            List<java.lang.String> fileContent = new ArrayList<java.lang.String>();
             BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String temp = null;
+            java.lang.String temp = null;
             while ((temp = br.readLine()) != null) {
                 fileContent.add(temp.trim());
             }
@@ -101,9 +100,9 @@ public class CommonUtil {
          * @return
          * @throws IOException
          */
-        public static String readFile(String filePath) throws IOException {
+        public static java.lang.String readFile(java.lang.String filePath) throws IOException {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String temp = null;
+            java.lang.String temp = null;
             StringBuffer sb = new StringBuffer();
             while ((temp = br.readLine()) != null) {
                 sb.append(temp.trim());
@@ -115,7 +114,7 @@ public class CommonUtil {
         /**
          * @return
          */
-        public static String getProjectPath() {
+        public static java.lang.String getProjectPath() {
             return System.getProperty("user.dir");
         }
 
@@ -126,8 +125,8 @@ public class CommonUtil {
          * @return
          * @throws IOException
          */
-        public static Document readXml(String filename) throws IOException {
-            File f = new File(filename);
+        public static Document readXml(java.lang.String filename) throws IOException {
+            java.io.File f = new java.io.File(filename);
             if (f.exists()) {
                 logger.info("配置文件路径:" + filename);
             }
@@ -171,7 +170,7 @@ public class CommonUtil {
          * @return
          * @throws IOException
          */
-        public static String getPros(String key, String filePath) throws IOException {
+        public static java.lang.String getPros(java.lang.String key, java.lang.String filePath) throws IOException {
             Properties prop = new Properties();// 属性集合对象
             FileInputStream fis = new FileInputStream(filePath);// 属性文件流
             prop.load(fis);// 将属性文件流装载到Properties对象中
@@ -186,8 +185,8 @@ public class CommonUtil {
          * @param fileName
          * @throws Exception
          */
-        public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception {
-            File targetFile = new File(filePath);
+        public static void uploadFile(byte[] file, java.lang.String filePath, java.lang.String fileName) throws Exception {
+            java.io.File targetFile = new java.io.File(filePath);
             if (!targetFile.exists()) {
                 targetFile.mkdirs();
             }
@@ -205,14 +204,14 @@ public class CommonUtil {
      *
      * @author wglbsr
      */
-    public static class StringUtil {
+    public static class String {
         /**
          * 不为null,但等于""
          *
          * @param str
          * @return
          */
-        public static boolean hasEmptyStr(String str) {
+        public static boolean hasEmptyStr(java.lang.String str) {
             if (str != null && !"".equals(str)) {
                 return false;
             }
@@ -220,7 +219,7 @@ public class CommonUtil {
         }
 
 
-        public static String getRandomNum(int num) {
+        public static java.lang.String getRandomNum(int num) {
             return "" + (int) (Math.random() * Math.pow(10, num));
         }
 
@@ -232,7 +231,7 @@ public class CommonUtil {
          * @param errorMsg
          * @return
          */
-        public static String returnJson(boolean success, Object data, String errorMsg) {
+        public static java.lang.String returnJson(boolean success, Object data, java.lang.String errorMsg) {
             JSONObject jsonObj = new JSONObject();
             if (!success) {
                 jsonObj.put("result", -1);
@@ -252,8 +251,8 @@ public class CommonUtil {
          * @param data
          * @return
          */
-        public static String returnSimpleJson(boolean success, Object data) {
-            return CommonUtil.StringUtil.returnJson(success, data, "");
+        public static java.lang.String returnSimpleJson(boolean success, Object data) {
+            return String.returnJson(success, data, "");
         }
 
         /**
@@ -262,19 +261,19 @@ public class CommonUtil {
          * @param mailAddress
          * @return
          */
-        public static boolean isMailAddress(String mailAddress) {
+        public static boolean isMailAddress(java.lang.String mailAddress) {
             // TODO Auto-generated method stub
-            if (CommonUtil.StringUtil.matchStrByRegEx(mailAddress,
+            if (String.matchStrByRegEx(mailAddress,
                     "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$")) {
                 return true;
             }
             return false;
         }
 
-        public static boolean isAllMailAddress(String... mailAddress) {
+        public static boolean isAllMailAddress(java.lang.String... mailAddress) {
             // TODO Auto-generated method stub
-            for (String temp : mailAddress) {
-                if (!CommonUtil.StringUtil.isMailAddress(temp)) {
+            for (java.lang.String temp : mailAddress) {
+                if (!String.isMailAddress(temp)) {
                     return false;
                 }
             }
@@ -287,7 +286,7 @@ public class CommonUtil {
          * @param str
          * @return
          */
-        public static boolean validStr(String str) {
+        public static boolean validStr(java.lang.String str) {
             if (str != null && !"".equals(str)) {
                 return true;
             }
@@ -300,8 +299,8 @@ public class CommonUtil {
          * @param str1
          * @return
          */
-        public static boolean validStr(String... str1) {
-            for (String temp : str1) {
+        public static boolean validStr(java.lang.String... str1) {
+            for (java.lang.String temp : str1) {
                 if (!validStr(temp))
                     return false;
             }
@@ -314,9 +313,9 @@ public class CommonUtil {
          * @param str1
          * @return
          */
-        public static boolean lengthEq(String[]... str1) {
+        public static boolean lengthEq(java.lang.String[]... str1) {
             int length = str1[0].length;
-            for (String[] temp : str1) {
+            for (java.lang.String[] temp : str1) {
                 if (temp.length != length) {
                     return false;
                 }
@@ -328,17 +327,17 @@ public class CommonUtil {
          * @param str
          * @return
          */
-        public static boolean isNum(String str) {
-            String regExp = "^\\d+$";
+        public static boolean isNum(java.lang.String str) {
+            java.lang.String regExp = "^\\d+$";
             if (validStr(str) && str.matches(regExp)) {
                 return true;
             }
             return false;
         }
 
-        public static boolean isNum(String... str) {
-            for (String temp : str) {
-                if (!StringUtil.isNum(temp)) return false;
+        public static boolean isNum(java.lang.String... str) {
+            for (java.lang.String temp : str) {
+                if (!String.isNum(temp)) return false;
             }
 
             return true;
@@ -349,7 +348,7 @@ public class CommonUtil {
          * @param regEx
          * @return
          */
-        public static String findStrByRegEx(String content, String regEx) {
+        public static java.lang.String findStrByRegEx(java.lang.String content, java.lang.String regEx) {
             Pattern p = Pattern.compile(regEx);
             Matcher m = p.matcher(content);
             if (m.find()) {
@@ -361,11 +360,11 @@ public class CommonUtil {
         /**
          * unicode转换字符串
          */
-        public static String unicode2String(String unicode) {
+        public static java.lang.String unicode2String(java.lang.String unicode) {
 
             StringBuffer string = new StringBuffer();
 
-            String[] hex = unicode.split("\\\\u");
+            java.lang.String[] hex = unicode.split("\\\\u");
 
             for (int i = 1; i < hex.length; i++) {
 
@@ -387,7 +386,7 @@ public class CommonUtil {
          * @param index
          * @return
          */
-        public static String findStrByRegExMul(String content, String regEx, int index) {
+        public static java.lang.String findStrByRegExMul(java.lang.String content, java.lang.String regEx, int index) {
             Pattern p = Pattern.compile(regEx);
             Matcher m = p.matcher(content);
             if (m.find(index)) {
@@ -402,8 +401,8 @@ public class CommonUtil {
          * @param regEx
          * @return
          */
-        public static boolean matchStrByRegEx(String content, String regEx) {
-            return CommonUtil.StringUtil.findStrByRegEx(content, regEx) != null;
+        public static boolean matchStrByRegEx(java.lang.String content, java.lang.String regEx) {
+            return String.findStrByRegEx(content, regEx) != null;
         }
 
         /**
@@ -412,8 +411,8 @@ public class CommonUtil {
          * @param content
          * @return
          */
-        public static boolean isPhone(String content) {
-            String regExp = "^\\d{11}$";
+        public static boolean isPhone(java.lang.String content) {
+            java.lang.String regExp = "^\\d{11}$";
             return content.matches(regExp);
 
         }
@@ -421,7 +420,7 @@ public class CommonUtil {
         /**
          * 字符串转换unicode
          */
-        public static String string2Unicode(String string) {
+        public static java.lang.String string2Unicode(java.lang.String string) {
 
             StringBuffer unicode = new StringBuffer();
 
@@ -443,9 +442,9 @@ public class CommonUtil {
          * @param str1
          * @return
          */
-        public static String getValidOne(String... str1) {
-            for (String temp : str1) {
-                if (CommonUtil.StringUtil.validStr(temp)) {
+        public static java.lang.String getValidOne(java.lang.String... str1) {
+            for (java.lang.String temp : str1) {
+                if (String.validStr(temp)) {
                     return temp;
                 }
             }
@@ -458,17 +457,17 @@ public class CommonUtil {
      *
      * @author wglbsr
      */
-    public static class DateUtil {
+    public static class Date {
 
         /**
          * @return
          */
-        public static Date getNowDateTime() {
-            Date currentTime = new Date();
+        public static java.util.Date getNowDateTime() {
+            java.util.Date currentTime = new java.util.Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String dateString = formatter.format(currentTime);
+            java.lang.String dateString = formatter.format(currentTime);
             ParsePosition pos = new ParsePosition(8);
-            Date currentTime_2 = formatter.parse(dateString, pos);
+            java.util.Date currentTime_2 = formatter.parse(dateString, pos);
             return currentTime_2;
         }
 
@@ -478,9 +477,9 @@ public class CommonUtil {
          * @param timeStamp
          * @return
          */
-        public static String timestampToStr(long timeStamp) {
+        public static java.lang.String timestampToStr(long timeStamp) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//这个是你要转成后的时间的格式
-            String sd = sdf.format(new Date(timeStamp));   // 时间戳转换成时间
+            java.lang.String sd = sdf.format(new java.util.Date(timeStamp));   // 时间戳转换成时间
             return sd;
         }
 
@@ -491,20 +490,20 @@ public class CommonUtil {
          * @return
          * @throws ParseException
          */
-        public static Date timestampToDate(long timestamp) throws ParseException {
+        public static java.util.Date timestampToDate(long timestamp) throws ParseException {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String dateStr = format.format(timestamp);
-            Date date = format.parse(dateStr);
+            java.lang.String dateStr = format.format(timestamp);
+            java.util.Date date = format.parse(dateStr);
             return date;
         }
 
         /**
          * @return
          */
-        public static String getNowDate() {
-            Date currentTime = new Date();
+        public static java.lang.String getNowDate() {
+            java.util.Date currentTime = new java.util.Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String dateString = formatter.format(currentTime);
+            java.lang.String dateString = formatter.format(currentTime);
             return dateString;
         }
 
@@ -514,13 +513,13 @@ public class CommonUtil {
          * @param format
          * @return
          */
-        public static String getNowDate(String format) {
-            Date currentTime = new Date();
-            if (!CommonUtil.StringUtil.validStr(format)) {
+        public static java.lang.String getNowDate(java.lang.String format) {
+            java.util.Date currentTime = new java.util.Date();
+            if (!String.validStr(format)) {
                 format = "yyyyMMdd";
             }
             SimpleDateFormat formatter = new SimpleDateFormat(format);
-            String dateString = formatter.format(currentTime);
+            java.lang.String dateString = formatter.format(currentTime);
             return dateString;
         }
 
@@ -531,12 +530,12 @@ public class CommonUtil {
          * @param format
          * @return
          */
-        public static String getNDaysString(int nDays, String format) {
+        public static java.lang.String getNDaysString(int nDays, java.lang.String format) {
             Calendar calendar = Calendar.getInstance();
-            String thisFormat = CommonUtil.StringUtil.validStr(format) ? format : "yyyyMMdd";
+            java.lang.String thisFormat = String.validStr(format) ? format : "yyyyMMdd";
             SimpleDateFormat sdf2 = new SimpleDateFormat(thisFormat);
             calendar.add(Calendar.DATE, nDays);
-            String three_days_after = sdf2.format(calendar.getTime());
+            java.lang.String three_days_after = sdf2.format(calendar.getTime());
             return three_days_after;
         }
 
@@ -546,7 +545,7 @@ public class CommonUtil {
          * @param nDays
          * @return
          */
-        public static Date getNDaysDate(int nDays) {
+        public static java.util.Date getNDaysDate(int nDays) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
@@ -563,14 +562,14 @@ public class CommonUtil {
          * @return
          */
         // private List<String> DatePatternList = null;
-        public static String getNowDateStringByPattern(String pattern) {
+        public static java.lang.String getNowDateStringByPattern(java.lang.String pattern) {
             // 字符串是否合法
-            if (!CommonUtil.StringUtil.validStr(pattern))
+            if (!String.validStr(pattern))
                 return null;
-            Date currentTime = new Date();
+            java.util.Date currentTime = new java.util.Date();
             // 此处应该作格式合法判断
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-            String dateString = formatter.format(currentTime);
+            java.lang.String dateString = formatter.format(currentTime);
             return dateString;
         }
 
@@ -579,13 +578,13 @@ public class CommonUtil {
          * @param pattern
          * @return
          */
-        public static String getDateStringByPattern(Date date, String pattern) {
+        public static java.lang.String getDateStringByPattern(java.util.Date date, java.lang.String pattern) {
             // 字符串是否合法
-            if (!CommonUtil.StringUtil.validStr(pattern))
+            if (!String.validStr(pattern))
                 return null;
             // 此处应该作格式合法判断
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-            String dateString = formatter.format(date);
+            java.lang.String dateString = formatter.format(date);
             return dateString;
         }
 
@@ -595,7 +594,7 @@ public class CommonUtil {
          * @return
          * @throws ParseException
          */
-        public static Date getDateStringByPattern(String date, String pattern) throws ParseException {
+        public static java.util.Date getDateStringByPattern(java.lang.String date, java.lang.String pattern) throws ParseException {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             return simpleDateFormat.parse(date);
         }
@@ -609,10 +608,10 @@ public class CommonUtil {
          * @return
          * @throws ParseException
          */
-        public static String getDateStringByPattern(String date, String fromPattern, String toPattern)
+        public static java.lang.String getDateStringByPattern(java.lang.String date, java.lang.String fromPattern, java.lang.String toPattern)
                 throws ParseException {
-            Date temp = CommonUtil.DateUtil.getDateStringByPattern(date, fromPattern);
-            return CommonUtil.DateUtil.getDateStringByPattern(temp, toPattern);
+            java.util.Date temp = Date.getDateStringByPattern(date, fromPattern);
+            return Date.getDateStringByPattern(temp, toPattern);
         }
 
         // /**
@@ -628,12 +627,4 @@ public class CommonUtil {
         // }
     }
 
-    /**
-     * 短信操作类
-     *
-     * @author wglbsr
-     */
-    public static class MessageUtil {
-
-    }
 }

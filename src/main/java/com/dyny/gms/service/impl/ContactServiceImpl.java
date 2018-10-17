@@ -78,7 +78,7 @@ public class ContactServiceImpl extends BaseService implements ContactService {
     @Override
     public String getContact(Contact contact, String searchContent, int pageNum, int pageSize, String orderBy) {
         ContactExample example = new ContactExample();
-        if (CommonUtil.StringUtil.validStr(searchContent)) {//模糊查找模式
+        if (CommonUtil.String.validStr(searchContent)) {//模糊查找模式
             example.or().andContactNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andContactPhoneLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andRemarkLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);

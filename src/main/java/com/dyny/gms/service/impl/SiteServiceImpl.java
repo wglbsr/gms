@@ -106,7 +106,7 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         ExportParams params = new ExportParams("发电记录表", "发电记录表");
         params.setType(ExcelType.XSSF);
         Workbook workbook = ExcelExportUtil.exportExcel(params, GenerateRecordEntity.class, list);
-        String excelFileName = CommonUtil.DateUtil.getNowDateStringByPattern("yyyyMMddHHmmssSSS") + user_cus + ".xlsx";
+        String excelFileName = CommonUtil.Date.getNowDateStringByPattern("yyyyMMddHHmmssSSS") + user_cus + ".xlsx";
         FileOutputStream fos = new FileOutputStream(this.path + File.separator + excelFileName);
         workbook.write(fos);
         fos.close();
@@ -153,8 +153,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         page.setOrderBy(orderBy);
         List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate);
         long total = page.getTotal();
-        logger.info("******************************ADMIN_LEVEL:"+super.ADMIN_LEVEL);
-        logger.info("******************************MAX_SQL_SIZE:"+super.MAX_SQL_SIZE);
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
 

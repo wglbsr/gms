@@ -55,11 +55,11 @@ public class GenerateRecordEntity {
 
 
     public void setStart_time(long start_time) {
-        this.start_time = CommonUtil.DateUtil.timestampToStr(start_time);
+        this.start_time = CommonUtil.Date.timestampToStr(start_time);
     }
 
     public void setEnd_time(long end_time) {
-        this.end_time = CommonUtil.DateUtil.timestampToStr(end_time);
+        this.end_time = CommonUtil.Date.timestampToStr(end_time);
     }
 
     public void setStart_time(String start_time) {
@@ -102,11 +102,11 @@ public class GenerateRecordEntity {
 
     public void setE_start_time(long e_end_time) {
 
-        this.e_end_time = CommonUtil.DateUtil.timestampToStr(e_end_time);
+        this.e_end_time = CommonUtil.Date.timestampToStr(e_end_time);
     }
 
     public void setE_end_time(long e_end_time) {
-        this.e_end_time = CommonUtil.DateUtil.timestampToStr(e_end_time);
+        this.e_end_time = CommonUtil.Date.timestampToStr(e_end_time);
     }
 
     public String getS_station_no() {
@@ -114,7 +114,7 @@ public class GenerateRecordEntity {
     }
 
     public void setS_station_no(String s_station_no) {
-        this.s_station_no = CommonUtil.StringUtil.validStr(s_station_no)?s_station_no:"暂无";
+        this.s_station_no = CommonUtil.String.validStr(s_station_no)?s_station_no:"暂无";
     }
 
     public String getS_station_name() {
@@ -122,7 +122,7 @@ public class GenerateRecordEntity {
     }
 
     public void setS_station_name(String s_station_name) {
-        this.s_station_name = CommonUtil.StringUtil.validStr(s_station_name)?s_station_name:"暂无";
+        this.s_station_name = CommonUtil.String.validStr(s_station_name)?s_station_name:"暂无";
     }
 
     @Excel(name = "基站编码", width = 30, isImportField = "true_st")

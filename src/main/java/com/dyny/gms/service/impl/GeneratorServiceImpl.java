@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -92,7 +91,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         criteria.andCusNoEqualTo(cusNo).andMachNoEqualTo(machNo);
         //判断是关联还是取消关联
         if (!relateFlag) {
-            if (!CommonUtil.StringUtil.validStr(stationNo)) {
+            if (!CommonUtil.String.validStr(stationNo)) {
                 return 0;
             }
             criteria.andStNoEqualTo(stationNo);
@@ -131,14 +130,14 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public int insertToGeneratorContactTable(String machNo, List<Integer> contactIdList) {
-        if (!CommonUtil.StringUtil.validStr(machNo)) {
+        if (!CommonUtil.String.validStr(machNo)) {
             return 0;
         }
         int cnt = 0;
         for (Integer contactId : contactIdList) {
             GeneratorContactRel generatorContactRel = new GeneratorContactRel();
             generatorContactRel.setContactId(contactId);
-            generatorContactRel.setCreateTime(new Date());
+            generatorContactRel.setCreateTime(new java.util.Date());
             generatorContactRel.setDeleted(false);
             generatorContactRel.setGeneratorNo(machNo);
             cnt += generatorContactRelMapper.insert(generatorContactRel);
@@ -156,12 +155,12 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public int insertToGeneratorStationTable(String machNo, String stationNo) {
-        if (CommonUtil.StringUtil.validStr(machNo, stationNo)) {
+        if (CommonUtil.String.validStr(machNo, stationNo)) {
             GeneratorStationRel generatorStationRel = new GeneratorStationRel();
             generatorStationRel.setDeleted(false);
             generatorStationRel.setGeneratorNo(machNo);
             generatorStationRel.setStationNo(stationNo);
-            generatorStationRel.setCreateTime(new Date());
+            generatorStationRel.setCreateTime(new java.util.Date());
             return generatorStationRelMapper.insert(generatorStationRel);
         } else {
             return 0;
@@ -179,17 +178,17 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     public int logicDeleteGeneratorStationTable(String machNo, String stationNo) {
         GeneratorStationRel generatorStationRel = new GeneratorStationRel();
         GeneratorStationRelExample generatorStationRelExample = new GeneratorStationRelExample();
-        if (CommonUtil.StringUtil.validStr(machNo, stationNo)) {
+        if (CommonUtil.String.validStr(machNo, stationNo)) {
             generatorStationRelExample.or().andGeneratorNoEqualTo(machNo).andStationNoEqualTo(stationNo).andDeletedEqualTo(false);
-        } else if (CommonUtil.StringUtil.validStr(stationNo) && !CommonUtil.StringUtil.validStr(machNo)) {
+        } else if (CommonUtil.String.validStr(stationNo) && !CommonUtil.String.validStr(machNo)) {
             generatorStationRelExample.or().andStationNoEqualTo(stationNo).andDeletedEqualTo(false);
-        } else if (!CommonUtil.StringUtil.validStr(stationNo) && CommonUtil.StringUtil.validStr(machNo)) {
+        } else if (!CommonUtil.String.validStr(stationNo) && CommonUtil.String.validStr(machNo)) {
             generatorStationRelExample.or().andGeneratorNoEqualTo(machNo).andDeletedEqualTo(false);
         } else {
             return 0;
         }
         generatorStationRel.setDeleted(true);
-        generatorStationRel.setModifyTime(new Date());
+        generatorStationRel.setModifyTime(new java.util.Date());
         return generatorStationRelMapper.updateByExampleSelective(generatorStationRel, generatorStationRelExample);
     }
 
@@ -203,14 +202,14 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public int logicDeleteGeneratorContactTable(String machNo, List<Integer> contactIdList) {
-        if (contactIdList == null || contactIdList.size() == 0 || CommonUtil.StringUtil.validStr(machNo)) {
+        if (contactIdList == null || contactIdList.size() == 0 || CommonUtil.String.validStr(machNo)) {
             return 0;
         }
         GeneratorContactRelExample generatorContactRelExample = new GeneratorContactRelExample();
         generatorContactRelExample.or().andContactIdIn(contactIdList).andGeneratorNoEqualTo(machNo);
         GeneratorContactRel generatorContactRel = new GeneratorContactRel();
         generatorContactRel.setDeleted(true);
-        generatorContactRel.setModifyTime(new Date());
+        generatorContactRel.setModifyTime(new java.util.Date());
         return generatorContactRelMapper.updateByExample(generatorContactRel, generatorContactRelExample);
     }
 
@@ -243,11 +242,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         Generator generator = new Generator();
         generator.setStNo("");
         GeneratorExample generatorExample = new GeneratorExample();
-        if (CommonUtil.StringUtil.validStr(stationNo, generatorNo)) {
+        if (CommonUtil.String.validStr(stationNo, generatorNo)) {
             generatorExample.or().andStNoEqualTo(stationNo).andMachNoEqualTo(generatorNo);
-        } else if (CommonUtil.StringUtil.validStr(stationNo) && !CommonUtil.StringUtil.validStr(generatorNo)) {
+        } else if (CommonUtil.String.validStr(stationNo) && !CommonUtil.String.validStr(generatorNo)) {
             generatorExample.or().andStNoEqualTo(stationNo);
-        } else if (!CommonUtil.StringUtil.validStr(stationNo) && CommonUtil.StringUtil.validStr(generatorNo)) {
+        } else if (!CommonUtil.String.validStr(stationNo) && CommonUtil.String.validStr(generatorNo)) {
             generatorExample.or().andMachNoEqualTo(generatorNo);
         } else {
             return 0;
@@ -264,7 +263,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
 
     @Override
     public int generatorRegister(Generator generator) {
-        generator.setCreatTime(new Date());
+        generator.setCreatTime(new java.util.Date());
         generator.setActivated(true);
         generator.setDeleted(false);
         generator.setTotalGenerateCnt(0);
@@ -323,17 +322,17 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         for (Generator generatorTemp : generatorList) {
             ActivateHistory activateHistory = new ActivateHistory();
             String stationNo = generatorTemp.getStNo();
-            activateHistory.setCreateTime(new Date());
+            activateHistory.setCreateTime(new java.util.Date());
             activateHistory.setActivated(activate);
             activateHistory.setGeneratorNo(generatorTemp.getMachNo());
             activateHistory.setGeneratorName(generatorTemp.getMachName());
-            if (CommonUtil.StringUtil.validStr(username)) {
+            if (CommonUtil.String.validStr(username)) {
                 activateHistory.setUsername(username);
             }
-            if (CommonUtil.StringUtil.validStr(customerNo)) {
+            if (CommonUtil.String.validStr(customerNo)) {
                 activateHistory.setCustomerNo(customerNo);
             }
-            if (CommonUtil.StringUtil.validStr(stationNo)) {
+            if (CommonUtil.String.validStr(stationNo)) {
                 activateHistory.setStationNo(stationNo);
                 for (Station stationTemp : stationList) {
                     if (stationTemp.getStationNo().equals(stationNo)) {
@@ -369,17 +368,17 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public String getActivateHistory(String keyWord, int level, String generatorNo, String customerNo, int activate, int pageNum, int pageSize, long startTimestamp, long endTimestamp) throws ParseException {
         ActivateHistoryExample activateHistoryExample = new ActivateHistoryExample();
-        Date startDate = CommonUtil.DateUtil.timestampToDate(startTimestamp);
-        Date endDate = CommonUtil.DateUtil.timestampToDate(endTimestamp);
+        java.util.Date startDate = CommonUtil.Date.timestampToDate(startTimestamp);
+        java.util.Date endDate = CommonUtil.Date.timestampToDate(endTimestamp);
         if (level >= super.ADMIN_LEVEL) {
-            if (CommonUtil.StringUtil.validStr(keyWord)) {
+            if (CommonUtil.String.validStr(keyWord)) {
                 activateHistoryExample.or().andGeneratorNoLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andGeneratorNameLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andStationNoLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andStationNameLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
             }
         } else if (level < super.ADMIN_LEVEL) {
-            if (CommonUtil.StringUtil.validStr(keyWord)) {
+            if (CommonUtil.String.validStr(keyWord)) {
                 activateHistoryExample.or().andGeneratorNoLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andGeneratorNameLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andStationNoLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
@@ -393,11 +392,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
-    public int saveGeneratorData(String generatorNo, Basis basis) {
+    public int saveGeneratorData(Basis basis) {
         //1.保存到缓存/
         //1.1 方案1:直接保存basis
         //1.2 方案2:翻译成原来的视图再保存
-        cacheService.setCache(generatorNo, JSONObject.toJSONString(basis));
+        cacheService.setCache(basis.getMachNo(), JSONObject.toJSONString(basis));
 
 
         //2.保存到DB
@@ -407,7 +406,35 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public String getGeneratorDataFromCache(String generatorNo) {
         //注意需要分页
+        String basisJsonStr = cacheService.getStringCache(generatorNo);
+        Basis basis = JSONObject.parseObject(basisJsonStr, Basis.class);
+
+
+        //2.油机
+        //2.1查找缓存,存在则跳过2.2,2.3
+        //2.2查找数据库
+        //2.3保存到缓存
+        cacheService.getStringCache(generatorNo);
+        GeneratorExample generatorExample = new GeneratorExample();
+        generatorExample.or().andMachNoEqualTo(generatorNo);
+        List<Generator> generatorList = generatorMapper.selectByExample(generatorExample);
+        Generator generator = generatorList.get(0);
+
+        //3.基站
+        String stationNo = generator.getStNo();
+        List<Station> stationList = null;
+        if (CommonUtil.String.validStr(stationNo)) {
+            StationExample stationExample = new StationExample();
+            stationExample.or().andStationNoEqualTo(stationNo);
+            stationList = stationMapper.selectByExample(stationExample);
+        }
+        if (stationList != null && stationList.size() > 0) {
+            Station station = stationList.get(0);
+        }
+
         //涉及的表c_mach,C_basis,t_station
+
+
         //1.查找缓存
 
 
@@ -430,7 +457,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
 
     @Override
     public int logicDeleteGeneratorContactByStationNo(String stationNo) {
-        if (!CommonUtil.StringUtil.validStr(stationNo)) {
+        if (!CommonUtil.String.validStr(stationNo)) {
             return 0;
         }
         int cnt = 0;
@@ -443,7 +470,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         if (generatorIds.size() > 0) {
             GeneratorContactRel generatorContactRel = new GeneratorContactRel();
             generatorContactRel.setDeleted(true);
-            generatorContactRel.setModifyTime(new Date());
+            generatorContactRel.setModifyTime(new java.util.Date());
             GeneratorContactRelExample generatorContactRelExample = new GeneratorContactRelExample();
             generatorContactRelExample.or().andGeneratorNoIn(generatorIds).andDeletedEqualTo(false);
             cnt = generatorContactRelMapper.updateByExampleSelective(generatorContactRel, generatorContactRelExample);
