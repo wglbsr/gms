@@ -3,20 +3,17 @@ package com.dyny.gms.service;
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.User;
 import com.dyny.gms.utils.Tool;
-import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DigestUtils;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class BaseService extends BaseController {
-
-    protected static int ADMIN_LEVEL = 200;
-
-    protected static int MAX_SQL_SIZE = 50;
+    @Value("${system.config.admin.level}")
+    protected int ADMIN_LEVEL;
+    @Value("${database.sql.max}")
+    protected int MAX_SQL_SIZE;
 
     /**
      * 获取所有子用户（只获取用户编号）
@@ -44,10 +41,6 @@ public class BaseService extends BaseController {
         }
     }
 
-
-    protected long getFakeEndTimestamp() {
-        return 1854934178000l;
-    }
 
     /**
      * 获取所有子节点

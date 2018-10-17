@@ -11,6 +11,7 @@ import com.dyny.gms.service.SiteService;
 import com.dyny.gms.utils.Tool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,8 @@ import java.util.Map;
 @Deprecated
 @Service
 public class SiteServiceImpl extends BaseService implements SiteService {
+    private final Logger logger = Logger.getLogger(SiteServiceImpl.class);
+
     @Override
     public String getSiteWarningList(String user_cus, int pageNum, int pageSize, int action,
                                      long startDate, long endDate) {
@@ -150,6 +153,8 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         page.setOrderBy(orderBy);
         List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate);
         long total = page.getTotal();
+        logger.info("******************************ADMIN_LEVEL:"+super.ADMIN_LEVEL);
+        logger.info("******************************MAX_SQL_SIZE:"+super.MAX_SQL_SIZE);
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
 

@@ -49,6 +49,7 @@ public class CacheServiceImpl implements CacheService {
     }
 
     private void initSystemConfig() {
-        logger.info("正常执行缓存加载任务initSystemConfig..........");
+
+//        logger.info("正常执行缓存加载任务initSystemConfig..........");
     }
 }
