@@ -8,7 +8,7 @@ import com.dyny.gms.db.dao.SiteMapper;
 import com.dyny.gms.exportEntity.GenerateRecordEntity;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SiteService;
-import com.dyny.gms.utils.Tool;
+import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.log4j.Logger;
@@ -106,7 +106,7 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         ExportParams params = new ExportParams("发电记录表", "发电记录表");
         params.setType(ExcelType.XSSF);
         Workbook workbook = ExcelExportUtil.exportExcel(params, GenerateRecordEntity.class, list);
-        String excelFileName = Tool.DateUtil.getNowDateStringByPattern("yyyyMMddHHmmssSSS") + user_cus + ".xlsx";
+        String excelFileName = CommonUtil.DateUtil.getNowDateStringByPattern("yyyyMMddHHmmssSSS") + user_cus + ".xlsx";
         FileOutputStream fos = new FileOutputStream(this.path + File.separator + excelFileName);
         workbook.write(fos);
         fos.close();

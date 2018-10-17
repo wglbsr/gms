@@ -278,19 +278,26 @@
   <!--*************************************手动添加***************************************************************************************************************************************************************-->
 
   <insert id="insertBatch" parameterType="java.util.List">
-    insert into t_activate_history (s_generator_no, b_activated,
-    d_create_time, s_username, s_generator_name,
-    s_station_no, s_station_name,s_customer_no) values
+    insert into t_activate_history (
+    s_generator_no,
+    b_activated,
+    s_username,
+    s_generator_name,
+    s_station_no,
+    s_station_name,
+    s_customer_no,
+    d_create_time
+    ) values
     <foreach collection="list" item="item" index="index" separator=",">
       (
       #{item.generatorNo,jdbcType=VARCHAR},
       #{item.activated,jdbcType=BIT},
-      #{item.createTime,jdbcType=TIMESTAMP},
       #{item.username,jdbcType=VARCHAR},
       #{item.generatorName,jdbcType=VARCHAR},
       #{item.stationNo,jdbcType=VARCHAR},
       #{item.stationName,jdbcType=VARCHAR},
-      #{customerNo,jdbcType=VARCHAR}
+      #{item.customerNo,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}
       )
     </foreach>
   </insert>

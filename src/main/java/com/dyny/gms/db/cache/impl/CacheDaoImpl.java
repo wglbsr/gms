@@ -2,6 +2,7 @@ package com.dyny.gms.db.cache.impl;
 
 import com.dyny.gms.db.cache.CacheDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Repository;
 public class CacheDaoImpl implements CacheDao {
     @Autowired
     StringRedisTemplate template;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Override
     public void set(String key, String value) {

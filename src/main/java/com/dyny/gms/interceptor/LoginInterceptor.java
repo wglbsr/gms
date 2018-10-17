@@ -1,21 +1,19 @@
 package com.dyny.gms.interceptor;
 
-import com.dyny.gms.utils.EhcacheUtil;
 import org.apache.log4j.Logger;
-import org.springframework.ui.ModelMap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.util.Set;
 
 /**
  * 登陆拦截器
  */
 public class LoginInterceptor implements HandlerInterceptor {
-
+    @Value("${system.config.demo.level}")
+    private int DEMO_LEVEL;
     private static Logger logger = Logger.getLogger(LoginInterceptor.class);
     public static String LOGIN_CACHE_NAME = "loginInfo";
     public static String TOKEN_NAME = "token";
@@ -37,7 +35,11 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //过滤掉登陆操作的token判断
-
+//        String userLevelStr = request.getParameter("userLevel");
+//        int level = Integer.valueOf(userLevelStr);
+//        if (level == this.DEMO_LEVEL) {
+//
+//        }
         String origin = request.getHeader("Origin");
         response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, PATCH");

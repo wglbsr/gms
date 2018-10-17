@@ -37,4 +37,6 @@ public interface GeneratorMapper {
     int calculateGenerateTimeToApTime();
 
     int updateByPrimaryKeySelectiveBatch(List<Generator> records);
+
+    List<String> getAllGeneratorNo();
 }

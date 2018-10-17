@@ -584,6 +584,12 @@
              UPDATE ap_time set i_generate_time = DATEDIFF(mi, start_time, end_time)
     </update>
 
+  <select id="getAllGeneratorNo" resultType="java.lang.String">
+    select machNo as generatorNo from C_mach
+  </select>
+
+
+
   <update id="updateByPrimaryKeySelectiveBatch" parameterType="java.util.List">
     <foreach collection="list" item="item" index="index" separator=";">
       update C_mach

@@ -3,12 +3,11 @@ package com.dyny.gms.service.impl;
 import com.dyny.gms.db.dao.BasisMapper;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.BasisService;
-import com.dyny.gms.utils.Tool;
+import com.dyny.gms.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +22,6 @@ public class BasisServiceImpl extends BaseService implements BasisService {
 
     @Override
     public List getBasisByOffset(int offset, String machNo,int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException {
-        return basisMapper.selectByOffset(offset, machNo,samplingInterval, Tool.DateUtil.timestampToDate(startTimestamp), Tool.DateUtil.timestampToDate(endTimestamp));
+        return basisMapper.selectByOffset(offset, machNo,samplingInterval, CommonUtil.DateUtil.timestampToDate(startTimestamp), CommonUtil.DateUtil.timestampToDate(endTimestamp));
     }
 }

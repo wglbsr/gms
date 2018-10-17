@@ -2,7 +2,7 @@ package com.dyny.gms.service;
 
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.User;
-import com.dyny.gms.utils.Tool;
+import com.dyny.gms.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DigestUtils;
 
@@ -23,7 +23,7 @@ public class BaseService extends BaseController {
      * @param target
      */
     protected void getAllChildrenCusNo(String parentCusNo, List<User> users, List<String> target) {
-        if (!Tool.StringUtil.validStr(parentCusNo)) {
+        if (!CommonUtil.StringUtil.validStr(parentCusNo)) {
             return;
         }
         Iterator it = users.iterator();
@@ -34,7 +34,7 @@ public class BaseService extends BaseController {
                 continue;
             }
             String userParentCus = user.getParentCusNo();
-            if (Tool.StringUtil.validStr(userParentCus) && userParentCus.equals(parentCusNo)) {
+            if (CommonUtil.StringUtil.validStr(userParentCus) && userParentCus.equals(parentCusNo)) {
                 target.add(userCus);
                 getAllChildrenCusNo(userCus, users, target);
             }
@@ -50,7 +50,7 @@ public class BaseService extends BaseController {
      * @param target
      */
     protected void getAllChildren(String parentCusNo, List<User> users, List<User> target) {
-        if (!Tool.StringUtil.validStr(parentCusNo)) {
+        if (!CommonUtil.StringUtil.validStr(parentCusNo)) {
             return;
         }
         Iterator it = users.iterator();
@@ -61,7 +61,7 @@ public class BaseService extends BaseController {
                 continue;
             }
             String userParentCus = user.getParentCusNo();
-            if (Tool.StringUtil.validStr(userParentCus) && userParentCus.equals(parentCusNo)) {
+            if (CommonUtil.StringUtil.validStr(userParentCus) && userParentCus.equals(parentCusNo)) {
                 target.add(user);
                 getAllChildren(userCus, users, target);
             }
@@ -75,7 +75,7 @@ public class BaseService extends BaseController {
      * @return
      */
     protected String MD5(String content) {
-        if (Tool.StringUtil.validStr(content)) {
+        if (CommonUtil.StringUtil.validStr(content)) {
             return DigestUtils.md5DigestAsHex(content.getBytes());
         } else {
             return "";

@@ -5,7 +5,7 @@ import com.dyny.gms.db.pojo.Customer;
 import com.dyny.gms.db.pojo.CustomerExample;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.CustomerService;
-import com.dyny.gms.utils.Tool;
+import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     @Override
     public String getAllCustomer(String orderBy, int pageNum, int pageSize, String searchContent) {
         CustomerExample example = new CustomerExample();
-        if (Tool.StringUtil.validStr(searchContent)) {
+        if (CommonUtil.StringUtil.validStr(searchContent)) {
             example.or().andDeletedEqualTo(false).andCustomerNameLike(super.appendLike(searchContent));
             example.or().andDeletedEqualTo(false).andCustomerNoLike(super.appendLike(searchContent));
         } else {

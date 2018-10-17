@@ -5,16 +5,14 @@ import com.dyny.gms.db.pojo.User;
 import com.dyny.gms.db.pojo.UserExample;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.UserService;
-import com.dyny.gms.utils.Tool;
+import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -56,7 +54,7 @@ public class UserServiceImpl extends BaseService implements UserService {
      */
     @Override
     public int deleteUserByUserNo(String userNo) {
-        if (Tool.StringUtil.validStr(userNo)) {
+        if (CommonUtil.StringUtil.validStr(userNo)) {
             User user = new User();
             UserExample userExample = new UserExample();
             userExample.or().andUserNoEqualTo(userNo);
@@ -85,7 +83,7 @@ public class UserServiceImpl extends BaseService implements UserService {
             criteria1.andUserCusEqualTo(customerNo).andUserLevelLessThanOrEqualTo(level);
             criteria2.andUserCusEqualTo(customerNo).andUserLevelLessThanOrEqualTo(level);
         }
-        if (Tool.StringUtil.validStr(searchContent)) {
+        if (CommonUtil.StringUtil.validStr(searchContent)) {
             criteria1.andUserNoLike(super.appendLike(searchContent));
             criteria2.andUsernameCnLike(super.appendLike(searchContent));
         }
@@ -108,7 +106,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> users = userMapper.selectByExample(example);
         List<String> userCustomerNoList = new ArrayList<>();
         for (User user : users) {
-            if (Tool.StringUtil.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
+            if (CommonUtil.StringUtil.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
                 userCustomerNoList.add(user.getUserCus());
                 break;
             }
@@ -134,7 +132,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> users = userMapper.selectByExample(example);
         List<User> userList = new ArrayList<>();
         for (User user : users) {
-            if (Tool.StringUtil.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
+            if (CommonUtil.StringUtil.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
                 userList.add(user);
             }
         }

@@ -25,8 +25,8 @@ import com.alibaba.fastjson.JSONObject;
  *
  * @author wglbsr
  */
-public class Tool {
-    private static Logger logger = Logger.getLogger(Tool.class);
+public class CommonUtil {
+    private static Logger logger = Logger.getLogger(CommonUtil.class);
 
     public static void main(String[] args) throws IOException {
     }
@@ -54,7 +54,7 @@ public class Tool {
             } else if (test2.exists()) {
                 realPath = prosFilePath2;
             }
-            if (Tool.StringUtil.validStr(realPath)) {
+            if (CommonUtil.StringUtil.validStr(realPath)) {
                 FileInputStream fis = new FileInputStream(realPath);
                 Properties emailPros = new Properties();
                 emailPros.load(fis);
@@ -72,7 +72,7 @@ public class Tool {
             BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
             StringBuffer sb = new StringBuffer(4096);
             for (String temp : fileContent) {
-                if (Tool.StringUtil.validStr(temp.trim())) {
+                if (CommonUtil.StringUtil.validStr(temp.trim())) {
                     sb.append(temp.trim()).append("\r\n");
                 }
             }
@@ -253,7 +253,7 @@ public class Tool {
          * @return
          */
         public static String returnSimpleJson(boolean success, Object data) {
-            return Tool.StringUtil.returnJson(success, data, "");
+            return CommonUtil.StringUtil.returnJson(success, data, "");
         }
 
         /**
@@ -264,7 +264,7 @@ public class Tool {
          */
         public static boolean isMailAddress(String mailAddress) {
             // TODO Auto-generated method stub
-            if (Tool.StringUtil.matchStrByRegEx(mailAddress,
+            if (CommonUtil.StringUtil.matchStrByRegEx(mailAddress,
                     "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$")) {
                 return true;
             }
@@ -274,7 +274,7 @@ public class Tool {
         public static boolean isAllMailAddress(String... mailAddress) {
             // TODO Auto-generated method stub
             for (String temp : mailAddress) {
-                if (!Tool.StringUtil.isMailAddress(temp)) {
+                if (!CommonUtil.StringUtil.isMailAddress(temp)) {
                     return false;
                 }
             }
@@ -403,7 +403,7 @@ public class Tool {
          * @return
          */
         public static boolean matchStrByRegEx(String content, String regEx) {
-            return Tool.StringUtil.findStrByRegEx(content, regEx) != null;
+            return CommonUtil.StringUtil.findStrByRegEx(content, regEx) != null;
         }
 
         /**
@@ -445,7 +445,7 @@ public class Tool {
          */
         public static String getValidOne(String... str1) {
             for (String temp : str1) {
-                if (Tool.StringUtil.validStr(temp)) {
+                if (CommonUtil.StringUtil.validStr(temp)) {
                     return temp;
                 }
             }
@@ -516,7 +516,7 @@ public class Tool {
          */
         public static String getNowDate(String format) {
             Date currentTime = new Date();
-            if (!Tool.StringUtil.validStr(format)) {
+            if (!CommonUtil.StringUtil.validStr(format)) {
                 format = "yyyyMMdd";
             }
             SimpleDateFormat formatter = new SimpleDateFormat(format);
@@ -533,7 +533,7 @@ public class Tool {
          */
         public static String getNDaysString(int nDays, String format) {
             Calendar calendar = Calendar.getInstance();
-            String thisFormat = Tool.StringUtil.validStr(format) ? format : "yyyyMMdd";
+            String thisFormat = CommonUtil.StringUtil.validStr(format) ? format : "yyyyMMdd";
             SimpleDateFormat sdf2 = new SimpleDateFormat(thisFormat);
             calendar.add(Calendar.DATE, nDays);
             String three_days_after = sdf2.format(calendar.getTime());
@@ -565,7 +565,7 @@ public class Tool {
         // private List<String> DatePatternList = null;
         public static String getNowDateStringByPattern(String pattern) {
             // 字符串是否合法
-            if (!Tool.StringUtil.validStr(pattern))
+            if (!CommonUtil.StringUtil.validStr(pattern))
                 return null;
             Date currentTime = new Date();
             // 此处应该作格式合法判断
@@ -581,7 +581,7 @@ public class Tool {
          */
         public static String getDateStringByPattern(Date date, String pattern) {
             // 字符串是否合法
-            if (!Tool.StringUtil.validStr(pattern))
+            if (!CommonUtil.StringUtil.validStr(pattern))
                 return null;
             // 此处应该作格式合法判断
             SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -611,8 +611,8 @@ public class Tool {
          */
         public static String getDateStringByPattern(String date, String fromPattern, String toPattern)
                 throws ParseException {
-            Date temp = Tool.DateUtil.getDateStringByPattern(date, fromPattern);
-            return Tool.DateUtil.getDateStringByPattern(temp, toPattern);
+            Date temp = CommonUtil.DateUtil.getDateStringByPattern(date, fromPattern);
+            return CommonUtil.DateUtil.getDateStringByPattern(temp, toPattern);
         }
 
         // /**

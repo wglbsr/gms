@@ -3,6 +3,7 @@ package com.dyny.gms.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.cache.CacheDao;
 import com.dyny.gms.service.CacheService;
+import com.dyny.gms.utils.CommonUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,16 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void setCache(String key, Object value) {
+        if (value != null) {
+            cacheDao.set(key, JSONObject.toJSONString(value));
+        }
     }
 
     @Override
     public void setCache(String key, String value) {
-        cacheDao.set(key, value);
+        if (CommonUtil.StringUtil.validStr(value)) {
+            cacheDao.set(key, value);
+        }
     }
 
     @Override
@@ -45,6 +51,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public String getStringCache(String key) {
+
         return cacheDao.get(key);
     }
 
