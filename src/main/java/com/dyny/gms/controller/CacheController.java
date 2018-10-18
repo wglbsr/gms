@@ -1,6 +1,7 @@
 package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
+import com.dyny.gms.db.cachce.CacheDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,17 +17,17 @@ public class CacheController extends BaseController {
 
 
     @Autowired
-    private CacheService cacheService;
+    private CacheDao cacheDao;
 
-    @RequestMapping("/set")
+    @RequestMapping("/cache/set")
     public String set(@RequestParam(name = "key") String key,
                       @RequestParam(name = "value") String value) {
-        cacheService.setCache(key, value);
+        cacheDao.set(key, value);
         return "1";
     }
 
-    @RequestMapping("/get")
+    @RequestMapping("/cache/get")
     public String get(@RequestParam(name = "key") String key) {
-        return cacheService.getStringCache(key);
+        return cacheDao.get(key);
     }
 }

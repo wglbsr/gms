@@ -36,9 +36,27 @@ public class RedisDaoImpl implements CacheDao {
     }
 
     @Override
+    public void set(String key, String value, Class targetClass) {
+        this.set(targetClass.getSimpleName() + key, value);
+    }
+
+    @Override
     public void set(String key, Object value) {
         if (value != null) {
             this.set(key, JSONObject.toJSONString(value));
+        }
+    }
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @param targetClass 注意只是类名没有包名
+     */
+    @Override
+    public void set(String key, Object value, Class targetClass) {
+        if (value != null) {
+            this.set(targetClass.getSimpleName() + key, JSONObject.toJSONString(value));
         }
     }
 
@@ -59,6 +77,15 @@ public class RedisDaoImpl implements CacheDao {
             return JSONObject.parseObject(strValue, targetClass);
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public <T> T get(String key, Class<T> targetClass, boolean autoPrefix) {
+        if (autoPrefix) {
+            return this.get(targetClass.getSimpleName() + key, targetClass);
+        } else {
+            return this.get(key, targetClass);
         }
     }
 

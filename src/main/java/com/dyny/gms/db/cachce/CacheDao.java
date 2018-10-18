@@ -15,11 +15,18 @@ public interface CacheDao {
 
     public void set(String key, String value);
 
+    public void set(String key, String value, Class classNamePrefix);
+
     public void set(String key, Object value);
+
+    public void set(String key, Object value, Class classNamePrefix);
 
     public String get(String key);
 
     public <T> T get(String key, Class<T> targetClass);
+
+    public <T> T get(String key, Class<T> targetClass, boolean autoPrefix);
+
 
     public void delete(List<String> keyList);
 
