@@ -3,7 +3,6 @@ package com.dyny.gms.db.cachce.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.utils.CommonUtil;
-import org.apache.ibatis.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
