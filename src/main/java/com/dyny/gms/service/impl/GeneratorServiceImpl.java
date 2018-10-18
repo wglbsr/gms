@@ -4,8 +4,9 @@ import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
-import com.dyny.gms.service.ContactService;
+import com.dyny.gms.service.BasisService;
 import com.dyny.gms.service.GeneratorService;
+import com.dyny.gms.service.StationService;
 import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -33,11 +34,13 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Autowired
     StationMapper stationMapper;
     @Autowired
-    ContactService contactService;
-    @Autowired
     CacheDao cacheDao;
     @Autowired
     BasisMapper basisMapper;
+    @Autowired
+    BasisService basisService;
+    @Autowired
+    StationService stationService;
 
     /**
      * 根据基站编号和客户编号获取油机
@@ -395,45 +398,23 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         //1.保存到缓存/
         //1.1 方案1:直接保存basis
         //1.2 方案2:翻译成原来的视图再保存
-        cacheDao.set(basis.getMachNo(), basis);
-
-
+        cacheDao.set(basis.getMachNo(), basis, Basis.class);
         //2.保存到DB
         return basisMapper.insert(basis);
     }
 
     @Override
     public String getGeneratorDataFromCache(String generatorNo) {
-        //注意需要分页
-        Basis basis = cacheDao.get(generatorNo, Basis.class);
-
-
-        //2.油机
-        //2.1查找缓存,存在则跳过2.2,2.3
-        //2.2查找数据库
-        //2.3保存到缓存
-        cacheDao.get(generatorNo);
-        GeneratorExample generatorExample = new GeneratorExample();
-        generatorExample.or().andMachNoEqualTo(generatorNo);
-        List<Generator> generatorList = generatorMapper.selectByExample(generatorExample);
-        Generator generator = generatorList.get(0);
-
-        //3.基站
+        //采集信息
+        Basis basis = basisService.getBasisFromCache(generatorNo);
+        //油机资料
+        Generator generator = this.getGeneratorDetailFromCache(generatorNo);
+        //基站
         String stationNo = generator.getStNo();
-        List<Station> stationList = null;
+        Station station = null;
         if (CommonUtil.String.validStr(stationNo)) {
-            StationExample stationExample = new StationExample();
-            stationExample.or().andStationNoEqualTo(stationNo);
-            stationList = stationMapper.selectByExample(stationExample);
+            station = stationService.getStationDataFromCache(stationNo);
         }
-        if (stationList != null && stationList.size() > 0) {
-            Station station = stationList.get(0);
-        }
-
-        //涉及的表c_mach,C_basis,t_station
-
-
-        //1.查找缓存
 
 
         return null;
@@ -441,14 +422,21 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
 
     /**
      * 从缓存中查找油机资料,没有则从数据库中查找
+     *
      * @param generatorNo
      * @return
      */
     @Override
     public Generator getGeneratorDetailFromCache(String generatorNo) {
-        Generator generator = cacheDao.get(generatorNo, Generator.class);
+        if (!CommonUtil.String.validStr(generatorNo)) {
+            return null;
+        }
+        Generator generator = cacheDao.get(generatorNo, Generator.class, true);
         if (generator == null) {
             generator = this.getGeneratorDetail(generatorNo);
+            if (generator != null) {
+                cacheDao.set(generatorNo, generator, Generator.class);
+            }
         }
         return generator;
     }

@@ -1,21 +1,28 @@
 package com.dyny.gms;
 
+import com.dyny.gms.interceptor.LoginInterceptor;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GmsApplicationTests {
+    private static Logger logger = Logger.getLogger(GmsApplicationTests.class);
 
-	@Test
-	public void contextLoads() {
-//		Jedis jedis = new Jedis("39.108.127.174");
-//		jedis.auth("Dyny0763Redis");
-//		jedis.set("foo", "111");
-//		String value = jedis.get("foo");
-//		System.out.println("************************************:"+value);
-	}
+    @Autowired
+    RedisTemplate redisTemplate;
+
+
+    @Test
+    public void contextLoads() {
+        ValueOperations<String, String> operation = redisTemplate.opsForValue();
+        logger.info("******************************************************************" + redisTemplate.hasKey("name"));
+    }
 
 }

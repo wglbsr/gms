@@ -32,10 +32,16 @@ public class BasisServiceImpl extends BaseService implements BasisService {
 
     @Override
     public Basis getBasisFromCache(String generatorNo) {
+        if (!CommonUtil.String.validStr(generatorNo)) {
+            return null;
+        }
         //1.查找缓存
         Basis basis = cacheDao.get(generatorNo, Basis.class);
         if (basis == null) {
             basis = this.getLastBasis(generatorNo);
+            if (basis != null) {
+                cacheDao.set(generatorNo, basis, Basis.class);
+            }
         }
         return basis;
     }

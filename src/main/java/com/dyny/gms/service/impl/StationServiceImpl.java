@@ -185,11 +185,17 @@ public class StationServiceImpl extends BaseService implements StationService {
      */
     @Override
     public Station getStationDataFromCache(String stationNo) {
+        if (!CommonUtil.String.validStr(stationNo)) {
+            return null;
+        }
         //1.查找缓存
-        Station station = cacheDao.get(stationNo, Station.class);
+        Station station = cacheDao.get(stationNo, Station.class, true);
         //2.为空则查找数据库
         if (station == null) {
             station = this.getStationByStationNo(stationNo);
+            if (station != null) {
+                cacheDao.set(stationNo, station, Station.class);
+            }
         }
         return station;
     }
