@@ -1,5 +1,7 @@
 package com.dyny.gms.service;
 
+import com.dyny.gms.db.pojo.Basis;
+
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -11,5 +13,9 @@ import java.util.List;
  */
 public interface BasisService {
 
-    List getBasisByOffset(int offset, String machNo,int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException;
+    List getBasisByOffset(int offset, String machNo, int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException;
+
+    Basis getBasisFromCache(String generatorNo);
+
+    Basis getLastBasis(String generatorNo);
 }

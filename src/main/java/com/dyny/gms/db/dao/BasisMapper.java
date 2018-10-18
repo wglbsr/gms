@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 @Mapper
 public interface BasisMapper {
     long countByExample(BasisExample example);
@@ -32,6 +33,10 @@ public interface BasisMapper {
 
     int updateByPrimaryKey(Basis record);
 
-    List selectByOffset(@Param("offset") int offset, @Param("machNo") String machNo,@Param("samplingInterval") int samplingInterval,//samplingInterval
-                               @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    /***************************************手动添加********************************************************/
+
+    Basis selectByMachNo(String machNo);
+
+    List selectByOffset(@Param("offset") int offset, @Param("machNo") String machNo, @Param("samplingInterval") int samplingInterval,//samplingInterval
+                        @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

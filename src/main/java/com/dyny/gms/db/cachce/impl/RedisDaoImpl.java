@@ -1,0 +1,80 @@
+package com.dyny.gms.db.cachce.impl;
+
+import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.db.cachce.CacheDao;
+import com.dyny.gms.utils.CommonUtil;
+import org.apache.ibatis.cache.Cache;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * @author:wanggl
+ * @date:2018-10-18
+ * @version:1.0.0
+ */
+@Repository
+public class RedisDaoImpl implements CacheDao {
+    @Autowired
+    RedisTemplate redisTemplate;
+
+    //    public RedisTemplate getRedisTemplate() {
+//
+//        return this.redisTemplate;
+//    }
+//
+//    public ValueOperations<String, String> getValueOperations() {
+//        return this.redisTemplate.opsForValue();
+//    }
+    @Override
+    public void set(String key, String value) {
+        ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
+        operations.set(key, value);
+    }
+
+    @Override
+    public void set(String key, Object value) {
+        if (value != null) {
+            this.set(key, JSONObject.toJSONString(value));
+        }
+    }
+
+    @Override
+    public String get(String key) {
+        if (this.redisTemplate.hasKey(key)) {
+            ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
+            return operations.get(key);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public <T> T get(String key, Class<T> targetClass) {
+        String strValue = this.get(key);
+        if (CommonUtil.String.validStr(strValue)) {
+            return JSONObject.parseObject(strValue, targetClass);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void delete(List<String> keyList) {
+        this.redisTemplate.delete(keyList);
+    }
+
+    @Override
+    public void delete(String key) {
+        this.redisTemplate.delete(key);
+    }
+
+    @Override
+    public boolean contains(String key) {
+        return this.redisTemplate.hasKey(key);
+    }
+
+}

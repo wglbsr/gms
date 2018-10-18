@@ -628,4 +628,14 @@
     ORDER BY
     inter_time ASC;
   </select>
+
+  <select id="selectByMachNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select top 1
+    <include refid="Base_Column_List" />
+    from C_basis
+    WHERE
+    mach_no = #{machNo,jdbcType=VARCHAR}
+    ORDER BY
+    inter_time DESC ;
+  </select>
 </mapper>

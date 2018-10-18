@@ -1,10 +1,9 @@
 package com.dyny.gms.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.service.BaseService;
-import com.dyny.gms.service.CacheService;
 import com.dyny.gms.service.ContactService;
 import com.dyny.gms.service.GeneratorService;
 import com.dyny.gms.utils.CommonUtil;
@@ -36,7 +35,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Autowired
     ContactService contactService;
     @Autowired
-    CacheService cacheService;
+    CacheDao cacheDao;
     @Autowired
     BasisMapper basisMapper;
 
@@ -396,7 +395,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         //1.保存到缓存/
         //1.1 方案1:直接保存basis
         //1.2 方案2:翻译成原来的视图再保存
-        cacheService.setCache(basis.getMachNo(), JSONObject.toJSONString(basis));
+        cacheDao.set(basis.getMachNo(), basis);
 
 
         //2.保存到DB
@@ -406,15 +405,14 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public String getGeneratorDataFromCache(String generatorNo) {
         //注意需要分页
-        String basisJsonStr = cacheService.getStringCache(generatorNo);
-        Basis basis = JSONObject.parseObject(basisJsonStr, Basis.class);
+        Basis basis = cacheDao.get(generatorNo, Basis.class);
 
 
         //2.油机
         //2.1查找缓存,存在则跳过2.2,2.3
         //2.2查找数据库
         //2.3保存到缓存
-        cacheService.getStringCache(generatorNo);
+        cacheDao.get(generatorNo);
         GeneratorExample generatorExample = new GeneratorExample();
         generatorExample.or().andMachNoEqualTo(generatorNo);
         List<Generator> generatorList = generatorMapper.selectByExample(generatorExample);
@@ -441,6 +439,20 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         return null;
     }
 
+    /**
+     * 从缓存中查找油机资料,没有则从数据库中查找
+     * @param generatorNo
+     * @return
+     */
+    @Override
+    public Generator getGeneratorDetailFromCache(String generatorNo) {
+        Generator generator = cacheDao.get(generatorNo, Generator.class);
+        if (generator == null) {
+            generator = this.getGeneratorDetail(generatorNo);
+        }
+        return generator;
+    }
+
     @Override
     public List<String> getAllGeneratorNo() {
         return generatorMapper.getAllGeneratorNo();
@@ -452,7 +464,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public void saveGeneratorNoToCache() {
         List<String> generatorNoList = this.getAllGeneratorNo();
-        cacheService.setCache("generatorNoList", JSONObject.toJSONString(generatorNoList));
+        cacheDao.set("generatorNoList", generatorNoList);
     }
 
     @Override

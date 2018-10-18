@@ -3,13 +3,11 @@ package com.dyny.gms.service.impl;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.alibaba.fastjson.JSONObject;
+import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.exportEntity.StationImportEntity;
-import com.dyny.gms.service.BaseService;
-import com.dyny.gms.service.ContactService;
-import com.dyny.gms.service.GeneratorService;
-import com.dyny.gms.service.StationService;
+import com.dyny.gms.service.*;
 import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -43,7 +41,8 @@ public class StationServiceImpl extends BaseService implements StationService {
     ContactMapper contactMapper;
     @Autowired
     GeneratorStationRelMapper generatorStationRelMapper;
-
+    @Autowired
+    CacheDao cacheDao;
 
     /**
      * 取消关联单位
@@ -178,9 +177,21 @@ public class StationServiceImpl extends BaseService implements StationService {
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }
 
+    /**
+     * 从缓存中查找基站信息,没有则直接查数据库
+     *
+     * @param stationNo
+     * @return
+     */
     @Override
     public Station getStationDataFromCache(String stationNo) {
-        return null;
+        //1.查找缓存
+        Station station = cacheDao.get(stationNo, Station.class);
+        //2.为空则查找数据库
+        if (station == null) {
+            station = this.getStationByStationNo(stationNo);
+        }
+        return station;
     }
 
     /**
@@ -395,8 +406,6 @@ public class StationServiceImpl extends BaseService implements StationService {
      */
     @Override
     public int updateStation(Station station, StationExample example) {
-
-
         return stationMapper.updateByExample(station, example);
     }
 

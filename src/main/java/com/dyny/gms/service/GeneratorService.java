@@ -51,13 +51,15 @@ public interface GeneratorService {
 
     int activateGenerator(List<String> generatorNoList, boolean activate, String username);
 
-    int saveActivateLog(List<String> generatorNoList, boolean activate, String username,String customerNo);
+    int saveActivateLog(List<String> generatorNoList, boolean activate, String username, String customerNo);
 
     String getActivateHistory(String keyWord, int level, String generatorNo, String customerNo, int activate, int pageNum, int pageSize, long startDate, long endDate) throws ParseException;
 
     int saveGeneratorData(Basis basis);
 
     String getGeneratorDataFromCache(String generatorNo);
+
+    Generator getGeneratorDetailFromCache(String generatorNo);
 
     List<String> getAllGeneratorNo();
 

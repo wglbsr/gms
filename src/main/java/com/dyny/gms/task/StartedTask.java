@@ -1,6 +1,5 @@
 package com.dyny.gms.task;
 
-import com.dyny.gms.service.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
