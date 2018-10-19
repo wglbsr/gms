@@ -1,5 +1,6 @@
 package com.dyny.gms.db.cachce;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,6 +29,10 @@ public interface CacheDao {
 
     <T> T get(String key, Class<T> targetClass, boolean autoPrefix);
 
+    <T> List<T> getList(String key, Class<T> targetClass);
+
+    <T> List<T> getList(String key, Class<T> targetClass, boolean autoPrefix);
+
     Long delete(Set<String> keyList);
 
     Long deleteAll();
@@ -36,6 +41,7 @@ public interface CacheDao {
 
     int delete(String key);
 
+    int delete(String key, String className);
 
     boolean contains(String key);
 

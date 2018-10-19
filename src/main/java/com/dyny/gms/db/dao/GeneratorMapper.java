@@ -12,7 +12,7 @@ public interface GeneratorMapper {
 
     int deleteByExample(GeneratorExample example);
 
-    int deleteByPrimaryKey(String machNo);
+    int deleteByPrimaryKey(String machNo);//需要单个更新
 
     int insert(Generator record);
 
@@ -22,13 +22,13 @@ public interface GeneratorMapper {
 
     Generator selectByPrimaryKey(String machNo);
 
-    int updateByExampleSelective(@Param("record") Generator record, @Param("example") GeneratorExample example);
+    int updateByExampleSelective(@Param("record") Generator record, @Param("example") GeneratorExample example);//需要批量更新
 
-    int updateByExample(@Param("record") Generator record, @Param("example") GeneratorExample example);
+    int updateByExample(@Param("record") Generator record, @Param("example") GeneratorExample example);//需要批量更新
 
-    int updateByPrimaryKeySelective(Generator record);
+    int updateByPrimaryKeySelective(Generator record);//需要单个更新
 
-    int updateByPrimaryKey(Generator record);
+    int updateByPrimaryKey(Generator record);//需要批量更新
 
 
     /******************手动添加*************************/
@@ -36,7 +36,7 @@ public interface GeneratorMapper {
 
     int calculateGenerateTimeToApTime();
 
-    int updateByPrimaryKeySelectiveBatch(List<Generator> records);
+    int updateByPrimaryKeySelectiveBatch(List<Generator> records);//需要批量更新
 
     List<String> getAllGeneratorNo();
 }

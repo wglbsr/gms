@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,6 +42,7 @@ public class RedisDaoImpl implements CacheDao {
     @Override
     public void update(String key, Object value) {
         if (redisTemplate.hasKey(key)) {
+            logger.info("更新缓存:" + key);
             this.set(key, value);
         }
     }
@@ -90,6 +92,25 @@ public class RedisDaoImpl implements CacheDao {
     }
 
     @Override
+    public <T> List<T> getList(String key, Class<T> targetClass) {
+        String strValue = this.get(key);
+        if (CommonUtil.String.validStr(strValue)) {
+            return JSONObject.parseArray(strValue, targetClass);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public <T> List<T> getList(String key, Class<T> targetClass, boolean autoPrefix) {
+        if (autoPrefix) {
+            return this.getList(targetClass.getSimpleName() + key, targetClass);
+        } else {
+            return this.getList(key, targetClass);
+        }
+    }
+
+    @Override
     public <T> T get(String key, Class<T> targetClass, boolean autoPrefix) {
         if (autoPrefix) {
             return this.get(targetClass.getSimpleName() + key, targetClass);
@@ -100,12 +121,19 @@ public class RedisDaoImpl implements CacheDao {
 
     @Override
     public Long delete(Set<String> keyList) {
+        logger.info("批量清除缓存数量:" + keyList.size());
         return this.redisTemplate.delete(keyList);
     }
 
     @Override
     public int delete(String key) {
+        logger.info("清除缓存:" + key);
         return this.redisTemplate.delete(key) ? 1 : 0;
+    }
+
+    @Override
+    public int delete(String key, String className) {
+        return this.delete(className + key);
     }
 
     @Override
