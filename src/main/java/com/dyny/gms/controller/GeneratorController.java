@@ -194,7 +194,7 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/cache/setBasis", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String setBasisInfo(@RequestBody Basis basis) {
-        return super.getSuccessResult(generatorService.saveGeneratorData(basis, false));
+        return generatorService.saveGeneratorData(basis, false) + "";
     }
 
     @RequestMapping(value = "/cache/getBasis", produces = {"application/json;charset=UTF-8"})
@@ -206,7 +206,7 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/setBasisToCacheAndDB", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String setBasisToCacheAndDB(@RequestBody Basis basis) {
-        return super.getSuccessResult(generatorService.saveGeneratorData(basis, true));
+        return generatorService.saveGeneratorData(basis, true) + "";
     }
 
 

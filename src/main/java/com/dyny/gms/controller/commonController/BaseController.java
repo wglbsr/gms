@@ -26,6 +26,11 @@ public class BaseController {
         return this.getResult(true, data, "", 0, 0, 0);
     }
 
+    public String getJsonObj(Object data) {
+        return JSONObject.toJSONString(data, SerializerFeature.WriteMapNullValue);
+    }
+
+
     public String getSuccessResult(Object data, int pageNum, int pageSize, long total) {
         return this.getResult(true, data, "", pageNum, pageSize, total);
     }
