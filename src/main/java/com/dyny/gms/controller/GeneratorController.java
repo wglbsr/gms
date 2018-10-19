@@ -191,11 +191,25 @@ public class GeneratorController extends BaseController {
         return super.getSuccessResult(basisService.getBasisByOffset(offset, machNo, samplingInterval, startTimestamp, endTimestamp));
     }
 
-    @RequestMapping(value = "/setBasis", produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/cache/setBasis", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String setBasisInfo(@RequestBody Basis basis) {
-        return super.getSuccessResult(generatorService.saveGeneratorData(basis));
+        return super.getSuccessResult(generatorService.saveGeneratorData(basis, false));
     }
+
+    @RequestMapping(value = "/cache/getBasis", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getBasisInfo(@RequestParam(name = "generatorNo") String generatorNo) {
+        return super.getSuccessResult(basisService.getBasisFromCache(generatorNo));
+    }
+
+    @RequestMapping(value = "/setBasisToCacheAndDB", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String setBasisToCacheAndDB(@RequestBody Basis basis) {
+        return super.getSuccessResult(generatorService.saveGeneratorData(basis, true));
+    }
+
+
 //
 //    {
 //        "alVoltage":54.700,

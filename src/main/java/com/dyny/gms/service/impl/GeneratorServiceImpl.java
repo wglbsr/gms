@@ -393,13 +393,18 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     }
 
     @Override
-    public int saveGeneratorData(Basis basis) {
+    public int saveGeneratorData(Basis basis, boolean saveToDB) {
         //1.保存到缓存/
         cacheDao.set(basis.getMachNo(), basis, Basis.class);
-        //2.保存到DB
-        //2.1 方案1:直接保存basis
-        //2.2 方案2:翻译成原来的视图再保存
-        return 1;
+        int result = 1;
+        //2.是否保存到DB
+        if (saveToDB) {
+            basis.setId(null);
+            if (CommonUtil.String.validStr(basis.getMachNo())) {
+                result += basisMapper.insert(basis);
+            }
+        }
+        return result;
     }
 
     @Override

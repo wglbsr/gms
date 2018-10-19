@@ -3,6 +3,7 @@ package com.dyny.gms.db.cachce.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.utils.CommonUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -17,6 +18,7 @@ import java.util.Set;
  */
 @Repository
 public class RedisDaoImpl implements CacheDao {
+    private static Logger logger = Logger.getLogger(RedisDaoImpl.class);
 
 
     @Autowired
@@ -26,12 +28,20 @@ public class RedisDaoImpl implements CacheDao {
     public void set(String key, String value) {
         ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
         operations.set(key, value);
+        logger.info("插入缓存**key:" + key + ",value:" + value);
     }
 
     @Override
     public void update(String key, Object value, Class targetClass) {
         if (redisTemplate.hasKey(key)) {
             this.set(key, value, targetClass);
+        }
+    }
+
+    @Override
+    public void update(String key, Object value) {
+        if (redisTemplate.hasKey(key)) {
+            this.set(key, value);
         }
     }
 
@@ -90,7 +100,7 @@ public class RedisDaoImpl implements CacheDao {
 
     @Override
     public Long delete(Set<String> keyList) {
-        return  this.redisTemplate.delete(keyList);
+        return this.redisTemplate.delete(keyList);
     }
 
     @Override
@@ -100,7 +110,12 @@ public class RedisDaoImpl implements CacheDao {
 
     @Override
     public Long deleteAll() {
-        Set<String> keys = this.getKeys("*");
+        return this.deleteByPattern("*");
+    }
+
+    @Override
+    public Long deleteByPattern(String pattern) {
+        Set<String> keys = this.getKeys(pattern);
         return this.delete(keys);
     }
 

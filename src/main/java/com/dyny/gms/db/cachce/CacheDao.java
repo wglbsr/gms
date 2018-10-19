@@ -19,6 +19,9 @@ public interface CacheDao {
 
     void update(String key, Object value, Class targetClass);
 
+    void update(String key, Object value);
+
+
     String get(String key);
 
     <T> T get(String key, Class<T> targetClass);
@@ -27,9 +30,12 @@ public interface CacheDao {
 
     Long delete(Set<String> keyList);
 
+    Long deleteAll();
+
+    Long deleteByPattern(String pattern);
+
     int delete(String key);
 
-    Long deleteAll();
 
     boolean contains(String key);
 
