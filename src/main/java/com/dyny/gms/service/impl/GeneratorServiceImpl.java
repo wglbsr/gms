@@ -3,6 +3,7 @@ package com.dyny.gms.service.impl;
 import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
+import com.dyny.gms.db.pojo.custom.GeneratorStatusBeanOld;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.BasisService;
 import com.dyny.gms.service.GeneratorService;
@@ -443,6 +444,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         return generator;
     }
 
+
     @Override
     public List<String> getAllGeneratorNo() {
         return generatorMapper.getAllGeneratorNo();
@@ -455,6 +457,18 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     public void saveGeneratorNoToCache() {
         List<String> generatorNoList = this.getAllGeneratorNo();
         cacheDao.set("generatorNoList", generatorNoList);
+    }
+
+    @Override
+    public GeneratorStatusBeanOld getGeneratorStatusData(String generatorNo) {
+        Generator generator = this.getGeneratorDetailFromCache(generatorNo);
+        Basis basis = basisService.getBasisFromCache(generatorNo);
+        String stationNo = generator.getStNo();
+        Station station = null;
+        if (CommonUtil.String.validStr(stationNo)) {
+            station = stationService.getStationDataFromCache(stationNo);
+        }
+        return new GeneratorStatusBeanOld(generator, basis, station);
     }
 
     @Override

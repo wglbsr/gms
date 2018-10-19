@@ -198,7 +198,7 @@
   </update>
 
   <!--*****************************手动添加******************************************-->
-  <resultMap id="PageResultMap" type="com.dyny.gms.db.pojo.LankForPage">
+  <resultMap id="PageResultMap" type="com.dyny.gms.db.pojo.custom.LankForPage">
     <result column="st_id" jdbcType="INTEGER" property="stId"/>
     <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
     <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>

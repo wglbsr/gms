@@ -1,4 +1,7 @@
-package com.dyny.gms.db.pojo;
+package com.dyny.gms.db.pojo.custom;
+
+import com.dyny.gms.db.pojo.Contact;
+import com.dyny.gms.db.pojo.Station;
 
 import java.util.List;
 

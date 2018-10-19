@@ -2,9 +2,6 @@ package com.dyny.gms.task;
 
 import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.GeneratorMapper;
-import com.dyny.gms.db.pojo.Basis;
-import com.dyny.gms.db.pojo.Generator;
-import com.dyny.gms.db.pojo.Station;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

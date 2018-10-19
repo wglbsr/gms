@@ -1,4 +1,6 @@
-package com.dyny.gms.db.pojo;
+package com.dyny.gms.db.pojo.custom;
+
+import com.dyny.gms.db.pojo.Lank;
 
 public class LankForPage extends Lank {
 

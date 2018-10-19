@@ -1,12 +1,10 @@
 package com.dyny.gms.controller.commonController;
 
 import com.dyny.gms.db.dao.CommonMapper;
-import com.dyny.gms.db.pojo.CommonPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
 @Controller

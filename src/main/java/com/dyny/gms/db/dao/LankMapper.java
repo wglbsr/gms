@@ -4,7 +4,7 @@ import com.dyny.gms.db.pojo.Lank;
 import com.dyny.gms.db.pojo.LankExample;
 import java.util.List;
 
-import com.dyny.gms.db.pojo.LankForPage;
+import com.dyny.gms.db.pojo.custom.LankForPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 @Mapper

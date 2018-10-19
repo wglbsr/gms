@@ -127,12 +127,12 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         Map<String, Integer> allMap = mapper.getMachineNum(user_cus, activate, inactivate);
         int total = allMap.get("total");
         int online = allMap.get("online");
-        int generating = allMap.get("generating");
+        int sleeping = allMap.get("sleeping");
         result.put("allNum", total);
         result.put("onlineNum", online);
         result.put("offlineNum", total - online);
-        result.put("generatingNum", generating);
-        result.put("interruptionNum", total - generating);
+        result.put("generatingNum", sleeping);
+        result.put("interruptionNum", total - sleeping);
         return result;
     }
 

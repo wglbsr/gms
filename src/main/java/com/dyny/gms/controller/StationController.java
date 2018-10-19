@@ -1,7 +1,7 @@
 package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
-import com.dyny.gms.db.pojo.StationForPage;
+import com.dyny.gms.db.pojo.custom.StationForPage;
 import com.dyny.gms.service.StationService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;

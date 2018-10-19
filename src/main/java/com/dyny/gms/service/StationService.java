@@ -2,10 +2,9 @@ package com.dyny.gms.service;
 
 import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
-import com.dyny.gms.db.pojo.StationForPage;
+import com.dyny.gms.db.pojo.custom.StationForPage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public interface StationService {

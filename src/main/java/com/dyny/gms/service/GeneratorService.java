@@ -3,6 +3,7 @@ package com.dyny.gms.service;
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.pojo.Basis;
 import com.dyny.gms.db.pojo.Generator;
+import com.dyny.gms.db.pojo.custom.GeneratorStatusBeanOld;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -64,4 +65,6 @@ public interface GeneratorService {
     List<String> getAllGeneratorNo();
 
     void saveGeneratorNoToCache();
+
+    GeneratorStatusBeanOld getGeneratorStatusData(String generatorNo);
 }

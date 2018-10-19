@@ -210,46 +210,11 @@ public class GeneratorController extends BaseController {
     }
 
 
-//
-//    {
-//        "alVoltage":54.700,
-//            "cabinetTemperature":29.200,
-//            "cityElectricity":false,
-//            "endTime":"",
-//            "externalTemperature":0.000,
-//            "interTime":1539770402787,
-//            "lankLevel":105.000,
-//            "loadMode":false,
-//            "machNo":"18070012",
-//            "mainboardTemperature":0.000,
-//            "maintainTime":"",
-//            "numTime":"",
-//            "onTime":"",
-//            "outputVoltage":0.000,
-//            "proMode":false,
-//            "stCo":0.000,
-//            "stCoordinate":"27.1860,103.5558",
-//            "stCurrent":24.700,
-//            "startTime":"",
-//            "startVoltage":34.600,
-//            "state":true,
-//            "sumPower":0.000,
-//            "sysMode":0
-//    }
-//    @RequestMapping(value = "/getActivateHistory", produces = {"application/json;charset=UTF-8"})
-//    @ResponseBody
-//    public String getActivateHistory(
-//            @RequestParam(name = "keyWord", required = false, defaultValue = "") String keyWord,
-//            @RequestParam(name = "customerNo", required = false, defaultValue = "") String customerNo,
-//            @RequestParam(name = "generatorNo", required = false, defaultValue = "") String generatorNo,
-//            @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
-//            @RequestParam(name = "endDate", required = false, defaultValue = "1854934178000l") long endDate,
-//            @RequestParam(name = "level", required = false, defaultValue = "0") int userLevel,
-//            @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
-//            @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
-//            @RequestParam(name = "activate", required = false, defaultValue = "0") int activate) throws ParseException {
-//        return generatorService.getActivateHistory(keyWord, userLevel, generatorNo, customerNo, activate, pageNum, pageSize, startDate, endDate);
-//    }
+    @RequestMapping(value = "/getGeneratorStatusData", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getGeneratorStatusData(@RequestParam(name = "generatorNo") String generatorNo) {
+        return super.getSuccessResult(generatorService.getGeneratorStatusData(generatorNo));
+    }
 
     /**
      * 获得各个状态的油机数量,status参数暂时没有用上
