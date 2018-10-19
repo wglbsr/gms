@@ -114,16 +114,8 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     }
 
 
-    @Override
-    public int addOil(String co_no, String co_time, String co_per, String co_tel,
-                      String st_no, String mach_no, String use_address, String user_no) {
-        // TODO Auto-generated method stub
-        return mapper.addOil(co_no, co_time, co_per, co_tel, st_no, mach_no, use_address, user_no);
-    }
-
-
     /**
-     * 性能极低!!!!!!!!!!!!!!!
+     *
      *
      * @param user_cus
      * @return
@@ -180,19 +172,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
                                   String user_no) {
         // TODO Auto-generated method stub
         return mapper.changeProtectModel(mach_no, modelflag, code, user_no);
-    }
-
-//    @Override
-//    public Map<String, Object> getMachineMap(String user_cus) {
-//        // TODO Auto-generated method stub
-//        return mapper.getMachineMap(user_cus);
-//    }
-
-    @Override
-    public List searchMachineInUse(String user_cus,
-                                   String strat_time, String end_time) {
-        // TODO Auto-generated method stub
-        return mapper.searchMachineInUse(user_cus, strat_time, end_time);
     }
 
 

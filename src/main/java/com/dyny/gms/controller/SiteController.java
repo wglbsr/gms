@@ -159,26 +159,6 @@ public class SiteController extends BaseController {
     }
 
 
-    /**
-     * 二十五.	油机领用管理
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @Deprecated
-    @RequestMapping(value = "/addOil.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String addOil(@RequestParam(name = "co_no", required = true) String co_no,
-                         @RequestParam(name = "co_time", required = true) String co_time,
-                         @RequestParam(name = "co_per", required = true) String co_per,
-                         @RequestParam(name = "co_tel", required = true) String co_tel,
-                         @RequestParam(name = "st_no", required = true) String st_no,
-                         @RequestParam(name = "mach_no", required = true) String mach_no,
-                         @RequestParam(name = "use_address", required = true) String use_address,
-                         @RequestParam(name = "user_no", required = true) String user_no) {
-        return super.getSuccessResult(service.addOil(co_no, co_time, co_per, co_tel, st_no, mach_no, use_address, user_no));
-    }
 
     /**
      * 二十六.	移动油机运行情况（全部）
@@ -294,20 +274,6 @@ public class SiteController extends BaseController {
     }
 
 
-    /**
-     * 三十七.	移动油机领用查询(25项目的补充)
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/searchMachineInUse.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String searchMachineInUse(@RequestParam(name = "user_cus", required = true) String user_cus,
-                                     @RequestParam(name = "start_time", required = true) String start_time,
-                                     @RequestParam(name = "end_time", required = true) String end_time) {
-        return super.getSuccessResult(service.searchMachineInUse(user_cus, start_time, end_time));
-    }
 
 
     /**

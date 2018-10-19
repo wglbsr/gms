@@ -19,14 +19,14 @@ public class CacheController extends BaseController {
     @Autowired
     private CacheDao cacheDao;
 
-    @RequestMapping("/cache/set")
+    @RequestMapping(value="/cache/set", produces = {"application/json;charset=UTF-8"})
     public String set(@RequestParam(name = "key") String key,
                       @RequestParam(name = "value") String value) {
         cacheDao.set(key, value);
         return "1";
     }
 
-    @RequestMapping("/cache/get")
+    @RequestMapping(value="/cache/get", produces = {"application/json;charset=UTF-8"})
     public String get(@RequestParam(name = "key") String key) {
         return cacheDao.get(key);
     }

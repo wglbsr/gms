@@ -1,9 +1,7 @@
 package com.dyny.gms.db.interceptor;
 
 import com.dyny.gms.db.cachce.CacheDao;
-import com.dyny.gms.db.dao.CacheMethodMapper;
 import com.dyny.gms.db.pojo.CacheMethod;
-import com.dyny.gms.db.pojo.CacheMethodExample;
 import com.dyny.gms.utils.CommonUtil;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -31,8 +29,6 @@ public class ModifyInterceptor implements Interceptor {
 
     @Autowired
     CacheDao cacheDao;
-    @Autowired
-    CacheMethodMapper cacheMethodMapper;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -76,13 +72,7 @@ public class ModifyInterceptor implements Interceptor {
 
     private List<CacheMethod> getCacheMethodList() {
         String key = CacheMethod.class.getSimpleName();
-        List<CacheMethod> cacheMethodList = cacheDao.getList(key, CacheMethod.class);
-        if (cacheMethodList == null || cacheMethodList.size() == 0) {
-            CacheMethodExample cacheMethodExample = new CacheMethodExample();
-            cacheMethodExample.or().andDeletedEqualTo(false);
-            cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
-            cacheDao.set(key, cacheMethodList, CacheMethod.class);
-        }
+        List<CacheMethod> cacheMethodList = cacheDao.getList(CacheMethod.class.getSimpleName(), CacheMethod.class);
         return cacheMethodList;
     }
 
@@ -93,10 +83,11 @@ public class ModifyInterceptor implements Interceptor {
         }
         for (CacheMethod temp : cacheMethodList) {
             if (mapperId.equals(temp.getMapperId())) {
+                logger.info("即将更新缓存");
                 String pojoName = temp.getPojoName();
                 String propertyName = temp.getPropertyName();
                 boolean multiple = temp.getMultiple();
-                if (multiple) {
+                if (multiple || CommonUtil.String.validStr(propertyName)) {
                     //批量操作,删除该pojo的缓存
                     cacheDao.deleteByPattern(pojoName + "*");
                 } else {

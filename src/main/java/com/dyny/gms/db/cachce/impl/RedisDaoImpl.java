@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,14 +24,30 @@ public class RedisDaoImpl implements CacheDao {
     private static Logger logger = Logger.getLogger(RedisDaoImpl.class);
 
 
-    @Autowired
+//    @Autowired
     RedisTemplate redisTemplate;
+
+
+    /**
+     * 更改默认的序列化方法
+     * 避免前缀出现类似\xac\xed\x00\x05t\x00\x19的字符串
+     * @param redisTemplate
+     */
+    @Autowired(required = false)
+    public void setRedisTemplate(RedisTemplate redisTemplate) {
+        RedisSerializer stringSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringSerializer);
+        redisTemplate.setValueSerializer(stringSerializer);
+        redisTemplate.setHashKeySerializer(stringSerializer);
+        redisTemplate.setHashValueSerializer(stringSerializer);
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
     public void set(String key, String value) {
         ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
         operations.set(key, value);
-        logger.info("插入缓存**key:" + key + ",value:" + value);
+        logger.info("插入缓存**key:" + key);
     }
 
     @Override

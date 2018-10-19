@@ -38,15 +38,8 @@ public class TimerTask {
 
     @Scheduled(cron = "0 0 0/1 * * ? ") // 每小时记录一次缓存数量
     public void logCacheKeys() {
-        String basisClassName = Basis.class.getSimpleName();
-        String generatorClassName = Generator.class.getSimpleName();
-        String stationClassName = Station.class.getSimpleName();
-        Set basisKeySet = cacheDao.getKeys(basisClassName + "*");
-        Set generatorKeySet = cacheDao.getKeys(generatorClassName + "*");
-        Set stationKeySet = cacheDao.getKeys(stationClassName + "*");
-        logger.info("缓存中Basis的数据量:" + basisKeySet.size());
-        logger.info("缓存中Generator的数据量:" + generatorKeySet.size());
-        logger.info("缓存中Station的数据量:" + stationKeySet.size());
+        Set keySet = cacheDao.getKeys("*");
+        logger.info("缓存中的数据量:" + keySet.size());
     }
 
 

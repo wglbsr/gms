@@ -224,33 +224,6 @@
     </select>
 
 
-    <!-- 二十五.	油机领用管理 -->
-    <insert id="addOil">
-        INSERT INTO Ap_collar (
-        co_no,
-        co_time,
-        co_per,
-        co_tel,
-        st_no,
-        mach_no,
-        co_add,
-        creat_time,
-        creat_per
-        )
-        VALUES(
-        #{co_no, jdbcType = VARCHAR},
-        #{co_time, jdbcType = VARCHAR},
-        #{co_per, jdbcType = VARCHAR},
-        #{co_tel, jdbcType = VARCHAR},
-        #{st_no, jdbcType = VARCHAR},
-        #{mach_no, jdbcType = VARCHAR},
-        #{use_address, jdbcType = VARCHAR},
-        getdate(),
-        #{user_no, jdbcType = VARCHAR}
-        )
-    </insert>
-
-
     <resultMap type="map" id="machineNumMap">
         <result column="total" property="total" javaType="int"/>
         <result column="online" property="online" javaType="int"/>
@@ -418,30 +391,6 @@
     </insert>
 
 
-    <!-- 三十七.	移动油机领用查询(25项目的补充) -->
-    <resultMap type="map" id="machineInUseMap">
-        <result column="co_no" property="co_no" javaType="string"/>
-        <result column="co_time" property="co_time" javaType="string"/>
-        <result column="co_per" property="co_per" javaType="string"/>
-        <result column="co_tel" property="co_tel" javaType="string"/>
-        <result column="st_no" property="st_no" javaType="string"/>
-        <result column="mach_no" property="mach_no" javaType="string"/>
-        <result column="co_add" property="co_add" javaType="string"/>
-    </resultMap>
-    <select id="searchMachineInUse" resultMap="machineInUseMap">
-        SELECT co_no, co_time, co_per, co_tel, st_no, mach_no, co_add, CONVERT(varchar(100), creat_time, 20), creat_per
-        FROM Ap_collar
-        WHERE 1 = 1
-        <if test="user_cus != null and user_cus != '' ">
-            AND (dbo.cus_no(mach_no) = #{user_cus})
-        </if>
-        <if test="strat_time != null and strat_time != '' ">
-            AND (co_time &gt;= #{strat_time})
-        </if>
-        <if test="end_time != null and end_time != '' ">
-            AND (co_time &lt;= #{end_time})
-        </if>
-    </select>
 
 
     <!-- 三十九.	移动油机直流主数据明细 -->

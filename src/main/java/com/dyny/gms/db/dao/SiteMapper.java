@@ -56,19 +56,6 @@ public interface SiteMapper {
                                @Param("end_date") long end_date);
 
 
-    /**
-     * 二十五.	油机领用管理
-     */
-    public int addOil(
-            @Param("co_no") String co_no,
-            @Param("co_time") String co_time,
-            @Param("co_per") String co_per,
-            @Param("co_tel") String co_tel,
-            @Param("st_no") String st_no,
-            @Param("mach_no") String mach_no,
-            @Param("use_address") String use_address,
-            @Param("user_no") String user_no);
-
 
     public Map getMachineNum(@Param("user_cus") String user_cus,
                              @Param("activate") boolean activate,
@@ -121,14 +108,6 @@ public interface SiteMapper {
             @Param("code") String code,
             @Param("user_no") String user_no);
 
-
-    /**
-     * 三十七.	移动油机领用查询(25项目的补充)
-     */
-    public List searchMachineInUse(
-            @Param("user_cus") String user_cus,
-            @Param("strat_time") String strat_time,
-            @Param("end_time") String end_time);
 
 
     /**

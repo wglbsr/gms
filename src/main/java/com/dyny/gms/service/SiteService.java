@@ -34,19 +34,6 @@ public interface SiteService {
 
 
     /**
-     * 二十五.	油机领用管理
-     */
-     int addOil(
-            String co_no,
-            String co_time,
-            String co_per,
-            String co_tel,
-            String st_no,
-            String mach_no,
-            String use_address,
-            String user_no);
-
-    /**
      * 二十六.
      */
 
@@ -83,16 +70,6 @@ public interface SiteService {
      * 三十五.	保护模式切换功能
      */
      int changeProtectModel(String mach_no, int modelflag, String code, String user_no);
-
-//    /**
-//     * 三十六.	移动油机地图位置
-//     */
-//     Map<String, Object> getMachineMap(String user_cus);
-
-    /**
-     * 三十七.	移动油机领用查询(25项目的补充)
-     */
-     List searchMachineInUse(String user_cus, String strat_time, String end_time);
 
 
     /**
