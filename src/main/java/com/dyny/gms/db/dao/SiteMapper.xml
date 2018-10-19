@@ -376,21 +376,6 @@
         )
     </insert>
 
-    <!-- 三十五.	保护模式切换功能 -->
-    <insert id="changeProtectModel">
-        INSERT INTO Ap_operate(mach_no, op_no,
-        op_num, creat_time, creat_per,
-        action) VALUES (
-        #{mach_no, jdbcType = VARCHAR},
-        #{modelflag, jdbcType = INTEGER},
-        #{code, jdbcType = VARCHAR},
-        getdate(),
-        #{user_no, jdbcType = VARCHAR},
-        '0'
-        )
-    </insert>
-
-
 
 
     <!-- 三十九.	移动油机直流主数据明细 -->

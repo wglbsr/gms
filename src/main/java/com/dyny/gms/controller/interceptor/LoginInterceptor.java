@@ -1,4 +1,4 @@
-package com.dyny.gms.interceptor;
+package com.dyny.gms.controller.interceptor;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;

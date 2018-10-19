@@ -167,13 +167,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return mapper.changeModel(mach_no, modelflag, code, user_no);
     }
 
-    @Override
-    public int changeProtectModel(String mach_no, int modelflag, String code,
-                                  String user_no) {
-        // TODO Auto-generated method stub
-        return mapper.changeProtectModel(mach_no, modelflag, code, user_no);
-    }
-
 
     @Override
     public List getSiteDetailed1(String mach_no) {

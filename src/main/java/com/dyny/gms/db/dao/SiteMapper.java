@@ -99,16 +99,6 @@ public interface SiteMapper {
             @Param("code") String code,
             @Param("user_no") String user_no);
 
-    /**
-     * 三十五.	保护模式切换功能
-     */
-    public int changeProtectModel(
-            @Param("mach_no") String mach_no,
-            @Param("modelflag") int modelflag,
-            @Param("code") String code,
-            @Param("user_no") String user_no);
-
-
 
     /**
      * 39.	移动油机交流主数据明细

@@ -67,12 +67,6 @@ public interface SiteService {
      int changeModel(String mach_no, int modelflag, String code, String user_no);
 
     /**
-     * 三十五.	保护模式切换功能
-     */
-     int changeProtectModel(String mach_no, int modelflag, String code, String user_no);
-
-
-    /**
      * 三十九.  移动油机直流主数据明细
      */
      List getSiteDetailed1(String mach_no);
