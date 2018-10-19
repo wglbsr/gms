@@ -29,8 +29,8 @@ public class GeneratorController extends BaseController {
      */
     @RequestMapping(value = "/getGeneratorDetail", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getGeneratorDetail(@RequestParam(name = "mach_no", required = true) String machNo) {
-        return super.getSuccessResult(generatorService.getGeneratorDetail(machNo));
+    public String getGeneratorDetail(@RequestParam(name = "mach_no") String machNo) {
+        return super.getSuccessResult(generatorService.getGeneratorDetailFromCache(machNo));
     }
 
 
@@ -42,7 +42,7 @@ public class GeneratorController extends BaseController {
      */
     @RequestMapping(value = "/getGeneratorByCusNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getGeneratorByCusNo(@RequestParam(name = "user_cus", required = true) String cusNo) {
+    public String getGeneratorByCusNo(@RequestParam(name = "user_cus") String cusNo) {
         return super.getSuccessResult(generatorService.getGeneratorDetail(cusNo));
     }
 
@@ -84,9 +84,9 @@ public class GeneratorController extends BaseController {
      */
     @RequestMapping(value = "/getGeneratorForStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getGeneratorForStation(@RequestParam(name = "stationNo", required = true) String stationNo,
+    public String getGeneratorForStation(@RequestParam(name = "stationNo") String stationNo,
                                          @RequestParam(name = "searchContent", required = false, defaultValue = "") String searchContent,
-                                         @RequestParam(name = "user_cus", required = true) String user_cus) {
+                                         @RequestParam(name = "user_cus") String user_cus) {
         return super.getSuccessResult(generatorService.getGeneratorForStation(stationNo, user_cus, searchContent));
     }
 
@@ -100,8 +100,8 @@ public class GeneratorController extends BaseController {
      */
     @RequestMapping(value = "/changeBootVoltage", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String changeBootVoltage(@RequestParam(name = "generatorNoList[]", required = true) List<String> generatorNoList,
-                                    @RequestParam(name = "bootVoltage", required = true) BigDecimal bootVoltage) {
+    public String changeBootVoltage(@RequestParam(name = "generatorNoList[]") List<String> generatorNoList,
+                                    @RequestParam(name = "bootVoltage") BigDecimal bootVoltage) {
         return super.getSuccessResult(generatorService.changeBootVoltage(generatorNoList, bootVoltage));
     }
 
@@ -117,10 +117,10 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/relateGeneratorWithStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String relateGeneratorWithStation(@RequestParam(name = "stationNo", required = false, defaultValue = "") String stationNo,
-                                             @RequestParam(name = "machNo", required = true) String machNo,
-                                             @RequestParam(name = "relate", required = true) boolean relate,
-//                                             @RequestParam(name = "contactIdList", required = true) List<Integer> contactIdList,
-                                             @RequestParam(name = "user_cus", required = true) String user_cus) {
+                                             @RequestParam(name = "machNo") String machNo,
+                                             @RequestParam(name = "relate") boolean relate,
+//                                             @RequestParam(name = "contactIdList") List<Integer> contactIdList,
+                                             @RequestParam(name = "user_cus") String user_cus) {
         return super.getSuccessResult(generatorService.relateGeneratorWithStation(machNo, stationNo, user_cus, relate, new ArrayList<Integer>()));//暂时不需要选择油机操作人员
     }
 
@@ -137,9 +137,9 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/relateGeneratorListWithStation", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String relateGeneratorListWithStation(@RequestParam(name = "stationNo", required = false, defaultValue = "") String stationNo,
-                                                 @RequestParam(name = "machNoList[]", required = true) List<String> machNoList,
-                                                 @RequestParam(name = "relate", required = true) boolean relate,
-                                                 @RequestParam(name = "user_cus", required = true) String user_cus) {
+                                                 @RequestParam(name = "machNoList[]") List<String> machNoList,
+                                                 @RequestParam(name = "relate") boolean relate,
+                                                 @RequestParam(name = "user_cus") String user_cus) {
         int cnt = 0;
         for (String temp : machNoList) {
             cnt += generatorService.relateGeneratorWithStation(temp, stationNo, user_cus, relate, new ArrayList<Integer>());
@@ -158,8 +158,8 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/getGeneratorNumByStatus", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getGeneratorNumByStatus(
-            @RequestParam(name = "status", required = true) String status,
-            @RequestParam(name = "user_cus", required = true) String user_cus) {
+            @RequestParam(name = "status") String status,
+            @RequestParam(name = "user_cus") String user_cus) {
         return super.getSuccessResult(generatorService.getGeneratorNumByStatus(status, user_cus));
     }
 
@@ -173,9 +173,9 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/activateGenerator", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activateGenerator(
-            @RequestParam(name = "generatorNoList[]", required = true) List<String> generatorNoList,
+            @RequestParam(name = "generatorNoList[]") List<String> generatorNoList,
             @RequestParam(name = "username", required = false, defaultValue = "") String username,
-            @RequestParam(name = "activate", required = true) boolean activate) {
+            @RequestParam(name = "activate") boolean activate) {
         return super.getSuccessResult(generatorService.activateGenerator(generatorNoList, activate, username));
     }
 
@@ -183,8 +183,8 @@ public class GeneratorController extends BaseController {
     @RequestMapping(value = "/getBasisInfo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getFuelInfo(
-            @RequestParam(name = "offset", required = true) int offset,
-            @RequestParam(name = "machNo", required = true) String machNo,
+            @RequestParam(name = "offset") int offset,
+            @RequestParam(name = "machNo") String machNo,
             @RequestParam(name = "samplingInterval", required = false, defaultValue = "3600") int samplingInterval,
             @RequestParam(name = "startTimestamp", required = false, defaultValue = "") long startTimestamp,
             @RequestParam(name = "endTimestamp", required = false, defaultValue = "") long endTimestamp) throws ParseException {
@@ -193,9 +193,35 @@ public class GeneratorController extends BaseController {
 
     @RequestMapping(value = "/setBasis", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String setBasisInfo( @RequestBody Basis basis) throws ParseException {
-        return "";
+    public String setBasisInfo(@RequestBody Basis basis) {
+        return super.getSuccessResult(generatorService.saveGeneratorData(basis));
     }
+//
+//    {
+//        "alVoltage":54.700,
+//            "cabinetTemperature":29.200,
+//            "cityElectricity":false,
+//            "endTime":"",
+//            "externalTemperature":0.000,
+//            "interTime":1539770402787,
+//            "lankLevel":105.000,
+//            "loadMode":false,
+//            "machNo":"18070012",
+//            "mainboardTemperature":0.000,
+//            "maintainTime":"",
+//            "numTime":"",
+//            "onTime":"",
+//            "outputVoltage":0.000,
+//            "proMode":false,
+//            "stCo":0.000,
+//            "stCoordinate":"27.1860,103.5558",
+//            "stCurrent":24.700,
+//            "startTime":"",
+//            "startVoltage":34.600,
+//            "state":true,
+//            "sumPower":0.000,
+//            "sysMode":0
+//    }
 //    @RequestMapping(value = "/getActivateHistory", produces = {"application/json;charset=UTF-8"})
 //    @ResponseBody
 //    public String getActivateHistory(

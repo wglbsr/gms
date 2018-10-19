@@ -1,7 +1,10 @@
 package com.dyny.gms.task;
 
+import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.GeneratorMapper;
-import com.dyny.gms.interceptor.LoginInterceptor;
+import com.dyny.gms.db.pojo.Basis;
+import com.dyny.gms.db.pojo.Generator;
+import com.dyny.gms.db.pojo.Station;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.File;
+import java.util.Set;
 
 @Configuration
 @EnableScheduling
@@ -26,6 +30,23 @@ public class TimerTask {
         int size2 = generatorMapper.calculateGenerateTimeToApTime();
         logger.info("计算c_mach表发电时间任务完成，影响行数:" + size);
         logger.info("计算ap_time表电时间任务完成，影响行数:" + size2);
+    }
+
+
+    @Autowired
+    CacheDao cacheDao;
+
+    @Scheduled(cron = "0 0 0/1 * * ? ") // 每小时记录一次缓存数量
+    public void logCacheKeys() {
+        String basisClassName = Basis.class.getSimpleName();
+        String generatorClassName = Generator.class.getSimpleName();
+        String stationClassName = Station.class.getSimpleName();
+        Set basisKeySet = cacheDao.getKeys(basisClassName + "*");
+        Set generatorKeySet = cacheDao.getKeys(generatorClassName + "*");
+        Set stationKeySet = cacheDao.getKeys(stationClassName + "*");
+        logger.info("缓存中Basis的数据量:" + basisKeySet.size());
+        logger.info("缓存中Generator的数据量:" + generatorKeySet.size());
+        logger.info("缓存中Station的数据量:" + stationKeySet.size());
     }
 
 

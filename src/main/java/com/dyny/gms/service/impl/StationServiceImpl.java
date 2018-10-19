@@ -45,13 +45,14 @@ public class StationServiceImpl extends BaseService implements StationService {
     CacheDao cacheDao;
 
     /**
-     * 取消关联单位
-     *
+     * 取消关联单位和基站,批量操作后缓存中的数据将会有问题
+     * 该方法暂时没有用上
      * @param unitId
+     * @param stationNo 该参数不传则认为所有该单位的基站都不再关联
      * @return
      */
     @Override
-    public int disrelateStationToUnit(int unitId) {
+    public int disrelateStationToUnit(int unitId, String stationNo) {
         if (unitId <= 0) {
             return 0;
         }
@@ -61,8 +62,13 @@ public class StationServiceImpl extends BaseService implements StationService {
         Station station = new Station();
         StationExample example = new StationExample();
         station.setUnitId(0);
-        example.or().andUnitIdEqualTo(unitId);
-        return stationMapper.updateByExampleSelective(station, example);
+        if (CommonUtil.String.validStr(stationNo)) {
+            example.or().andUnitIdEqualTo(unitId).andStationNoEqualTo(stationNo);
+        } else {
+            example.or().andUnitIdEqualTo(unitId);
+        }
+        int result = stationMapper.updateByExampleSelective(station, example);
+        return result;
     }
 
 
@@ -72,7 +78,11 @@ public class StationServiceImpl extends BaseService implements StationService {
         StationExample.Criteria criteria = example.createCriteria();
         criteria.andStationNoEqualTo(station.getStationNo());
         example.or(criteria);
-        return stationMapper.updateByExample(station, example);
+        int result = stationMapper.updateByExample(station, example);
+        if (result > 0) {
+            cacheDao.update(station.getStationNo(), station, Station.class);
+        }
+        return result;
     }
 
     /**
@@ -219,7 +229,6 @@ public class StationServiceImpl extends BaseService implements StationService {
 //        cnt += this.logicDeleteStation(stationNo);//逻辑删除
         cnt += this.deleteStation(stationNo);//暂时使用物理删除
 
-
         return cnt;
     }
 
@@ -329,7 +338,11 @@ public class StationServiceImpl extends BaseService implements StationService {
         StationExample example = new StationExample();
         StationExample.Criteria criteria = example.createCriteria();
         criteria.andStationNoEqualTo(stationNo);
-        return stationMapper.deleteByExample(example);
+        int result = stationMapper.deleteByExample(example);
+        if (result > 0) {
+            cacheDao.delete(stationNo);
+        }
+        return result;
     }
 
     @Override

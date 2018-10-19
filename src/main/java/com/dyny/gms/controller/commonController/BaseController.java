@@ -16,9 +16,6 @@ public class BaseController {
     private static String RESULT_KEY = "result";
     private static String DEFAULT_ERROR_MSG = "内部错误!";
 
-    private static long DEFAULT_PAGE_SIZE = 20;
-    private static long DEFAULT_PAGE_NUM = 1;
-
     /**
      * 返回成功信息
      *

@@ -99,28 +99,27 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
             criteria.andStNoEqualTo(stationNo);
             //.将油机的基站编码置空
             generator.setStNo("");
-
             //.将油机-基站关联表中的记录逻辑删除
             this.logicDeleteGeneratorStationTable(machNo, stationNo);
-
             //.将油机-联系人关联表中的相关记录逻辑删除
             this.logicDeleteGeneratorContactTable(machNo, contactIdList);
-
 
         } else {
             //判断油机是否已经关联到基站,如果是则将油机-基站关联表中相关的记录逻辑删除
             this.logicDeleteGeneratorStationTable(machNo, stationNo);
-
             //.保存在油机-基站关联表中，方便以后查看
             this.insertToGeneratorStationTable(machNo, stationNo);
-
             //.保存在油机-联系人关联表中
             this.insertToGeneratorContactTable(stationNo, contactIdList);
-
             //.将油机的基站编号改为目标基站
             generator.setStNo(stationNo);
         }
-        return generatorMapper.updateByExampleSelective(generator, example);
+
+        int result = generatorMapper.updateByExampleSelective(generator, example);
+        if (result > 0) {
+            cacheDao.delete(machNo);
+        }
+        return result;
     }
 
     /**
@@ -396,11 +395,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public int saveGeneratorData(Basis basis) {
         //1.保存到缓存/
-        //1.1 方案1:直接保存basis
-        //1.2 方案2:翻译成原来的视图再保存
         cacheDao.set(basis.getMachNo(), basis, Basis.class);
         //2.保存到DB
-        return basisMapper.insert(basis);
+        //2.1 方案1:直接保存basis
+        //2.2 方案2:翻译成原来的视图再保存
+        return 1;
     }
 
     @Override
@@ -415,8 +414,6 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         if (CommonUtil.String.validStr(stationNo)) {
             station = stationService.getStationDataFromCache(stationNo);
         }
-
-
         return null;
     }
 

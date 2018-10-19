@@ -86,7 +86,7 @@ public class StationController extends BaseController {
     @RequestMapping(value = "/getStationByStationNo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getStationByStationNo(@RequestParam(name = "stationNo", required = true) String stationNo) {
-        return super.getSuccessResult(stationService.getStationByStationNo(stationNo));
+        return super.getSuccessResult(stationService.getStationDataFromCache(stationNo));
     }
 
     @RequestMapping(value = "/getStationByStationNoList", produces = {"application/json;charset=UTF-8"})

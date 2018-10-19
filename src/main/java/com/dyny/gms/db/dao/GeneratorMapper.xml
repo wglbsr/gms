@@ -666,8 +666,8 @@
         <if test="item.activated != null">
           b_activated = #{item.activated,jdbcType=BIT},
         </if>
-        <if test="boardVersion != null">
-          i_board_version = #{boardVersion,jdbcType=INTEGER},
+        <if test="item.boardVersion != null">
+          i_board_version = #{item.boardVersion,jdbcType=INTEGER},
         </if>
       </trim>
       where mach_no = #{item.machNo,jdbcType=VARCHAR}

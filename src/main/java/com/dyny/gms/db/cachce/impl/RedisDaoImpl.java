@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author:wanggl
@@ -17,21 +17,22 @@ import java.util.List;
  */
 @Repository
 public class RedisDaoImpl implements CacheDao {
+
+
     @Autowired
     RedisTemplate redisTemplate;
 
-    //    public RedisTemplate getRedisTemplate() {
-//
-//        return this.redisTemplate;
-//    }
-//
-//    public ValueOperations<String, String> getValueOperations() {
-//        return this.redisTemplate.opsForValue();
-//    }
     @Override
     public void set(String key, String value) {
         ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
         operations.set(key, value);
+    }
+
+    @Override
+    public void update(String key, Object value, Class targetClass) {
+        if (redisTemplate.hasKey(key)) {
+            this.set(key, value, targetClass);
+        }
     }
 
     @Override
@@ -47,7 +48,6 @@ public class RedisDaoImpl implements CacheDao {
     }
 
     /**
-     *
      * @param key
      * @param value
      * @param targetClass 注意只是类名没有包名
@@ -89,18 +89,29 @@ public class RedisDaoImpl implements CacheDao {
     }
 
     @Override
-    public void delete(List<String> keyList) {
-        this.redisTemplate.delete(keyList);
+    public Long delete(Set<String> keyList) {
+        return  this.redisTemplate.delete(keyList);
     }
 
     @Override
-    public void delete(String key) {
-        this.redisTemplate.delete(key);
+    public int delete(String key) {
+        return this.redisTemplate.delete(key) ? 1 : 0;
+    }
+
+    @Override
+    public Long deleteAll() {
+        Set<String> keys = this.getKeys("*");
+        return this.delete(keys);
     }
 
     @Override
     public boolean contains(String key) {
         return this.redisTemplate.hasKey(key);
+    }
+
+    @Override
+    public Set<String> getKeys(String pattern) {
+        return this.redisTemplate.keys(pattern);
     }
 
 }

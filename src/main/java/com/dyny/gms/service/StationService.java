@@ -36,7 +36,7 @@ public interface StationService {
 
     List getStationByStationNoList(List<String> stationNoList);
 
-    int disrelateStationToUnit(int unitId);
+    int disrelateStationToUnit(int unitId,String stationNo);
 
     int importStationFromExcelFile(File file,String customerNo);
 

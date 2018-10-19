@@ -1,6 +1,8 @@
 package com.dyny.gms;
 
+import com.dyny.gms.db.interceptor.ModifyInterceptor;
 import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +34,17 @@ public class GmsApplication {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setLocation(path);
         return factory.createMultipartConfig();
+    }
+
+
+    /**
+     * mybatis拦截器
+     * @return
+     */
+    @Bean
+    public Interceptor getInterceptor() {
+        ModifyInterceptor modifyInterceptor = new ModifyInterceptor();
+        return modifyInterceptor;
     }
 
 }
