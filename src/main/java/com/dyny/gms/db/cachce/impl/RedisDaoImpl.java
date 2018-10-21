@@ -24,13 +24,14 @@ public class RedisDaoImpl implements CacheDao {
     private static Logger logger = Logger.getLogger(RedisDaoImpl.class);
 
 
-//    @Autowired
+    //    @Autowired
     RedisTemplate redisTemplate;
 
 
     /**
      * 更改默认的序列化方法
      * 避免前缀出现类似\xac\xed\x00\x05t\x00\x19的字符串
+     *
      * @param redisTemplate
      */
     @Autowired(required = false)
@@ -91,7 +92,7 @@ public class RedisDaoImpl implements CacheDao {
 
     @Override
     public String get(String key) {
-        if (this.redisTemplate.hasKey(key)) {
+        if (this.contains(key)) {
             ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
             return operations.get(key);
         } else {

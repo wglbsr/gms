@@ -2,6 +2,7 @@ package com.dyny.gms.db.cachce;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author:wanggl
@@ -21,7 +22,6 @@ public interface CacheDao {
     void update(String key, Object value, Class targetClass);
 
     void update(String key, Object value);
-
 
     String get(String key);
 

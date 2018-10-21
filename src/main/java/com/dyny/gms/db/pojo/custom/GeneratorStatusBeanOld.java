@@ -24,8 +24,8 @@ public class GeneratorStatusBeanOld {
     public String fuel_type;
     public String generatorName;
     public String generatorNo;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    public Date inter_time;
+    //    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    public String inter_time;
     public float lank_level;
     public float lank_per;
     public Boolean load_mode;
@@ -63,7 +63,7 @@ public class GeneratorStatusBeanOld {
         this.sum_time = generator.getTotalGenerateTime();
         this.maintain_time = generator.getMaintainTime();
         this.pro_mode = basis.getProMode();
-        this.inter_time = basis.getInterTime();
+        this.inter_time = CommonUtil.Date.getDateStringByPattern(basis.getInterTime(), "yyyy-MM-dd HH:mm:ss");
         this.lank_per = basis.getLankLevel().floatValue() > 100 ? 100 : basis.getLankLevel().floatValue();
         this.lank_level = this.lank_per * generator.getVolumeno().floatValue() / 100;
         this.activated = generator.getActivated();

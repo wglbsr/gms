@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * mybatis拦截器,用于拦截update/delete操作并更新缓存
  * @author:wanggl
  * @date:2018-10-18
  * @version:1.0.0
@@ -78,7 +79,7 @@ public class ModifyInterceptor implements Interceptor {
 
     private void refreshCache(String mapperId, Object argObj) throws NoSuchFieldException, IllegalAccessException {
         List<CacheMethod> cacheMethodList = this.getCacheMethodList();
-        if (!CommonUtil.String.validStr(mapperId)) {
+        if (!CommonUtil.String.validStr(mapperId) || cacheMethodList == null) {
             return;
         }
         for (CacheMethod temp : cacheMethodList) {

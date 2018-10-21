@@ -42,7 +42,7 @@ public class BasisServiceImpl extends BaseService implements BasisService {
             return null;
         }
         //1.查找缓存
-        Basis basis = cacheDao.get(generatorNo, Basis.class);
+        Basis basis = cacheDao.get(generatorNo, Basis.class,true);
         if (basis == null) {
             basis = this.getLastBasis(generatorNo);
             if (basis != null) {
