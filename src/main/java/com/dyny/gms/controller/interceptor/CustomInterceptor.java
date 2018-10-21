@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 登陆拦截器
  */
-public class LoginInterceptor implements HandlerInterceptor {
+public class CustomInterceptor implements HandlerInterceptor {
     @Value("${system.config.demo.level}")
     private int DEMO_LEVEL;
-    private static Logger logger = Logger.getLogger(LoginInterceptor.class);
+    private static Logger logger = Logger.getLogger(CustomInterceptor.class);
     public static String LOGIN_CACHE_NAME = "loginInfo";
     public static String TOKEN_NAME = "token";
 
@@ -36,6 +36,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //过滤掉登陆操作的token判断
         String uri = request.getRequestURI();
+
+
         logger.info("request uri:" + uri);
         String origin = request.getHeader("Origin");
         response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);
