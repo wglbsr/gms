@@ -1,10 +1,5 @@
 package com.dyny.gms.task;
 
-import com.dyny.gms.db.cachce.CacheDao;
-import com.dyny.gms.db.dao.CacheMethodMapper;
-import com.dyny.gms.db.interceptor.ModifyInterceptor;
-import com.dyny.gms.db.pojo.CacheMethod;
-import com.dyny.gms.db.pojo.CacheMethodExample;
 import com.dyny.gms.service.SystemConfigService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +7,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 启动任务
