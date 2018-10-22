@@ -24,10 +24,6 @@ public class StartedTask implements ApplicationRunner {
     private static Logger logger = Logger.getLogger(StartedTask.class);
 
     @Autowired
-    CacheMethodMapper cacheMethodMapper;
-    @Autowired
-    CacheDao cacheDao;
-    @Autowired
     SystemConfigService systemConfigService;
 
     @Override
@@ -36,20 +32,12 @@ public class StartedTask implements ApplicationRunner {
     }
 
     private void initCacheMethod() {
-
-
         logger.info("*********************加载系统配置到缓存*********************");
         systemConfigService.getConfig();
-        logger.info("*********************加载缓存完成*********************");
+        logger.info("*********************加载需要拦截的mybatis的dao方法列表到缓存*********************");
+        systemConfigService.initMybatisInterceptorCache();
+        logger.info("*********************缓存加载完成*********************");
     }
 
-
-    private void intiCacheMethods() {
-        CacheMethodExample cacheMethodExample = new CacheMethodExample();
-        cacheMethodExample.or().andDeletedEqualTo(false);
-        List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
-        logger.info("*********************加载需要拦截mybatis方法到缓存*********************");
-        cacheDao.set(CacheMethod.class.getSimpleName(), cacheMethodList);
-    }
 
 }
