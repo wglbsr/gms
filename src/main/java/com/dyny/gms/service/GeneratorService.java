@@ -1,6 +1,5 @@
 package com.dyny.gms.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.pojo.Basis;
 import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.db.pojo.custom.GeneratorStatusBeanOld;
