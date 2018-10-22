@@ -17,4 +17,6 @@ public interface SystemConfigService {
 
     int createConfig(SystemConfig systemConfig);
 
+    int initMybatisInterceptorCache();
+
 }

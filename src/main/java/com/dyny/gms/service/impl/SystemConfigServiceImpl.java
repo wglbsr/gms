@@ -1,7 +1,10 @@
 package com.dyny.gms.service.impl;
 
 import com.dyny.gms.db.cachce.CacheDao;
+import com.dyny.gms.db.dao.CacheMethodMapper;
 import com.dyny.gms.db.dao.SystemConfigMapper;
+import com.dyny.gms.db.pojo.CacheMethod;
+import com.dyny.gms.db.pojo.CacheMethodExample;
 import com.dyny.gms.db.pojo.SystemConfig;
 import com.dyny.gms.db.pojo.SystemConfigExample;
 import com.dyny.gms.service.SystemConfigService;
@@ -22,6 +25,17 @@ public class SystemConfigServiceImpl implements SystemConfigService {
     SystemConfigMapper systemConfigMapper;
     @Autowired
     CacheDao cacheDao;
+    @Autowired
+    CacheMethodMapper cacheMethodMapper;
+
+    @Override
+    public int initMybatisInterceptorCache() {
+        CacheMethodExample cacheMethodExample = new CacheMethodExample();
+        cacheMethodExample.or().andDeletedEqualTo(false);
+        List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
+        cacheDao.set(CacheMethod.class.getSimpleName(), cacheMethodList);
+        return 1;
+    }
 
     @Override
     public SystemConfig getConfig() {

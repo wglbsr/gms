@@ -36,15 +36,20 @@ public class StartedTask implements ApplicationRunner {
     }
 
     private void initCacheMethod() {
-        CacheMethodExample cacheMethodExample = new CacheMethodExample();
-        cacheMethodExample.or().andDeletedEqualTo(false);
-        List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
-        logger.info("*********************加载需要拦截mybatis方法到缓存*********************");
-        cacheDao.set(CacheMethod.class.getSimpleName(), cacheMethodList);
+
+
         logger.info("*********************加载系统配置到缓存*********************");
         systemConfigService.getConfig();
         logger.info("*********************加载缓存完成*********************");
     }
 
+
+    private void intiCacheMethods() {
+        CacheMethodExample cacheMethodExample = new CacheMethodExample();
+        cacheMethodExample.or().andDeletedEqualTo(false);
+        List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
+        logger.info("*********************加载需要拦截mybatis方法到缓存*********************");
+        cacheDao.set(CacheMethod.class.getSimpleName(), cacheMethodList);
+    }
 
 }
