@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author:wanggl
@@ -29,6 +31,8 @@ public class BasisServiceImpl extends BaseService implements BasisService {
     @Autowired
     CacheDao cacheDao;
 
+    private static String BASIS_ID_PREFIX = "MaxBasisId";
+
     @Override
     public List getBasisByOffset(int offset, String machNo, int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException {
         List<Basis> bisisList = basisMapper.selectByOffset(offset, machNo, samplingInterval, CommonUtil.Date.timestampToDate(startTimestamp), CommonUtil.Date.timestampToDate(endTimestamp));
@@ -42,7 +46,7 @@ public class BasisServiceImpl extends BaseService implements BasisService {
             return null;
         }
         //1.查找缓存
-        Basis basis = cacheDao.get(generatorNo, Basis.class,true);
+        Basis basis = cacheDao.get(generatorNo, Basis.class, true);
         if (basis == null) {
             basis = this.getLastBasis(generatorNo);
             if (basis != null) {
@@ -55,5 +59,22 @@ public class BasisServiceImpl extends BaseService implements BasisService {
     @Override
     public Basis getLastBasis(String generatorNo) {
         return basisMapper.selectByMachNo(generatorNo);
+    }
+
+    @Override
+    public List<Integer> getBasisIdListFromCache() {
+        List<Integer> result = new ArrayList<>();
+        Set<String> keys = cacheDao.getKeys(BASIS_ID_PREFIX + "*");
+        for (String key : keys) {
+            Integer value = cacheDao.get(key, Integer.class);
+            result.add(value);
+        }
+        return result;
+    }
+
+    @Override
+    public int saveBasisIdToCache(String generatorNo, Integer id) {
+        cacheDao.set(BASIS_ID_PREFIX + generatorNo, id);
+        return 1;
     }
 }

@@ -5,6 +5,7 @@ import com.dyny.gms.db.dao.CacheMethodMapper;
 import com.dyny.gms.db.interceptor.ModifyInterceptor;
 import com.dyny.gms.db.pojo.CacheMethod;
 import com.dyny.gms.db.pojo.CacheMethodExample;
+import com.dyny.gms.service.SystemConfigService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -26,6 +27,8 @@ public class StartedTask implements ApplicationRunner {
     CacheMethodMapper cacheMethodMapper;
     @Autowired
     CacheDao cacheDao;
+    @Autowired
+    SystemConfigService systemConfigService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -36,8 +39,12 @@ public class StartedTask implements ApplicationRunner {
         CacheMethodExample cacheMethodExample = new CacheMethodExample();
         cacheMethodExample.or().andDeletedEqualTo(false);
         List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
+        logger.info("*********************加载需要拦截mybatis方法到缓存*********************");
         cacheDao.set(CacheMethod.class.getSimpleName(), cacheMethodList);
-        logger.info("加载缓存");
+        logger.info("*********************加载系统配置到缓存*********************");
+        systemConfigService.getConfig();
+        logger.info("*********************加载缓存完成*********************");
     }
+
 
 }

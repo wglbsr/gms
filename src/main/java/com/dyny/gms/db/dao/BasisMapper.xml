@@ -638,4 +638,29 @@
     ORDER BY
     inter_time DESC ;
   </select>
+
+  <insert id="insertReturnPK" parameterType="com.dyny.gms.db.pojo.Basis" useGeneratedKeys="true" keyProperty="id">
+    insert into C_basis (mach_no, state,
+      sys_mode, pro_mode, lank_level,
+      cabinet_temperature, st_current, external_temperature,
+      st_voltage, al_voltage, city_electricity,
+      cabinet_state, st_time, start_time,
+      end_time, ver_no, start_Voltage,
+      sum_power, num_time, on_time,
+      maintain_time, mainboard_temperature, inter_time,
+      st_co, st_coordinate, output_voltage,
+      load_mode, item3, item4,
+      item5)
+    values ( #{machNo,jdbcType=VARCHAR}, #{state,jdbcType=BIT},
+      #{sysMode,jdbcType=INTEGER}, #{proMode,jdbcType=BIT}, #{lankLevel,jdbcType=NUMERIC},
+      #{cabinetTemperature,jdbcType=NUMERIC}, #{stCurrent,jdbcType=NUMERIC}, #{externalTemperature,jdbcType=NUMERIC},
+      #{stVoltage,jdbcType=NUMERIC}, #{alVoltage,jdbcType=NUMERIC}, #{cityElectricity,jdbcType=BIT},
+      #{cabinetState,jdbcType=BIT}, #{stTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=VARCHAR},
+      #{endTime,jdbcType=VARCHAR}, #{verNo,jdbcType=VARCHAR}, #{startVoltage,jdbcType=NUMERIC},
+      #{sumPower,jdbcType=NUMERIC}, #{numTime,jdbcType=VARCHAR}, #{onTime,jdbcType=VARCHAR},
+      #{maintainTime,jdbcType=VARCHAR}, #{mainboardTemperature,jdbcType=NUMERIC}, #{interTime,jdbcType=TIMESTAMP},
+      #{stCo,jdbcType=NUMERIC}, #{stCoordinate,jdbcType=VARCHAR}, #{outputVoltage,jdbcType=NUMERIC},
+      #{loadMode,jdbcType=BIT}, #{item3,jdbcType=VARCHAR}, #{item4,jdbcType=VARCHAR},
+      #{item5,jdbcType=VARCHAR})
+  </insert>
 </mapper>

@@ -110,6 +110,7 @@ public class RedisDaoImpl implements CacheDao {
         }
     }
 
+
     @Override
     public <T> List<T> getList(String key, Class<T> targetClass) {
         String strValue = this.get(key);

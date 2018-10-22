@@ -11,7 +11,7 @@ public class SystemConfig {
 
     private Date modifyTime;
 
-    private Integer onilneTimeout;
+    private Integer onlineTimeout;
 
     private Integer refreshTimeout;
 
@@ -26,6 +26,10 @@ public class SystemConfig {
     private String companyPhone;
 
     private String contactName;
+
+    private Boolean useCache;
+
+    private Integer version;
 
     public Integer getId() {
         return id;
@@ -59,12 +63,12 @@ public class SystemConfig {
         this.modifyTime = modifyTime;
     }
 
-    public Integer getOnilneTimeout() {
-        return onilneTimeout;
+    public Integer getOnlineTimeout() {
+        return onlineTimeout;
     }
 
-    public void setOnilneTimeout(Integer onilneTimeout) {
-        this.onilneTimeout = onilneTimeout;
+    public void setOnlineTimeout(Integer onlineTimeout) {
+        this.onlineTimeout = onlineTimeout;
     }
 
     public Integer getRefreshTimeout() {
@@ -121,5 +125,21 @@ public class SystemConfig {
 
     public void setContactName(String contactName) {
         this.contactName = contactName == null ? null : contactName.trim();
+    }
+
+    public Boolean getUseCache() {
+        return useCache;
+    }
+
+    public void setUseCache(Boolean useCache) {
+        this.useCache = useCache;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

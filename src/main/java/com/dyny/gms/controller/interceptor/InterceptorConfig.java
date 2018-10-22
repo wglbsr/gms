@@ -1,6 +1,8 @@
 package com.dyny.gms.controller.interceptor;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -8,7 +10,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class InterceptorConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CustomInterceptor());
+        registry.addInterceptor(getCustomInterceptor());
         super.addInterceptors(registry);
+    }
+
+    @Bean
+    public HandlerInterceptor getCustomInterceptor() {
+        return new CustomInterceptor();
     }
 }

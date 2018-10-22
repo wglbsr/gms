@@ -3,11 +3,14 @@ package com.dyny.gms.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.OperateMapper;
 import com.dyny.gms.db.dao.SiteMapper;
+import com.dyny.gms.db.pojo.SystemConfig;
 import com.dyny.gms.exportEntity.GenerateRecordEntity;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SiteService;
+import com.dyny.gms.service.SystemConfigService;
 import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -16,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import sun.misc.Cache;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -113,10 +117,10 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         return excelFileName;
     }
 
+    @Autowired
+    SystemConfigService systemConfigService;
 
     /**
-     *
-     *
      * @param user_cus
      * @return
      */
@@ -124,7 +128,8 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     public Map<String, Object> getMachineNum(String user_cus, boolean activate, boolean inactivate) {
         // TODO Auto-generated method stub
         Map<String, Object> result = new HashMap<String, Object>();
-        Map<String, Integer> allMap = mapper.getMachineNum(user_cus, activate, inactivate);
+        SystemConfig systemConfig = systemConfigService.getConfig();
+        Map<String, Integer> allMap = mapper.getMachineNum(user_cus, systemConfig.getOnlineTimeout(), activate, inactivate);
         int total = allMap.get("total");
         int online = allMap.get("online");
         int sleeping = allMap.get("sleeping");

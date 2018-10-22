@@ -17,4 +17,8 @@ public interface BasisService {
     Basis getBasisFromCache(String generatorNo);
 
     Basis getLastBasis(String generatorNo);
+
+    List<Integer> getBasisIdListFromCache();
+
+    int saveBasisIdToCache(String generatorNo, Integer id);
 }

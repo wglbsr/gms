@@ -1,6 +1,8 @@
 package com.dyny.gms.service.impl;
 
+import com.dyny.gms.db.dao.LoginHistoryMapper;
 import com.dyny.gms.db.dao.UserMapper;
+import com.dyny.gms.db.pojo.LoginHistory;
 import com.dyny.gms.db.pojo.User;
 import com.dyny.gms.db.pojo.UserExample;
 import com.dyny.gms.service.BaseService;
@@ -19,7 +21,8 @@ import java.util.List;
 public class UserServiceImpl extends BaseService implements UserService {
     @Autowired
     UserMapper userMapper;
-
+    @Autowired
+    LoginHistoryMapper loginHistoryMapper;
 
     @Override
     public int changePassword(String username, String oldPassword, String newPassword) {
@@ -64,6 +67,11 @@ public class UserServiceImpl extends BaseService implements UserService {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public int saveLoginLog(LoginHistory loginHistory) {
+        return loginHistoryMapper.insert(loginHistory);
     }
 
     @Override

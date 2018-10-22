@@ -1,12 +1,16 @@
 package com.dyny.gms.controller.interceptor;
 
+import com.dyny.gms.db.pojo.LoginHistory;
+import com.dyny.gms.service.UserService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * 登陆拦截器
@@ -17,6 +21,9 @@ public class CustomInterceptor implements HandlerInterceptor {
     private static Logger logger = Logger.getLogger(CustomInterceptor.class);
     public static String LOGIN_CACHE_NAME = "loginInfo";
     public static String TOKEN_NAME = "token";
+
+    @Autowired
+    UserService userService;
 
     /**
      * 1.是否已登录
@@ -34,11 +41,25 @@ public class CustomInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //过滤掉登陆操作的token判断
+
+
         String uri = request.getRequestURI();
 
+        //记录登陆信息
+        if (uri.equals("Login") || uri.equals("login") || uri.equals("/ems/users/login.do")) {
+            String username = request.getParameter("username");
+            String ip = request.getRemoteAddr();
+            LoginHistory loginHistory = new LoginHistory();
+            loginHistory.setIp(ip);
+            loginHistory.setUsername(username);
+            loginHistory.setCreateTime(new Date());
+            userService.saveLoginLog(loginHistory);
+            logger.info("login username:" + username);
+        } else {
+            logger.info("request uri:" + uri);
+        }
 
-        logger.info("request uri:" + uri);
+        //允许跨域请求
         String origin = request.getHeader("Origin");
         response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, PATCH");
@@ -51,21 +72,6 @@ public class CustomInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-//        if (modelAndView == null) {
-//            logger.info("modelAndView is null");
-//        }else{
-//            ModelMap modelMap = modelAndView.getModelMap();
-//            modelAndView.getModel();
-//            Set<String> keySet = modelMap.keySet();
-//            for (String key : keySet) {
-//                logger.info(key + ":" + modelMap.get(key));
-//            }
-//        }
-//
-//       OutputStream op =  response.getOutputStream();
-//
-
-//        logger.info("modelAndView is null");
     }
 
     @Override

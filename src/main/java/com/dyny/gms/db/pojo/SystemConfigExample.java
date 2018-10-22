@@ -345,63 +345,63 @@ public class SystemConfigExample {
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutIsNull() {
-            addCriterion("i_onilne_timeout is null");
+        public Criteria andOnlineTimeoutIsNull() {
+            addCriterion("i_online_timeout is null");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutIsNotNull() {
-            addCriterion("i_onilne_timeout is not null");
+        public Criteria andOnlineTimeoutIsNotNull() {
+            addCriterion("i_online_timeout is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutEqualTo(Integer value) {
-            addCriterion("i_onilne_timeout =", value, "onilneTimeout");
+        public Criteria andOnlineTimeoutEqualTo(Integer value) {
+            addCriterion("i_online_timeout =", value, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutNotEqualTo(Integer value) {
-            addCriterion("i_onilne_timeout <>", value, "onilneTimeout");
+        public Criteria andOnlineTimeoutNotEqualTo(Integer value) {
+            addCriterion("i_online_timeout <>", value, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutGreaterThan(Integer value) {
-            addCriterion("i_onilne_timeout >", value, "onilneTimeout");
+        public Criteria andOnlineTimeoutGreaterThan(Integer value) {
+            addCriterion("i_online_timeout >", value, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutGreaterThanOrEqualTo(Integer value) {
-            addCriterion("i_onilne_timeout >=", value, "onilneTimeout");
+        public Criteria andOnlineTimeoutGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_online_timeout >=", value, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutLessThan(Integer value) {
-            addCriterion("i_onilne_timeout <", value, "onilneTimeout");
+        public Criteria andOnlineTimeoutLessThan(Integer value) {
+            addCriterion("i_online_timeout <", value, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutLessThanOrEqualTo(Integer value) {
-            addCriterion("i_onilne_timeout <=", value, "onilneTimeout");
+        public Criteria andOnlineTimeoutLessThanOrEqualTo(Integer value) {
+            addCriterion("i_online_timeout <=", value, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutIn(List<Integer> values) {
-            addCriterion("i_onilne_timeout in", values, "onilneTimeout");
+        public Criteria andOnlineTimeoutIn(List<Integer> values) {
+            addCriterion("i_online_timeout in", values, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutNotIn(List<Integer> values) {
-            addCriterion("i_onilne_timeout not in", values, "onilneTimeout");
+        public Criteria andOnlineTimeoutNotIn(List<Integer> values) {
+            addCriterion("i_online_timeout not in", values, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutBetween(Integer value1, Integer value2) {
-            addCriterion("i_onilne_timeout between", value1, value2, "onilneTimeout");
+        public Criteria andOnlineTimeoutBetween(Integer value1, Integer value2) {
+            addCriterion("i_online_timeout between", value1, value2, "onlineTimeout");
             return (Criteria) this;
         }
 
-        public Criteria andOnilneTimeoutNotBetween(Integer value1, Integer value2) {
-            addCriterion("i_onilne_timeout not between", value1, value2, "onilneTimeout");
+        public Criteria andOnlineTimeoutNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_online_timeout not between", value1, value2, "onlineTimeout");
             return (Criteria) this;
         }
 
@@ -872,6 +872,126 @@ public class SystemConfigExample {
 
         public Criteria andContactNameNotBetween(String value1, String value2) {
             addCriterion("s_contact_name not between", value1, value2, "contactName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheIsNull() {
+            addCriterion("b_use_cache is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheIsNotNull() {
+            addCriterion("b_use_cache is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheEqualTo(Boolean value) {
+            addCriterion("b_use_cache =", value, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheNotEqualTo(Boolean value) {
+            addCriterion("b_use_cache <>", value, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheGreaterThan(Boolean value) {
+            addCriterion("b_use_cache >", value, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("b_use_cache >=", value, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheLessThan(Boolean value) {
+            addCriterion("b_use_cache <", value, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheLessThanOrEqualTo(Boolean value) {
+            addCriterion("b_use_cache <=", value, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheIn(List<Boolean> values) {
+            addCriterion("b_use_cache in", values, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheNotIn(List<Boolean> values) {
+            addCriterion("b_use_cache not in", values, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_use_cache between", value1, value2, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCacheNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_use_cache not between", value1, value2, "useCache");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNull() {
+            addCriterion("i_version is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIsNotNull() {
+            addCriterion("i_version is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionEqualTo(Integer value) {
+            addCriterion("i_version =", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotEqualTo(Integer value) {
+            addCriterion("i_version <>", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThan(Integer value) {
+            addCriterion("i_version >", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_version >=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThan(Integer value) {
+            addCriterion("i_version <", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionLessThanOrEqualTo(Integer value) {
+            addCriterion("i_version <=", value, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionIn(List<Integer> values) {
+            addCriterion("i_version in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotIn(List<Integer> values) {
+            addCriterion("i_version not in", values, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionBetween(Integer value1, Integer value2) {
+            addCriterion("i_version between", value1, value2, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_version not between", value1, value2, "version");
             return (Criteria) this;
         }
     }

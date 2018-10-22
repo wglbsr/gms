@@ -399,7 +399,8 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         cacheDao.set(basis.getMachNo(), basis, Basis.class);
         int result = 1;
         //2.是否保存到DB
-        if (saveToDB) {
+        Integer id = basis.getId();
+        if (saveToDB && (id == null || id <= 0)) {
             basis.setId(null);
             if (CommonUtil.String.validStr(basis.getMachNo())) {
                 result += basisMapper.insert(basis);

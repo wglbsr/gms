@@ -58,6 +58,7 @@ public interface SiteMapper {
 
 
     public Map getMachineNum(@Param("user_cus") String user_cus,
+                             @Param("onlineTimeout") int onlineTimeout,
                              @Param("activate") boolean activate,
                              @Param("inactivate") boolean inactivate);
 
