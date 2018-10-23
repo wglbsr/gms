@@ -19,15 +19,15 @@ public class GeneratorStatusBeanOld {
     public String Expr1;
     public Boolean activated;
     public BigDecimal al_voltage;
-    public int boardVersion;
+    public Integer boardVersion;
     public BigDecimal external_temperature;
     public String fuel_type;
     public String generatorName;
     public String generatorNo;
     //    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     public String inter_time;
-    public float lank_level;
-    public float lank_per;
+    public Float lank_level;
+    public Float lank_per;
     public Boolean load_mode;
     public BigDecimal maintain_time;
     public BigDecimal output_voltage;
@@ -42,8 +42,8 @@ public class GeneratorStatusBeanOld {
     public String stationLongitude;
     public String stationName;
     public String stationType;
-    public int sum_time;
-    public int sys_mode;
+    public Integer sum_time;
+    public Integer sys_mode;
 
     public GeneratorStatusBeanOld(Generator generator, Basis basis, Station station) {
         this.generatorName = generator.getMachName();

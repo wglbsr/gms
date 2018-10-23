@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyny.gms.db.dao.WarningMapper">
+    <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.Warning">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="st_id" jdbcType="INTEGER" property="stId"/>
+        <result column="st_no" jdbcType="VARCHAR" property="stNo"/>
+        <result column="mach_no" jdbcType="VARCHAR" property="machNo"/>
+        <result column="action_type" jdbcType="INTEGER" property="actionType"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="see" jdbcType="BIT" property="see"/>
+        <result column="inter_time" jdbcType="TIMESTAMP" property="interTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, st_id, st_no, mach_no, action_type, action, see, inter_time
+  </sql>
+    <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.WarningExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from Ap_warning
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <delete id="deleteByExample" parameterType="com.dyny.gms.db.pojo.WarningExample">
+        delete from Ap_warning
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.dyny.gms.db.pojo.Warning">
+    insert into Ap_warning (id, st_id, st_no, 
+      mach_no, action_type, action, 
+      see, inter_time)
+    values (#{id,jdbcType=INTEGER}, #{stId,jdbcType=INTEGER}, #{stNo,jdbcType=VARCHAR}, 
+      #{machNo,jdbcType=VARCHAR}, #{actionType,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, 
+      #{see,jdbcType=BIT}, #{interTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.Warning">
+        insert into Ap_warning
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="stId != null">
+                st_id,
+            </if>
+            <if test="stNo != null">
+                st_no,
+            </if>
+            <if test="machNo != null">
+                mach_no,
+            </if>
+            <if test="actionType != null">
+                action_type,
+            </if>
+            <if test="action != null">
+                action,
+            </if>
+            <if test="see != null">
+                see,
+            </if>
+            <if test="interTime != null">
+                inter_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="stId != null">
+                #{stId,jdbcType=INTEGER},
+            </if>
+            <if test="stNo != null">
+                #{stNo,jdbcType=VARCHAR},
+            </if>
+            <if test="machNo != null">
+                #{machNo,jdbcType=VARCHAR},
+            </if>
+            <if test="actionType != null">
+                #{actionType,jdbcType=INTEGER},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="see != null">
+                #{see,jdbcType=BIT},
+            </if>
+            <if test="interTime != null">
+                #{interTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.dyny.gms.db.pojo.WarningExample" resultType="java.lang.Long">
+        select count(*) from Ap_warning
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update Ap_warning
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.stId != null">
+                st_id = #{record.stId,jdbcType=INTEGER},
+            </if>
+            <if test="record.stNo != null">
+                st_no = #{record.stNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.machNo != null">
+                mach_no = #{record.machNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.actionType != null">
+                action_type = #{record.actionType,jdbcType=INTEGER},
+            </if>
+            <if test="record.action != null">
+                action = #{record.action,jdbcType=VARCHAR},
+            </if>
+            <if test="record.see != null">
+                see = #{record.see,jdbcType=BIT},
+            </if>
+            <if test="record.interTime != null">
+                inter_time = #{record.interTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update Ap_warning
+        set id = #{record.id,jdbcType=INTEGER},
+        st_id = #{record.stId,jdbcType=INTEGER},
+        st_no = #{record.stNo,jdbcType=VARCHAR},
+        mach_no = #{record.machNo,jdbcType=VARCHAR},
+        action_type = #{record.actionType,jdbcType=INTEGER},
+        action = #{record.action,jdbcType=VARCHAR},
+        see = #{record.see,jdbcType=BIT},
+        inter_time = #{record.interTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+
+    <!--********************************************************************************************-->
+    <resultMap id="ActionCountResultMap" type="map">
+        <result column="action_type" jdbcType="INTEGER" property="actionType"/>
+        <result column="action" jdbcType="VARCHAR" property="action"/>
+        <result column="cnt" jdbcType="INTEGER" property="cnt"/>
+    </resultMap>
+    <select id="selectActionCount" resultMap="ActionCountResultMap">
+        SELECT
+        action_type,
+        action,
+        COUNT (1) cnt
+        FROM
+        [dbo].[Ap_warning]
+        WHERE 1=1
+        <if test="generatorNo != null and generatorNo !=''">
+            and
+            mach_no = #{generatorNo}
+        </if>
+        GROUP BY
+        action_type,
+        action
+        ORDER BY
+        action_type
+    </select>
+</mapper>

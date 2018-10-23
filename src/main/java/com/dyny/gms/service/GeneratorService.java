@@ -66,4 +66,5 @@ public interface GeneratorService {
     void saveGeneratorNoToCache();
 
     GeneratorStatusBeanOld getGeneratorStatusData(String generatorNo);
+
 }

@@ -42,6 +42,8 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     BasisService basisService;
     @Autowired
     StationService stationService;
+    @Autowired
+    WarningMapper warningMapper;
 
     /**
      * 根据基站编号和客户编号获取油机
@@ -471,6 +473,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         }
         return new GeneratorStatusBeanOld(generator, basis, station);
     }
+
 
     @Override
     public int logicDeleteGeneratorContactByStationNo(String stationNo) {

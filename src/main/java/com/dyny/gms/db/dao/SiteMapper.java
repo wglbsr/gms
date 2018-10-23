@@ -110,6 +110,9 @@ public interface SiteMapper {
     /**
      * 四十一.警报信息查询明细1
      */
-    public List getSiteWarningList(@Param("user_cus") String user_cus, @Param("action_type") int action_type, @Param("start_date") long start_date, @Param("end_date") long end_date);
+    public List getSiteWarningList(@Param("user_cus") String user_cus,
+                                   @Param("action_type") int action_type,
+                                   @Param("start_date") long start_date,
+                                   @Param("end_date") long end_date);
 
 }

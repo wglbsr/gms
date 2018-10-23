@@ -230,5 +230,4 @@ public class GeneratorController extends BaseController {
         return super.getSuccessResult(generatorService.generatorRegister(generator));
     }
 
-
 }

@@ -1,6 +1,7 @@
 package com.dyny.gms.task;
 
 import com.dyny.gms.service.SystemConfigService;
+import com.dyny.gms.service.WarningService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -18,6 +19,8 @@ public class StartedTask implements ApplicationRunner {
 
     @Autowired
     SystemConfigService systemConfigService;
+    @Autowired
+    WarningService warningService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -29,6 +32,8 @@ public class StartedTask implements ApplicationRunner {
         systemConfigService.getConfig();
         logger.info("*********************加载需要拦截的mybatis的dao方法列表到缓存*********************");
         systemConfigService.initMybatisInterceptorCache();
+        logger.info("*********************加载告警类型到缓存*********************");
+        warningService.loadWarningTypeToCache();
         logger.info("*********************缓存加载完成*********************");
     }
 
