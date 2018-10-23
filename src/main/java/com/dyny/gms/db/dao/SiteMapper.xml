@@ -396,6 +396,7 @@
         <result column="st_co" property="st_co" javaType="string"/>
         <result column="sum_time" property="sum_time" javaType="string"/>
         <result column="maintain_time" property="maintain_time" javaType="string"/>
+        <result column="maintainTimeFixed" property="maintainTimeFixed" javaType="string"/>
         <result column="st_voltag" property="st_voltag" javaType="string"/>
         <result column="Expr1" property="Expr1" javaType="string"/>
         <result column="al_voltage" property="al_voltage" javaType="string"/>
@@ -424,6 +425,7 @@
         mach_no,
         i_board_version,
         b_activated,
+        maintainTimeFixed,
         isnull(cabinet_temperature, 0) external_temperature,
         isnull(
         CONVERT (VARCHAR(100), inter_time, 20),
