@@ -11,6 +11,7 @@ import com.dyny.gms.service.StationService;
 import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +97,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         criteria.andCusNoEqualTo(cusNo).andMachNoEqualTo(machNo);
         //判断是关联还是取消关联
         if (!relateFlag) {
-            if (!CommonUtil.String.validStr(stationNo)) {
+            if (StringUtils.isEmpty(stationNo)) {
                 return 0;
             }
             criteria.andStNoEqualTo(stationNo);
@@ -134,7 +135,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public int insertToGeneratorContactTable(String machNo, List<Integer> contactIdList) {
-        if (!CommonUtil.String.validStr(machNo)) {
+        if (StringUtils.isEmpty(machNo)) {
             return 0;
         }
         int cnt = 0;
@@ -159,7 +160,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public int insertToGeneratorStationTable(String machNo, String stationNo) {
-        if (CommonUtil.String.validStr(machNo, stationNo)) {
+        if (!CommonUtil.String.validStr(machNo, stationNo)) {
             GeneratorStationRel generatorStationRel = new GeneratorStationRel();
             generatorStationRel.setDeleted(false);
             generatorStationRel.setGeneratorNo(machNo);
@@ -182,11 +183,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     public int logicDeleteGeneratorStationTable(String machNo, String stationNo) {
         GeneratorStationRel generatorStationRel = new GeneratorStationRel();
         GeneratorStationRelExample generatorStationRelExample = new GeneratorStationRelExample();
-        if (CommonUtil.String.validStr(machNo, stationNo)) {
+        if (!CommonUtil.String.validStr(machNo, stationNo)) {
             generatorStationRelExample.or().andGeneratorNoEqualTo(machNo).andStationNoEqualTo(stationNo).andDeletedEqualTo(false);
-        } else if (CommonUtil.String.validStr(stationNo) && !CommonUtil.String.validStr(machNo)) {
+        } else if (!StringUtils.isEmpty(stationNo) && StringUtils.isEmpty(machNo)) {
             generatorStationRelExample.or().andStationNoEqualTo(stationNo).andDeletedEqualTo(false);
-        } else if (!CommonUtil.String.validStr(stationNo) && CommonUtil.String.validStr(machNo)) {
+        } else if (StringUtils.isEmpty(stationNo) && !StringUtils.isEmpty(machNo)) {
             generatorStationRelExample.or().andGeneratorNoEqualTo(machNo).andDeletedEqualTo(false);
         } else {
             return 0;
@@ -206,7 +207,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public int logicDeleteGeneratorContactTable(String machNo, List<Integer> contactIdList) {
-        if (contactIdList == null || contactIdList.size() == 0 || CommonUtil.String.validStr(machNo)) {
+        if (contactIdList == null || contactIdList.size() == 0 || !StringUtils.isEmpty(machNo)) {
             return 0;
         }
         GeneratorContactRelExample generatorContactRelExample = new GeneratorContactRelExample();
@@ -246,11 +247,11 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         Generator generator = new Generator();
         generator.setStNo("");
         GeneratorExample generatorExample = new GeneratorExample();
-        if (CommonUtil.String.validStr(stationNo, generatorNo)) {
+        if (!CommonUtil.String.validStr(stationNo, generatorNo)) {
             generatorExample.or().andStNoEqualTo(stationNo).andMachNoEqualTo(generatorNo);
-        } else if (CommonUtil.String.validStr(stationNo) && !CommonUtil.String.validStr(generatorNo)) {
+        } else if (!StringUtils.isEmpty(stationNo) && StringUtils.isEmpty(generatorNo)) {
             generatorExample.or().andStNoEqualTo(stationNo);
-        } else if (!CommonUtil.String.validStr(stationNo) && CommonUtil.String.validStr(generatorNo)) {
+        } else if (StringUtils.isEmpty(stationNo) && !StringUtils.isEmpty(generatorNo)) {
             generatorExample.or().andMachNoEqualTo(generatorNo);
         } else {
             return 0;
@@ -330,13 +331,13 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
             activateHistory.setActivated(activate);
             activateHistory.setGeneratorNo(generatorTemp.getMachNo());
             activateHistory.setGeneratorName(generatorTemp.getMachName());
-            if (CommonUtil.String.validStr(username)) {
+            if (!StringUtils.isEmpty(username)) {
                 activateHistory.setUsername(username);
             }
-            if (CommonUtil.String.validStr(customerNo)) {
+            if (!StringUtils.isEmpty(customerNo)) {
                 activateHistory.setCustomerNo(customerNo);
             }
-            if (CommonUtil.String.validStr(stationNo)) {
+            if (!StringUtils.isEmpty(stationNo)) {
                 activateHistory.setStationNo(stationNo);
                 for (Station stationTemp : stationList) {
                     if (stationTemp.getStationNo().equals(stationNo)) {
@@ -375,14 +376,14 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         java.util.Date startDate = CommonUtil.Date.timestampToDate(startTimestamp);
         java.util.Date endDate = CommonUtil.Date.timestampToDate(endTimestamp);
         if (level >= super.ADMIN_LEVEL) {
-            if (CommonUtil.String.validStr(keyWord)) {
+            if (!StringUtils.isEmpty(keyWord)) {
                 activateHistoryExample.or().andGeneratorNoLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andGeneratorNameLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andStationNoLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andStationNameLike(super.appendLike(keyWord)).andCreateTimeBetween(startDate, endDate);
             }
         } else if (level < super.ADMIN_LEVEL) {
-            if (CommonUtil.String.validStr(keyWord)) {
+            if (!StringUtils.isEmpty(keyWord)) {
                 activateHistoryExample.or().andGeneratorNoLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andGeneratorNameLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
                 activateHistoryExample.or().andStationNoLike(super.appendLike(keyWord)).andCustomerNoEqualTo(customerNo).andCreateTimeBetween(startDate, endDate);
@@ -404,7 +405,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         Integer id = basis.getId();
         if (saveToDB && (id == null || id <= 0)) {
             basis.setId(null);
-            if (CommonUtil.String.validStr(basis.getMachNo())) {
+            if (!StringUtils.isEmpty(basis.getMachNo())) {
                 result += basisMapper.insert(basis);
             }
         }
@@ -420,7 +421,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         //基站
         String stationNo = generator.getStNo();
         Station station = null;
-        if (CommonUtil.String.validStr(stationNo)) {
+        if (!StringUtils.isEmpty(stationNo)) {
             station = stationService.getStationDataFromCache(stationNo);
         }
         return null;
@@ -434,7 +435,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
      */
     @Override
     public Generator getGeneratorDetailFromCache(String generatorNo) {
-        if (!CommonUtil.String.validStr(generatorNo)) {
+        if (StringUtils.isEmpty(generatorNo)) {
             return null;
         }
         Generator generator = cacheDao.get(generatorNo, Generator.class, true);
@@ -468,7 +469,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         Basis basis = basisService.getBasisFromCache(generatorNo);
         String stationNo = generator.getStNo();
         Station station = null;
-        if (CommonUtil.String.validStr(stationNo)) {
+        if (!StringUtils.isEmpty(stationNo)) {
             station = stationService.getStationDataFromCache(stationNo);
         }
         return new GeneratorStatusBeanOld(generator, basis, station);
@@ -477,7 +478,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
 
     @Override
     public int logicDeleteGeneratorContactByStationNo(String stationNo) {
-        if (!CommonUtil.String.validStr(stationNo)) {
+        if (StringUtils.isEmpty(stationNo)) {
             return 0;
         }
         int cnt = 0;
@@ -522,5 +523,15 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
     @Override
     public int addGenerator(Generator generator) {
         return generatorMapper.insert(generator);
+    }
+
+    @Override
+    public String getActivateLog(String keyword, long startTimestamp, long endTimestamp, int pageNum, int pageSize) {
+//        activateHistoryMapper.getActivateLog();
+
+
+
+
+        return null;
     }
 }

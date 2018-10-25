@@ -17,17 +17,5 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.getByNameAndPass(username, password);
 	}
 
-	@Override
-	public int add(Users users) {
-		// TODO Auto-generated method stub
-		return mapper.add(users);
-	}
-
-	@Override
-	public int updatePass(String password, String userName) {
-		// TODO Auto-generated method stub
-		return mapper.updatePass(password, userName);
-	}
-
 
 }

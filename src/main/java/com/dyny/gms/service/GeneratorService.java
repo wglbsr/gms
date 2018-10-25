@@ -1,5 +1,6 @@
 package com.dyny.gms.service;
 
+import com.dyny.gms.db.pojo.ActivateHistory;
 import com.dyny.gms.db.pojo.Basis;
 import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.db.pojo.custom.GeneratorStatusBeanOld;
@@ -66,5 +67,7 @@ public interface GeneratorService {
     void saveGeneratorNoToCache();
 
     GeneratorStatusBeanOld getGeneratorStatusData(String generatorNo);
+
+    String getActivateLog(String keyword, long startTimestamp, long endTimestamp, int pageNum, int pageSize);
 
 }

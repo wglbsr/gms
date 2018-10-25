@@ -19,6 +19,10 @@ public class WarningType {
 
     private Date modifyTime;
 
+    private Double limit;
+
+    private Boolean over;
+
     public Integer getId() {
         return id;
     }
@@ -81,5 +85,21 @@ public class WarningType {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Double getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Double limit) {
+        this.limit = limit;
+    }
+
+    public Boolean getOver() {
+        return over;
+    }
+
+    public void setOver(Boolean over) {
+        this.over = over;
     }
 }

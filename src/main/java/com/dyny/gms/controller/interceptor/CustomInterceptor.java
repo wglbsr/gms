@@ -2,7 +2,10 @@ package com.dyny.gms.controller.interceptor;
 
 import com.dyny.gms.db.pojo.LoginHistory;
 import com.dyny.gms.service.UserService;
+import com.dyny.gms.utils.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -48,7 +51,7 @@ public class CustomInterceptor implements HandlerInterceptor {
         //记录登陆信息
         if (uri.equals("Login") || uri.equals("login") || uri.equals("/ems/users/login.do")) {
             String username = request.getParameter("username");
-            String ip = request.getRemoteAddr();
+            String ip = this.getActualIp(request);
             LoginHistory loginHistory = new LoginHistory();
             loginHistory.setIp(ip);
             loginHistory.setUsername(username);
@@ -68,6 +71,28 @@ public class CustomInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("XDomainRequestAllowed", "1");
         return true;
+    }
+
+
+    /**
+     * 获取真实ip地址
+     *
+     * @param request
+     * @return
+     */
+    private String getActualIp(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return StringUtils.isEmpty(ip)?"unknown":ip;
+
     }
 
     @Override

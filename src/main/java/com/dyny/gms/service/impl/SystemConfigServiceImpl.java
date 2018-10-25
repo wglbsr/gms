@@ -7,7 +7,11 @@ import com.dyny.gms.db.pojo.CacheMethod;
 import com.dyny.gms.db.pojo.CacheMethodExample;
 import com.dyny.gms.db.pojo.SystemConfig;
 import com.dyny.gms.db.pojo.SystemConfigExample;
+import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.SystemConfigService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +24,7 @@ import java.util.List;
  * @version:1.0.0
  */
 @Service
-public class SystemConfigServiceImpl implements SystemConfigService {
+public class SystemConfigServiceImpl extends BaseService implements SystemConfigService {
     @Autowired
     SystemConfigMapper systemConfigMapper;
     @Autowired
@@ -35,6 +39,45 @@ public class SystemConfigServiceImpl implements SystemConfigService {
         List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
         cacheDao.set(CacheMethod.class.getSimpleName(), cacheMethodList);
         return 1;
+    }
+
+    @Override
+    public String getCacheMethodList(String keyWord, int pageNum, int pageSize) {
+        CacheMethodExample cacheMethodExample = new CacheMethodExample();
+        if (!StringUtils.isEmpty(keyWord)) {
+            cacheMethodExample.or().andDeletedEqualTo(false).andPojoNameLike(super.appendLike(keyWord));
+            cacheMethodExample.or().andDeletedEqualTo(false).andPropertyNameLike(super.appendLike(keyWord));
+            cacheMethodExample.or().andDeletedEqualTo(false).andMapperIdLike(super.appendLike(keyWord));
+        } else {
+            cacheMethodExample.or().andDeletedEqualTo(false);
+        }
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        List<CacheMethod> cacheMethodList = cacheMethodMapper.selectByExample(cacheMethodExample);
+        int total = (int) page.getTotal();
+        return super.getSuccessResult(cacheMethodList, pageNum, pageSize, total);
+    }
+
+    @Override
+    public int deleteCacheMethodList(int id) {
+        return cacheMethodMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateCacheMethodList(CacheMethod cacheMethod) {
+        cacheMethod.setDeleted(false);
+        return cacheMethodMapper.updateByPrimaryKeySelective(cacheMethod);
+    }
+
+    /**
+     * 逻辑删除
+     *
+     * @param cacheMethod
+     * @return
+     */
+    @Override
+    public int insertCacheMethodList(CacheMethod cacheMethod) {
+        cacheMethod.setDeleted(true);
+        return cacheMethodMapper.updateByPrimaryKeySelective(cacheMethod);
     }
 
     @Override

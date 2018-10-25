@@ -1,5 +1,6 @@
 package com.dyny.gms.service;
 
+import com.dyny.gms.db.pojo.CacheMethod;
 import com.dyny.gms.db.pojo.SystemConfig;
 
 /**
@@ -8,7 +9,7 @@ import com.dyny.gms.db.pojo.SystemConfig;
  * @version:1.0.0
  */
 public interface SystemConfigService {
-    static String SYSTEM_CONFIG_CACHE = "SystemConfig";
+    String SYSTEM_CONFIG_CACHE = "SystemConfig";
 
 
     SystemConfig getConfig();
@@ -18,5 +19,15 @@ public interface SystemConfigService {
     int createConfig(SystemConfig systemConfig);
 
     int initMybatisInterceptorCache();
+
+
+    String getCacheMethodList(String keyWord, int pageNum, int pageSize);
+
+    int deleteCacheMethodList(int id);
+
+    int updateCacheMethodList(CacheMethod cacheMethod);
+
+    int insertCacheMethodList(CacheMethod cacheMethod);
+
 
 }

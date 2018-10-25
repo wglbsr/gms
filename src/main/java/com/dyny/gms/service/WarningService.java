@@ -14,6 +14,9 @@ import java.util.Map;
 public interface WarningService {
     String CACHE_WARNING_TYPE_LIST_KEY = "WarningTypeList";
 
+    String CACHE_WARNING_KEY_PREFIX = "WarningTypeList";
+
+
     List<Warning> getRealTimeAlarmInfo(String customerNo);
 
     List<Map> getWarningTypeCnt(String generatorNo);
@@ -34,5 +37,7 @@ public interface WarningService {
     int checkWarningType(int warningType);
 
     int checkWarningCode(String warningCode);
+
+    int setWarningToCacheAndDB(Warning warning);
 
 }

@@ -8,6 +8,7 @@ import com.dyny.gms.service.CustomerService;
 import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,7 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     @Override
     public String getAllCustomer(String orderBy, int pageNum, int pageSize, String searchContent) {
         CustomerExample example = new CustomerExample();
-        if (CommonUtil.String.validStr(searchContent)) {
+        if (!StringUtils.isEmpty(searchContent)) {
             example.or().andDeletedEqualTo(false).andCustomerNameLike(super.appendLike(searchContent));
             example.or().andDeletedEqualTo(false).andCustomerNoLike(super.appendLike(searchContent));
         } else {

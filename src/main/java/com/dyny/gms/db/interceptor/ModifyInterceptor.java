@@ -3,6 +3,7 @@ package com.dyny.gms.db.interceptor;
 import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.pojo.CacheMethod;
 import com.dyny.gms.utils.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
@@ -72,14 +73,13 @@ public class ModifyInterceptor implements Interceptor {
 
 
     private List<CacheMethod> getCacheMethodList() {
-        String key = CacheMethod.class.getSimpleName();
         List<CacheMethod> cacheMethodList = cacheDao.getList(CacheMethod.class.getSimpleName(), CacheMethod.class);
         return cacheMethodList;
     }
 
     private void refreshCache(String mapperId, Object argObj) throws NoSuchFieldException, IllegalAccessException {
         List<CacheMethod> cacheMethodList = this.getCacheMethodList();
-        if (!CommonUtil.String.validStr(mapperId) || cacheMethodList == null) {
+        if (StringUtils.isEmpty(mapperId) || cacheMethodList == null) {
             return;
         }
         for (CacheMethod temp : cacheMethodList) {
@@ -88,7 +88,7 @@ public class ModifyInterceptor implements Interceptor {
                 String pojoName = temp.getPojoName();
                 String propertyName = temp.getPropertyName();
                 boolean multiple = temp.getMultiple();
-                if (multiple || CommonUtil.String.validStr(propertyName)) {
+                if (multiple || !StringUtils.isEmpty(propertyName)) {
                     //批量操作,删除该pojo的缓存
                     cacheDao.deleteByPattern(pojoName + "*");
                 } else {

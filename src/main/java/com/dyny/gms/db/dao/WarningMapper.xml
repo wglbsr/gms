@@ -218,20 +218,30 @@
     </resultMap>
     <select id="selectActionCount" resultMap="ActionCountResultMap">
         SELECT
-        action_type,
-        action,
+        aw.action_type,
+        ACTION,
         COUNT (1) cnt
         FROM
-        [dbo].[Ap_warning]
+        [dbo].[Ap_warning] aw
         WHERE 1=1
         <if test="generatorNo != null and generatorNo !=''">
             and
-            mach_no = #{generatorNo}
+            aw.mach_no = #{generatorNo}
+            AND aw.inter_time >= (
+            SELECT
+            TOP 1
+            Purch_time
+            inter_time
+            FROM
+            C_mach cm
+            WHERE
+            cm.mach_no = aw.mach_no
+            )
         </if>
         GROUP BY
-        action_type,
-        action
+        aw.action_type,
+        aw.action
         ORDER BY
-        action_type
+        aw.action_type
     </select>
 </mapper>

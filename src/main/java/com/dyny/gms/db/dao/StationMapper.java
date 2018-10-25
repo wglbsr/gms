@@ -1,5 +1,7 @@
 package com.dyny.gms.db.dao;
 
+import com.dyny.gms.annotation.Intercepted;
+import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
 
@@ -26,8 +28,10 @@ public interface StationMapper {
 
     int updateByExampleSelective(@Param("record") Station record, @Param("example") StationExample example);//批量
 
+    @Intercepted(multiple = false, pojoClass = Station.class,propertyName = "stationNo")
     int updateByExample(@Param("record") Station record, @Param("example") StationExample example);//批量
 
+    @Intercepted(multiple = false, pojoClass = Station.class,propertyName = "stationNo")
     int updateByPrimaryKeySelective(Station record);//单个
 
     int updateByPrimaryKey(Station record);//批量

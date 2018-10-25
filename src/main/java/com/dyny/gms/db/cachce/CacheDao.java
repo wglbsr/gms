@@ -19,6 +19,14 @@ public interface CacheDao {
 
     void set(String key, Object value, Class classNamePrefix);
 
+    void set(String key, String value, long timeout, TimeUnit timeUnit);
+
+    void set(String key, String value, Class classNamePrefix, long timeout, TimeUnit timeUnit);
+
+    void set(String key, Object value, long timeout, TimeUnit timeUnit);
+
+    void set(String key, Object value, Class classNamePrefix, long timeout, TimeUnit timeUnit);
+
     void update(String key, Object value, Class targetClass);
 
     void update(String key, Object value);

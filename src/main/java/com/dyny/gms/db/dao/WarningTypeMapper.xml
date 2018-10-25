@@ -3,13 +3,15 @@
 <mapper namespace="com.dyny.gms.db.dao.WarningTypeMapper">
   <resultMap id="BaseResultMap" type="com.dyny.gms.db.pojo.WarningType">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="i_warning_type" jdbcType="VARCHAR" property="warningType" />
+    <result column="i_warning_type" jdbcType="INTEGER" property="warningType" />
     <result column="s_warning_name" jdbcType="VARCHAR" property="warningName" />
     <result column="s_warning_code" jdbcType="VARCHAR" property="warningCode" />
     <result column="i_warning_level" jdbcType="INTEGER" property="warningLevel" />
     <result column="s_warning_remark" jdbcType="VARCHAR" property="warningRemark" />
     <result column="d_create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="d_modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="f_limit" jdbcType="DOUBLE" property="limit" />
+    <result column="b_over" jdbcType="BIT" property="over" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, i_warning_type, s_warning_name, s_warning_code, i_warning_level, s_warning_remark, 
-    d_create_time, d_modify_time
+    d_create_time, d_modify_time, f_limit, b_over
   </sql>
   <select id="selectByExample" parameterType="com.dyny.gms.db.pojo.WarningTypeExample" resultMap="BaseResultMap">
     select
@@ -106,10 +108,12 @@
   <insert id="insert" parameterType="com.dyny.gms.db.pojo.WarningType">
     insert into t_warning_type (id, i_warning_type, s_warning_name, 
       s_warning_code, i_warning_level, s_warning_remark, 
-      d_create_time, d_modify_time)
-    values (#{id,jdbcType=INTEGER}, #{warningType,jdbcType=VARCHAR}, #{warningName,jdbcType=VARCHAR}, 
+      d_create_time, d_modify_time, f_limit, 
+      b_over)
+    values (#{id,jdbcType=INTEGER}, #{warningType,jdbcType=INTEGER}, #{warningName,jdbcType=VARCHAR}, 
       #{warningCode,jdbcType=VARCHAR}, #{warningLevel,jdbcType=INTEGER}, #{warningRemark,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{limit,jdbcType=DOUBLE}, 
+      #{over,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.dyny.gms.db.pojo.WarningType">
     insert into t_warning_type
@@ -138,13 +142,19 @@
       <if test="modifyTime != null">
         d_modify_time,
       </if>
+      <if test="limit != null">
+        f_limit,
+      </if>
+      <if test="over != null">
+        b_over,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
       <if test="warningType != null">
-        #{warningType,jdbcType=VARCHAR},
+        #{warningType,jdbcType=INTEGER},
       </if>
       <if test="warningName != null">
         #{warningName,jdbcType=VARCHAR},
@@ -164,6 +174,12 @@
       <if test="modifyTime != null">
         #{modifyTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="limit != null">
+        #{limit,jdbcType=DOUBLE},
+      </if>
+      <if test="over != null">
+        #{over,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.dyny.gms.db.pojo.WarningTypeExample" resultType="java.lang.Long">
@@ -179,7 +195,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.warningType != null">
-        i_warning_type = #{record.warningType,jdbcType=VARCHAR},
+        i_warning_type = #{record.warningType,jdbcType=INTEGER},
       </if>
       <if test="record.warningName != null">
         s_warning_name = #{record.warningName,jdbcType=VARCHAR},
@@ -199,6 +215,12 @@
       <if test="record.modifyTime != null">
         d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.limit != null">
+        f_limit = #{record.limit,jdbcType=DOUBLE},
+      </if>
+      <if test="record.over != null">
+        b_over = #{record.over,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,13 +229,15 @@
   <update id="updateByExample" parameterType="map">
     update t_warning_type
     set id = #{record.id,jdbcType=INTEGER},
-      i_warning_type = #{record.warningType,jdbcType=VARCHAR},
+      i_warning_type = #{record.warningType,jdbcType=INTEGER},
       s_warning_name = #{record.warningName,jdbcType=VARCHAR},
       s_warning_code = #{record.warningCode,jdbcType=VARCHAR},
       i_warning_level = #{record.warningLevel,jdbcType=INTEGER},
       s_warning_remark = #{record.warningRemark,jdbcType=VARCHAR},
       d_create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+      d_modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      f_limit = #{record.limit,jdbcType=DOUBLE},
+      b_over = #{record.over,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -222,7 +246,7 @@
     update t_warning_type
     <set>
       <if test="warningType != null">
-        i_warning_type = #{warningType,jdbcType=VARCHAR},
+        i_warning_type = #{warningType,jdbcType=INTEGER},
       </if>
       <if test="warningName != null">
         s_warning_name = #{warningName,jdbcType=VARCHAR},
@@ -242,18 +266,26 @@
       <if test="modifyTime != null">
         d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="limit != null">
+        f_limit = #{limit,jdbcType=DOUBLE},
+      </if>
+      <if test="over != null">
+        b_over = #{over,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dyny.gms.db.pojo.WarningType">
     update t_warning_type
-    set i_warning_type = #{warningType,jdbcType=VARCHAR},
+    set i_warning_type = #{warningType,jdbcType=INTEGER},
       s_warning_name = #{warningName,jdbcType=VARCHAR},
       s_warning_code = #{warningCode,jdbcType=VARCHAR},
       i_warning_level = #{warningLevel,jdbcType=INTEGER},
       s_warning_remark = #{warningRemark,jdbcType=VARCHAR},
       d_create_time = #{createTime,jdbcType=TIMESTAMP},
-      d_modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+      d_modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      f_limit = #{limit,jdbcType=DOUBLE},
+      b_over = #{over,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

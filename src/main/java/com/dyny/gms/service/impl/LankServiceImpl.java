@@ -26,8 +26,8 @@ public class LankServiceImpl extends BaseService implements LankService {
     public String getLank(String customerNo, String keyWord, int pageNum, int pageSize, long startDate, long endDate) throws ParseException {
 //        LankExample lankExample = new LankExample();
 //        GeneratorExample generatorExample = new GeneratorExample();
-//        if (CommonUtil.String.validStr(customerNo)) {
-//            if (CommonUtil.String.validStr(keyWord)) {
+//        if (!StringUtils.isEmpty(customerNo)) {
+//            if (!StringUtils.isEmpty(keyWord)) {
 //                generatorExample.or().andCusNoEqualTo(customerNo).andMachNoLike(super.appendLike(keyWord));
 //                generatorExample.or().andCusNoEqualTo(customerNo).andMachNameLike(super.appendLike(keyWord));
 //                generatorExample.or().andCusNoEqualTo(customerNo).andStNoLike(super.appendLike(keyWord));
@@ -35,7 +35,7 @@ public class LankServiceImpl extends BaseService implements LankService {
 //                generatorExample.or().andCusNoEqualTo(customerNo);
 //            }
 //        } else {
-//            if (CommonUtil.String.validStr(keyWord)) {
+//            if (!StringUtils.isEmpty(keyWord)) {
 //                generatorExample.or().andMachNoLike(super.appendLike(keyWord));
 //                generatorExample.or().andMachNameLike(super.appendLike(keyWord));
 //                generatorExample.or().andStNoLike(super.appendLike(keyWord));

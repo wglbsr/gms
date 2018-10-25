@@ -614,6 +614,126 @@ public class WarningTypeExample {
             addCriterion("d_modify_time not between", value1, value2, "modifyTime");
             return (Criteria) this;
         }
+
+        public Criteria andLimitIsNull() {
+            addCriterion("f_limit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitIsNotNull() {
+            addCriterion("f_limit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitEqualTo(Double value) {
+            addCriterion("f_limit =", value, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitNotEqualTo(Double value) {
+            addCriterion("f_limit <>", value, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitGreaterThan(Double value) {
+            addCriterion("f_limit >", value, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitGreaterThanOrEqualTo(Double value) {
+            addCriterion("f_limit >=", value, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitLessThan(Double value) {
+            addCriterion("f_limit <", value, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitLessThanOrEqualTo(Double value) {
+            addCriterion("f_limit <=", value, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitIn(List<Double> values) {
+            addCriterion("f_limit in", values, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitNotIn(List<Double> values) {
+            addCriterion("f_limit not in", values, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitBetween(Double value1, Double value2) {
+            addCriterion("f_limit between", value1, value2, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andLimitNotBetween(Double value1, Double value2) {
+            addCriterion("f_limit not between", value1, value2, "limit");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverIsNull() {
+            addCriterion("b_over is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverIsNotNull() {
+            addCriterion("b_over is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverEqualTo(Boolean value) {
+            addCriterion("b_over =", value, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverNotEqualTo(Boolean value) {
+            addCriterion("b_over <>", value, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverGreaterThan(Boolean value) {
+            addCriterion("b_over >", value, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("b_over >=", value, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverLessThan(Boolean value) {
+            addCriterion("b_over <", value, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverLessThanOrEqualTo(Boolean value) {
+            addCriterion("b_over <=", value, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverIn(List<Boolean> values) {
+            addCriterion("b_over in", values, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverNotIn(List<Boolean> values) {
+            addCriterion("b_over not in", values, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_over between", value1, value2, "over");
+            return (Criteria) this;
+        }
+
+        public Criteria andOverNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("b_over not between", value1, value2, "over");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

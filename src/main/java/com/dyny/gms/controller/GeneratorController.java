@@ -180,6 +180,25 @@ public class GeneratorController extends BaseController {
     }
 
 
+    /**
+     * 获得各个状态的油机数量,status参数暂时没有用上
+     *
+     * @param status
+     * @param user_cus
+     * @return
+     */
+    @RequestMapping(value = "/getActivateLog", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getActivateLog(
+            @RequestParam(name = "keyWord") String keyWord,
+            @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize,
+            @RequestParam(name = "startTimestamp", required = false, defaultValue = "") long startTimestamp,
+            @RequestParam(name = "endTimestamp", required = false, defaultValue = "") long endTimestamp) {
+        return generatorService.getActivateLog(keyWord, startTimestamp, endTimestamp, pageNum, pageSize);
+    }
+
+
     @RequestMapping(value = "/getBasisInfo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getFuelInfo(
@@ -229,5 +248,6 @@ public class GeneratorController extends BaseController {
 
         return super.getSuccessResult(generatorService.generatorRegister(generator));
     }
+
 
 }

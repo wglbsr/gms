@@ -2,6 +2,7 @@ package com.dyny.gms.exportEntity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.dyny.gms.utils.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class GenerateRecordEntity {
     }
 
     public void setS_station_no(String s_station_no) {
-        this.s_station_no = CommonUtil.String.validStr(s_station_no)?s_station_no:"暂无";
+        this.s_station_no = !StringUtils.isEmpty(s_station_no)?s_station_no:"暂无";
     }
 
     public String getS_station_name() {
@@ -122,7 +123,7 @@ public class GenerateRecordEntity {
     }
 
     public void setS_station_name(String s_station_name) {
-        this.s_station_name = CommonUtil.String.validStr(s_station_name)?s_station_name:"暂无";
+        this.s_station_name = !StringUtils.isEmpty(s_station_name)?s_station_name:"暂无";
     }
 
     @Excel(name = "基站编码", width = 30, isImportField = "true_st")

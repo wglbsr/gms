@@ -7,9 +7,9 @@ import com.dyny.gms.db.pojo.UnitExample;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.StationService;
 import com.dyny.gms.service.UnitService;
-import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,13 +45,13 @@ public class UnitServiceImpl extends BaseService implements UnitService {
     @Override
     public String getUnit(Unit unit, String searchContent, int pageNum, int pageSize, String orderBy) {
         UnitExample example = new UnitExample();
-        if (CommonUtil.String.validStr(searchContent)) {//模糊查找模式
+        if (!StringUtils.isEmpty(searchContent)) {//模糊查找模式
             example.or().andUnitNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andUnitNoLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andUnitAddressLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andRemarkLike(super.appendLike(searchContent)).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
         } else {//精确查找模式
-            if (CommonUtil.String.validStr(unit.getUnitNo())) {
+            if (!StringUtils.isEmpty(unit.getUnitNo())) {
                 example.or().andUnitNoEqualTo(unit.getUnitNo()).andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);
             } else {
                 example.or().andCustomerNoEqualTo(unit.getCustomerNo()).andDeletedEqualTo(false);

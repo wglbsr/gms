@@ -175,62 +175,62 @@ public class CacheMethodExample {
         }
 
         public Criteria andPojoNameEqualTo(String value) {
-            addCriterion("s_pojo_name =", value, "pojoName");
+            addCriterion("s_pojo_name =", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameNotEqualTo(String value) {
-            addCriterion("s_pojo_name <>", value, "pojoName");
+            addCriterion("s_pojo_name <>", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameGreaterThan(String value) {
-            addCriterion("s_pojo_name >", value, "pojoName");
+            addCriterion("s_pojo_name >", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameGreaterThanOrEqualTo(String value) {
-            addCriterion("s_pojo_name >=", value, "pojoName");
+            addCriterion("s_pojo_name >=", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameLessThan(String value) {
-            addCriterion("s_pojo_name <", value, "pojoName");
+            addCriterion("s_pojo_name <", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameLessThanOrEqualTo(String value) {
-            addCriterion("s_pojo_name <=", value, "pojoName");
+            addCriterion("s_pojo_name <=", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameLike(String value) {
-            addCriterion("s_pojo_name like", value, "pojoName");
+            addCriterion("s_pojo_name like", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameNotLike(String value) {
-            addCriterion("s_pojo_name not like", value, "pojoName");
+            addCriterion("s_pojo_name not like", value, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameIn(List<String> values) {
-            addCriterion("s_pojo_name in", values, "pojoName");
+            addCriterion("s_pojo_name in", values, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameNotIn(List<String> values) {
-            addCriterion("s_pojo_name not in", values, "pojoName");
+            addCriterion("s_pojo_name not in", values, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameBetween(String value1, String value2) {
-            addCriterion("s_pojo_name between", value1, value2, "pojoName");
+            addCriterion("s_pojo_name between", value1, value2, "propertyName");
             return (Criteria) this;
         }
 
         public Criteria andPojoNameNotBetween(String value1, String value2) {
-            addCriterion("s_pojo_name not between", value1, value2, "pojoName");
+            addCriterion("s_pojo_name not between", value1, value2, "propertyName");
             return (Criteria) this;
         }
 
@@ -435,62 +435,62 @@ public class CacheMethodExample {
         }
 
         public Criteria andPropertyNameEqualTo(String value) {
-            addCriterion("s_property_name =", value, "propertyName");
+            addCriterion("s_property_name =", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameNotEqualTo(String value) {
-            addCriterion("s_property_name <>", value, "propertyName");
+            addCriterion("s_property_name <>", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameGreaterThan(String value) {
-            addCriterion("s_property_name >", value, "propertyName");
+            addCriterion("s_property_name >", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameGreaterThanOrEqualTo(String value) {
-            addCriterion("s_property_name >=", value, "propertyName");
+            addCriterion("s_property_name >=", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameLessThan(String value) {
-            addCriterion("s_property_name <", value, "propertyName");
+            addCriterion("s_property_name <", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameLessThanOrEqualTo(String value) {
-            addCriterion("s_property_name <=", value, "propertyName");
+            addCriterion("s_property_name <=", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameLike(String value) {
-            addCriterion("s_property_name like", value, "propertyName");
+            addCriterion("s_property_name like", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameNotLike(String value) {
-            addCriterion("s_property_name not like", value, "propertyName");
+            addCriterion("s_property_name not like", value, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameIn(List<String> values) {
-            addCriterion("s_property_name in", values, "propertyName");
+            addCriterion("s_property_name in", values, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameNotIn(List<String> values) {
-            addCriterion("s_property_name not in", values, "propertyName");
+            addCriterion("s_property_name not in", values, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameBetween(String value1, String value2) {
-            addCriterion("s_property_name between", value1, value2, "propertyName");
+            addCriterion("s_property_name between", value1, value2, "pojoClass");
             return (Criteria) this;
         }
 
         public Criteria andPropertyNameNotBetween(String value1, String value2) {
-            addCriterion("s_property_name not between", value1, value2, "propertyName");
+            addCriterion("s_property_name not between", value1, value2, "pojoClass");
             return (Criteria) this;
         }
     }

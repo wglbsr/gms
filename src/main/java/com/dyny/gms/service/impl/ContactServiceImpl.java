@@ -2,12 +2,15 @@ package com.dyny.gms.service.impl;
 
 import com.dyny.gms.db.dao.ContactMapper;
 import com.dyny.gms.db.dao.ContactStationRelMapper;
-import com.dyny.gms.db.pojo.*;
+import com.dyny.gms.db.pojo.Contact;
+import com.dyny.gms.db.pojo.ContactExample;
+import com.dyny.gms.db.pojo.ContactStationRel;
+import com.dyny.gms.db.pojo.ContactStationRelExample;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.ContactService;
-import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +81,7 @@ public class ContactServiceImpl extends BaseService implements ContactService {
     @Override
     public String getContact(Contact contact, String searchContent, int pageNum, int pageSize, String orderBy) {
         ContactExample example = new ContactExample();
-        if (CommonUtil.String.validStr(searchContent)) {//模糊查找模式
+        if (!StringUtils.isEmpty(searchContent)) {//模糊查找模式
             example.or().andContactNameLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andContactPhoneLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);
             example.or().andRemarkLike(super.appendLike(searchContent)).andCustomerNoEqualTo(contact.getCustomerNo()).andDeletedEqualTo(false);

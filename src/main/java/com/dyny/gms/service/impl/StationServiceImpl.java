@@ -8,10 +8,13 @@ import com.dyny.gms.db.dao.*;
 import com.dyny.gms.db.pojo.*;
 import com.dyny.gms.db.pojo.custom.StationForPage;
 import com.dyny.gms.exportEntity.StationImportEntity;
-import com.dyny.gms.service.*;
-import com.dyny.gms.utils.CommonUtil;
+import com.dyny.gms.service.BaseService;
+import com.dyny.gms.service.ContactService;
+import com.dyny.gms.service.GeneratorService;
+import com.dyny.gms.service.StationService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +66,7 @@ public class StationServiceImpl extends BaseService implements StationService {
         Station station = new Station();
         StationExample example = new StationExample();
         station.setUnitId(0);
-        if (CommonUtil.String.validStr(stationNo)) {
+        if (!StringUtils.isEmpty(stationNo)) {
             example.or().andUnitIdEqualTo(unitId).andStationNoEqualTo(stationNo);
         } else {
             example.or().andUnitIdEqualTo(unitId);
@@ -166,7 +169,7 @@ public class StationServiceImpl extends BaseService implements StationService {
         StationExample stationExample = new StationExample();
 
         if (level >= this.ADMIN_LEVEL) {
-            if (CommonUtil.String.validStr(searchContent)) {
+            if (!StringUtils.isEmpty(searchContent)) {
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationAddressLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
@@ -174,7 +177,7 @@ public class StationServiceImpl extends BaseService implements StationService {
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andDeletedEqualTo(false);
             }
         } else {
-            if (CommonUtil.String.validStr(searchContent)) {
+            if (!StringUtils.isEmpty(searchContent)) {
                 stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andCustomerNoEqualTo(customerNo).andStationNoNotIn(relatedGeneratorStationNoList).andStationAddressLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
@@ -196,7 +199,7 @@ public class StationServiceImpl extends BaseService implements StationService {
      */
     @Override
     public Station getStationDataFromCache(String stationNo) {
-        if (!CommonUtil.String.validStr(stationNo)) {
+        if (StringUtils.isEmpty(stationNo)) {
             return null;
         }
         //1.查找缓存
@@ -370,7 +373,7 @@ public class StationServiceImpl extends BaseService implements StationService {
     public String getStationListByUsercus(String customerNo, int level, String searchContent, int pageNum, int pageSize, String orderBy) {
         StationExample example = new StationExample();
         if (level >= this.ADMIN_LEVEL) {
-            if (CommonUtil.String.validStr(searchContent)) {
+            if (!StringUtils.isEmpty(searchContent)) {
                 example.or().andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
                 example.or().andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
                 example.or().andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));
@@ -381,7 +384,7 @@ public class StationServiceImpl extends BaseService implements StationService {
                 example.or().andDeletedEqualTo(false);
             }
         } else {
-            if (CommonUtil.String.validStr(searchContent)) {
+            if (!StringUtils.isEmpty(searchContent)) {
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationNoLike(super.appendLike(searchContent));
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andStationAddressLike(super.appendLike(searchContent));
                 example.or().andCustomerNoEqualTo(customerNo).andDeletedEqualTo(false).andRemarkLike(super.appendLike(searchContent));

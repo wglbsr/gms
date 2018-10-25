@@ -108,4 +108,16 @@ public class WarningServiceImpl extends BaseService implements WarningService {
         List result = warningTypeMapper.selectByExample(warningTypeExample);
         return result != null && result.size() > 0 ? 1 : 0;
     }
+
+    @Override
+    public int setWarningToCacheAndDB(Warning warning) {
+        String key = CACHE_WARNING_KEY_PREFIX;
+        String generatorNo = warning.getMachNo();
+        key = key + generatorNo;
+        cacheDao.set(key, warning);
+        int result = warningMapper.insertSelective(warning);
+        return result;
+    }
+
+
 }

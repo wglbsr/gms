@@ -2,7 +2,7 @@ package com.dyny.gms.db.cachce.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dyny.gms.db.cachce.CacheDao;
-import com.dyny.gms.utils.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author:wanggl
@@ -51,12 +52,22 @@ public class RedisDaoImpl implements CacheDao {
         logger.info("插入缓存**key:" + key);
     }
 
+
+    @Override
+    public void set(String key, String value, long timeout, TimeUnit timeUnit) {
+        ValueOperations<String, String> operations = this.redisTemplate.opsForValue();
+        operations.set(key, value, timeout, timeUnit);
+        logger.info("插入缓存**key:" + key);
+
+    }
+
     @Override
     public void update(String key, Object value, Class targetClass) {
         if (redisTemplate.hasKey(key)) {
             this.set(key, value, targetClass);
         }
     }
+
 
     @Override
     public void update(String key, Object value) {
@@ -72,9 +83,22 @@ public class RedisDaoImpl implements CacheDao {
     }
 
     @Override
+    public void set(String key, String value, Class classNamePrefix, long timeout, TimeUnit timeUnit) {
+        this.set(classNamePrefix.getSimpleName() + key, value, timeout, timeUnit);
+
+    }
+
+    @Override
     public void set(String key, Object value) {
         if (value != null) {
             this.set(key, JSONObject.toJSONString(value));
+        }
+    }
+
+    @Override
+    public void set(String key, Object value, long timeout, TimeUnit timeUnit) {
+        if (value != null) {
+            this.set(key, JSONObject.toJSONString(value), timeout, timeUnit);
         }
     }
 
@@ -90,6 +114,15 @@ public class RedisDaoImpl implements CacheDao {
         }
     }
 
+
+    @Override
+    public void set(String key, Object value, Class classNamePrefix, long timeout, TimeUnit timeUnit) {
+        if (value != null) {
+            this.set(classNamePrefix.getSimpleName() + key, JSONObject.toJSONString(value), timeout, timeUnit);
+        }
+    }
+
+
     @Override
     public String get(String key) {
         if (this.contains(key)) {
@@ -103,7 +136,7 @@ public class RedisDaoImpl implements CacheDao {
     @Override
     public <T> T get(String key, Class<T> targetClass) {
         String strValue = this.get(key);
-        if (CommonUtil.String.validStr(strValue)) {
+        if (!StringUtils.isEmpty(strValue)) {
             return JSONObject.parseObject(strValue, targetClass);
         } else {
             return null;
@@ -114,7 +147,7 @@ public class RedisDaoImpl implements CacheDao {
     @Override
     public <T> List<T> getList(String key, Class<T> targetClass) {
         String strValue = this.get(key);
-        if (CommonUtil.String.validStr(strValue)) {
+        if (!StringUtils.isEmpty(strValue)) {
             return JSONObject.parseArray(strValue, targetClass);
         } else {
             return null;

@@ -10,6 +10,7 @@ import com.dyny.gms.service.UserService;
 import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,7 @@ public class UserServiceImpl extends BaseService implements UserService {
      */
     @Override
     public int deleteUserByUserNo(String userNo) {
-        if (CommonUtil.String.validStr(userNo)) {
+        if (!StringUtils.isEmpty(userNo)) {
             User user = new User();
             UserExample userExample = new UserExample();
             userExample.or().andUserNoEqualTo(userNo);
@@ -91,7 +92,7 @@ public class UserServiceImpl extends BaseService implements UserService {
             criteria1.andUserCusEqualTo(customerNo).andUserLevelLessThanOrEqualTo(level);
             criteria2.andUserCusEqualTo(customerNo).andUserLevelLessThanOrEqualTo(level);
         }
-        if (CommonUtil.String.validStr(searchContent)) {
+        if (!StringUtils.isEmpty(searchContent)) {
             criteria1.andUserNoLike(super.appendLike(searchContent));
             criteria2.andUsernameCnLike(super.appendLike(searchContent));
         }
@@ -114,7 +115,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> users = userMapper.selectByExample(example);
         List<String> userCustomerNoList = new ArrayList<>();
         for (User user : users) {
-            if (CommonUtil.String.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
+            if (!StringUtils.isEmpty(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
                 userCustomerNoList.add(user.getUserCus());
                 break;
             }
@@ -140,7 +141,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         List<User> users = userMapper.selectByExample(example);
         List<User> userList = new ArrayList<>();
         for (User user : users) {
-            if (CommonUtil.String.validStr(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
+            if (!StringUtils.isEmpty(user.getUserCus()) && user.getUserCus().equals(parentNo)) {
                 userList.add(user);
             }
         }

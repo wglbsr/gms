@@ -1,6 +1,7 @@
 package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
+import com.dyny.gms.db.pojo.Warning;
 import com.dyny.gms.db.pojo.WarningType;
 import com.dyny.gms.service.WarningService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,14 @@ public class WarningController extends BaseController {
     public String getWaningTypeList(@RequestParam(name = "id", required = false, defaultValue = "0") int id,
                                     @RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum,
                                     @RequestParam(name = "pageSize", required = false, defaultValue = "20") int pageSize) {
-        return warningService.getWarningTypeList(id,pageNum, pageSize);
+        return warningService.getWarningTypeList(id, pageNum, pageSize);
+    }
+
+
+    @RequestMapping(value = "/setWarningToCacheAndDB", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String setWarningToCacheAndDB(@RequestBody Warning warning) {
+        return super.getSuccessResult(warningService.setWarningToCacheAndDB(warning));
     }
 
     @RequestMapping(value = "/createWarningType", produces = {"application/json;charset=UTF-8"})

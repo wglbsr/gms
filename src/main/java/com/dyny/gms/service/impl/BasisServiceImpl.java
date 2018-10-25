@@ -7,6 +7,7 @@ import com.dyny.gms.db.pojo.Basis;
 import com.dyny.gms.service.BaseService;
 import com.dyny.gms.service.BasisService;
 import com.dyny.gms.utils.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,14 +36,13 @@ public class BasisServiceImpl extends BaseService implements BasisService {
 
     @Override
     public List getBasisByOffset(int offset, String machNo, int samplingInterval, long startTimestamp, long endTimestamp) throws ParseException {
-        List<Basis> bisisList = basisMapper.selectByOffset(offset, machNo, samplingInterval, CommonUtil.Date.timestampToDate(startTimestamp), CommonUtil.Date.timestampToDate(endTimestamp));
-        logger.info(JSONObject.toJSONString(new Basis()));
-        return bisisList;
+        List<Basis> basisList = basisMapper.selectByOffset(offset, machNo, samplingInterval, CommonUtil.Date.timestampToDate(startTimestamp), CommonUtil.Date.timestampToDate(endTimestamp));
+        return basisList;
     }
 
     @Override
     public Basis getBasisFromCache(String generatorNo) {
-        if (!CommonUtil.String.validStr(generatorNo)) {
+        if (StringUtils.isEmpty(generatorNo)) {
             return null;
         }
         //1.查找缓存
