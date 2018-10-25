@@ -7,6 +7,7 @@ import java.lang.annotation.*;
  * @date:2018-10-25
  * @version:1.0.0
  */
+@Deprecated
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

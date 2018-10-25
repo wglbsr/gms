@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
@@ -418,6 +419,25 @@ public class CommonUtil {
         }
 
         /**
+         * 是否包含,只要有一个包含,即返回true
+         *
+         * @param str1
+         * @param keyword
+         * @return
+         */
+        public static boolean contains(java.lang.String str1, java.lang.String... keyword) {
+            if (StringUtils.isEmpty(str1)) {
+                return false;
+            }
+            for (java.lang.String temp : keyword) {
+                if (str1.contains(temp)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
          * 字符串转换unicode
          */
         public static java.lang.String string2Unicode(java.lang.String string) {
@@ -486,6 +506,7 @@ public class CommonUtil {
 
         /**
          * 时间戳转date
+         *
          * @param timestamp
          * @return
          * @throws ParseException

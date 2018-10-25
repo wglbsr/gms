@@ -9,5 +9,8 @@ import java.util.List;
 @Mapper
 public interface CommonMapper {
 
-    List<HashMap<String, Object>> selectByPrimaryKey(@Param("table") String tableName, @Param("pk_name") String pk_name, @Param("pk_value") String pk_value);
+    List select(@Param("table") String tableName, @Param("name") String pk_name, @Param("value") String value);
+
+    List execute(@Param("sql") String sql);
+
 }

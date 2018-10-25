@@ -58,7 +58,6 @@ public class ModifyInterceptor implements Interceptor {
      * @throws IllegalAccessException
      */
     private Object afterHandler(Invocation invocation) throws InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        Method method = invocation.getMethod();
         Object[] args = invocation.getArgs();
         MappedStatement mappedStatement = (MappedStatement) args[0];
         Object mapperArgs = args[1];

@@ -56,7 +56,6 @@ public interface SiteMapper {
                                @Param("end_date") long end_date);
 
 
-
     public Map getMachineNum(@Param("user_cus") String user_cus,
                              @Param("onlineTimeout") int onlineTimeout,
                              @Param("activate") boolean activate,
@@ -104,7 +103,7 @@ public interface SiteMapper {
     /**
      * 39.	移动油机交流主数据明细
      */
-    public List getSiteDetailed1(String mach_no);
+    public List getSiteDetailed1(@Param("mach_no") String mach_no);
 
 
     /**

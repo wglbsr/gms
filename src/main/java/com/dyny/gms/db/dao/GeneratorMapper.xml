@@ -590,6 +590,29 @@
 
 
 
+  <resultMap type="map" id="machineStatusMap">
+    <result column="mach_no" property="mach_no" javaType="string"/>
+
+  </resultMap>
+
+  <!-- 三十一.	移动油机查询 -->
+  <select id="searchMachine" resultMap="machineStatusMap">
+    select mach_no,mach_name,s_station_name,st_no,
+    i_total_generate_time, mach_type, st_state,b_activated,
+    city_electricity,Acity_electricity,
+    output_voltage,load_mode,
+    al_voltage,
+    -- isnull(i_total_generate_time,0)/60 sum_time,
+    -- dbo.sumnum_time(mach_no) sumnum_time,
+    state,isnull(start_Vo,0) start_Vo,
+    state1,isnull(Expr2,0)-isnull(i_total_generate_time,0)/60 maintain_time,isnull(lank_level,0)
+    lank_per,st_current,isnull(cabinet_temperature,0)
+    external_temperature,isnull(lank_level,0)*isnull(volumeno,0)/100 lank_level ,isnull(sys_mode,0) sys_mode
+    from view_generator_full_info
+    WHERE 1 = 1
+
+  </select>
+
   <update id="updateByPrimaryKeySelectiveBatch" parameterType="java.util.List">
     <foreach collection="list" item="item" index="index" separator=";">
       update C_mach
