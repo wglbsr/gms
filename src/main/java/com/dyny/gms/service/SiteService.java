@@ -18,8 +18,6 @@ public interface SiteService {
 
      Map<String, Object> getCareTime(String mach_no);
 
-     int modifyCareTime(BigDecimal currentServiceTime, String mach_no);
-
      Map<String, Object> getStopTime(String mach_no);
 
 

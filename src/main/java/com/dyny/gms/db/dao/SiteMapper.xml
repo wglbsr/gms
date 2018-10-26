@@ -141,12 +141,6 @@
         WHERE mach_no = #{mach_no}
     </select>
 
-    <!-- 十六.	(2)设定保养时间功能 -->
-    <update id="modifyCareTime">
-        UPDATE C_mach SET maintain_time = #{currentServiceTime,jdbcType = DECIMAL}
-        WHERE mach_no = #{mach_no}
-    </update>
-
     <!-- 十七.	（1）设定停机功能 -->
     <select id="getStopTime" resultMap="careTimeMap">
         select stop_time as currentServiceTime

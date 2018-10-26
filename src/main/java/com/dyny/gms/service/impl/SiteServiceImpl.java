@@ -78,12 +78,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     }
 
     @Override
-    public int modifyCareTime(BigDecimal currentServiceTime, String mach_no) {
-        // TODO Auto-generated method stub
-        return mapper.modifyCareTime(currentServiceTime, mach_no);
-    }
-
-    @Override
     public Map<String, Object> getStopTime(String mach_no) {
         // TODO Auto-generated method stub
         return mapper.getStopTime(mach_no);

@@ -30,13 +30,6 @@ public interface SiteMapper {
      */
     public Map<String, Object> getCareTime(String mach_no);
 
-    /**
-     * 十六.(2)设定保养时间功能
-     *
-     * @param mach_no
-     * @return
-     */
-    public int modifyCareTime(@Param("currentServiceTime") BigDecimal currentServiceTime, @Param("mach_no") String stationId);
 
     /**
      * 十七.	(1)设定停机功能

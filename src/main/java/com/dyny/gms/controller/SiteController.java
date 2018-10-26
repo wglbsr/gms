@@ -113,19 +113,6 @@ public class SiteController extends BaseController {
         return super.getSuccessResult(service.getCareTime(mach_no));
     }
 
-    /**
-     * 十六.(2)设定保养时间功能
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/modifyCareTime.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String modifyCareTime(@RequestParam(name = "mach_no") String mach_no,
-                                 @RequestParam(name = "currentServiceTime") BigDecimal currentServiceTime) {
-        return getSuccessResult(service.modifyCareTime(currentServiceTime, mach_no));
-    }
 
     /**
      * 十七.	(1)设定停机功能

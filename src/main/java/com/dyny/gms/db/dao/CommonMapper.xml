@@ -9,7 +9,10 @@
         = ${value}
     </select>
 
-    <select id="execute" resultType="java.util.Map" statementType="STATEMENT">
+    <select id="executeSelect" resultType="java.util.Map" statementType="STATEMENT">
         ${sql}
     </select>
+    <update id="executeModify" statementType="STATEMENT">
+        ${sql}
+    </update>
 </mapper>
