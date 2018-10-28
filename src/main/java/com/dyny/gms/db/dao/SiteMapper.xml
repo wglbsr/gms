@@ -76,7 +76,7 @@
         </if>
         <if test="keyWord!=null and keyWord!=''">
             and (i.mach_no like '%'+#{keyWord}+'%' or m.mach_name like '%'+#{keyWord}+'%' or
-                 m.st_no like '%'+#{keyWord}+'%' or ts.s_station_name like '%'+#{keyWord}+'%')
+            m.st_no like '%'+#{keyWord}+'%' or ts.s_station_name like '%'+#{keyWord}+'%')
         </if>
     </select>
 
@@ -278,8 +278,6 @@
         city_electricity,Acity_electricity,
         output_voltage,load_mode,
         al_voltage,
-        -- isnull(i_total_generate_time,0)/60 sum_time,
-        -- dbo.sumnum_time(mach_no) sumnum_time,
         state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(i_total_generate_time,0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
@@ -318,11 +316,12 @@
         </if>
         AND b_activated in (
         <if test="activate">
-            1
+            1,
         </if>
         <if test="inactivate">
-            ,0
+            0,
         </if>
+            3
         )
 
 
@@ -369,7 +368,6 @@
         '0'
         )
     </insert>
-
 
 
     <!-- 三十九.	移动油机直流主数据明细 -->
@@ -519,7 +517,7 @@
         WHERE
         1 = 1
         <if test="user_cus != null and user_cus != '' ">
-            AND  aw.mach_no in (select mach_no from c_mach where user_cus=#{user_cus} )
+            AND aw.mach_no in (select mach_no from c_mach where user_cus=#{user_cus} )
         </if>
         <if test="action_type>0">
             AND aw.action_type = #{action_type}
