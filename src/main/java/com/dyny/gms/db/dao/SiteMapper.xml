@@ -517,7 +517,7 @@
         WHERE
         1 = 1
         <if test="user_cus != null and user_cus != '' ">
-            AND aw.mach_no in (select mach_no from c_mach where user_cus=#{user_cus} )
+            AND aw.mach_no in (select mach_no from c_mach where cus_no=#{user_cus} )
         </if>
         <if test="action_type>0">
             AND aw.action_type = #{action_type}

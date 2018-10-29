@@ -124,9 +124,9 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         Map<String, Object> result = new HashMap<String, Object>();
         SystemConfig systemConfig = systemConfigService.getConfig();
         Map<String, Integer> allMap = mapper.getMachineNum(user_cus, systemConfig.getOnlineTimeout(), activate, inactivate);
-        int total = allMap.get("total");
-        int online = allMap.get("online");
-        int sleeping = allMap.get("sleeping");
+        int total = allMap.containsKey("total") ? allMap.get("total") : 0;
+        int online = allMap.containsKey("online") ? allMap.get("online") : 0;
+        int sleeping = allMap.containsKey("sleeping") ? allMap.get("sleeping") : 0;
         result.put("allNum", total);
         result.put("onlineNum", online);
         result.put("offlineNum", total - online);
