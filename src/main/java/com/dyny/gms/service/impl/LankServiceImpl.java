@@ -24,36 +24,6 @@ public class LankServiceImpl extends BaseService implements LankService {
 
     @Override
     public String getLank(String customerNo, String keyWord, int pageNum, int pageSize, long startDate, long endDate) throws ParseException {
-//        LankExample lankExample = new LankExample();
-//        GeneratorExample generatorExample = new GeneratorExample();
-//        if (!StringUtils.isEmpty(customerNo)) {
-//            if (!StringUtils.isEmpty(keyWord)) {
-//                generatorExample.or().andCusNoEqualTo(customerNo).andMachNoLike(super.appendLike(keyWord));
-//                generatorExample.or().andCusNoEqualTo(customerNo).andMachNameLike(super.appendLike(keyWord));
-//                generatorExample.or().andCusNoEqualTo(customerNo).andStNoLike(super.appendLike(keyWord));
-//            } else {
-//                generatorExample.or().andCusNoEqualTo(customerNo);
-//            }
-//        } else {
-//            if (!StringUtils.isEmpty(keyWord)) {
-//                generatorExample.or().andMachNoLike(super.appendLike(keyWord));
-//                generatorExample.or().andMachNameLike(super.appendLike(keyWord));
-//                generatorExample.or().andStNoLike(super.appendLike(keyWord));
-//            }
-//        }
-//        //1.获取该客户下的所有油机
-//        List<Generator> generators = generatorMapper.selectByExample(generatorExample);
-//        //获取油机编号
-//        List<String> generatorNoList = generators.stream().map(Generator::getMachNo).collect(Collectors.toList());
-//        if (startDate > 0 && endDate > 0) {
-//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeBetween(CommonUtil.Date.timestampToDate(startDate), CommonUtil.Date.timestampToDate(endDate));
-//        } else if (startDate == 0 && endDate > 0) {
-//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeLessThan(CommonUtil.Date.timestampToDate(endDate));
-//        } else if (startDate > 0 && endDate == 0) {
-//            lankExample.or().andMachNoIn(generatorNoList).andCreatTimeGreaterThan(CommonUtil.Date.timestampToDate(startDate));
-//        } else {
-//            lankExample.or().andMachNoIn(generatorNoList);
-//        }
         Page page = PageHelper.startPage(pageNum, pageSize);
         List result = lankMapper.selectByCustomerNoAndKeyWord(startDate, endDate, customerNo, keyWord);
         int total = (int) page.getTotal();
