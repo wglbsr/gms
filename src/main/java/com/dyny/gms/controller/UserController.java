@@ -14,30 +14,30 @@ public class UserController extends BaseController {
     UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String login(@RequestParam(value = "username", required = true) String username,
-                        @RequestParam(value = "password", required = true) String password) {
+    public String login(@RequestParam(value = "username") String username,
+                        @RequestParam(value = "password") String password) {
         return super.getSuccessResult(userService.login(username, password));
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String logout(@RequestParam(value = "AUTH_TOKEN", required = true) String token) {
+    public String logout(@RequestParam(value = UserService.TOKEN_NAME) String token) {
         return super.getSuccessResult(userService.logout(token));
     }
 
 
     @RequestMapping(value = "/getAllMyChildrenCustomerNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String getAllMyChildrenCustomerNo(@RequestParam(value = "customerNo", required = true) String customerNo) {
+    public String getAllMyChildrenCustomerNo(@RequestParam(value = "customerNo") String customerNo) {
         return super.getSuccessResult(userService.getAllChildrenCusNo(customerNo));
     }
 
     @RequestMapping(value = "/getAllMyChildren", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String getAllMyChildren(@RequestParam(value = "customerNo", required = true) String customerNo) {
+    public String getAllMyChildren(@RequestParam(value = "customerNo") String customerNo) {
         return super.getSuccessResult(userService.getAllChildren(customerNo));
     }
 
 
     @RequestMapping(value = "/getNextLevelUser", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String getNextLevelUser(@RequestParam(value = "customerNo", required = true) String customerNo) {
+    public String getNextLevelUser(@RequestParam(value = "customerNo") String customerNo) {
         return super.getSuccessResult(userService.getNextLevelUser(customerNo));
     }
 
@@ -51,20 +51,20 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/getUserByUserNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getUserByUserNo(@RequestParam(value = "userNo", required = true) String userNo) {
+    public String getUserByUserNo(@RequestParam(value = "userNo") String userNo) {
         return super.getSuccessResult(userService.getUserByUserNo(userNo));
     }
 
     @RequestMapping(value = "/deleteUserByUserNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String deleteUserByUserNo(@RequestParam(value = "userNo", required = true) String userNo) {
+    public String deleteUserByUserNo(@RequestParam(value = "userNo") String userNo) {
         return super.getSuccessResult(userService.deleteUserByUserNo(userNo));
     }
 
 
     @RequestMapping(value = "/checkUsername", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String checkUsername(@RequestParam(value = "username", required = true) String username) {
+    public String checkUsername(@RequestParam(value = "username") String username) {
         User user = userService.getUserByUsername(username);
         return super.getSuccessResult(user == null ? 0 : 1);
     }
@@ -72,9 +72,9 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String changePassword(@RequestParam(value = "username", required = true) String username,
-                                 @RequestParam(value = "oldPassword", required = true) String oldPassword,
-                                 @RequestParam(value = "newPassword", required = true) String newPassword) {
+    public String changePassword(@RequestParam(value = "username") String username,
+                                 @RequestParam(value = "oldPassword") String oldPassword,
+                                 @RequestParam(value = "newPassword") String newPassword) {
         return super.getSuccessResult(userService.changePassword(username, oldPassword, newPassword));
     }
 
@@ -83,11 +83,11 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/getUserListByCustomerNoAndLevel", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getUserListByCustomerNoAndLevel(@RequestParam(value = "level", required = true) int level,
+    public String getUserListByCustomerNoAndLevel(@RequestParam(value = "level") int level,
                                                   @RequestParam(value = "pageNum", required = false, defaultValue = "0") int pageNum,
                                                   @RequestParam(value = "pageSize", required = false, defaultValue = "0") int pageSize,
                                                   @RequestParam(value = "searchContent", required = false, defaultValue = "") String searchContent,
-                                                  @RequestParam(value = "customerNo", required = true) String customerNo) {
+                                                  @RequestParam(value = "customerNo") String customerNo) {
         return userService.getUserListByCustomerNoAndLevel(customerNo, level, searchContent, pageNum, pageSize);
     }
 

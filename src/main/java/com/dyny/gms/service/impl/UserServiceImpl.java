@@ -92,10 +92,12 @@ public class UserServiceImpl extends BaseService implements UserService {
             token = super.MD5(content);
             User user = userList.get(0);
             user.setUserPass("");
-            cacheDao.set(token, user, User.class, loginTimeout, TimeUnit.MINUTES);
+            cacheDao.set(token, user, loginTimeout, TimeUnit.MINUTES);
             result.put("AUTH_TOKEN", token);
             result.put("userLevel", user.getUserLevel());
             result.put("customerNo", user.getUserCus());
+            result.put("usercus", user.getUserCus());
+            result.put("user_cus", user.getUserCus());
         }
         return result;
     }

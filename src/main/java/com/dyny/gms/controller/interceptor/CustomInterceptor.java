@@ -66,7 +66,7 @@ public class CustomInterceptor implements HandlerInterceptor {
             logger.info("login username:" + username);
         } else {
             //更新超时
-            String token = request.getHeader(UserService.TOKEN_NAME);
+            String token = request.getParameter(UserService.TOKEN_NAME);
             if (!StringUtils.isEmpty(token)) {
                 cacheDao.updateTimeout(token, loginTimeout, TimeUnit.MINUTES);
             }
