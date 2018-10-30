@@ -1,5 +1,6 @@
 package com.dyny.gms.service.impl;
 
+import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.dao.LoginHistoryMapper;
 import com.dyny.gms.db.dao.UserMapper;
 import com.dyny.gms.db.pojo.LoginHistory;
@@ -12,11 +13,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl extends BaseService implements UserService {
@@ -24,6 +25,8 @@ public class UserServiceImpl extends BaseService implements UserService {
     UserMapper userMapper;
     @Autowired
     LoginHistoryMapper loginHistoryMapper;
+    @Autowired
+    CacheDao cacheDao;
 
     @Override
     public int changePassword(String username, String oldPassword, String newPassword) {
@@ -73,6 +76,38 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public int saveLoginLog(LoginHistory loginHistory) {
         return loginHistoryMapper.insert(loginHistory);
+    }
+
+    @Value("${system.login.timeout}")
+    private int loginTimeout;
+
+    @Override
+    public Map login(String username, String password) {
+        List<User> userList = this.getUserListByUsernameAndPsw(username, password);
+        String token = "";
+        Map result = new HashMap();
+        if (userList != null && userList.size() == 1) {
+            Date date = new Date();
+            String content = username + password + date.getTime();
+            token = super.MD5(content);
+            User user = userList.get(0);
+            user.setUserPass("");
+            cacheDao.set(token, user, User.class, loginTimeout, TimeUnit.MINUTES);
+            result.put("AUTH_TOKEN", token);
+            result.put("userLevel", user.getUserLevel());
+            result.put("customerNo", user.getUserCus());
+        }
+        return result;
+    }
+
+    @Override
+    public int logout(String token) {
+        return cacheDao.delete(token);
+    }
+
+    @Override
+    public User getUserFromCache(String token) {
+        return cacheDao.get(token, User.class);
     }
 
     @Override

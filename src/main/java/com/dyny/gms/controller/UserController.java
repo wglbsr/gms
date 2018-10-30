@@ -16,8 +16,12 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String login(@RequestParam(value = "username", required = true) String username,
                         @RequestParam(value = "password", required = true) String password) {
-        List<User> users = userService.getUserListByUsernameAndPsw(username, password);
-        return super.getSuccessResult(users);
+        return super.getSuccessResult(userService.login(username, password));
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public String logout(@RequestParam(value = "AUTH_TOKEN", required = true) String token) {
+        return super.getSuccessResult(userService.logout(token));
     }
 
 

@@ -1,6 +1,8 @@
 package com.dyny.gms.controller.interceptor;
 
+import com.dyny.gms.db.cachce.CacheDao;
 import com.dyny.gms.db.pojo.LoginHistory;
+import com.dyny.gms.db.pojo.User;
 import com.dyny.gms.service.UserService;
 import com.dyny.gms.utils.CommonUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -8,12 +10,14 @@ import org.apache.log4j.Logger;
 import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 登陆拦截器
@@ -22,11 +26,13 @@ public class CustomInterceptor implements HandlerInterceptor {
     @Value("${system.config.demo.level}")
     private int DEMO_LEVEL;
     private static Logger logger = Logger.getLogger(CustomInterceptor.class);
-    public static String LOGIN_CACHE_NAME = "loginInfo";
-    public static String TOKEN_NAME = "token";
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+    @Autowired
+    private CacheDao cacheDao;
+    @Value("${system.login.timeout}")
+    private int loginTimeout;
 
     /**
      * 1.是否已登录
@@ -49,7 +55,7 @@ public class CustomInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
 
         //记录登陆信息
-        if (uri.equals("Login") || uri.equals("login") || uri.equals("/ems/users/login.do")) {
+        if (CommonUtil.String.equalsOne(uri, "login", "Login", "/ems/users/login.do")) {
             String username = request.getParameter("username");
             String ip = this.getActualIp(request);
             LoginHistory loginHistory = new LoginHistory();
@@ -59,8 +65,14 @@ public class CustomInterceptor implements HandlerInterceptor {
             userService.saveLoginLog(loginHistory);
             logger.info("login username:" + username);
         } else {
+            //更新超时
+            String token = request.getHeader(UserService.TOKEN_NAME);
+            if (!StringUtils.isEmpty(token)) {
+                cacheDao.updateTimeout(token, loginTimeout, TimeUnit.MINUTES);
+            }
             logger.info("request uri:" + uri);
         }
+
 
         //允许跨域请求
         String origin = request.getHeader("Origin");
@@ -91,7 +103,7 @@ public class CustomInterceptor implements HandlerInterceptor {
         if (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return StringUtils.isEmpty(ip)?"unknown":ip;
+        return StringUtils.isEmpty(ip) ? "unknown" : ip;
 
     }
 

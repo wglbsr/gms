@@ -78,6 +78,13 @@ public class RedisDaoImpl implements CacheDao {
     }
 
     @Override
+    public void updateTimeout(String key, long timeout, TimeUnit timeUnit) {
+        if (this.contains(key)) {
+            redisTemplate.expire(key, timeout, timeUnit);
+        }
+    }
+
+    @Override
     public void set(String key, String value, Class targetClass) {
         this.set(targetClass.getSimpleName() + key, value);
     }

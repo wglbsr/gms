@@ -220,6 +220,24 @@ public class CommonUtil {
         }
 
 
+        public static boolean equalsAll(java.lang.String target, java.lang.String... str) {
+            for (java.lang.String temp : str) {
+                if (!temp.equals(target)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static boolean equalsOne(java.lang.String target, java.lang.String... str) {
+            for (java.lang.String temp : str) {
+                if (temp.equals(target)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static java.lang.String getRandomNum(int num) {
             return "" + (int) (Math.random() * Math.pow(10, num));
         }

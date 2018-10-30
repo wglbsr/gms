@@ -31,6 +31,8 @@ public interface CacheDao {
 
     void update(String key, Object value);
 
+    void updateTimeout(String key, long timeout, TimeUnit timeUnit);
+
     String get(String key);
 
     <T> T get(String key, Class<T> targetClass);

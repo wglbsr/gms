@@ -4,8 +4,11 @@ import com.dyny.gms.db.pojo.LoginHistory;
 import com.dyny.gms.db.pojo.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
+    String TOKEN_NAME = "AUTH_TOKEN";
+
     List<String> getAllChildrenCusNo(String parentNo);
 
     List<User> getAllChildren(String parentNo);
@@ -28,5 +31,10 @@ public interface UserService {
 
     int saveLoginLog(LoginHistory loginHistory);
 
+    Map login(String username, String password);
+
+    int logout(String token);
+
+    User getUserFromCache(String token);
 
 }
