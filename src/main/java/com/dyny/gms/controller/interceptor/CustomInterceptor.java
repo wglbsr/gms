@@ -14,6 +14,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -50,9 +51,9 @@ public class CustomInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-
         String uri = request.getRequestURI();
+        String token = request.getParameter(UserService.TOKEN_NAME);
+
 
         //记录登陆信息
         if (CommonUtil.String.equalsOne(uri, "login", "Login", "/ems/users/login.do")) {
@@ -66,14 +67,14 @@ public class CustomInterceptor implements HandlerInterceptor {
             logger.info("login username:" + username);
         } else {
             //更新超时
-            String token = request.getParameter(UserService.TOKEN_NAME);
+//            if (!cacheDao.contains(token)) {
+//                return false;
+//            }
             if (!StringUtils.isEmpty(token)) {
                 cacheDao.updateTimeout(token, loginTimeout, TimeUnit.MINUTES);
             }
             logger.info("request uri:" + uri);
         }
-
-
         //允许跨域请求
         String origin = request.getHeader("Origin");
         response.setHeader("Access-Control-Allow-Origin", origin != null && !origin.isEmpty() ? "*" : origin);
