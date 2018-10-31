@@ -57,11 +57,12 @@
         JOIN c_mach m ON m.mach_no = i.mach_no
         AND m.b_activated in (
         <if test="activate">
-            1
+            1,
         </if>
         <if test="inactivate">
-            ,0
+            0,
         </if>
+        3
         )
         LEFT JOIN t_station ts ON ts.s_station_no = m.st_no --
         LEFT JOIN C_basis cb ON i.id = cb.id
@@ -237,11 +238,12 @@
         </if>
         AND b_activated in (
         <if test="activate">
-            1
+            1,
         </if>
         <if test="inactivate">
-            ,0
+            0,
         </if>
+        3
         )
     </select>
 
