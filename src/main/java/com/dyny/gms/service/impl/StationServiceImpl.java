@@ -167,8 +167,7 @@ public class StationServiceImpl extends BaseService implements StationService {
         List<GeneratorStationRel> generatorStationRelList = generatorStationRelMapper.selectByExample(generatorStationRelExample);
         List<String> relatedGeneratorStationNoList = generatorStationRelList.stream().map(GeneratorStationRel::getStationNo).collect(Collectors.toList());
         StationExample stationExample = new StationExample();
-
-        if (level >= this.ADMIN_LEVEL) {
+        if (level >= this.ADMIN_LEVEL && StringUtils.isEmpty(customerNo)) {
             if (!StringUtils.isEmpty(searchContent)) {
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNoLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
                 stationExample.or().andStationNoNotIn(relatedGeneratorStationNoList).andStationNameLike(super.appendLike(searchContent)).andDeletedEqualTo(false);
