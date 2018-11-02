@@ -38,6 +38,4 @@ public class GlobalExceptionHandler extends BaseController {
         }
         return super.getErrorMsg(errorMsg);
     }
-
-
 }
