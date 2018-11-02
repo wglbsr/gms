@@ -1,20 +1,15 @@
 package com.dyny.gms.service.impl;
 
-import com.dyny.gms.exception.GlobalExceptionHandler;
 import com.dyny.gms.service.MailService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @project: gms
@@ -28,7 +23,6 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-
 
     @Value("${system.mail.default.receiver}")
     private String receiver;
@@ -48,11 +42,9 @@ public class MailServiceImpl implements MailService {
             helper.setFrom(sender);
             helper.setSubject(title);
             helper.setText(content, true);
-            for (String temp : receiverList) {
-                helper.setTo(temp);
-                logger.info("发送异常警告邮件给:" + temp);
-                javaMailSender.send(message);
-            }
+            helper.setTo(receiverList);
+            logger.info("发送异常警告邮件给:" + receiverList);
+            javaMailSender.send(message);
             return true;
         } catch (MessagingException e) {
             e.printStackTrace();
