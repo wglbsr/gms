@@ -43,7 +43,7 @@ public class MailServiceImpl implements MailService {
             helper.setSubject(title);
             helper.setText(content, true);
             helper.setTo(receiverList);
-            logger.info("发送异常警告邮件给:" + receiverList);
+            logger.info("发送异常警告邮件给:" + receiver);
             javaMailSender.send(message);
             return true;
         } catch (MessagingException e) {
