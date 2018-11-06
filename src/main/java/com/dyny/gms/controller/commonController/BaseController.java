@@ -3,6 +3,8 @@ package com.dyny.gms.controller.commonController;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
+import java.util.List;
+
 public class BaseController {
 
     private JSONObject result = new JSONObject();
@@ -23,7 +25,14 @@ public class BaseController {
      * @return
      */
     public String getSuccessResult(Object data) {
-        return this.getResult(true, data, "", 0, 0, 0);
+        int pageNum = 1;
+        int pageSize = 0;
+        int totalNum = 0;
+        if(data instanceof List){
+            pageSize = ((List) data).size();
+            totalNum = pageSize;
+        }
+        return this.getResult(true, data, "", pageNum, pageSize, totalNum);
     }
 
     public String getJsonObj(Object data) {
