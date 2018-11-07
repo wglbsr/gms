@@ -490,13 +490,15 @@ public class StationServiceImpl extends BaseService implements StationService {
         stationForPage.setCreateTime(new Date());
         int cnt = stationMapper.insertSelective(stationForPage);
         int cnt2 = 0;
-        for (Integer contactId : contactIdList) {
-            ContactStationRel contactStationRel = new ContactStationRel();
-            contactStationRel.setContactId(contactId);
-            contactStationRel.setStationNo(stationForPage.getStationNo());
-            contactStationRel.setCreateTime(new Date());
-            contactStationRel.setDeleted(false);
-            cnt2 += contactStationRelMapper.insert(contactStationRel) > 0 ? 1 : 0;
+        if(contactIdList!=null){
+            for (Integer contactId : contactIdList) {
+                ContactStationRel contactStationRel = new ContactStationRel();
+                contactStationRel.setContactId(contactId);
+                contactStationRel.setStationNo(stationForPage.getStationNo());
+                contactStationRel.setCreateTime(new Date());
+                contactStationRel.setDeleted(false);
+                cnt2 += contactStationRelMapper.insert(contactStationRel) > 0 ? 1 : 0;
+            }
         }
         return cnt + cnt2;
     }

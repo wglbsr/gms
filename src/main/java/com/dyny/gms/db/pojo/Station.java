@@ -9,6 +9,7 @@ public class Station {
 
     private String stationNo;
 
+    @Deprecated
     private String stationCoordinate;
 
     private Date createTime;
