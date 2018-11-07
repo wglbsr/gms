@@ -442,35 +442,37 @@ public class StationServiceImpl extends BaseService implements StationService {
     public int updateStationForPage(StationForPage station) {
         String stationNo = station.getStationNo();
         List<Integer> contactIds1 = station.getContactIdList();
-        List<Integer> contactIds2 = contactService.getContactByStationNo(stationNo, true);
-        List<Integer> crossIdList = new ArrayList<>();
-        for (Integer temp1 : contactIds1) {
-            for (Integer temp2 : contactIds2) {
-                if (temp1.intValue() == temp2.intValue()) {
-                    crossIdList.add(temp1);
+        if(contactIds1!=null){
+            List<Integer> contactIds2 = contactService.getContactByStationNo(stationNo, true);
+            List<Integer> crossIdList = new ArrayList<>();
+            for (Integer temp1 : contactIds1) {
+                for (Integer temp2 : contactIds2) {
+                    if (temp1.intValue() == temp2.intValue()) {
+                        crossIdList.add(temp1);
+                    }
                 }
             }
-        }
-        contactIds1.removeAll(contactIds2);//需要插入的
-        contactIds2.removeAll(contactIds1);//需要删除的,同时包含无需改变的值，所以下方需要去掉无需改变的值
-        //逻辑删除
-        ContactStationRel contactStationRelForDelete = new ContactStationRel();
-        ContactStationRelExample contactStationRelExample = new ContactStationRelExample();
-        contactStationRelForDelete.setDeleted(true);
-        contactStationRelForDelete.setModifyTime(new Date());
-        contactIds2.removeAll(crossIdList);//去掉无需改变的值
-        if (contactIds2.size() > 0) {
-            contactStationRelExample.or().andStationNoEqualTo(stationNo).andContactIdIn(contactIds2).andDeletedEqualTo(false);
-            contactStationRelMapper.updateByExampleSelective(contactStationRelForDelete, contactStationRelExample);
-        }
-        //插入
-        for (Integer temp : contactIds1) {
-            ContactStationRel contactStationRel = new ContactStationRel();
-            contactStationRel.setContactId(temp);
-            contactStationRel.setStationNo(stationNo);
-            contactStationRel.setDeleted(false);
-            contactStationRel.setCreateTime(new Date());
-            contactStationRelMapper.insert(contactStationRel);
+            contactIds1.removeAll(contactIds2);//需要插入的
+            contactIds2.removeAll(contactIds1);//需要删除的,同时包含无需改变的值，所以下方需要去掉无需改变的值
+            //逻辑删除
+            ContactStationRel contactStationRelForDelete = new ContactStationRel();
+            ContactStationRelExample contactStationRelExample = new ContactStationRelExample();
+            contactStationRelForDelete.setDeleted(true);
+            contactStationRelForDelete.setModifyTime(new Date());
+            contactIds2.removeAll(crossIdList);//去掉无需改变的值
+            if (contactIds2.size() > 0) {
+                contactStationRelExample.or().andStationNoEqualTo(stationNo).andContactIdIn(contactIds2).andDeletedEqualTo(false);
+                contactStationRelMapper.updateByExampleSelective(contactStationRelForDelete, contactStationRelExample);
+            }
+            //插入
+            for (Integer temp : contactIds1) {
+                ContactStationRel contactStationRel = new ContactStationRel();
+                contactStationRel.setContactId(temp);
+                contactStationRel.setStationNo(stationNo);
+                contactStationRel.setDeleted(false);
+                contactStationRel.setCreateTime(new Date());
+                contactStationRelMapper.insert(contactStationRel);
+            }
         }
         //更新其他信息
         return this.updateStation(station);
