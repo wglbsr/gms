@@ -33,7 +33,7 @@ import java.util.Map;
 @Deprecated
 @Service
 public class SiteServiceImpl extends BaseService implements SiteService {
-    private final Logger logger = Logger.getLogger(SiteServiceImpl.class);
+//    private final Logger logger = Logger.getLogger(SiteServiceImpl.class);
 
     @Override
     public String getSiteWarningList(String user_cus, int pageNum, int pageSize, int action,
@@ -46,8 +46,6 @@ public class SiteServiceImpl extends BaseService implements SiteService {
 
     @Autowired
     private SiteMapper mapper;
-    @Autowired
-    private OperateMapper operateMapper;
 
     @Override
     public List getGeneratorLocation(String username, String machNo, boolean activate, boolean inactivate, String keyWord) {
