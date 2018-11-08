@@ -62,6 +62,7 @@ public class CustomInterceptor implements HandlerInterceptor {
         String userAgent = request.getHeader("User-Agent");
         String deviceType = "未知";
         //判断设配类型
+        //目前只能判断常用设备
         if (!StringUtils.isEmpty(userAgent)) {
             userAgent = userAgent.toLowerCase();
             if (userAgent.contains(MOBILE_DEVICE_iPhone)) {
