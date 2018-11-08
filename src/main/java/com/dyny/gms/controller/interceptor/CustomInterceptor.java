@@ -27,7 +27,13 @@ public class CustomInterceptor implements HandlerInterceptor {
     @Value("${system.config.demo.level}")
     private int DEMO_LEVEL;
     private static Logger logger = Logger.getLogger(CustomInterceptor.class);
-
+    private static String MOBILE_DEVICE_iPhone = "iphone";
+    private static String MOBILE_DEVICE_iPad = "ipad";
+    private static String MOBILE_DEVICE_Android = "android";
+    private static String MOBILE_DEVICE_Linux = "linux";
+    private static String PC_DEVICE_Mac = "macintosh";
+    private static String PC_DEVICE_Win = "windows";
+    private static String PC_DEVICE_Lux = "linux";
     @Autowired
     private UserService userService;
     @Autowired
@@ -53,8 +59,25 @@ public class CustomInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
         String token = request.getParameter(UserService.TOKEN_NAME);
-
-
+        String userAgent = request.getHeader("User-Agent");
+        String deviceType = "未知";
+        //判断设配类型
+        if (!StringUtils.isEmpty(userAgent)) {
+            userAgent = userAgent.toLowerCase();
+            if (userAgent.contains(MOBILE_DEVICE_iPhone)) {
+                deviceType = MOBILE_DEVICE_iPhone;
+            } else if (userAgent.contains(MOBILE_DEVICE_iPad)) {
+                deviceType = MOBILE_DEVICE_iPad;
+            } else if (userAgent.contains(MOBILE_DEVICE_Android)) {
+                deviceType = MOBILE_DEVICE_Android;
+            } else if (userAgent.contains(PC_DEVICE_Lux)) {
+                deviceType = PC_DEVICE_Lux;
+            } else if (userAgent.contains(PC_DEVICE_Win)) {
+                deviceType = PC_DEVICE_Win;
+            } else if (userAgent.contains(PC_DEVICE_Mac)) {
+                deviceType = PC_DEVICE_Mac;
+            }
+        }
         //记录登陆信息
         if (CommonUtil.String.equalsOne(uri, "login", "Login", "/ems/users/login.do")) {
             String username = request.getParameter("username");
@@ -73,7 +96,7 @@ public class CustomInterceptor implements HandlerInterceptor {
             if (!StringUtils.isEmpty(token)) {
                 cacheDao.updateTimeout(token, loginTimeout, TimeUnit.MINUTES);
             }
-            logger.info("request uri:" + uri);
+            logger.info("device:" + deviceType + " , URI:" + uri);
         }
         //允许跨域请求
         String origin = request.getHeader("Origin");
