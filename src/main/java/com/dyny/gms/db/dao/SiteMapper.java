@@ -41,12 +41,24 @@ public interface SiteMapper {
 
 
     /**
-     * 二十三.	发电记录功能
+     * 二十三.	发电记录功能  有效发电(即在基站停电后发电)
      */
     public List getGenerateLog(@Param("user_cus") String user_cus,
                                @Param("mach_no") String mach_no,
                                @Param("start_date") long start_date,
                                @Param("end_date") long end_date);
+    /**
+     * @Author wanggl(lane)
+     * @Description //TODO 实际发电
+     * @Date 15:15 2018-12-06
+     * @Param [user_cus, mach_no, start_date, end_date]
+     * @return java.util.List
+     **/
+    public List getActGenerateLog(@Param("user_cus") String user_cus,
+                                  @Param("mach_no") String mach_no,
+                                  @Param("start_date") long start_date,
+                                  @Param("end_date") long end_date);
+
 
 
     public Map getMachineNum(@Param("user_cus") String user_cus,

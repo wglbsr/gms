@@ -139,11 +139,12 @@ public class SiteController extends BaseController {
     @ResponseBody
     public String getActiveElecLog(@RequestParam(name = "mach_no", required = false, defaultValue = "") String mach_no,
                                    @RequestParam(name = "user_cus") String user_cus,
+                                   @RequestParam(name = "allOfIt", required = false, defaultValue = "false") boolean allOfIt,//是否查找所有的实际发电记录(包括有效无效)
                                    @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                    @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
                                    @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                    @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) {
-        return service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate);
+        return service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate,allOfIt);
     }
 
 

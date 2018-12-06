@@ -83,10 +83,15 @@ public class SiteServiceImpl extends BaseService implements SiteService {
 
 
     @Override
-    public String getGenerateLog(String user_cus, String mach_no, int pageNum, int pageSize, long startDate, long endDate) {
+    public String getGenerateLog(String user_cus, String mach_no, int pageNum, int pageSize, long startDate, long endDate, boolean allOfIt) {
         // TODO Auto-generated method stub
         Page page = PageHelper.startPage(pageNum, pageSize);
-        List result = mapper.getGenerateLog(user_cus, mach_no, startDate, endDate);
+        List result = null;
+        if (allOfIt) {//所有的
+            result = mapper.getActGenerateLog(user_cus, mach_no, startDate, endDate);
+        } else {//有效的
+            result = mapper.getGenerateLog(user_cus, mach_no, startDate, endDate);
+        }
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }

@@ -121,14 +121,15 @@
         <result column="start_Voltage" property="start_Voltage" javaType="string"/>
     </resultMap>
     <select id="getStartVoltage" resultMap="startVoltageMap">
-        select isnull(start_Voltage,0) start_Voltage
+        select isnull(start_Voltage, 0) start_Voltage
         from C_mach
         WHERE mach_no = #{mach_no}
     </select>
 
     <!-- 十五.	设定启动电压功能 -->
     <update id="modifyStartVoltage">
-        UPDATE C_mach SET start_Voltage = #{changeVoltage, jdbcType = DECIMAL}
+        UPDATE C_mach
+        SET start_Voltage = #{changeVoltage, jdbcType = DECIMAL}
         WHERE mach_no = #{mach_no}
     </update>
 
@@ -166,8 +167,18 @@
         <result column="st_pertel2" property="contactManPhoneB" javaType="string"/>
     </resultMap>
     <select id="getSiteInfo" resultMap="siteInfoMap" parameterType="java.lang.Integer">
-        select id, st_name, st_no, st_type, cus_no, st_coordinate, st_add, unit_add, st_per1, st_pertel1, st_per2,
-        st_pertel2
+        select id,
+               st_name,
+               st_no,
+               st_type,
+               cus_no,
+               st_coordinate,
+               st_add,
+               unit_add,
+               st_per1,
+               st_pertel1,
+               st_per2,
+               st_pertel2
         FROM C_station
         where id = #{stationId}
         order by id
@@ -186,23 +197,24 @@
     </resultMap>
     <select id="getGenerateLog" resultMap="generateLogMap">
         SELECT
-        t.mach_no,
+        apt.mach_no,
         ts.s_station_no,
         ts.s_station_name,
         m.mach_name,
-        t.start_time,
-        t.end_time,
-        dbo.get_close_start_time (t.mach_no, t.start_time) e_start_time,
-        dbo.get_close_end_time (t.mach_no, t.start_time) e_end_time,
-        DATEDIFF(
-        mi,
-        start_time,
-        ISNULL(end_time, GETDATE())
-        ) num_time
+        apt.start_time,
+        apt.end_time,
+        ot.start_time as e_start_time,
+        ot.end_time as e_end_time,
+        DATEDIFF( mi, apt.start_time, ISNULL( apt.end_time, GETDATE()) ) num_time
         FROM
-        Ap_time t left join t_station ts on ts.s_station_no=t.st_no
-        JOIN C_mach m ON m.mach_no = t.mach_no
-        where 1=1
+        Ap_time apt
+        LEFT JOIN t_station ts ON ts.s_station_no= apt.st_no
+        JOIN C_mach m ON m.mach_no = apt.mach_no
+        JOIN Off_time ot ON ot.mach_no = apt.mach_no
+        AND ot.start_time &lt;= apt.start_time
+        AND ot.end_time &gt;= apt.start_time
+        WHERE
+        1 =1
         <if test="user_cus!=null and user_cus!=''">
             and m.cus_no=#{user_cus}
         </if>
@@ -210,14 +222,51 @@
             and (m.mach_no like '%'+#{mach_no}+'%' or m.mach_name like '%'+#{mach_no}+'%')
         </if>
         <if test="start_date>0">
-            AND start_time &gt;= DATEADD(S,#{start_date},'1970-01-01 08:00:00')
+            AND apt.start_time &gt;= DATEADD(S,#{start_date},'1970-01-01 08:00:00')
         </if>
         <if test="end_date>0">
-            AND end_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
+            AND apt.end_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
         </if>
-        order by t.start_time desc
+        order by apt.start_time desc
     </select>
 
+
+    <resultMap type="map" id="actGenerateLogMap">
+        <result column="mach_name" property="mach_name" javaType="string"/>
+        <result column="mach_no" property="mach_no" javaType="string"/>
+        <result column="start_time" property="start_time" javaType="string"/>
+        <result column="end_time" property="end_time" javaType="string"/>
+        <result column="num_time" property="num_time" javaType="string"/>
+    </resultMap>
+    <select id="getActGenerateLog" resultMap="actGenerateLogMap">
+        SELECT
+        apt.mach_no,
+        ts.s_station_no,
+        ts.s_station_name,
+        m.mach_name,
+        apt.start_time,
+        apt.end_time,
+        DATEDIFF( mi, apt.start_time, ISNULL( apt.end_time, GETDATE()) ) num_time
+        FROM
+        Ap_time apt
+        LEFT JOIN t_station ts ON ts.s_station_no= apt.st_no
+        JOIN C_mach m ON m.mach_no = apt.mach_no
+        WHERE
+        1 =1
+        <if test="user_cus!=null and user_cus!=''">
+            and m.cus_no=#{user_cus}
+        </if>
+        <if test="mach_no!=null and mach_no!=''">
+            and (m.mach_no like '%'+#{mach_no}+'%' or m.mach_name like '%'+#{mach_no}+'%')
+        </if>
+        <if test="start_date>0">
+            AND apt.start_time &gt;= DATEADD(S,#{start_date},'1970-01-01 08:00:00')
+        </if>
+        <if test="end_date>0">
+            AND apt.end_time &lt;= DATEADD(S,#{end_date},'1970-01-01 08:00:00')
+        </if>
+        order by apt.start_time desc
+    </select>
 
     <resultMap type="map" id="machineNumMap">
         <result column="total" property="total" javaType="int"/>
@@ -323,7 +372,7 @@
         <if test="inactivate">
             0,
         </if>
-            3
+        3
         )
 
 
@@ -332,43 +381,40 @@
     <!-- 三十二.	启动功能 -->
     <insert id="startMachine">
         INSERT INTO Ap_operate(mach_no, op_no,
-        op_num, creat_time, creat_per,
-        action) VALUES(
-        #{mach_no, jdbcType = VARCHAR},
-        1,
-        '84 05 01 00 00 00 01 02 16',
-        getdate(),
-        #{user_no, jdbcType = VARCHAR},
-        '0'
-        )
+                               op_num, creat_time, creat_per,
+                               action)
+        VALUES (#{mach_no, jdbcType = VARCHAR},
+                1,
+                '84 05 01 00 00 00 01 02 16',
+                getdate(),
+                #{user_no, jdbcType = VARCHAR},
+                '0')
     </insert>
 
     <!-- 三十三.	熄火功能 -->
     <insert id="offMachine">
         INSERT INTO Ap_operate(mach_no, op_no,
-        op_num, creat_time, creat_per,
-        action) VALUES (
-        #{mach_no, jdbcType = VARCHAR},
-        2,
-        '84 05 01 00 00 00 02 03 16',
-        getdate(),
-        #{user_no, jdbcType = VARCHAR},
-        '0'
-        )
+                               op_num, creat_time, creat_per,
+                               action)
+        VALUES (#{mach_no, jdbcType = VARCHAR},
+                2,
+                '84 05 01 00 00 00 02 03 16',
+                getdate(),
+                #{user_no, jdbcType = VARCHAR},
+                '0')
     </insert>
 
     <!-- 三十四.	模式切换功能 -->
     <insert id="changeModel">
         INSERT INTO Ap_operate (mach_no, op_no,
-        op_num, creat_time, creat_per,
-        action) VALUES (
-        #{mach_no, jdbcType = VARCHAR},
-        #{modelflag, jdbcType =INTEGER},
-        #{code, jdbcType = VARCHAR},
-        getdate(),
-        #{user_no, jdbcType = VARCHAR},
-        '0'
-        )
+                                op_num, creat_time, creat_per,
+                                action)
+        VALUES (#{mach_no, jdbcType = VARCHAR},
+                #{modelflag, jdbcType =INTEGER},
+                #{code, jdbcType = VARCHAR},
+                getdate(),
+                #{user_no, jdbcType = VARCHAR},
+                '0')
     </insert>
 
 
@@ -406,40 +452,40 @@
     </resultMap>
     <select id="getSiteDetailed1" resultMap="SiteDetailedMap1">
         SELECT
-        Acity_electricity,
-        s_station_name,
-        s_station_latitude,
-        s_station_longitude,
-        output_voltage,
-        load_mode,
-        st_state,
-        fuel_type,
-        pro_mode,
-        mach_name,
-        mach_no,
-        i_board_version,
-        b_activated,
-        maintainTimeFixed,
-        isnull(cabinet_temperature, 0) external_temperature,
-        isnull(
-        CONVERT (VARCHAR(100), inter_time, 20),
-        0
-        ) inter_time,
-        isnull(dbo.mach_type(mach_no), 0) stationType,
-        isnull(start_Vo, 0) start_Voltage,
-        isnull(lank_level, 0) lank_per,
-        isnull(lank_level, 0) * isnull(volumeno, 0) / 100 lank_level,
-        isnull(st_current, 0) st_current,
-        state1,
-        isnull(st_co, 0) st_co,
-        isnull(dbo.sum_time(mach_no), 0) sum_time,
-        isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
-        isnull(st_voltage, 0) st_voltag,
-        isnull(Expr1, 0) Expr1,
-        isnull(al_voltage, 0) al_voltage,
-        isnull(sys_mode, 0) sys_mode
+            Acity_electricity,
+            s_station_name,
+            s_station_latitude,
+            s_station_longitude,
+            output_voltage,
+            load_mode,
+            st_state,
+            fuel_type,
+            pro_mode,
+            mach_name,
+            mach_no,
+            i_board_version,
+            b_activated,
+            maintainTimeFixed,
+            isnull(cabinet_temperature, 0)                           external_temperature,
+            isnull(
+                    CONVERT(VARCHAR (100), inter_time, 20),
+                    0
+                )                                                    inter_time,
+            isnull(dbo.mach_type(mach_no), 0)                        stationType,
+            isnull(start_Vo, 0)                                      start_Voltage,
+            isnull(lank_level, 0)                                    lank_per,
+            isnull(lank_level, 0) * isnull(volumeno, 0) / 100        lank_level,
+            isnull(st_current, 0)                                    st_current,
+            state1,
+            isnull(st_co, 0)                                         st_co,
+            isnull(dbo.sum_time(mach_no), 0)                         sum_time,
+            isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
+            isnull(st_voltage, 0)                                    st_voltag,
+            isnull(Expr1, 0)                                         Expr1,
+            isnull(al_voltage, 0)                                    al_voltage,
+            isnull(sys_mode, 0)                                      sys_mode
         FROM
-        view_generator_full_info
+            view_generator_full_info
         WHERE mach_no = #{mach_no}
         order by mach_no
     </select>
@@ -466,24 +512,24 @@
     <select id="getGeneratorDetail" resultMap="generatorDetail">
         SELECT
             Acity_electricity,
-            isnull(cabinet_temperature, 0) external_temperature,
+            isnull(cabinet_temperature, 0)                           external_temperature,
             isnull(
-                CONVERT (VARCHAR(100), inter_time, 20),
-                0
-            ) inter_time,
-            isnull(dbo.mach_type(mach_no), 0) stationType,
-            isnull(start_Vo, 0) start_Voltage,
-            isnull(lank_level, 0) lank_per,
-            isnull(lank_level, 0) * isnull(volumeno, 0) / 100 lank_level,
-            isnull(st_current, 0) st_current,
+                    CONVERT(VARCHAR (100), inter_time, 20),
+                    0
+                )                                                    inter_time,
+            isnull(dbo.mach_type(mach_no), 0)                        stationType,
+            isnull(start_Vo, 0)                                      start_Voltage,
+            isnull(lank_level, 0)                                    lank_per,
+            isnull(lank_level, 0) * isnull(volumeno, 0) / 100        lank_level,
+            isnull(st_current, 0)                                    st_current,
             state1,
             i_board_version,
-            isnull(st_co, 0) st_co,
-            isnull(dbo.sum_time(mach_no), 0) sum_time,
+            isnull(st_co, 0)                                         st_co,
+            isnull(dbo.sum_time(mach_no), 0)                         sum_time,
             isnull(Expr2, 0) - isnull(dbo.sum_time(mach_no), 0) / 60 maintain_time,
-            isnull(st_voltage, 0) st_voltag,
-            isnull(Expr1, 0) Expr1,
-            isnull(al_voltage, 0) al_voltage
+            isnull(st_voltage, 0)                                    st_voltag,
+            isnull(Expr1, 0)                                         Expr1,
+            isnull(al_voltage, 0)                                    al_voltage
         FROM
             view_generator_full_info
         WHERE mach_no = #{mach_no}
