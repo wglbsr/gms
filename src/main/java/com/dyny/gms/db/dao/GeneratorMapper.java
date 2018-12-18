@@ -12,7 +12,7 @@ public interface GeneratorMapper {
 
     int deleteByExample(GeneratorExample example);
 
-    int deleteByPrimaryKey(String machNo);//需要单个更新
+    int deleteByPrimaryKey(String machNo);
 
     int insert(Generator record);
 
@@ -22,13 +22,14 @@ public interface GeneratorMapper {
 
     Generator selectByPrimaryKey(String machNo);
 
-    int updateByExampleSelective(@Param("record") Generator record, @Param("example") GeneratorExample example);//需要批量更新
+    int updateByExampleSelective(@Param("record") Generator record, @Param("example") GeneratorExample example);
 
-    int updateByExample(@Param("record") Generator record, @Param("example") GeneratorExample example);//需要批量更新
+    int updateByExample(@Param("record") Generator record, @Param("example") GeneratorExample example);
 
-    int updateByPrimaryKeySelective(Generator record);//需要单个更新
+    int updateByPrimaryKeySelective(Generator record);
 
-    int updateByPrimaryKey(Generator record);//需要批量更新
+    int updateByPrimaryKey(Generator record);
+
 
 
     /******************手动添加*************************/

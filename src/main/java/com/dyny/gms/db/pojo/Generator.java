@@ -62,6 +62,10 @@ public class Generator {
 
     private Integer boardVersion;
 
+    private String offlineReason;
+
+    private Integer offlineType;
+
     public String getMachNo() {
         return machNo;
     }
@@ -292,5 +296,21 @@ public class Generator {
 
     public void setBoardVersion(Integer boardVersion) {
         this.boardVersion = boardVersion;
+    }
+
+    public String getOfflineReason() {
+        return offlineReason;
+    }
+
+    public void setOfflineReason(String offlineReason) {
+        this.offlineReason = offlineReason == null ? null : offlineReason.trim();
+    }
+
+    public Integer getOfflineType() {
+        return offlineType;
+    }
+
+    public void setOfflineType(Integer offlineType) {
+        this.offlineType = offlineType;
     }
 }

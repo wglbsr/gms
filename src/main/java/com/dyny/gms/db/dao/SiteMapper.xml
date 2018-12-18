@@ -282,7 +282,7 @@
         count(1) total ,
         sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=#{onlineTimeout}/60 then 1 else 0 end) online,
         sum(case when isnull(Expr1,1)=0 then 1 else 0 end) sleeping,
-        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=#{onlineTimeout}/60 and offline_type=0 then 1 else 0 end) offline_sys
+        sum(case when DATEDIFF(mi,inter_time,GETDATE()) >#{onlineTimeout}/60 and i_offline_type=0 then 1 else 0 end) offline_sys
         from view_generator_full_info where 1=1
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}
@@ -349,6 +349,9 @@
         <if test="online != null and online != '' ">
             AND st_state = #{online}
         </if>
+        <if test="offlineType !=null and offlineType >=0 and online =='离线'">
+            AND i_offline_type = #{offlineType}
+        </if>
         <if test="currentType != null and currentType != '' ">
             AND mach_type = #{currentType}
         </if>
@@ -369,9 +372,6 @@
         </if>
         <if test="use_type !=null and use_type != '' ">
             AND use_type = #{use_type}
-        </if>
-        <if test="offlineType !=null and offlineType >=0 ">
-            AND i_offline_type = #{offlineType}
         </if>
         AND b_activated in (
         <if test="activate">

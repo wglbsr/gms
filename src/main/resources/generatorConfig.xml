@@ -26,26 +26,26 @@
         </javaModelGenerator>
         <!-- 生成的映射文件包名和位置 -->
         <sqlMapGenerator targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
-            <property name="enableSubPackages" value="true"/>
+        <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.dyny.gms.db.dao" targetProject="src/main/java">
-            <property name="enableSubPackages" value="true"/>
+        <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--<table tableName="t_enumeration" domainObjectName="Enumeration">-->
         <!--<columnRenamingRule searchString="^[^_]+" replaceString="" />-->
         <!--</table>-->
 
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
-            <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
+        <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
         <!--<table tableName="t_station" domainObjectName="Station">-->
-            <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
+        <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
-            <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
+        <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="t_warning222_type" domainObjectName="WarningType">
+        <table tableName="C_mach" domainObjectName="Generator">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

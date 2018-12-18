@@ -1985,6 +1985,136 @@ public class GeneratorExample {
             addCriterion("i_board_version not between", value1, value2, "boardVersion");
             return (Criteria) this;
         }
+
+        public Criteria andOfflineReasonIsNull() {
+            addCriterion("s_offline_reason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonIsNotNull() {
+            addCriterion("s_offline_reason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonEqualTo(String value) {
+            addCriterion("s_offline_reason =", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonNotEqualTo(String value) {
+            addCriterion("s_offline_reason <>", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonGreaterThan(String value) {
+            addCriterion("s_offline_reason >", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("s_offline_reason >=", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonLessThan(String value) {
+            addCriterion("s_offline_reason <", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonLessThanOrEqualTo(String value) {
+            addCriterion("s_offline_reason <=", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonLike(String value) {
+            addCriterion("s_offline_reason like", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonNotLike(String value) {
+            addCriterion("s_offline_reason not like", value, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonIn(List<String> values) {
+            addCriterion("s_offline_reason in", values, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonNotIn(List<String> values) {
+            addCriterion("s_offline_reason not in", values, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonBetween(String value1, String value2) {
+            addCriterion("s_offline_reason between", value1, value2, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineReasonNotBetween(String value1, String value2) {
+            addCriterion("s_offline_reason not between", value1, value2, "offlineReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeIsNull() {
+            addCriterion("i_offline_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeIsNotNull() {
+            addCriterion("i_offline_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeEqualTo(Integer value) {
+            addCriterion("i_offline_type =", value, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeNotEqualTo(Integer value) {
+            addCriterion("i_offline_type <>", value, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeGreaterThan(Integer value) {
+            addCriterion("i_offline_type >", value, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("i_offline_type >=", value, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeLessThan(Integer value) {
+            addCriterion("i_offline_type <", value, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("i_offline_type <=", value, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeIn(List<Integer> values) {
+            addCriterion("i_offline_type in", values, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeNotIn(List<Integer> values) {
+            addCriterion("i_offline_type not in", values, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeBetween(Integer value1, Integer value2) {
+            addCriterion("i_offline_type between", value1, value2, "offlineType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfflineTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("i_offline_type not between", value1, value2, "offlineType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
