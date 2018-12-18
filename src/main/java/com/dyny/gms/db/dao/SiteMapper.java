@@ -47,18 +47,18 @@ public interface SiteMapper {
                                @Param("mach_no") String mach_no,
                                @Param("start_date") long start_date,
                                @Param("end_date") long end_date);
+
     /**
+     * @return java.util.List
      * @Author wanggl(lane)
      * @Description //TODO 实际发电
      * @Date 15:15 2018-12-06
      * @Param [user_cus, mach_no, start_date, end_date]
-     * @return java.util.List
      **/
     public List getActGenerateLog(@Param("user_cus") String user_cus,
                                   @Param("mach_no") String mach_no,
                                   @Param("start_date") long start_date,
                                   @Param("end_date") long end_date);
-
 
 
     public Map getMachineNum(@Param("user_cus") String user_cus,
@@ -83,7 +83,8 @@ public interface SiteMapper {
             @Param("expr1") int expr1,
             @Param("use_type") String use_type,
             @Param("activate") boolean activate,
-            @Param("inactivate") boolean inactivate);
+            @Param("inactivate") boolean inactivate,
+            @Param("offlineType") int offlineType);
 
     /**
      * 三十二.	启动功能

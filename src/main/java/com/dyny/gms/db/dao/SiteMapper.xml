@@ -272,6 +272,7 @@
         <result column="total" property="total" javaType="int"/>
         <result column="online" property="online" javaType="int"/>
         <result column="sleeping" property="sleeping" javaType="int"/>
+        <result column="offline_sys" property="offlineSys" javaType="int"/>
     </resultMap>
 
 
@@ -280,7 +281,8 @@
         select
         count(1) total ,
         sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=#{onlineTimeout}/60 then 1 else 0 end) online,
-        sum(case when isnull(Expr1,1)=0 then 1 else 0 end) sleeping
+        sum(case when isnull(Expr1,1)=0 then 1 else 0 end) sleeping,
+        sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=#{onlineTimeout}/60 and offline_type=0 then 1 else 0 end) offline_sys
         from view_generator_full_info where 1=1
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}
@@ -319,7 +321,8 @@
         <result column="output_voltage" property="output_voltage" javaType="string"/>
         <result column="load_mode" property="load_mode" javaType="int"/>
         <result column="b_activated" property="activated" javaType="int"/>
-
+        <result column="i_offline_type" property="offlineType" javaType="int"/>
+        <result column="s_offline_reason" property="offlineReason" javaType="string"/>
     </resultMap>
 
     <!-- 三十一.	移动油机查询 -->
@@ -329,6 +332,8 @@
         city_electricity,Acity_electricity,
         output_voltage,load_mode,
         al_voltage,
+        i_offline_type,
+        s_offline_reason,
         state,isnull(start_Vo,0) start_Vo,
         state1,isnull(Expr2,0)-isnull(i_total_generate_time,0)/60 maintain_time,isnull(lank_level,0)
         lank_per,st_current,isnull(cabinet_temperature,0)
@@ -364,6 +369,9 @@
         </if>
         <if test="use_type !=null and use_type != '' ">
             AND use_type = #{use_type}
+        </if>
+        <if test="offlineType !=null and offlineType >=0 ">
+            AND i_offline_type = #{offlineType}
         </if>
         AND b_activated in (
         <if test="activate">

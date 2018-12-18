@@ -45,7 +45,7 @@ public interface SiteService {
      */
     String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type,
                          String Acity_electricity, String content, String generateStatus, int expr1,
-                         String use_type, boolean activate, boolean inactivate, int pageNum, int pageSize, String orderBy);
+                         String use_type, boolean activate, boolean inactivate,int offlineType, int pageNum, int pageSize, String orderBy);
 
 
     /**

@@ -130,9 +130,12 @@ public class SiteServiceImpl extends BaseService implements SiteService {
         int total = allMap.containsKey("total") ? allMap.get("total") : 0;
         int online = allMap.containsKey("online") ? allMap.get("online") : 0;
         int sleeping = allMap.containsKey("sleeping") ? allMap.get("sleeping") : 0;
+        int offlineSys = allMap.containsKey("offlineSys") ? allMap.get("offlineSys") : 0;
         result.put("allNum", total);
         result.put("onlineNum", online);
         result.put("offlineNum", total - online);
+        result.put("offlineSys", offlineSys);
+        result.put("offlineOther", total - online - offlineSys);
         result.put("generatingNum", sleeping);
         result.put("interruptionNum", total - sleeping);
         return result;
@@ -141,11 +144,11 @@ public class SiteServiceImpl extends BaseService implements SiteService {
     @Override
     public String searchMachine(String user_cus, String state, String st_state, String mach_type, String fuel_type,
                                 String Acity_electricity, String content, String generateStatus, int expr1, String use_type,
-                                boolean activate, boolean inactivate, int pageNum, int pageSize, String orderBy) {
+                                boolean activate, boolean inactivate, int offlineType, int pageNum, int pageSize, String orderBy) {
         // TODO Auto-generated method stub
         Page page = PageHelper.startPage(pageNum, pageSize);
         page.setOrderBy(orderBy);
-        List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate);
+        List result = mapper.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate, offlineType);
         long total = page.getTotal();
         return super.getSuccessResult(result, pageNum, pageSize, total);
     }

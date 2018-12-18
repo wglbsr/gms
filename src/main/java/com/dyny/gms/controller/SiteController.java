@@ -144,7 +144,7 @@ public class SiteController extends BaseController {
                                    @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
                                    @RequestParam(name = "startDate", required = false, defaultValue = "0") long startDate,
                                    @RequestParam(name = "endDate", required = false, defaultValue = "0") long endDate) {
-        return service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate,allOfIt);
+        return service.getGenerateLog(user_cus, mach_no, pageNum, pageSize, startDate, endDate, allOfIt);
     }
 
 
@@ -185,12 +185,13 @@ public class SiteController extends BaseController {
                                 @RequestParam(name = "expr1", required = false, defaultValue = "-1") int expr1,
                                 @RequestParam(name = "pageNum", required = false, defaultValue = "0") int pageNum,
                                 @RequestParam(name = "pageSize", required = false, defaultValue = "0") int pageSize,
+                                @RequestParam(name = "offlineType", required = false, defaultValue = "-1") int offlineType,
                                 @RequestParam(name = "activate", required = false, defaultValue = "true") boolean activate,
                                 @RequestParam(name = "inactivate", required = false, defaultValue = "true") boolean inactivate,
                                 @RequestParam(name = "content", required = false, defaultValue = "") String content,
                                 @RequestParam(name = "orderBy", required = false, defaultValue = "mach_no") String orderBy,
                                 @RequestParam(name = "use_type", required = false, defaultValue = "") String use_type) {
-        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate, pageNum, pageSize, orderBy);
+        return service.searchMachine(user_cus, state, st_state, mach_type, fuel_type, Acity_electricity, content, generateStatus, expr1, use_type, activate, inactivate,offlineType, pageNum, pageSize, orderBy);
 
     }
 
