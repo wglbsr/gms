@@ -5,10 +5,11 @@ import com.dyny.gms.db.dao.LoginHistoryMapper;
 import com.dyny.gms.db.dao.UserMapper;
 import com.dyny.gms.db.pojo.LoginHistory;
 import com.dyny.gms.db.pojo.User;
+import com.dyny.gms.db.pojo.UserConfig;
 import com.dyny.gms.db.pojo.UserExample;
 import com.dyny.gms.service.BaseService;
+import com.dyny.gms.service.UserConfigService;
 import com.dyny.gms.service.UserService;
-import com.dyny.gms.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +28,8 @@ public class UserServiceImpl extends BaseService implements UserService {
     LoginHistoryMapper loginHistoryMapper;
     @Autowired
     CacheDao cacheDao;
+    @Autowired
+    UserConfigService userConfigService;
 
     @Override
     public int changePassword(String username, String oldPassword, String newPassword) {
@@ -49,7 +52,13 @@ public class UserServiceImpl extends BaseService implements UserService {
         user.setCreateTime(new Date());
         String password = user.getUserPass();
         user.setUserPass(super.MD5(password));
-        return userMapper.insert(user);
+        int result = userMapper.insert(user);
+        if (result > 0) {
+            UserConfig userConfig = new UserConfig();
+            userConfig.setUserNo(user.getUserNo());
+            userConfigService.insert(userConfig);
+        }
+        return result;
     }
 
 

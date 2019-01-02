@@ -2,6 +2,8 @@ package com.dyny.gms.controller;
 
 import com.dyny.gms.controller.commonController.BaseController;
 import com.dyny.gms.db.pojo.User;
+import com.dyny.gms.db.pojo.UserConfig;
+import com.dyny.gms.service.UserConfigService;
 import com.dyny.gms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import java.util.List;
 public class UserController extends BaseController {
     @Autowired
     UserService userService;
+    @Autowired
+    UserConfigService userConfigService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public String login(@RequestParam(value = "username") String username,
@@ -46,6 +50,19 @@ public class UserController extends BaseController {
     @ResponseBody
     public String userRegister(@RequestBody User user) {
         return super.getSuccessResult(userService.userRegister(user));
+    }
+
+
+    @RequestMapping(value = "/getUserConfig", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getConfig(@RequestParam("username") String username) {
+        return super.getSuccessResult(userConfigService.select(username));
+    }
+
+    @RequestMapping(value = "/updateUserConfig", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String updateConfig(@RequestBody UserConfig userConfig) {
+        return super.getSuccessResult(userConfigService.update(userConfig));
     }
 
 

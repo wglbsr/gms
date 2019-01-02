@@ -45,7 +45,7 @@
         <!--<table tableName="t_unit" domainObjectName="Unit">-->
         <!--<columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>-->
         <!--</table>-->
-        <table tableName="C_mach" domainObjectName="Generator">
+        <table tableName="t_user_config" domainObjectName="UserConfig">
             <columnRenamingRule searchString="^[a-z]{1}_" replaceString=""/>
         </table>
     </context>

@@ -3,4 +3,3 @@
 
 
 
- int insertBatch(List<ActivateHistory> activateHistoryList);
