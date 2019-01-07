@@ -273,6 +273,7 @@ public class GeneratorServiceImpl extends BaseService implements GeneratorServic
         generator.setDeleted(false);
         generator.setTotalGenerateCnt(0);
         generator.setTotalGenerateTime(0);
+        generator.setOfflineType(0);
         List<String> generatorNoList = new ArrayList<>();
         generatorNoList.add(generator.getMachNo());
         //保存激活记录
