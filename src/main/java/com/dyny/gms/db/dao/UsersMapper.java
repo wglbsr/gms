@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Param;
 @Deprecated
 @Mapper
 public interface UsersMapper {
-	
-	public Users getByNameAndPass(@Param("username") String username, @Param("password") String password);
-	
-	public int add(Users users);
-	
-	public int updatePass(@Param("password") String password, @Param("username") String userName);
+
+    public Users getByNameAndPass(@Param("username") String username, @Param("password") String password);
+
+    public int add(Users users);
+
+    public int updatePass(@Param("password") String password, @Param("username") String userName);
 }

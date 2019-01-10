@@ -282,7 +282,7 @@
         count(1) total ,
         sum(case when DATEDIFF(mi,inter_time,GETDATE()) &lt;=#{onlineTimeout}/60 then 1 else 0 end) online,
         sum(case when isnull(Expr1,1)=0 then 1 else 0 end) sleeping,
-        sum(case when DATEDIFF(mi,inter_time,GETDATE()) >#{onlineTimeout}/60 and i_offline_type=0 then 1 else 0 end) offline_sys
+        sum(case when (DATEDIFF(mi,inter_time,GETDATE()) >#{onlineTimeout}/60 or inter_time is null) and i_offline_type=0 then 1 else 0 end) offline_sys
         from view_generator_full_info where 1=1
         <if test="user_cus != null and user_cus != '' ">
             AND cus_no = #{user_cus}

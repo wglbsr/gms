@@ -1,14 +1,11 @@
 package com.dyny.gms.db.dao;
 
-import com.dyny.gms.annotation.Intercepted;
-import com.dyny.gms.db.pojo.Generator;
 import com.dyny.gms.db.pojo.Station;
 import com.dyny.gms.db.pojo.StationExample;
-
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface StationMapper {

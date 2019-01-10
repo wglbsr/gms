@@ -8,14 +8,14 @@ import com.dyny.gms.db.pojo.Users;
 @Deprecated
 @Service
 public class UsersServiceImpl implements UsersService {
-	@Autowired
-	private UsersMapper mapper;
+    @Autowired
+    private UsersMapper mapper;
 
-	@Override
-	public Users getByNameAndPass(String username, String password) {
-		// TODO Auto-generated method stub
-		return mapper.getByNameAndPass(username, password);
-	}
+    @Override
+    public Users getByNameAndPass(String username, String password) {
+        // TODO Auto-generated method stub
+        return mapper.getByNameAndPass(username, password);
+    }
 
 
 }
